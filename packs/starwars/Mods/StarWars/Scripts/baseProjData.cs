@@ -1048,6 +1048,15 @@ LaserData TargetLaser
 //   hitSoundId        = SoundFireTargetingLaser;
 };
 
+LaserData SeekerLaser
+{
+	laserBitmapName = "paintPulse.bmp";
+	damageConversion = 0.0;
+	baseDamageType = 0;
+	lightRange = 20.0;
+	lightColor = { 0.25, 1.0, 0.25 };
+	detachFromShooter = false;
+};
 
 RepairEffectData RepairBolt
 {

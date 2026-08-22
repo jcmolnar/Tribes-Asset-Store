@@ -1,60 +1,122 @@
 {
-  "_comment": "Asset Store catalog. Each pack's content lives under packs/<id>/ mirroring INSTALL-RELATIVE paths (e.g. packs/tac/Mods/Tac/scripts.vol installs to <game>/Mods/Tac/scripts.vol). tools/publish-store.ps1 in the native repo validates this file, hashes the content, regenerates store.json, and commits. Adding an asset never touches the game manifest or bumps the game version.",
-  "packs": [
-    {
-      "id": "tac",
-      "title": "Tribes Aerial Combat (TAC) 1.41",
-      "category": "mods",
-      "description": "Team Aerial Combat - teamwork-required flight combat by the TPG team (2001). Full client and server: 29 missions (CTF, C&H, TDM, D&D, F&R), custom skins and sounds, and the complete server-side scripts so you can host it. Launch with -mod Tac or use the toggle below.",
-      "author": "TAC Development Team",
-      "version": 1,
-      "state": "live",
-      "paths": ["Mods\\Tac"],
-      "launchMods": ["Tac"]
-    },
-    {
-      "id": "rmrpg",
-      "title": "Red Moon RPG (RMRPG)",
-      "category": "mods",
-      "description": "Red Moon RPG - the Tribes RPG variant that stacks on top of the base RPG mod: its own missions, skins, GUI and server scripts. Needed to join Red Moon servers. Launch with -mod rpg -mod rmrpg (RMRPG stacks on RPG) or use the toggle below.",
-      "author": "Red Moon RPG team",
-      "version": 1,
-      "state": "live",
-      "paths": ["Mods\\RMRPG"],
-      "launchMods": ["rpg", "rmrpg"]
-    },
-    {
-      "id": "swrpg",
-      "title": "Star Wars RPG (SWRPG)",
-      "category": "mods",
-      "description": "Star Wars Tribes RPG by Hazor and team - a self-contained RPG mod set in the Star Wars universe, built on the Star Wars TC 2.0 art and sounds: missions, skins, models and full server scripts. Needed to join SWRPG servers. Launch with -mod SWRPG or use the toggle below.",
-      "author": "Hazor / SWRPG team",
-      "version": 1,
-      "state": "live",
-      "paths": ["Mods\\SWRPG"],
-      "launchMods": ["SWRPG"]
-    },
-    {
-      "id": "starwars",
-      "title": "Star Wars TC 2.0",
-      "category": "mods",
-      "description": "Star Wars Total Conversion 2.0 for Tribes: Star Wars vehicles, weapons, models, sounds and missions. Needed to join Star Wars TC servers. Launch with -mod StarWars or use the toggle below.",
-      "author": "Star Wars TC team",
-      "version": 1,
-      "state": "live",
-      "paths": ["Mods\\StarWars"],
-      "launchMods": ["StarWars"]
-    },
-    {
-      "id": "annihilation",
-      "title": "Tribes Annihilation",
-      "category": "mods",
-      "description": "Annihilation - the classic Tribes mod: new weapons, armors, vehicles, voices and objects, plus its missions, skins and complete server scripts so you can host it. Needed to join Annihilation servers. Launch with -mod Annihilation or use the toggle below.",
-      "author": "Annihilation team",
-      "version": 1,
-      "state": "live",
-      "paths": ["Mods\\Annihilation"],
-      "launchMods": ["Annihilation"]
-    }
-  ]
+ "_comment": "Asset Store catalog. Each pack's content lives under packs/<id>/ mirroring INSTALL-RELATIVE paths (e.g. packs/tac/Mods/Tac/scripts.vol installs to <game>/Mods/Tac/scripts.vol). tools/publish-store.ps1 in the native repo validates this file, hashes the content, regenerates store.json, and commits. Adding an asset never touches the game manifest or bumps the game version.",
+ "packs": [
+  {
+   "id": "tac",
+   "title": "Tribes Aerial Combat (TAC) 1.41",
+   "category": "mods",
+   "description": "Team Aerial Combat - teamwork-required flight combat by the TPG team (2001). Full client and server: 29 missions (CTF, C&H, TDM, D&D, F&R), custom skins and sounds, and the complete server-side scripts so you can host it. Launch with -mod Tac or use the toggle below.",
+   "author": "TAC Development Team",
+   "version": 1,
+   "state": "live",
+   "paths": [
+    "Mods\\Tac"
+   ],
+   "launchMods": [
+    "Tac"
+   ]
+  },
+  {
+   "id": "rmrpg",
+   "title": "Red Moon RPG (RMRPG)",
+   "category": "mods",
+   "description": "Red Moon RPG - the Tribes RPG variant that stacks on top of the base RPG mod: its own missions, skins, GUI and server scripts. Needed to join Red Moon servers. Launch with -mod rpg -mod rmrpg (RMRPG stacks on RPG) or use the toggle below.",
+   "author": "Red Moon RPG team",
+   "version": 1,
+   "state": "live",
+   "paths": [
+    "Mods\\RMRPG"
+   ],
+   "launchMods": [
+    "rpg",
+    "rmrpg"
+   ]
+  },
+  {
+   "id": "swrpg",
+   "title": "Star Wars RPG (SWRPG)",
+   "category": "mods",
+   "description": "Star Wars Tribes RPG by Hazor and team - an RPG mod set in the Star Wars universe, built on the Star Wars TC 2.0 art and sounds: skins, models, terrain and scripts. Needed to join SWRPG servers. Note: the original Tatooine server mission file was never publicly released, so hosting this mod locally uses base maps. Launch with -mod SWRPG or use the toggle below.",
+   "author": "Hazor / SWRPG team",
+   "version": 1,
+   "state": "live",
+   "paths": [
+    "Mods\\SWRPG"
+   ],
+   "launchMods": [
+    "SWRPG"
+   ]
+  },
+  {
+   "id": "starwars",
+   "title": "Star Wars TC 2.0 (full)",
+   "category": "mods",
+   "description": "The complete Star Wars total conversion: eight Star Wars maps (Dantooine, Tatooine, Battle of Hoth, Yavin Base, Mos Eisley, Mos Espa, Sarlaac Pit, Sith Knight), custom vehicles, weapons, sounds and voices. Every texture AI-upscaled 4x and palettized, legacy .vol archives converted to .zip, and deduplicated against base Tribes so you download the mod rather than another copy of the game. Launch with -mod StarWars.",
+   "author": "Star Wars TC team",
+   "version": 2,
+   "state": "live",
+   "paths": [
+    "Mods\\StarWars"
+   ],
+   "launchMods": [
+    "StarWars"
+   ]
+  },
+  {
+   "id": "annihilation",
+   "title": "Tribes Annihilation",
+   "category": "mods",
+   "description": "Annihilation - the classic Tribes mod: new weapons, armors, vehicles, voices and objects, plus its missions, skins and complete server scripts so you can host it. Needed to join Annihilation servers. Launch with -mod Annihilation or use the toggle below.",
+   "author": "Annihilation team",
+   "version": 1,
+   "state": "live",
+   "paths": [
+    "Mods\\Annihilation"
+   ],
+   "launchMods": [
+    "Annihilation"
+   ]
+  },
+  {
+   "id": "goldeneye",
+   "title": "GoldenEye 007 + Perfect Dark Maps",
+   "category": "assets",
+   "description": "Nine maps recreated from GoldenEye 007 and Perfect Dark -- Facility, Complex, Caves, Egyptian, Temple, Library, Basement, Stack and Grid -- with flags, objectives and inventory stations for two teams. All 3,624 textures AI-upscaled 4x and palettized. Plays in base Tribes: no mod to select, the maps just appear.",
+   "author": "Map pack by the GoldenEye007 Tribes project; textures upscaled for Modern Tribes",
+   "version": 1,
+   "state": "live",
+   "launchMods": [],
+   "preview": "",
+   "paths": [
+    "base\\ge.zip",
+    "base\\pd.zip",
+    "base\\caves0.zip",
+    "base\\complex0.zip",
+    "base\\egyptian0.zip",
+    "base\\facilityfull0.zip",
+    "base\\grid0.zip",
+    "base\\library0.zip",
+    "base\\temple0.zip",
+    "base\\Skins\\GoldenEyeSkins.zip",
+    "base\\missions\\GoldenEye007Basement.dsc",
+    "base\\missions\\GoldenEye007Basement.mis",
+    "base\\missions\\GoldenEye007Caves.dsc",
+    "base\\missions\\GoldenEye007Caves.mis",
+    "base\\missions\\GoldenEye007Complex.dsc",
+    "base\\missions\\GoldenEye007Complex.mis",
+    "base\\missions\\GoldenEye007Egyptian.dsc",
+    "base\\missions\\GoldenEye007Egyptian.mis",
+    "base\\missions\\GoldenEye007Facility.dsc",
+    "base\\missions\\GoldenEye007Facility.mis",
+    "base\\missions\\GoldenEye007Grid.dsc",
+    "base\\missions\\GoldenEye007Grid.mis",
+    "base\\missions\\GoldenEye007Library.dsc",
+    "base\\missions\\GoldenEye007Library.mis",
+    "base\\missions\\GoldenEye007Stack.dsc",
+    "base\\missions\\GoldenEye007Stack.mis",
+    "base\\missions\\GoldenEye007Temple.dsc",
+    "base\\missions\\GoldenEye007Temple.mis"
+   ]
+  }
+ ]
 }

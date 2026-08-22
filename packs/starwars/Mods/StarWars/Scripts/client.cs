@@ -451,7 +451,7 @@ function remoteMODInfo(%server, %modString)
       // show it on the loading gui
       if($ServerModInfo != "")
       {
-         Control::setValue(ModTextString, "<jc><f1>NOTICE: This server has been modified\n<f0>" @ %modString);
+         Control::setValue(ModTextString, "<jc><f1>NOTICE: This server has been modified\n<f0>" @ %modString @ "\nSpoonbot v" @ $SPOONBOT::Version @ "\n<f2>http://www.playspoon.com");
       }
    }
 }
@@ -486,6 +486,8 @@ function remoteMissionChangeNotify(%serverManagerId, %nextMission)
 {
    if(%serverManagerId == 2048)
    {
+      BotHUD::Reset();	//Werewolf
+      BotHUD::Remove();
       cls();
       echo("Server mission complete - changing to mission: ", %nextMission);
       echo("Flushing Texture Cache");
@@ -497,26 +499,26 @@ function remoteMissionChangeNotify(%serverManagerId, %nextMission)
 function dataGotBlock(%blockName, %pctDone)
 {
    if(%pctDone < 0.1)
-      %text = "Loading StarWars Mod...";
+      %text = "Initializing Personal Digital Assistant...";
    else if(%pctDone < 0.2)
-      %text = "Loading Maps...";
+      %text = "Establishing uplink with satellite network...";
    else if(%pctDone < 0.3)
-      %text = "Loading Scripts...";
+      %text = "Downloading navigational and topographical data...";
    else if(%pctDone < 0.4)
-      %text = "Loading Models...";
+      %text = "Charging armor energy cell...";
    else if(%pctDone < 0.5)
-      %text = "Loading Skins...";
+      %text = "Pingback satellite uplink check...";
    else if(%pctDone < 0.6)
-      %text = "Loading Sounds...";
+      %text = "Beginning primary weapons system check...";
    else if(%pctDone < 0.7)
-      %text = "Authorizing Files...";
+      %text = "Beginning secondary weapons system check...";
    else if(%pctDone < 0.8)
-      %text = "Files Verification... OK";
+      %text = "Downloading tactical information from tribal database...";
    else
-      %text = "Completed!";
+      %text = "Starting armor power-up sequence...";
 
-   //Control::setText(ProgressText, "Loading " @ %blockName @ " data...");
-   Control::setValue(ProgressText, "<jc><f1>" @ %text);
+   Control::setText(ProgressText, "<jc><f1>Loading " @ %blockName @ " data...");
+   //Control::setValue(ProgressText, "<jc><f1>" @ %text);
    Control::setValue(ProgressSlider, %pctDone * 0.75);
 }
 
@@ -530,7 +532,7 @@ function dataFinished()
 		rbSetPlayMode (CD, 0);
 		rbStop (CD);
 	}
-   Control::setValue(ProgressText, "<jc><f0>StarWars Loaded Get Ready To Play");
+   Control::setValue(ProgressText, "<jc><f0>Get ready to rock n' roll!");
    Control::setValue(ProgressSlider, 0.9);
 
    $dataFinished = true;
@@ -621,6 +623,7 @@ function onConnection(%message)
 			renderCanvas(MainWindow);
 		}
 
+		BotHUD::Reset();  //Werewolf
    }
    else if(%message == "Rejected")
    {

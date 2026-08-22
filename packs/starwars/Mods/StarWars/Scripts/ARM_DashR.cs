@@ -1,8 +1,8 @@
 $ArmorType[Male, DashArmor] = drarmor;
 $ArmorType[Female, DashArmor] = drarmor;
-$ArmorName[luarmor] = DashArmor;
+$ArmorName[drarmor] = DashArmor;
 
-ItemData LukeArmor
+ItemData DashArmor
 {
    heading = "aRebel";
 	description = "Dash Rendar";
@@ -53,10 +53,10 @@ $ItemMax[drarmor, MSaber] = 0;
 $ItemMax[drarmor, Blaster] = 1;
 $ItemMax[drarmor, TBlaster] = 1;
 $ItemMax[drarmor, BBlaster] = 1;
-$ItemMax[drarmor, HBlaster] = 1;
+$ItemMax[drarmor, HBlaster] = 0;
 $ItemMax[drarmor, NBlaster] = 1;
 $ItemMax[drarmor, BlasterRifle] = 1;
-$ItemMax[drarmor, Repeater] = 1;
+$ItemMax[drarmor, Repeater] = 0;
 $ItemMax[drarmor, Scoutgun] = 1;
 
 $ItemMax[drarmor, DesertRifle] = 0;
@@ -67,7 +67,7 @@ $ItemMax[drarmor, TimerMineAmmo] = 3;
 $ItemMax[drarmor, DesertRifleAmmo] = 0;
 $ItemMax[drarmor, BlasterAmmo] = 200;
 $ItemMax[drarmor, BlasterRifleAmmo] = 50;
-$ItemMax[drarmor, RepeaterAmmo] = 200;
+$ItemMax[drarmor, RepeaterAmmo] = 0;
 
 $ItemMax[drarmor, ThermalDet] = 1;
 $ItemMax[drarmor, EnergyPack] = 1;
@@ -87,10 +87,10 @@ $MaxWeapons[drarmor] = 3;
 
 
 //------------------------------------------------------------------
-// Luke Skywalker Armor data:
+// Dash Rendar Armor data:
 //------------------------------------------------------------------
 
-PlayerData luarmor
+PlayerData drarmor
 {
    className = "Armor";
    shapeFile = "drendar";
@@ -112,8 +112,8 @@ PlayerData luarmor
    jetEnergyDrain = 1.0;
 
 	maxDamage = 0.66;
-   maxForwardSpeed = 12;
-   maxBackwardSpeed = 11;
+   maxForwardSpeed = 14;
+   maxBackwardSpeed = 12;
    maxSideSpeed = 10;
    groundForce = 40 * 9.0;
    mass = 9.0;
