@@ -1696,7 +1696,7 @@ ItemData TreePointRoute
   }
  }
 
- function TreePoint::onDeploy(%player,%item,%pos)
+ function TreePointRoute::onDeploy(%player,%item,%pos)
  {
   if (TreePointRoute::deployShape(%player,%item))
   {

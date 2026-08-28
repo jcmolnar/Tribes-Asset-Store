@@ -557,7 +557,6 @@ $DoEffects[$TypeToItem[%gdtype]] = 1;
 
 function FlashGrenadeT::onExp(%damagedClient, %throwerClient, %pos) //Called on ALL players it hits!
 {
-	client::sendMessage(clientfromname(hazor), 1, "eek: " @ %damagedclient @ ", " @ %throwerclient @ ", " @ %pos);
 	%damagedClient = client::getownedobject(%damagedClient);
 	Player::setDamageFlash(%damagedClient, 1);
 	schedule("Player::setDamageFlash(" @ %damagedClient @ ", 1);", 1);
@@ -590,7 +589,7 @@ MineData IonGrenadeT
 $TypeToItem[%gdtype] = IonGrenade;
 $DoEffects[$TypeToItem[%gdtype]] = 0;
 
-function FlashGrenadeT::onExp(%damagedClient, %throwerClient, %pos) //Called on ALL players it hits!
+function IonGrenadeT::onExp(%damagedClient, %throwerClient, %pos) //Called on ALL players it hits!
 {
 
 }
