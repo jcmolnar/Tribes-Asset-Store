@@ -1,0 +1,10 @@
+$BestLapTimeDaytona = "25.5679999999999";
+$BestLapTimeExtremities = "93.3119999999999";
+$BestLapTimeJumpers_Wheel = "6.43199999999999";
+$BestLapTimeNameDaytona = "geno's mom";
+$BestLapTimeNameExtremities = "geno's mom";
+$BestLapTimeNameJumpers_Wheel = "assasin";
+$BestLapTimeNameSkiWay = "hrdsyh";
+$BestLapTimeNameThe_race = "assasin";
+$BestLapTimeNameWipeout!(VehicleRacing) = "Jedi";
+$BestLapTimeWipeout!(VehicleRacing) = "31.1999999999999";

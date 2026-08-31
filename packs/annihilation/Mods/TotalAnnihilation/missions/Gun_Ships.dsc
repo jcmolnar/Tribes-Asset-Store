@@ -1,0 +1,3 @@
+$MDESC::Text = "<s3><f1>Mission Type: <f0> Capture the Flag\n<f1>System: <f0> Sector 4\n<f1>Situation: <f0> Space Worp\n<f1>Year: <f0> 2563AD\nf1>Edition: <f0> Gold\n<f1># of Teams: <f0> 2\n\n<f1>Briefing:<f0> Both the <vServer::teamName0> and <vServer::teamName1> tribes battle each other at close range with their massive Gun Ships. Each ship carries an important piece of cargo, the flag. Watch out!!! These ships are traveling near light speed and so are you. They are also flying near a black hole that acts like standard gravity and will pull you down. This mission should only be played by experienced Tribes players only, extremely tuff!!!!" @
+         "\n\n<f1>Mission designed by:<f0> EEPROM (Mappers Extreme)";
+$MDESC::Type = "CTF Mixed";

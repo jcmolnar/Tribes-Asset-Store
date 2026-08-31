@@ -1,0 +1,1712 @@
+$ext = getWord(".zip .vol", version() < 1.4);	// Backwards compatibility, FTW!
+exec("JetToPos");
+$Arena::Kill = True;
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	ownsObjects = "True";
+	instant SimGroup "Volumes" {
+		ownsObjects = "True";
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "World" {
+			fileName = "marsWorld.vol";
+		};
+		instant SimVolume "WorldTerrain" {
+			fileName = "marsTerrain.vol";
+		};
+		instant SimVolume "marsDML" {
+			fileName = "marsDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "TedFile" {
+			fileName = "Rollercoaster.ted";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "Rollercoaster.vol";
+		};
+	};
+	instant SimGroup "World" {
+		ownsObjects = "True";
+		instant SimPalette "Palette" {
+			fileName = "mars.day.ppl";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-128";
+			y = "-64";
+			w = "256";
+			h = "128";
+		};
+	};
+	instant SimGroup "Landscape" {
+		ownsObjects = "True";
+		instant Sky "Sky" {
+			dmlName = "marsdaycloud.dml";
+			skyColor = "0 0 0";
+			hazeColor = "0 0 0";
+			featurePosition = "0";
+			size = "400";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "2";
+			textures[3] = "3";
+			textures[4] = "4";
+			textures[5] = "5";
+			textures[6] = "6";
+			textures[7] = "7";
+			textures[8] = "8";
+			textures[9] = "9";
+			textures[10] = "10";
+			textures[11] = "11";
+			textures[12] = "12";
+			textures[13] = "13";
+			textures[14] = "14";
+			textures[15] = "15";
+		};
+		instant Planet "Sun" {
+			fileName = "";
+			azimuth = "-69";
+			incidence = "38";
+			castShadows = "True";
+			useLensFlare = "False";
+			intensity = "0.699972 0.699972 0.699972";
+			ambient = "0.299972 0.299972 0.399972";
+			size = "50";
+			distance = "485";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "Rollercoaster.dtf";
+			visibleDistance = "475";
+			hazeDistance = "350";
+			hazeVerticalMin = "0";
+			hazeVerticalMax = "0";
+			perspectiveDistance = "100";
+			screenSize = "46";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 300";
+			rotation = "0 0 0";
+		};
+	};
+	instant SimGroup "Lights" {
+		ownsObjects = "True";
+	};
+	instant SimGroup "Teams" {
+		ownsObjects = "True";
+		instant TeamGroup "Team0" {
+			ownsObjects = "True";
+			instant SimGroup "DropPoints" {
+				ownsObjects = "True";
+				instant SimGroup "Start" {
+					ownsObjects = "True";
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "124 48 96";
+						rotation = "0 -0 1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "112 48 96";
+						rotation = "0 -0 1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "112 -48 96";
+						rotation = "0 -0 1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "80 -48 96";
+						rotation = "0 -0 1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "80 -16 96";
+						rotation = "0 -0 1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "80 16 96";
+						rotation = "0 -0 1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "80 48 96";
+						rotation = "0 -0 1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "124 -48 96";
+						rotation = "0 -0 1.57079";
+					};
+				};
+				instant SimGroup "random" {
+					ownsObjects = "True";
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "112 16 108";
+						rotation = "0 -0 0.785397";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "112 16 96";
+						rotation = "0 -0 0.785397";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "112 -16 96";
+						rotation = "0 -0 2.35619";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "112 -16 108";
+						rotation = "0 -0 2.35619";
+					};
+				};
+			};
+			instant SimGroup "base" {
+				ownsObjects = "True";
+				instant InteriorShape "newdam1" {
+					fileName = "newdam.dis";
+					isContainer = "1";
+					position = "138 0 48";
+					rotation = "0 0 1.57079";
+					lightParams = "2 1.000000 1 1.000000 1 ";
+				};
+				instant InteriorShape "w64corner1" {
+					fileName = "W64corner.dis";
+					isContainer = "1";
+					position = "144 64 96";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64corner1" {
+					fileName = "W64corner.dis";
+					isContainer = "1";
+					position = "128 -80 96";
+					rotation = "0 -0 -1.57079";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gate1" {
+					fileName = "W64gate.dis";
+					isContainer = "1";
+					position = "128 -28 96";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gate1" {
+					fileName = "W64gate.dis";
+					isContainer = "1";
+					position = "100 0 96";
+					rotation = "0 -0 -1.57079";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gate1" {
+					fileName = "W64gate.dis";
+					isContainer = "1";
+					position = "128 28 96";
+					rotation = "0 -0 3.14159";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gatedoor1" {
+					fileName = "W64gatedoor.dis";
+					isContainer = "1";
+					position = "112 16 108";
+					rotation = "-1.57079 0 0.785397";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gatedoor1" {
+					fileName = "W64gatedoor.dis";
+					isContainer = "1";
+					position = "112 -16 108";
+					rotation = "-1.57079 0 2.35619";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64corner1" {
+					fileName = "W64corner.dis";
+					isContainer = "1";
+					position = "96 16 96";
+					rotation = "0 0 -1.57079";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64corner1" {
+					fileName = "W64corner.dis";
+					isContainer = "1";
+					position = "112 -32 96";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+			};
+			instant SimGroup "items" {
+				ownsObjects = "True";
+				instant Item "Flag1" {
+					dataBlock = "flag";
+					name = "Blood Eagle's flag";
+					position = "126 0 96.0626";
+					rotation = "0 -0 -0.785398";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					rotates = "False";
+					collideable = "False";
+					count = "1";
+					objectiveLine = "12";
+					Caps7 = "0";
+					Caps6 = "0";
+					Caps5 = "0";
+					Caps4 = "0";
+					Caps3 = "0";
+					Caps2 = "0";
+					Caps1 = "0";
+					Caps0 = "0";
+					enemyCaps = "0";
+					changeTeamCount = "0";
+					holdingTeam = "-1.000000";
+					carrier = "-1.000000";
+					pickupSequence = "0";
+					atHome = "true";
+					originalPosition = "126 0 96.0391";
+					scoreValue = "1";
+				};
+				instant StaticShape "Stand1" {
+					dataBlock = "FlagStand";
+					name = "Blood Eagle's flag stand";
+					position = "126 0 95.8876";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+			};
+		};
+		instant TeamGroup "team1" {
+			ownsObjects = "True";
+			instant SimGroup "DropPoints" {
+				ownsObjects = "True";
+				instant SimGroup "Start" {
+					ownsObjects = "True";
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-124 48 96";
+						rotation = "0 -0 -1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-124 -48 96";
+						rotation = "0 -0 -1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-80 48 96";
+						rotation = "0 -0 -1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-80 16 96";
+						rotation = "0 -0 -1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-80 -16 96";
+						rotation = "0 -0 -1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-80 -48 96";
+						rotation = "0 -0 -1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-112 -48 96";
+						rotation = "0 -0 -1.57079";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-112 48 96";
+						rotation = "0 -0 -1.57079";
+					};
+				};
+				instant SimGroup "random" {
+					ownsObjects = "True";
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-112 16 108";
+						rotation = "0 -0 -0.785397";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-112 -16 108";
+						rotation = "0 -0 -2.35619";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-112 -16 96";
+						rotation = "0 -0 -2.35619";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-112 16 96";
+						rotation = "0 -0 -0.785397";
+					};
+				};
+			};
+			instant SimGroup "base" {
+				ownsObjects = "True";
+				instant InteriorShape "newdam1" {
+					fileName = "newdam.dis";
+					isContainer = "1";
+					position = "-138 0 48";
+					rotation = "0 -0 -1.57079";
+					lightParams = "2 1.000000 1 1.000000 1 ";
+				};
+				instant InteriorShape "w64corner1" {
+					fileName = "W64corner.dis";
+					isContainer = "1";
+					position = "-144 -64 96";
+					rotation = "0 -0 -3.14159";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64corner1" {
+					fileName = "W64corner.dis";
+					isContainer = "1";
+					position = "-128 80 96";
+					rotation = "0 -0 1.57079";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gate1" {
+					fileName = "W64gate.dis";
+					isContainer = "1";
+					position = "-128 28 96";
+					rotation = "0 -0 -3.14159";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gate1" {
+					fileName = "W64gate.dis";
+					isContainer = "1";
+					position = "-128 -28 96";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gate1" {
+					fileName = "W64gate.dis";
+					isContainer = "1";
+					position = "-100 0 96";
+					rotation = "0 -0 1.57079";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gatedoor1" {
+					fileName = "W64gatedoor.dis";
+					isContainer = "1";
+					position = "-112 -16 108";
+					rotation = "-1.57079 0 -2.35619";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64gatedoor1" {
+					fileName = "W64gatedoor.dis";
+					isContainer = "1";
+					position = "-112 16 108";
+					rotation = "-1.57079 0 -0.785397";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64corner1" {
+					fileName = "W64corner.dis";
+					isContainer = "1";
+					position = "-96 -16 96";
+					rotation = "0 -0 1.57079";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "w64corner1" {
+					fileName = "W64corner.dis";
+					isContainer = "1";
+					position = "-112 32 96";
+					rotation = "0 -0 3.14159";
+					lightParams = "0 ";
+				};
+			};
+			instant SimGroup "items" {
+				ownsObjects = "True";
+				instant StaticShape "Stand1" {
+					dataBlock = "FlagStand";
+					name = "Diamond Sword's flag stamd";
+					position = "-126 0 95.8868";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant Item "Flag1" {
+					dataBlock = "flag";
+					name = "Diamond Sword's flag";
+					position = "-126.001 0 96.017";
+					rotation = "0 -0 -0.785398";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					rotates = "False";
+					collideable = "False";
+					count = "1";
+					objectiveLine = "13";
+					Caps7 = "0";
+					Caps6 = "0";
+					Caps5 = "0";
+					Caps4 = "0";
+					Caps3 = "0";
+					Caps2 = "0";
+					Caps1 = "0";
+					Caps0 = "0";
+					enemyCaps = "0";
+					changeTeamCount = "0";
+					holdingTeam = "-1.000000";
+					carrier = "-1.000000";
+					pickupSequence = "0";
+					atHome = "true";
+					originalPosition = "-126 0 96.0339";
+					scoreValue = "1";
+				};
+			};
+		};
+		instant Marker "Signature" {
+			dataBlock = "MapMarker";
+			name = "Labyrinth by [df]Perrinoia";
+			position = "0 0 0";
+			rotation = "0 0 0";
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		ownsObjects = "True";
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "0 0 200";
+			rotation = "-1.57078 0 0";
+		};
+	};
+	instant SimGroup "Walls" {
+		ownsObjects = "True";
+		instant InteriorShape "-32 0 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-31.9918 -15.9997 96";
+			rotation = "0 -0 -1.57029";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-32 32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-16 31.9976 96";
+			rotation = "0 -0 -0.000147073";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "0 32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-15.9997 32.0096 96";
+			rotation = "0 -0 3.14098";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "32 32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "47.9997 32.0134 96";
+			rotation = "0 -0 0.000842924";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "32 0 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "16 -0.0040576 96";
+			rotation = "0 -0 -3.14133";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "32 -32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "47.9997 -31.9978 96";
+			rotation = "0 -0 0.000117073";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "0 -32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "0.00516368 -47.9997 96";
+			rotation = "0 -0 -1.57047";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-32 -32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-47.9997 -31.9938 96";
+			rotation = "0 -0 3.1412";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-64 -32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-63.9924 -16 96";
+			rotation = "0 -0 1.57032";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-64 0 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-79.9997 -0.00590493 96";
+			rotation = "0 -0 -3.14122";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-64 32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-64.0136 16 96";
+			rotation = "0 -0 -1.57165";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-64 64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-64.0013 79.9997 96";
+			rotation = "0 -0 1.57088";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-32 64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-31.9878 48 96";
+			rotation = "0 -0 -1.57004";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "0 64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-0.00277874 79.9997 96";
+			rotation = "0 -0 1.57096";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "32 64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "32.0001 79.9997 96";
+			rotation = "0 -0 1.57077";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "64 64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "63.9954 48 96";
+			rotation = "0 -0 -1.57107";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "64 32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "63.9934 47.9997 96";
+			rotation = "0 -0 1.57119";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "64 0 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "64.0058 -15.9997 96";
+			rotation = "0 -0 -1.57042";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "64 -32 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "64.0081 -47.9997 96";
+			rotation = "0 -0 -1.57028";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "64 -64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "64.0041 -48 96";
+			rotation = "0 -0 1.57052";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "32 -64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "31.9996 -79.9997 96";
+			rotation = "0 -0 -1.57081";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "0 -64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-15.9997 -64.0005 96";
+			rotation = "0 -0 -3.14155";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-32 -64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-16 -63.9948 96";
+			rotation = "0 -0 0.000312924";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-64 -64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-64.0147 -79.9997 96";
+			rotation = "0 -0 -1.57172";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-96 -64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-96.0021 -48 96";
+			rotation = "0 -0 1.57093";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "-96 64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-95.9956 48 96";
+			rotation = "0 -0 -1.57053";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "96 64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "111.998 63.9977 96";
+			rotation = "0 -0 -0.000142924";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "0 0 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "-15.9997 -0.00389739 96";
+			rotation = "0 -0 -3.14134";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "96 -64 96" {
+			fileName = "W64corner.dis";
+			isContainer = "1";
+			position = "96 -80 96";
+			rotation = "0 -0 -1.57079";
+			lightParams = "0 ";
+		};
+	};
+	instant SimGroup "Arena" {
+		ownsObjects = "True";
+		instant InteriorShape "base61" {
+			fileName = "base6.dis";
+			isContainer = "1";
+			position = "0 0 32";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+			locked = "1";
+		};
+		instant InteriorShape "newdam1" {
+			fileName = "newdam.dis";
+			isContainer = "1";
+			position = "0 -74 50";
+			rotation = "0 0 0";
+			lightParams = "2 1.000000 1 1.000000 1 ";
+		};
+		instant InteriorShape "newdam1" {
+			fileName = "newdam.dis";
+			isContainer = "1";
+			position = "0 74 50";
+			rotation = "0 0 3.14159";
+			lightParams = "2 1.000000 1 1.000000 1 ";
+		};
+		instant InteriorShape "base61" {
+			fileName = "base6.dis";
+			isContainer = "1";
+			position = "0 0 182";
+			rotation = "0 3.14159 0";
+			lightParams = "0 ";
+			locked = "1";
+		};
+	};
+};
+//--- export object end ---//
+$teamScoreLimit = 10;
+exec(getWord("server/game/ctf objectives", version() < 1.4));	// Backwards compatibility, FTW!
+$Game::missionType = "CTF";
+$cdTrack = 8;
+$cdPlayMode = 1;
+
+function Game::playerSpawn(%clientId, %respawn)
+{
+	if(!$ghosting)
+		return false;
+	%clientId.AdminobserverMode = "";
+	Client::clearItemShopping(%clientId);
+	%spawnMarker = Game::pickPlayerSpawn(%clientId, %respawn);
+	
+	if(%clientId.inArena) // New Arena code -DaJ4ck3L
+	{
+		if($ArenaTD::Active)
+			if(%clientId.isArenaTDDead) return;
+		if($ArenaTD::Active && !%clientId.inArenaTD) return;
+		if($Arena::Winners && %clientId.inArenaWin == "") return;
+		if($Arena::Mapchange) return; // dont want anyone spawning before arena loads O.O
+		
+		//if(!$Arena::Terrain)
+			%spawnMarker = Arena::pickRandomSpawn(%clientId);
+			
+		//echo(%spawnMarker@" <<<<< Game::playerSpawn(%clientId, %respawn); <<<< ArenaTerrainSpawn <<< GAME");
+	}
+	
+	if(%spawnMarker)
+	{
+		%clientId.guiLock = "";
+		%clientId.dead = "";
+		//%adterrain = Legendz::pickWaypoint();
+		if($ArenaTD::Active && %clientId.inArenaTD)
+		{
+			if(%clientId.inArenaTDOne)
+			{
+				if($Arena::Terrain)
+				{
+					%spawnPosx = GetOffsetRot(GameBase::getPosition(%spawnMarker),"0 0 0",$ArenaTD::TerrainPos);
+					//%spawnPosx = GameBase::getPosition(%spawnMarker);
+					%spawnObjx = Terrain::CheckPos(%spawnPosx);
+					%spawnObj = Vector::add(%spawnObjx,"0 0 3");
+					%obj = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+					AddToSet("MissionCleanup",%obj);
+					GameBase::setPosition(%obj,%spawnObj);
+					GameBase::setRotation(%obj,$Pi@" 0 0");
+					%spawnPosz = Terrain::CheckPos(%spawnPosx);
+					%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+					//echo(%spawnPos@" <<<<< td 1 SPAWN <<<< ArenaTerrainSpawn");
+					%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+					Schedule("deleteObject("@ %obj @");",5,%obj);
+				}
+				else
+				{
+					%spawnPos = GameBase::getPosition(%spawnMarker);
+					%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+				}
+				//echo(">>> "@%spawnPos@" <<< Arena TD 1 spawnRot >>> "@%spawnRot@" <<< Arena TD 1 spawnRot >>> Team One <<< GAME");
+			}
+			else if(%clientId.inArenaTDTwo)
+			{
+	
+				if($Arena::Terrain)
+				{
+					%spawnPosx = GetOffsetRot(GameBase::getPosition(%spawnMarker),"0 0 0",$ArenaTD::TerrainPos);
+					//%spawnPosx = GameBase::getPosition(%spawnMarker);
+					%spawnObjx = Terrain::CheckPos(%spawnPosx);
+					%spawnObj = Vector::add(%spawnObjx,"0 0 3");
+					%obj = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+					AddToSet("MissionCleanup",%obj);
+					GameBase::setPosition(%obj,%spawnObj);
+					GameBase::setRotation(%obj,$Pi@" 0 0");
+					%spawnPosz = Terrain::CheckPos(%spawnPosx);
+					%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+					//echo(%spawnPos@" <<<<< td 2 SPAWN <<<< ArenaTerrainSpawn");
+					%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+					Schedule("deleteObject("@ %obj @");",5,%obj);
+				}
+				else
+				{
+					%spawnPos = GameBase::getPosition(%spawnMarker);
+					%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+				}
+				//echo(">>> "@%spawnPos@" <<< Arena TD 2 spawnRot >>> "@%spawnRot@" <<< Arena TD 2 spawnRot >>> Team Two <<< GAME");
+			}
+		}
+		else if(%clientId.inArena)
+		{
+			if($Arena::Terrain)
+			{
+				%spawnPosx = GameBase::getPosition(%spawnMarker);
+				%spawnObjx = Terrain::CheckPos(%spawnPosx);
+				%spawnObj = Vector::add(%spawnObjx,"0 0 3");
+				%objx = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+				AddToSet("MissionCleanup",%objx);
+				GameBase::setPosition(%objx,%spawnObj);
+				GameBase::setRotation(%objx,$Pi@" 0 0");
+				%spawnPosz = Terrain::CheckPos(%spawnPosx);
+				%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+				//echo(%spawnPos@" <<<<< arena SPAWN <<<< ArenaTerrainSpawn");
+				%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+				Schedule("deleteObject("@ %objx @");",5,%objx);
+			}
+			else
+			{
+				%spawnPos = GameBase::getPosition(%spawnMarker);
+				%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+			}
+			//echo(">>> "@%spawnPos@" <<< Arena spawnRot >>> "@%spawnRot@" <<< Arena spawnRot >>> Team Two <<< GAME");
+		}
+		else if(%clientId.inDuel) // New Arena code -DaJ4ck3L
+		{
+			if($Dueling[%clientId] == false) return;
+			if($Duel::Mapchange) return; // dont want anyone spawning before arena loads O.O
+		
+			//%duelnum = Duel::getnum();
+			//if(%duelnum <= 2)
+			//{
+				if(!$Duela)
+				{					
+					%pos = "0 10 0";
+					%spawnPosx = GetOffsetRot(%pos,"0 0 0",$Duel::Spawn);
+					%spawnObj = Vector::add(%spawnPosx,"0 0 3");
+					%obj = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+					AddToSet("MissionCleanup",%obj);
+					GameBase::setPosition(%obj,%spawnObj);
+					GameBase::setRotation(%obj,$Pi@" 0 0");
+					%spawnPosz = Terrain::CheckPos(%spawnPosx);
+					%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+					Schedule("deleteObject("@ %objx @");",11,%objx);
+					%spawnRot = "0 -0 -3";
+					$Duela = true;
+				}
+				else
+				{
+					%pos = "0 -10 0";
+					%spawnPosx = GetOffsetRot(%pos,"0 0 0",$Duel::Spawn);
+					%spawnObj = Vector::add(%spawnPosx,"0 0 3");
+					%obj = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+					AddToSet("MissionCleanup",%obj);
+					GameBase::setPosition(%obj,%spawnObj);
+					GameBase::setRotation(%obj,$Pi@" 0 0");
+					%spawnPosz = Terrain::CheckPos(%spawnPosx);
+					%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+					Schedule("deleteObject("@ %objx @");",11,%objx);
+					%spawnRot = "0 -0 -0";
+					$Duela = false;
+				}
+			//}
+			
+			//%spawnMarker = Duel::pickRandomSpawn();
+		}
+		else if(%spawnMarker == -1)
+		{
+			%spawnPos = "0 0 300";
+			%spawnRot = "0 0 0";
+		}
+		else
+		{
+			%spawnPos = GameBase::getPosition(%spawnMarker);
+			// make sure the player doesnt end up with goofy rotation and screw up deploying items.. -plasmatic
+			%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+		}
+		//plasmatic 3.0
+		if($build)
+		{
+			$DefaultArmor[Male] = armormBuilder;
+			$DefaultArmor[Female] = armorfBuilder;	
+		}
+		else if(%clientId.inArena) // New Arena code -DaJ4ck3L
+		{
+			if($LegendzArena::SpawnType == "AnniSpawn") //New Arena toggle -DaJ4ck3L
+			{
+				$DefaultArmor[Male] = armormWarrior;
+				$DefaultArmor[Female] = armorfWarrior;	
+			}
+			if($LegendzArena::SpawnType == "TitanSpawn")
+			{
+				$DefaultArmor[Male] = armorTitan;
+				$DefaultArmor[Female] = armorTitan;
+			}
+			if($LegendzArena::SpawnType == "EliteSpawn")
+			{
+				$DefaultArmor[Male] = armormMercenary;
+				$DefaultArmor[Female] = armorfMercenary;
+			}
+			if($LegendzArena::SpawnType == "BaseSpawn")
+			{
+				$DefaultArmor[Male] = armormLightArmor;
+				$DefaultArmor[Female] = armorfLightArmor;
+			}
+		}
+		else if(%clientId.inDuel) // New Duel code -DaJ4ck3L
+		{
+			if(%clientId.DuelArmor == "AnniSpawn") //New Duel toggle, stores by clientId -DaJ4ck3L
+			{
+				$DefaultArmor[Male] = armormWarrior;
+				$DefaultArmor[Female] = armorfWarrior;	
+			}
+			if(%clientId.DuelArmor == "EliteSpawn")
+			{
+				$DefaultArmor[Male] = armormMercenary;
+				$DefaultArmor[Female] = armorfMercenary;
+			}
+			if(%clientId.DuelArmor == "BaseSpawn")
+			{
+				$DefaultArmor[Male] = armormLightArmor;
+				$DefaultArmor[Female] = armorfLightArmor;
+			}
+			if(%clientId.DuelArmor == "BuilderSpawn")
+			{
+				$DefaultArmor[Male] = armormBuilder;
+				$DefaultArmor[Female] = armorfBuilder;
+			}
+			if(%clientId.DuelArmor == "TitanSpawn")
+			{
+				$DefaultArmor[Male] = armorTitan;
+				$DefaultArmor[Female] = armorTitan;
+			}
+		}
+		else if($LegendzLT::Active == true) // New Arena code -DaJ4ck3L
+		{
+			if($LegendzLT::SpawnType == "AnniSpawn") //New Arena toggle -DaJ4ck3L
+			{
+				$DefaultArmor[Male] = armormWarrior;
+				$DefaultArmor[Female] = armorfWarrior;	
+			}
+			if($LegendzLT::SpawnType == "EliteSpawn")
+			{
+				$DefaultArmor[Male] = armormMercenary;
+				$DefaultArmor[Female] = armorfMercenary;
+			}
+			if($LegendzLT::SpawnType == "BaseSpawn")
+			{
+				$DefaultArmor[Male] = armormLightArmor;
+				$DefaultArmor[Female] = armorfLightArmor;
+			}
+		}
+		else if($UberWear::Active == true)
+		{
+			$DefaultArmor[Male] = armormLightArmor;
+			$DefaultArmor[Female] = armorfLightArmor;
+		}
+		else
+		{
+			$DefaultArmor[Male] = armormWarrior;
+			$DefaultArmor[Female] = armorfWarrior;			
+		}
+		%armor = $DefaultArmor[Client::getGender(%clientId)];
+
+		%pl = spawnPlayer(%armor, %spawnPos, %spawnRot);
+		Anni::Echo("SPAWN: "@ Client::getName(%clientID)@ " cl:" @ %clientId @ " pl:" @ %pl @ " marker:" @ %spawnMarker @ " armor:" @ %armor);
+		%pl.cloakable = true;	//for base cloaker -plasmatic
+		%clientId.AdminobserverMode = "";
+		%clientId.observerMode = "";
+		%pl.teled = "";	// for teleporter 2.2 model -plasmatic
+		%clientId.ConnectBeam = "";	//for zappy invs -plasmatic
+		%clientId.InvTargetable = "";	//zap!
+		%ClientId.InvConnect = "";	//Zap!
+		
+		if(%pl != -1)
+		{
+			//Client::clearItemShopping(%clientId);
+			GameBase::setTeam(%pl, Client::getTeam(%clientId));
+			Client::setOwnedObject(%clientId, %pl);
+			//echo("start"); //debug for the damn player::useitem crap -DaJ4ck3L
+			Game::playerSpawned(%pl, %clientId, %armor, %respawn);
+			%pl.cloakable = true;
+			$jailed[%pl] = "";
+			$released[%pl] = "";
+			if($matchStarted)
+			{
+				Client::setControlObject(%clientId, %pl);
+				%clientId.droid=false;
+			}
+			else
+			{
+				%clientId.observerMode = "pregame";
+				Client::setControlObject(%clientId, Client::getObserverCamera(%clientId));
+				Observer::setOrbitObject(%clientId, %pl, 3, 3, 3);
+			}
+//==================  respawn Invulnerable -plasmatic
+			if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+				$respawnInvulnerableTime = 0;
+			if(%respawn)	
+			{
+				if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+					$respawnInvulnerableTime = 0;
+				if($siegeFlag)	
+					Siege::waypointClient(%clientId);
+			}
+			if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+           		%damage = %armor.maxDamage - 0.001;
+            GameBase::setEnergy(%pl, %armor.maxEnergy);	///2);
+			if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+			{
+            	GameBase::setAutoRepairRate(%pl, %damage / $respawnInvulnerableTime);
+            	%pl.invulnerable = true;
+			}
+            %pl.cloakable = true;	//fer base cloaker -plasmatic
+            $jailed[%pl] = "";	//just to be certain for jail..
+            $released[%pl] = "";
+      		if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+            	incInvulnerable(%pl, 0);
+		    %weapon = Player::getMountedItem(%pl,$WeaponSlot);
+		    if(%weapon != -1) //lol, I would put money on it this is what kept unmounting the item on spawn -DaJ4ck3L 
+			{
+			      %pl.lastWeapon = %weapon;
+			      Player::unMountItem(%pl,$WeaponSlot); //w.e might be here for a reason, my quick fix wont fuck with this -DaJ4ck3L
+			}
+       		if(!%respawn)
+			{
+			// initial drop
+		if($siegeFlag)
+		{
+			schedule("Client::sendMessage("@%clientId@", 0, \"Welcome to Siege! Capture or hold the switch to complete the mission.\");",5, %clientId);
+			schedule("Siege::InitialwaypointClient("@%clientId@");",5,%clientId);
+		}
+		if(%clientId.SpecialMessage == true)
+			CustomMessage(%clientId);
+		ModSettingsInfo(%clientId, true);
+		//Anni::Echo("join team "@Client::getTeam(%clientId)@" old team = "@%clientId.lastteam);
+		if(%clientId.LastTeam != -1 && %clientId.LastTeam != Client::getTeam(%clientId))
+		{
+			if($annihilation::DisableTurretsOnTeamChange)
+				Turret::DisableClients(%clientId);	
+		}
+		
+		%clientId.LastTeam = Client::getTeam(%clientId);
+	}  
+			
+		}
+		return true;
+	}
+	else 
+	{
+		Client::sendMessage(%clientId,0,"Sorry No Respawn Positions Are Empty - Try again later ");
+		return false;
+	}
+}
+function incInvulnerable(%player, %time)
+{
+   if(%time > $respawnInvulnerableTime)
+   {
+	  if(!%player.inArenaTD)
+		%player.invulnerable = "";
+      GameBase::setAutoRepairRate(%player, 0);
+	%weapon = Player::getMountedItem(%player,$WeaponSlot);
+	   if(%player.lastWeapon != "" && %weapon == -1) {
+		   Player::useItem(%player,%player.lastWeapon);
+		   %player.lastWeapon = "";
+	    }
+   }
+   else
+   { 
+      schedule("incInvulnerable(" @ %player @ ", "@ %time + 0.5 @ ");", 0.5, %player);
+   }
+}
+
+
+function Game::playerSpawned(%pl, %clientId, %armor)
+{
+	// hard coded here -plasmatic
+	
+	schedule("Client::clearItemShopping("@%clientId@");",1, %clientId);
+	
+	if($Annihilation::UsePersonalSkin)
+		Client::setSkin(%clientId, $Client::info[%clientId, 0]);
+	else 
+		Client::setSkin(%clientId, $Server::teamSkin[Client::getTeam(%clientId)]);
+	
+	//%pl = Client::getOwnedObject(%clientId);
+	
+	if($build && !%clientId.inArena && !%clientId.inDuel)
+	{
+		Player::setItemCount(%clientId, iarmorBuilder, 1);	
+		Player::setItemCount(%clientId, Railgun, 1);
+		Player::setItemCount(%clientId, Grabbler, 1);
+		Player::setItemCount(%clientId, RocketLauncher, 1);
+		Player::setItemCount(%clientId, TargetingLaser, 1);
+		   
+		Player::setItemCount(%clientId, RailAmmo, 300);		   
+		Player::setItemCount(%clientId, RocketAmmo, 300);
+		Player::setItemCount(%clientId, EnergyPack, 1);
+
+		if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+		   Player::useItem(%pl,EnergyPack);	  ///FUCK -DaJ4ck3L
+		   
+		Legendz::useItem(%pl,Grabbler); //New function used to get that weapon out!! -DaJ4ck3L		
+	}
+	else if(%clientId.inArena) // New Arena code -DaJ4ck3L
+	{
+		if($LegendzArena::SpawnType == "AnniSpawn") //New Arena toggle -DaJ4ck3L
+		{
+			if($LegendzArena::WeaponOpt == "Normal")
+			{
+				Player::setItemCount(%clientId, iarmorWarrior, 1);	
+				Player::setItemCount(%clientId, DiscLauncher, 1);
+				Player::setItemCount(%clientId, PlasmaGun, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmo, 30);		   
+				Player::setItemCount(%clientId, PlasmaAmmo, 30);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 20);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 5);
+				Player::setItemCount(%clientId, Grenade, 8);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncher);
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "DiscOnly")
+			{
+				Player::setItemCount(%clientId, iarmorWarrior, 1);	
+				Player::setItemCount(%clientId, DiscLauncher, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmo, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 5);
+				Player::setItemCount(%clientId, Grenade, 8);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncher);
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "MaxAmmo")
+			{
+				Player::setItemCount(%clientId, iarmorWarrior, 1);	
+				Player::setItemCount(%clientId, DiscLauncher, 1);
+				Player::setItemCount(%clientId, PlasmaGun, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmo, 100);		   
+				Player::setItemCount(%clientId, PlasmaAmmo, 100);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 5);
+				Player::setItemCount(%clientId, Grenade, 8);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncher);
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			
+			//Player::mountItem(%clientId,BlowUpDoll,7);
+		}
+		if($LegendzArena::SpawnType == "TitanSpawn") //New Arena Titan -DaJ4ck3L
+		{
+			Player::setItemCount(%clientId, iarmorTitan, 1);	
+			Player::setItemCount(%clientId, RocketLauncher, 1);
+			Player::setItemCount(%clientId, ParticleBeamWeapon, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, RocketAmmo, 100);
+	   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 5);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			Player::setItemCount(%clientId, MineAmmo, 5);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncher);
+			if(%clientId.isLegendz)
+				MountWings(%clientId);
+		}
+		if($LegendzArena::SpawnType == "EliteSpawn")
+		{
+			if($LegendzArena::WeaponOpt == "Normal")
+			{
+				//Player::setItemCount(%clientId, iarmorMercenary, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherElite, 1);
+				Player::setItemCount(%clientId, PlasmaGunBase, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoElite, 15);		   
+				Player::setItemCount(%clientId, PlasmaAmmoBase, 40);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 6);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherElite);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "DiscOnly")
+			{
+				//Player::setItemCount(%clientId, iarmorMercenary, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherElite, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoElite, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 6);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherElite);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "MaxAmmo")
+			{
+				//Player::setItemCount(%clientId, iarmorMercenary, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherElite, 1);
+				Player::setItemCount(%clientId, PlasmaGunBase, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoElite, 100);		   
+				Player::setItemCount(%clientId, PlasmaAmmoBase, 100);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 6);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherElite);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+		}
+		if($LegendzArena::SpawnType == "BaseSpawn")
+		{
+			if($LegendzArena::WeaponOpt == "Normal")
+			{
+				//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherBase, 1);
+				Player::setItemCount(%clientId, PlasmaGunBase, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+				Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 5);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherBase);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "DiscOnly")
+			{
+				//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoBase, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 5);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherBase);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "MaxAmmo")
+			{
+				//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherBase, 1);
+				Player::setItemCount(%clientId, PlasmaGunBase, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoBase, 100);		   
+				Player::setItemCount(%clientId, PlasmaAmmoBase, 100);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 5);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherBase);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+		}
+		
+	}
+	else if(%clientId.inDuel) // New Duel code -DaJ4ck3L
+	{
+		if(%clientId.DuelArmor == "AnniSpawn") //New Arena toggle -DaJ4ck3L
+		{
+			Player::setItemCount(%clientId, iarmorWarrior, 1);	
+			Player::setItemCount(%clientId, DiscLauncher, 1);
+			Player::setItemCount(%clientId, PlasmaGun, 1);
+    	    Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmo, 30);		   
+			Player::setItemCount(%clientId, PlasmaAmmo, 30);
+			Player::setItemCount(%clientId, GrenadeAmmoBase, 20);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 5);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncher);
+		}
+		if(%clientId.DuelArmor == "EliteSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorMercenary, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, DiscLauncherElite, 1);
+			Player::setItemCount(%clientId, PlasmaGunBase, 1);
+    	    Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmoElite, 15);		   
+			Player::setItemCount(%clientId, PlasmaAmmoBase, 40);
+			Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 3);
+			Player::setItemCount(%clientId, Grenade, 6);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherElite);
+		}
+		if(%clientId.DuelArmor == "BaseSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, DiscLauncherBase, 1);
+			Player::setItemCount(%clientId, PlasmaGunBase, 1);
+    	    Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+			Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+			Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 3);
+			Player::setItemCount(%clientId, Grenade, 5);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherBase);
+		}
+		if(%clientId.DuelArmor == "BuilderSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, Railgun, 1);
+			Player::setItemCount(%clientId, RocketLauncher, 1);
+    	    Player::setItemCount(%clientId, Fixit, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, RailAmmo, 15);		   
+			Player::setItemCount(%clientId, RocketAmmo, 10);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			//Player::setItemCount(%clientId, Beacon, 1);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			//Player::setItemCount(%clientId, MineAmmo, 3);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherBase);
+		}
+		if(%clientId.DuelArmor == "TitanSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, ParticleBeamWeapon, 1);
+			Player::setItemCount(%clientId, RocketLauncher, 1);
+    	    Player::setItemCount(%clientId, PhaseDisrupter, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, RocketAmmo, 20);		   
+			Player::setItemCount(%clientId, PhaseAmmo, 30);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 5);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			//Player::setItemCount(%clientId, MineAmmo, 5);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,RocketLauncher);
+		}
+		
+	}
+	else if($LegendzLT::Active == true) //New LT code -DaJ4ck3L
+	{	
+		if($LegendzLT::SpawnType == "AnniSpawn") //New LT toggle -DaJ4ck3L
+		{
+			Player::setItemCount(%clientId, iarmorWarrior, 1);	
+			Player::setItemCount(%clientId, DiscLauncher, 1);
+			Player::setItemCount(%clientId, PlasmaGunBase, 1);
+			if($LegendzLT::AnniWeapon == "Shotgun")
+				Player::setItemCount(%clientId, Shotgun, 1);
+			else if($LegendzLT::AnniWeapon == "GrenadeLauncher")
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			else if($LegendzLT::AnniWeapon == "Blaster")
+				Player::setItemCount(%clientId, Blaster, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmo, 30);		   
+			Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+			if($LegendzLT::AnniWeapon == "Shotgun")
+				Player::setItemCount(%clientId, ShotgunShells, 30);
+			else if($LegendzLT::AnniWeapon == "GrenadeLauncher")
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 20);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 5);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			Player::setItemCount(%clientId, MineAmmo, 3); //No mines in LT -DaJ4ck3L
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncher);
+		}
+		if($LegendzLT::SpawnType == "EliteSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorMercenary, 1); //Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, DiscLauncherElite, 1);
+			Player::setItemCount(%clientId, ChaingunElite, 1);
+    	    Player::setItemCount(%clientId, Blaster, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmoElite, 15);		   
+			Player::setItemCount(%clientId, BulletAmmoElite, 150);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 3);
+			Player::setItemCount(%clientId, Grenade, 6);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+			
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherElite);
+		}
+		if($LegendzLT::SpawnType == "BaseSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, DiscLauncherBase, 1);
+			Player::setItemCount(%clientId, ChaingunBase, 1);
+    	    Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+			Player::setItemCount(%clientId, BulletAmmoBase, 100);
+			Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 3);
+			Player::setItemCount(%clientId, Grenade, 5);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherBase);
+		}
+	}
+	else if($UberWear::Active == true)
+	{
+		//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+		Player::setItemCount(%clientId, DiscLauncherBase, 1);
+		Player::setItemCount(%clientId, PlasmaGunBase, 1);
+        Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+		
+		Player::setItemCount(%clientId, TargetingLaser, 1);
+		   
+		Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+		Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+		Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+	   
+		Player::setItemCount(%clientId, RepairKit, 1);
+		Player::setItemCount(%clientId, Beacon, 3);
+		Player::setItemCount(%clientId, Grenade, 5);	   
+		//Player::setItemCount(%clientId, MineAmmo, 0);
+	   	   
+		Player::setItemCount(%clientId, EnergyPack, 1);
+		if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+			Player::useItem(%pl,EnergyPack);
+		Legendz::useItem(%pl,DiscLauncherBase);
+	}
+	else
+	{	
+		Player::setItemCount(%clientId, iarmorWarrior, 1);	
+		Player::setItemCount(%clientId, DiscLauncher, 1);
+		Player::setItemCount(%clientId, PlasmaGun, 1);
+		Player::setItemCount(%clientId, Shotgun, 1);
+		Player::setItemCount(%clientId, Blaster, 1);
+		Player::setItemCount(%clientId, Thumper, 1);
+		Player::setItemCount(%clientId, TargetingLaser, 1);
+		   
+		Player::setItemCount(%clientId, DiscAmmo, 30);		   
+		Player::setItemCount(%clientId, PlasmaAmmo, 30);	  
+		Player::setItemCount(%clientId, ShotgunShells, 30);
+		Player::setItemCount(%clientId, thumperammo, 30);
+		   
+		Player::setItemCount(%clientId, RepairKit, 1);
+		Player::setItemCount(%clientId, Beacon, 5);
+		Player::setItemCount(%clientId, Grenade, 8);	   
+		Player::setItemCount(%clientId, MineAmmo, 3);
+		   	   
+		Player::setItemCount(%clientId, EnergyPack, 1);
+		if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+			Player::useItem(%pl,EnergyPack);	   
+		Legendz::useItem(%pl,DiscLauncher);
+	}
+}
+
+schedule("Spawn();", 10);
+schedule("Spawn2();", 20);
+
+
+function Spawn()
+{		
+messageAll(3, "Annihilation Spawn CTF ||There are NO stations|| ~wmine_act.wav");	
+messageAll(1, "Protect your flag and capture the enemy flag.");
+bottomprintall("<f1><jc>Annihilation Spawn CTF ||There are NO stations|| \n <f0><jc> Protect your flag and capture the enemy flag.",  25);
+schedule("Spawn();", 90);		
+}
+
+function Spawn2()
+{		
+bottomprintall("<f1><jc>Annihilation Spawn CTF ||There are NO stations|| \n <f0><jc> Protect your flag and capture the enemy flag.",  25);
+schedule("Spawn2();", 90);	
+}
+
+deleteVariables("spinning*");	// Walls cannot be spun if they are already spinning, so clear this variable array when the mission loads.
+
+//	If you see your team's logo, you're heading home.  If you see the enemy's logo, you're on the attack.
+function AllyWall(%this)
+{
+	%rot = getWord(GameBase::getRotation(%this), 2);
+	GameBase::setTeam(%this, %rot < -1.5707963267948966192313216916398 || 1.5707963267948966192313216916398 <= %rot);
+}
+
+// Each time this function is called, it rotates the selected wall 10 degrees in the specified direction.
+function TurnWall(%this, %wise)
+{
+	%cen = Object::getName(%this);
+	%rot = getWord(GameBase::getRotation(%this), 2) + (0.17453292519943295769236907684886 * %wise);
+	GameBase::setPosition(%this, Vector::add(%cen, Vector::getFromRot("0 0 "@ %rot - 1.5707963267948966192313216916398, 16, 0)));
+	GameBase::setRotation(%this, "0 0 "@ %rot);
+	AllyWall(%this);
+}
+
+// Checks if the selected wall can be turned, or if it is obstructed.
+function PickWall(%this)
+{
+	if(getObjectType(%this) == "InteriorShape" && !$spinning[%this] && !$ME::loaded)
+	{
+		%set = newObject($SimPlayerObjectType | $ItemObjectType | $StaticObjectType | $MineObjectType | $VehicleObjectType, SimSet);
+		if(containerBoxFillSet(%set, Object::getName(%set), Object::getName(%this), 64, 64, 22, 11) < 1)
+		{
+			$spinning[%this] = true;
+			%wise = getWord("-1 1", floor(getRandom() * 2));
+			for(%num = 0; %num < 9; %num++)
+				schedule("TurnWall("@ %this @", "@ %wise @");", %num / 10);
+			schedule("deleteVariables(\"spinning"@ %this @"\");", 1);
+		}
+		deleteObject(%set);
+	}
+}
+
+// Recursively reschedules itself, selecting 1 wall at random each second to be spun.
+function LiveMaze(%this)
+{
+	PickWall(Group::getObject(%this, floor(getRandom() * (Group::objectCount(%this) - 1))));
+	schedule("if($MissionName == \"Spawn Labyrinth\") LiveMaze("@ %this @");", 1);
+}
+
+// Preps the maze, ensuring all walls display the appropriate logos, and initiates the recursive scheduler.
+%maze = nameToId("MissionGroup/Walls");
+Group::iterateRecursive(%maze, AllyWall);
+LiveMaze(%maze);

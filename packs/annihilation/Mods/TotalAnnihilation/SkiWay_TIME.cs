@@ -1,0 +1,11 @@
+$BestLapTimeDaytona = "25.5679999999999";
+$BestLapTimeJumpers_Wheel = "10.9439999999999";
+$BestLapTimeNameJumpers_Wheel = "freyja";
+$BestLapTimeNameSkiWay = "|WB| RedTower";
+$BestLapTimeNameThe_race = "assasin";
+$BestLapTimeNameXtremeski = "blueberries";
+$BestLapTimeNameXtremeSki2 = "blueberries";
+$BestLapTimeSkiWay = "42.3699999999999";
+$BestLapTimeThe_race = "75.0079999999999";
+$BestLapTimeXtremeski = "46.1759999999999";
+$BestLapTimeXtremeSki2 = "76.5759999999999";

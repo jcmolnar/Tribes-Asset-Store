@@ -350,7 +350,14 @@ function getLVLFromWIS(%WIS, %LeveltoCal) {
 //This function is a placeholder+prevents possible console spam.
 //By phantom: beatme101.com, tribesrpg.org
 function remoteRawKey(%client, %key, %mod){
-	client::sendmessage(%client, 0, "This server does not support the use of extra keybinds.");
+	// KEYBIND-SPAM FIX (2026-08-29): the stock placeholder answered EVERY relayed
+	// press (numpad, F1-F12, ctrl/alt digits) with the line below, once per
+	// keypress. Say it once per connection, then stay quiet.
+	if(%client.rawKeyNotified == "")
+	{
+		%client.rawKeyNotified = 1;
+		client::sendmessage(%client, 0, "This server does not support the use of extra keybinds.");
+	}
 
 	//Under normal conditions, %key will be one of the following:
 	//Repack 4 and up:

@@ -1,0 +1,6244 @@
+exec("JetToPos");
+$Arena::Kill = True;
+$PCBuilder = true;
+$Build::Kill = True;
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "Entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "World" {
+			fileName = "alienWorld.vol";
+		};
+		instant SimVolume "WorldTerrain" {
+			fileName = "alienTerrain.vol";
+		};
+		instant SimVolume "alienDML" {
+			fileName = "alienDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "TedFile" {
+			fileName = "DeathKnell.ted";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "DeathKnell.vol";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "Palette" {
+			fileName = "alien.night.ppl";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-500";
+			y = "-3000";
+			w = "800";
+			h = "4000";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "";
+			skyColor = "0 0 0";
+			hazeColor = "0 0 0";
+			featurePosition = "0";
+			size = "20000";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "0";
+			textures[3] = "1";
+			textures[4] = "0";
+			textures[5] = "1";
+			textures[6] = "0";
+			textures[7] = "1";
+			textures[8] = "0";
+			textures[9] = "1";
+			textures[10] = "0";
+			textures[11] = "1";
+			textures[12] = "0";
+			textures[13] = "1";
+			textures[14] = "0";
+			textures[15] = "1";
+			distance = "800";
+		};
+		instant Planet "Sun" {
+			fileName = "";
+			azimuth = "60";
+			incidence = "51";
+			castShadows = "True";
+			useLensFlare = "False";
+			intensity = "0.399971 0.399971 0.699972";
+			ambient = "0.199973 0.199973 0.199973";
+			size = "2000";
+			distance = "11000";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "DeathKnell.dtf";
+			visibleDistance = "350";
+			hazeDistance = "200";
+			hazeVerticalMin = "1.73161e-39";
+			hazeVerticalMax = "1.73176e-39";
+			perspectiveDistance = "100";
+			screenSize = "50";
+			contGravity = "0 0 -30";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 0";
+			rotation = "0 0 0";
+		};
+		instant StarField "stars1" {
+			inFrontOfSky = "True";
+			colors[0] = "11 11 11";
+			colors[1] = "1 1 1";
+			colors[2] = "1 1 1";
+		};
+		instant StarField "stars1" {
+			inFrontOfSky = "True";
+			colors[0] = "1 1 0";
+			colors[1] = "1 1 1";
+			colors[2] = "1 1 1";
+		};
+		instant Snowfall "Snow1" {
+			intensity = "0.12999";
+			wind = "0 93 -35";
+			suspendRendering = "False";
+			rain = "False";
+		};
+		instant StarField "stars1" {
+			inFrontOfSky = "True";
+			colors[0] = "2 2 3";
+			colors[1] = "1 1 1";
+			colors[2] = "1 1 1";
+		};
+	};
+	instant SimGroup "Lights" {
+		instant SimLight "PointLight1" {
+			type = "2";
+			range = "10";
+			color = "1 1 1";
+			ambient = "3 0 0";
+			position = "38.9511 -1911.81 963.187";
+			aim = "0.57735 0.57735 0.57735";
+			isStatic = "False";
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "camera" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "7.65855 -2073 862.556";
+			rotation = "0.299986 -0 1.19984";
+			locked = "1";
+		};
+		instant Marker "camera" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "160 271.576 110";
+			rotation = "0 -0 -0.91999";
+		};
+	};
+	instant SimGroup "Teams" {
+		instant TeamGroup "Team0" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-35.2848 -35.3632 2033";
+						rotation = "0 -0 -1.56984";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-40.2846 -44.363 2033";
+						rotation = "0 -0 -1.5698";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-40.2846 -41.363 2033";
+						rotation = "0 -0 -1.5698";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-40.2846 -38.3631 2033";
+						rotation = "0 -0 -1.5698";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-40.2847 -35.3632 2033";
+						rotation = "0 -0 -1.56982";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-35.2844 -44.3627 2033";
+						rotation = "0 -0 -1.56976";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-35.2845 -42.3628 2033";
+						rotation = "0 -0 -1.56978";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-35.2847 -37.3631 2033";
+						rotation = "0 -0 -1.56981";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-22.9753 -56.5577 2014.5";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-30.8823 -56.3824 2014.5";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-25.3675 -56.5789 2014.5";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-34.0363 -56.2352 2014.5";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-27.6846 -56.346 2014.5";
+						rotation = "0 0 0";
+					};
+				};
+			};
+			instant SimGroup "Items" {
+				instant StaticShape "Generator1" {
+					dataBlock = "Generator";
+					name = "";
+					position = "-43.4306 -41.7783 2016.75";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant StaticShape "portgen1" {
+					dataBlock = "PortGenerator";
+					name = "";
+					position = "-43.1303 -41.5251 2030.25";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant StaticShape "AmmoStation1" {
+					dataBlock = "AmmoStation";
+					name = "Map by (:UberWear:)";
+					position = "-21.7711 -30.0689 2007";
+					rotation = "0 -0 -1.57984";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					lastPlayer = "8508";
+				};
+				instant InteriorShape "BEscargo21" {
+					fileName = "BEScargo2.dis";
+					isContainer = "0";
+					position = "-44.4446 -27.526 2014";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant Sensor "SENSOR1" {
+					dataBlock = "PulseSensor";
+					name = "";
+					position = "-39.7856 -40.2074 2038";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					shieldStrength = "0.0299999";
+				};
+				instant StaticShape "AntennaArray1" {
+					dataBlock = "ArrayAntenna";
+					name = "";
+					position = "-32.2348 -34.0966 2038";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant StaticShape "AntennaLarge1" {
+					dataBlock = "LargeAntenna";
+					name = "";
+					position = "-31.9925 -44.4279 2038";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant StaticShape "AntennaMed1" {
+					dataBlock = "MediumAntenna";
+					name = "";
+					position = "-31.8765 -47.5897 2038";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant StaticShape "AmmoStation1" {
+					dataBlock = "AmmoStation";
+					name = "Map by (:UberWear:)";
+					position = "-21.7292 -50.0052 2007";
+					rotation = "0 -0 -1.57983";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+//				instant Item "RepairPack1" {
+//					dataBlock = "RepairPack";
+//					name = "";
+//					position = "-44.4116 -27.5408 2016";
+//					rotation = "0 0 0";
+//					destroyable = "True";
+//					deleteOnDestroy = "False";
+//					rotates = "True";
+//					collideable = "False";
+//					count = "1";
+//				};
+			instant StaticShape "Fire1" {
+				dataBlock = "Fire";
+				name = "";
+				position = "-44.4116 -27.5408 2016";
+				rotation = "1.49166 0.423108 -0.280277";
+				destroyable = "True";
+				deleteOnDestroy = "False";
+				};
+			};
+			instant SimGroup "Structure" {
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -83.5 1986";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "-10 -460 1109.5";
+					rotation = "1.48338 0 1.57065";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -150 1921";
+					rotation = "-1.55319 -3.14144 -3.14144";
+					lightParams = "0 ";
+					locked = "0";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -168.385 1672";
+					rotation = "-1.46593 3.14145 -3.14145";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -185.885 1548";
+					rotation = "-1.39612 -3.14145 -3.14145";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -553 1150.5";
+					rotation = "0.436318 -3.14145 -3.14145";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -282.097 1170";
+					rotation = "-0.785396 -3.14157 -3.14157";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -290 1161.03";
+					rotation = "-0.610863 -3.14157 -3.14157";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -543 1146.5";
+					rotation = "0.261785 -3.14145 -3.14145";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -345 1143.5";
+					rotation = "-0.0349063 -3.14157 -3.14157";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -523 1143";
+					rotation = "0.087265 -3.14145 -3.14145";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -319 1146";
+					rotation = "-0.261797 -3.14157 -3.14157";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -310 1149";
+					rotation = "-0.43633 -3.14157 -3.14157";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -570 1161.03";
+					rotation = "0.61085 -3.14144 -3.14144";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -578 1170";
+					rotation = "0.785382 -3.14144 -3.14144";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -584 1178";
+					rotation = "1.13431 -3.14144 -3.14144";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -580 1173";
+					rotation = "0.959914 -3.14143 -3.14143";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -156.5 1796.5";
+					rotation = "-1.48337 -3.14144 -3.14144";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -591.781 1870";
+					rotation = "1.48338 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -590 1191";
+					rotation = "1.30883 -3.14143 -3.14143";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -593 1275";
+					rotation = "1.57064 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -593 1402";
+					rotation = "1.57015 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -593 1529";
+					rotation = "1.57015 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -593 1656";
+					rotation = "1.57015 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -593 1783";
+					rotation = "1.57015 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -593 1910";
+					rotation = "1.57015 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -499 1142.25";
+					rotation = "0 -3.14145 -3.14145";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -396 1143";
+					rotation = "0 -3.14157 -3.14157";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -462 1855";
+					rotation = "-1.56996 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -591.784 1199";
+					rotation = "1.48336 -3.14143 -3.14143";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -590 1880";
+					rotation = "1.30885 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -590 1880";
+					rotation = "1.13432 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -585 1890";
+					rotation = "0.785383 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -588 1885";
+					rotation = "0.959915 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -581 1895";
+					rotation = "0.610851 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -502 1906";
+					rotation = "-0.261785 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -574 1901";
+					rotation = "0.436317 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -560 1908";
+					rotation = "0.087265 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -535 1909.5";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -335 1144";
+					rotation = "-0.0872662 -3.14157 -3.14157";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -510 1908.5";
+					rotation = "-0.087265 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -568 1905";
+					rotation = "0.261784 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -496 1903";
+					rotation = "-0.436318 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -490 1900";
+					rotation = "-0.610851 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -482 1894";
+					rotation = "-0.785383 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -463 1868";
+					rotation = "-1.39612 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -474 1886";
+					rotation = "-0.959915 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridgecap1" {
+					fileName = "EXPBRIDGECAP.dis";
+					isContainer = "1";
+					position = "0 -468 1879";
+					rotation = "-1.13431 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -481 1109.5";
+					rotation = "1.39611 -3.14144 -3.14144";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -462.5 1048";
+					rotation = "1.57016 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "10 -460 1109.5";
+					rotation = "1.48338 0 -1.57065";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -460 1109.5";
+					rotation = "1.48336 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -468 1048";
+					rotation = "1.04705 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -468 1048";
+					rotation = "1.3961 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -468 1050";
+					rotation = "1.22158 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -468 1042.5";
+					rotation = "0.698117 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -468 1045.5";
+					rotation = "0.87265 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -468 1039";
+					rotation = "0.523584 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -468 1035";
+					rotation = "0.349051 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -498 1025";
+					rotation = "0.174518 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -540 1019";
+					rotation = "0.087265 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -550 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -614 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -678 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -742 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -806 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -870 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -934 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -998 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1062 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1126 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1190 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1254 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1318 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1382 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1446 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1510 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1638 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1574 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1702 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1766 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1830 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "0 -1894 1017";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "-27.4417 -1183.5 1021";
+					rotation = "1.57065 0 -1.04705";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "iblock1" {
+					fileName = "iblock.dis";
+					isContainer = "1";
+					position = "27.4418 -1183.5 1021";
+					rotation = "1.57016 0 1.04704";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -207 1428";
+					rotation = "-1.39624 -3.14157 -3.14157";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "expbridge1" {
+					fileName = "EXPBRIDGE.dis";
+					isContainer = "1";
+					position = "0 -228 1308";
+					rotation = "-1.39624 -3.14157 -3.14157";
+					lightParams = "0 ";
+				};
+			};
+		};
+		instant TeamGroup "team1" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "35.2849 -35.3634 2033";
+						rotation = "0 -0 1.56986";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "35.2847 -37.3631 2033";
+						rotation = "0 -0 1.56983";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "35.2845 -42.3629 2033";
+						rotation = "0 -0 1.5698";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "35.2844 -44.3628 2033";
+						rotation = "0 -0 1.56978";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "40.2848 -35.3633 2033";
+						rotation = "0 -0 1.56984";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "40.2847 -38.3631 2033";
+						rotation = "0 -0 1.56982";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "40.2847 -41.3631 2033";
+						rotation = "0 -0 1.56982";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "40.2847 -44.3631 2033";
+						rotation = "0 -0 1.56982";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "25.0721 -23.5294 2014.5";
+						rotation = "0 -0 3.12309";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "27.3962 -23.3299 2014.5";
+						rotation = "0 -0 3.12308";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "34.0955 -23.8417 2014.25";
+						rotation = "0 -0 3.12308";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "22.6693 -23.475 2014.5";
+						rotation = "0 -0 3.12308";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "31.3086 -23.947 2014.5";
+						rotation = "0 -0 3.12307";
+					};
+				};
+			};
+			instant SimGroup "Items" {
+				instant Sensor "SENSOR1" {
+					dataBlock = "PulseSensor";
+					name = "";
+					position = "40.0629 -40.198 2038";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					shieldStrength = "0.0299999";
+				};
+				instant StaticShape "AntennaRod1" {
+					dataBlock = "RodAntenna";
+					name = "";
+					position = "32.4186 -47.0075 2038";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant StaticShape "AmmoStation1" {
+					dataBlock = "AmmoStation";
+					name = "Map by (:UberWear:)";
+					position = "21.7291 -50.0052 2007";
+					rotation = "0 -0 1.57981";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant StaticShape "AmmoStation1" {
+					dataBlock = "AmmoStation";
+					name = "Map by (:UberWear:)";
+					position = "21.771 -30.0689 2007";
+					rotation = "0 -0 1.57982";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant InteriorShape "BEscargo21" {
+					fileName = "BEScargo2.dis";
+					isContainer = "0";
+					position = "43.6608 -52.4146 2014";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant Item "RepairPack1" {
+					dataBlock = "RepairPack";
+					name = "";
+					position = "43.66 -52.387 2016";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					rotates = "True";
+					collideable = "False";
+					count = "1";
+				};
+				instant StaticShape "portgen1" {
+					dataBlock = "PortGenerator";
+					name = "";
+					position = "43.1642 -38.6087 2030.25";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant StaticShape "Generator1" {
+					dataBlock = "Generator";
+					name = "";
+					position = "43.5625 -38.1182 2016.75";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+			};
+		};
+		instant TeamGroup "team2" {
+			instant SimGroup "Items" {
+				instant InteriorShape "ewedge1" {
+					fileName = "ewedge.dis";
+					isContainer = "1";
+					position = "-120.332 -2455 765";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant StaticShape "Generator1" {
+					dataBlock = "Generator";
+					name = "";
+					position = "-82.7714 -2458.25 709";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					lastDamageTeam = "1";
+					lastDamageObject = "2049";
+				};
+				instant InteriorShape "ewedge1" {
+					fileName = "ewedge.dis";
+					isContainer = "1";
+					position = "-45.0713 -2455.05 765";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant Turret "PlasmaTurret1" {
+					dataBlock = "PlasmaTurret";
+					name = "Turret";
+					position = "-118.833 -2479.5 765.449";
+					rotation = "0 -0 -1.56988";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					shieldStrength = "0.0299999";
+				};
+				instant Turret "PlasmaTurret1" {
+					dataBlock = "PlasmaTurret";
+					name = "Turret";
+					position = "-47.5249 -2437.9 765.09";
+					rotation = "0 -0 1.5699";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					shieldStrength = "0.0299999";
+				};
+				instant Turret "PlasmaTurret1" {
+					dataBlock = "PlasmaTurret";
+					name = "Turret";
+					position = "-46.6954 -2455.08 769.729";
+					rotation = "0 -0 1.56989";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					shieldStrength = "0.0299999";
+				};
+				instant Turret "PlasmaTurret1" {
+					dataBlock = "PlasmaTurret";
+					name = "Turret";
+					position = "-119.2 -2454.84 770.515";
+					rotation = "0 -0 -1.56988";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					shieldStrength = "0.0299999";
+				};
+				instant Sensor "SENSOR1" {
+					dataBlock = "PulseSensor";
+					name = "";
+					position = "-82.7629 -2509 765.09";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					shieldStrength = "0.0299999";
+					lastDamageObject = "0";
+					lastDamageTeam = "-1";
+				};
+				instant StaticShape "Switch1" {
+					dataBlock = "TowerSwitch";
+					name = "This team is not for players. Please switch.";
+					position = "-0.183588 2.03964 298.5";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					scoreValue = "1";
+					objectiveLine = "15";
+				};
+				instant InteriorShape "COPlcargo11" {
+					fileName = "COPLCargo1.dis";
+					isContainer = "0";
+					position = "0.149991 -5.59988 300";
+					rotation = "0 1.57071 1.57071";
+					lightParams = "4 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+				};
+			};
+			instant Marker "Map Marker1" {
+				dataBlock = "MapMarker";
+				name = "";
+				position = "-80.7305 -2447.04 765.09";
+				rotation = "0 0 0";
+			};
+			instant SimGroup "Items 2" {
+				instant StaticShape "solar1" {
+					dataBlock = "SolarPanel";
+					name = "";
+					position = "-102 -2686.75 851.16";
+					rotation = "-1.14132 -3.14138 -3.14138";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					lastDamageTeam = "0";
+					lastDamageObject = "2049";
+				};
+				instant Sensor "MedPulse1" {
+					dataBlock = "MediumPulseSensor";
+					name = "";
+					position = "-92.5692 -2683.57 843";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					lastDamageTeam = "0";
+					lastDamageObject = "2049";
+					shieldStrength = "0.0299999";
+				};
+				instant Turret "IndoorTurret1" {
+					dataBlock = "IndoorTurret";
+					name = "Turret";
+					position = "-87 -2660 842.595";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					shieldStrength = "0.0299999";
+				};
+				instant StaticShape "solar1" {
+					dataBlock = "SolarPanel";
+					name = "";
+					position = "-71 -2686.59 851.446";
+					rotation = "-1.14137 -3.1414 -3.1414";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					lastDamageTeam = "2";
+					lastDamageObject = "8393";
+				};
+			};
+		};
+	};
+	instant InteriorShape "dsdrop1" {
+		fileName = "dsdrop.dis";
+		isContainer = "1";
+		position = "-40 -40 2000";
+		rotation = "0 0 1.57066";
+		lightParams = "14 1.000000 0 1.000000 0 2.000000 1 2.000000 1 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 3.000000 1 3.000000 1 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-41.6626 -2178 911";
+		rotation = "1.57 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-73.8985 -2177.76 893";
+		rotation = "1.57066 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-114 -2212 940";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant SimGroup "FlagTower" {
+		instant StaticShape "Generator1" {
+			dataBlock = "Generator";
+			name = "Repository Gen #2";
+			position = "-415.14 -36.3789 17.166";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+	};
+	instant Item "flag1" {
+		dataBlock = "flag";
+		name = "";
+		position = "-417.654 -36.704 -5.82014e+06";
+		rotation = "0 -0 1.56288";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "False";
+		collideable = "False";
+		count = "1";
+		changeTeamCount = "0";
+		caps7 = "0";
+		caps6 = "0";
+		caps5 = "0";
+		caps4 = "0";
+		caps3 = "0";
+		caps2 = "0";
+		caps1 = "0";
+		caps0 = "0";
+		enemyCaps = "0";
+		holdingTeam = "-1";
+		carrier = "-1";
+		pickupSequence = "0";
+		atHome = "true";
+		originalPosition = "-417.655 -36.7041 -5.82014e+06";
+		scoreValue = "2";
+		objectiveName = "the North Flag";
+		objectiveLine = "16";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -1542 117.89";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "logo11" {
+		fileName = "logo1.dis";
+		isContainer = "1";
+		position = "-88 -2057.5 955";
+		rotation = "0 1.57076 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tank181" {
+		fileName = "tank18.dis";
+		isContainer = "1";
+		position = "0 -1039.25 960";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tank181" {
+		fileName = "tank18.dis";
+		isContainer = "1";
+		position = "0 -1900 980";
+		rotation = "0.87265 0 0";
+		lightParams = "0 ";
+	};
+	instant Item "RepairPack1" {
+		dataBlock = "RepairPack";
+		name = "";
+		position = "2 -143 1987";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant InteriorShape "tank181" {
+		fileName = "tank18.dis";
+		isContainer = "1";
+		position = "0 -1896 1000";
+		rotation = "1.57065 0 0";
+		lightParams = "0 ";
+		locked = "1";
+	};
+	instant InteriorShape "tank181" {
+		fileName = "tank18.dis";
+		isContainer = "1";
+		position = "0 -1905 1020";
+		rotation = "0.785385 -3.14146 -3.14146";
+		lightParams = "0 ";
+	};
+	instant SimGroup "Switches" {
+		instant Turret "PlasmaTurret1" {
+			dataBlock = "PlasmaTurret";
+			name = "Turret";
+			position = "-10.2777 -1977.25 970.455";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			shieldStrength = "0.0299999";
+		};
+		instant Turret "PlasmaTurret1" {
+			dataBlock = "PlasmaTurret";
+			name = "Turret";
+			position = "14.5463 -1977.28 970.188";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			shieldStrength = "0.0299999";
+		};
+		instant StaticShape "Switch1" {
+			dataBlock = "TowerSwitch";
+			name = "";
+			position = "6.33699 -1978.5 969.152";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			scoreValue = "1";
+			objectiveLine = "17";
+		};
+		instant StaticShape "Switch1" {
+			dataBlock = "TowerSwitch";
+			name = "";
+			position = "-4.34651 -1978.25 969.256";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			scoreValue = "1";
+			objectiveLine = "18";
+		};
+		instant StaticShape "Switch1" {
+			dataBlock = "TowerSwitch";
+			name = "";
+			position = "1.22035 -1978.5 969.194";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			scoreValue = "1";
+			objectiveLine = "19";
+		};
+		instant StaticShape "Generator1" {
+			dataBlock = "Generator";
+			name = "";
+			position = "-1.0722 -1980 986";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+		instant Turret "IndoorTurret1" {
+			dataBlock = "IndoorTurret";
+			name = "Turret";
+			position = "17.9678 -1975.83 981.75";
+			rotation = "1.56974 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			shieldStrength = "0.0299999";
+		};
+		instant Turret "IndoorTurret1" {
+			dataBlock = "IndoorTurret";
+			name = "Turret";
+			position = "-17.9677 -1975.82 981.75";
+			rotation = "1.56973 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			shieldStrength = "0.0299999";
+		};
+		instant Turret "IndoorTurret1" {
+			dataBlock = "IndoorTurret";
+			name = "Turret";
+			position = "15.9676 -1975.81 983";
+			rotation = "1.56972 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			shieldStrength = "0.0299999";
+		};
+		instant Turret "IndoorTurret1" {
+			dataBlock = "IndoorTurret";
+			name = "Turret";
+			position = "-15 -1975.82 983";
+			rotation = "1.56973 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			shieldStrength = "0.0299999";
+		};
+	};
+	instant InteriorShape "tank141" {
+		fileName = "tank14.dis";
+		isContainer = "1";
+		position = "0 -1217.25 996";
+		rotation = "0 0 1.57065";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tank141" {
+		fileName = "tank14.dis";
+		isContainer = "1";
+		position = "0 -1227.25 994";
+		rotation = "0 0 1.57065";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tank141" {
+		fileName = "tank14.dis";
+		isContainer = "1";
+		position = "0 -1247.25 992";
+		rotation = "0 0 1.57065";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tank141" {
+		fileName = "tank14.dis";
+		isContainer = "1";
+		position = "0 -1267.25 990";
+		rotation = "0 0 1.57065";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "awarehouse1" {
+		fileName = "awarehouse.dis";
+		isContainer = "1";
+		position = "16 -1900 968.625";
+		rotation = "0 3.14145 0";
+		lightParams = "14 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 2.000000 1 ";
+	};
+	instant InteriorShape "BETower21" {
+		fileName = "BETower2.dis";
+		isContainer = "1";
+		position = "-0 -1933 967";
+		rotation = "0 1.91972 3.14145";
+		lightParams = "12 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BETower11" {
+		fileName = "BETower1.dis";
+		isContainer = "1";
+		position = "-24 -1943 967.924";
+		rotation = "0 -3.14145 -3.14145";
+		lightParams = "0 ";
+		locked = "1";
+	};
+	instant InteriorShape "acommand1" {
+		fileName = "acommand.dis";
+		isContainer = "1";
+		position = "-65 -1971 936";
+		rotation = "-1.57065 0 -0.698117";
+		lightParams = "39 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 ";
+	};
+	instant InteriorShape "COPlcargo31" {
+		fileName = "COPLcargo3.dis";
+		isContainer = "0";
+		position = "-19.2011 -1941.78 935.724";
+		rotation = "1.56643 -0 -0";
+		lightParams = "3 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "COPlcargo31" {
+		fileName = "COPLcargo3.dis";
+		isContainer = "0";
+		position = "-25.091 -1947.25 936.185";
+		rotation = "1.56187 -0 1.47062";
+		lightParams = "3 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "mis_ob21" {
+		fileName = "mis_ob2.dis";
+		isContainer = "1";
+		position = "-5 -1948 969";
+		rotation = "0 -3.14147 -3.14147";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "catwalkB1" {
+		fileName = "catwalkB.dis";
+		isContainer = "1";
+		position = "11 -1922.05 957.165";
+		rotation = "1.39613 -3.14146 -3.14146";
+		lightParams = "4 2.099999 1 2.099999 1 5.599998 1 5.599998 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "8 -1938 938";
+		rotation = "0 0 1.57066";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "13.8903 -1914 918";
+		rotation = "0 0 1.57066";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "logo31" {
+		fileName = "logo3.dis";
+		isContainer = "1";
+		position = "-41.4113 -1931.75 933.5";
+		rotation = "0 -0 0.872651";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-66 -1958 881";
+		rotation = "1.36122 -3.14146 0.872651";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "BESfloatingpad1" {
+		fileName = "BESfloatingPad.dis";
+		isContainer = "1";
+		position = "-60 -1965 886.894";
+		rotation = "0 0 -0.698118";
+		lightParams = "9 0.700000 1 0.700000 1 0.700000 1 0.700000 1 0.700000 1 0.700000 1 0.700000 1 0.700000 1 0.700000 1 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-66 -1980 887";
+		rotation = "1.55321 0 -0.698118";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-60 -1978 881";
+		rotation = "1.57066 0 -2.26879";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-55 -1960.25 847";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-13.3093 -1952 925";
+		rotation = "0 1.57066 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-13.3093 -1952 861";
+		rotation = "0 1.57066 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-63.3573 -1956 882";
+		rotation = "1.5532 0 -0.698117";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-90.4468 -1997 868.25";
+		rotation = "0 0 -0.191973";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tank1" {
+		fileName = "tank.dis";
+		isContainer = "1";
+		position = "-79.7874 -1990.25 811.086";
+		rotation = "0 0 -0.698118";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tank1" {
+		fileName = "tank.dis";
+		isContainer = "1";
+		position = "-89 -2010 811";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "BETower41" {
+		fileName = "BETower4.dis";
+		isContainer = "1";
+		position = "-83 -2358 930";
+		rotation = "0.104709 -3.14149 -3.14149";
+		lightParams = "4 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "tank31" {
+		fileName = "tank3.dis";
+		isContainer = "1";
+		position = "-88.0986 -2041.5 881.082";
+		rotation = "0 -3.14146 -1.57066";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "BElcargo11" {
+		fileName = "BELCargo1.dis";
+		isContainer = "0";
+		position = "-79.3709 -2035.79 857";
+		rotation = "0 -3.14146 -3.14146";
+		lightParams = "4 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BELfloatingpad1" {
+		fileName = "BELfloatingPad.dis";
+		isContainer = "1";
+		position = "-58 -2043.25 941";
+		rotation = "0 1.57066 3.14146";
+		lightParams = "16 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BELfloatingpad1" {
+		fileName = "BELfloatingPad.dis";
+		isContainer = "1";
+		position = "-82.8125 -2009 941";
+		rotation = "0 1.57066 -1.57066";
+		lightParams = "16 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BELfloatingpad1" {
+		fileName = "BELfloatingPad.dis";
+		isContainer = "1";
+		position = "-106 -2043.25 941";
+		rotation = "0 1.57066 0";
+		lightParams = "16 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-87.5068 -2037 885";
+		rotation = "0.523585 0 0";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-77 -2042 898";
+		rotation = "-0.523585 0 0";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "BELfloatingpad1" {
+		fileName = "BELfloatingPad.dis";
+		isContainer = "1";
+		position = "-82.8125 -2070 936";
+		rotation = "0 1.57066 1.57066";
+		lightParams = "16 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-87.5072 -2037 860";
+		rotation = "0.523584 0 0";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-99.8979 -2038.5 898";
+		rotation = "1.56997 0 1.57066";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-77 -2042 873";
+		rotation = "-0.523584 0 0";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "BELfloatingpad1" {
+		fileName = "BELfloatingPad.dis";
+		isContainer = "1";
+		position = "-82.8125 -2009 897";
+		rotation = "0 1.57065 -1.57065";
+		lightParams = "16 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BELfloatingpad1" {
+		fileName = "BELfloatingPad.dis";
+		isContainer = "1";
+		position = "-82.8125 -2069.54 897";
+		rotation = "0 1.57064 1.57064";
+		lightParams = "16 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BELfloatingpad1" {
+		fileName = "BELfloatingPad.dis";
+		isContainer = "1";
+		position = "-58 -2043.25 897";
+		rotation = "0 1.57065 3.14145";
+		lightParams = "16 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BELfloatingpad1" {
+		fileName = "BELfloatingPad.dis";
+		isContainer = "1";
+		position = "-106 -2043.25 897";
+		rotation = "0 1.57063 0";
+		lightParams = "16 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-99.8973 -2039 938";
+		rotation = "1.57066 0 1.57066";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-87.5067 -2037 908";
+		rotation = "0.523585 0 0";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-77 -2042 921";
+		rotation = "-0.523585 0 0";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-87.5066 -2037 931";
+		rotation = "0.523585 0 0";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "catwalkA1" {
+		fileName = "catwalkA.dis";
+		isContainer = "1";
+		position = "-77 -2035 937";
+		rotation = "-0.174519 0 0";
+		lightParams = "4 1.400000 1 1.400000 1 8.399998 1 8.399998 1 ";
+	};
+	instant InteriorShape "BELfloatingpad1" {
+		fileName = "BELfloatingPad.dis";
+		isContainer = "1";
+		position = "-81.7406 -2039 981";
+		rotation = "0 -3.14146 1.57066";
+		lightParams = "16 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-82 -2119 952";
+		rotation = "0.261786 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-82 -2119 942";
+		rotation = "0.261786 3.14146 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-89.7986 -2119 945";
+		rotation = "0.261786 -1.57066 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-74.0986 -2119 945";
+		rotation = "0.261786 1.57066 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "logo31" {
+		fileName = "logo3.dis";
+		isContainer = "1";
+		position = "42.3763 -1916.75 940.125";
+		rotation = "0 0 1.57072";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tank51" {
+		fileName = "tank5.dis";
+		isContainer = "1";
+		position = "50.8922 -1929 914";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "logo11" {
+		fileName = "logo1.dis";
+		isContainer = "1";
+		position = "38.4466 -1926.5 933.984";
+		rotation = "0.174519 0 1.57066";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-44.6613 -2370 906.384";
+		rotation = "0.069812 1.57068 1.57068";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "logo11" {
+		fileName = "logo1.dis";
+		isContainer = "1";
+		position = "39.1286 -1932 938";
+		rotation = "0.174519 0 1.57066";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "logo11" {
+		fileName = "logo1.dis";
+		isContainer = "1";
+		position = "43.8038 -1939.59 959";
+		rotation = "0 1.57066 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "logo21" {
+		fileName = "logo2.dis";
+		isContainer = "1";
+		position = "60.7627 -1933 936";
+		rotation = "0 1.57076 1.57076";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "COPlcargo31" {
+		fileName = "COPLcargo3.dis";
+		isContainer = "0";
+		position = "-25.088 -1938.5 936.185";
+		rotation = "1.56562 -0 1.47063";
+		lightParams = "3 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo11" {
+		fileName = "BELCargo1.dis";
+		isContainer = "0";
+		position = "-76.261 -2035 850";
+		rotation = "0 -3.14145 -3.14145";
+		lightParams = "4 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-50 -2212 940";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-122.286 -2178 911";
+		rotation = "1.57066 0 0";
+		lightParams = "0 ";
+	};
+	instant Item "flag1" {
+		dataBlock = "flag";
+		name = "";
+		position = "-438.8 -59.9718 -5.82014e+06";
+		rotation = "0 -0 -3.0997";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "False";
+		collideable = "False";
+		count = "1";
+		changeTeamCount = "0";
+		caps7 = "0";
+		caps6 = "0";
+		caps5 = "0";
+		caps4 = "0";
+		caps3 = "0";
+		caps2 = "0";
+		caps1 = "0";
+		caps0 = "0";
+		enemyCaps = "0";
+		holdingTeam = "-1";
+		carrier = "-1";
+		pickupSequence = "0";
+		atHome = "true";
+		originalPosition = "-438.801 -59.9719 -5.82014e+06";
+		scoreValue = "2";
+		objectiveName = "the East Flag";
+		objectiveLine = "20";
+	};
+	instant Item "flag1" {
+		dataBlock = "flag";
+		name = "";
+		position = "-441.408 -9.67656 -5.82014e+06";
+		rotation = "0 -0 0.103176";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "False";
+		collideable = "False";
+		count = "1";
+		changeTeamCount = "0";
+		caps7 = "0";
+		caps6 = "0";
+		caps5 = "0";
+		caps4 = "0";
+		caps3 = "0";
+		caps2 = "0";
+		caps1 = "0";
+		caps0 = "0";
+		enemyCaps = "0";
+		holdingTeam = "-1";
+		carrier = "-1";
+		pickupSequence = "0";
+		atHome = "true";
+		originalPosition = "-441.409 -9.67657 -5.82014e+06";
+		scoreValue = "2";
+		objectiveName = "the West Flag";
+		objectiveLine = "21";
+	};
+	instant Item "flag1" {
+		dataBlock = "flag";
+		name = "";
+		position = "-462.445 -38.7274 -5.82014e+06";
+		rotation = "0 -0 1.34826";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "False";
+		collideable = "False";
+		count = "1";
+		changeTeamCount = "0";
+		caps7 = "0";
+		caps6 = "0";
+		caps5 = "0";
+		caps4 = "0";
+		caps3 = "0";
+		caps2 = "0";
+		caps1 = "0";
+		caps0 = "0";
+		enemyCaps = "0";
+		holdingTeam = "-1";
+		carrier = "-1";
+		pickupSequence = "0";
+		atHome = "true";
+		originalPosition = "-462.446 -38.7275 -5.82014e+06";
+		scoreValue = "2";
+		objectiveName = "the South Flag";
+		objectiveLine = "22";
+	};
+	instant InteriorShape "dsdrop1" {
+		fileName = "dsdrop.dis";
+		isContainer = "1";
+		position = "40 -40 2000";
+		rotation = "0 -0 -1.57065";
+		lightParams = "14 1.000000 0 1.000000 0 2.000000 1 2.000000 1 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 1.000000 0 3.000000 1 3.000000 1 ";
+		locked = "1";
+	};
+	instant StaticShape "AntennaMed1" {
+		dataBlock = "MediumAntenna";
+		name = "";
+		position = "32.3544 -32.4375 2038";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "AntennaLarge1" {
+		dataBlock = "LargeAntenna";
+		name = "";
+		position = "32.2942 -35.2174 2038";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant InteriorShape "scargo21" {
+		fileName = "Scargo2.dis";
+		isContainer = "0";
+		position = "-84.117 -2188.53 925";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo21" {
+		fileName = "Scargo2.dis";
+		isContainer = "0";
+		position = "-84.1169 -2198.52 925";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo21" {
+		fileName = "Scargo2.dis";
+		isContainer = "0";
+		position = "-84.1168 -2218.51 925";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo21" {
+		fileName = "Scargo2.dis";
+		isContainer = "0";
+		position = "-84.1165 -2253.5 925";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-114 -2276 940";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-50 -2276 940";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo21" {
+		fileName = "Scargo2.dis";
+		isContainer = "0";
+		position = "-84.1163 -2263.5 929";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo21" {
+		fileName = "Scargo2.dis";
+		isContainer = "0";
+		position = "-84.1157 -2306.5 911";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo21" {
+		fileName = "Scargo2.dis";
+		isContainer = "0";
+		position = "-84.1155 -2325.5 911";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo21" {
+		fileName = "Scargo2.dis";
+		isContainer = "0";
+		position = "-84.1153 -2344.5 913";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-114 -2340 940";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-50 -2340 940";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "3 -1500 1045";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "Underground81" {
+		fileName = "Underground8.dis";
+		isContainer = "1";
+		position = "-269.287 -1814.81 95.8411";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "base51" {
+		fileName = "base5.dis";
+		isContainer = "1";
+		position = "-453.306 -2100.63 106.571";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "base51" {
+		fileName = "base5.dis";
+		isContainer = "1";
+		position = "-86 -2663 857";
+		rotation = "0 0 1.57075";
+		lightParams = "0 ";
+		locked = "0";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-121.648 -2370 906.379";
+		rotation = "-0.0698121 1.57069 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "logo31" {
+		fileName = "logo3.dis";
+		isContainer = "1";
+		position = "-82.9322 -2367.1 923.416";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant StaticShape "AntennaLarge1" {
+		dataBlock = "LargeAntenna";
+		name = "";
+		position = "-84.0993 -2358.75 884.251";
+		rotation = "1.56387 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "AntennaLarge1" {
+		dataBlock = "LargeAntenna";
+		name = "";
+		position = "-82.0102 -2358.86 884.251";
+		rotation = "1.56501 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant InteriorShape "base51" {
+		fileName = "base5.dis";
+		isContainer = "1";
+		position = "-83 -2457 813.09";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+		locked = "1";
+	};
+	instant InteriorShape "BATower21" {
+		fileName = "BATower2.dis";
+		isContainer = "1";
+		position = "-123.59 -2833 892";
+		rotation = "0 -1.5707 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "BATower21" {
+		fileName = "BATower2.dis";
+		isContainer = "1";
+		position = "-83.7245 -2817 892";
+		rotation = "1.57021 0 0";
+		lightParams = "0 ";
+	};
+	instant StaticShape "ElectrBeam1" {
+		dataBlock = "ElectricalBeam";
+		name = "";
+		position = "-83.5 -2836 883.675";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "ElectrBeam1" {
+		dataBlock = "ElectricalBeam";
+		name = "";
+		position = "-83.5 -2836 883.674";
+		rotation = "0 1 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "ElectrBeam1" {
+		dataBlock = "ElectricalBeam";
+		name = "";
+		position = "-83.5 -2836 883.673";
+		rotation = "0 -1 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "ElectrBeam1" {
+		dataBlock = "ElectricalBeam";
+		name = "";
+		position = "-90 -2836.25 892.185";
+		rotation = "0 1.5699 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "ElectrBeam1" {
+		dataBlock = "ElectricalBeam";
+		name = "";
+		position = "-90 -2836.25 892.183";
+		rotation = "0 2.5999 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "ElectrBeam1" {
+		dataBlock = "ElectricalBeam";
+		name = "";
+		position = "-90 -2836.25 892.176";
+		rotation = "0 0.69999 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "ElectrBeam1" {
+		dataBlock = "ElectricalBeam";
+		name = "";
+		position = "-143 -2833 887";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "ElectrBeam1" {
+		dataBlock = "ElectricalBeam";
+		name = "";
+		position = "-143 -2833 887";
+		rotation = "0.99999 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "ElectrBeam1" {
+		dataBlock = "ElectricalBeam";
+		name = "";
+		position = "-143 -2833 887";
+		rotation = "-0.999988 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant InteriorShape "logo11" {
+		fileName = "logo1.dis";
+		isContainer = "1";
+		position = "-137.92 -2842.4 886";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tunnel1" {
+		fileName = "Tunnel.dis";
+		isContainer = "1";
+		position = "-83.6539 -2840 580";
+		rotation = "1.57021 0 3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tunnel1" {
+		fileName = "Tunnel.dis";
+		isContainer = "1";
+		position = "-83.6537 -2840 520";
+		rotation = "1.57021 0 3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tunnel1" {
+		fileName = "Tunnel.dis";
+		isContainer = "1";
+		position = "-83.6535 -2840.1 460";
+		rotation = "1.57001 0 3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tunnel1" {
+		fileName = "Tunnel.dis";
+		isContainer = "1";
+		position = "-83.6532 -2835 410";
+		rotation = "1.39617 0 3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tunnel1" {
+		fileName = "Tunnel.dis";
+		isContainer = "1";
+		position = "-83.6527 -2821 360";
+		rotation = "1.22164 0 3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5989 -2780 280";
+		rotation = "1.0471 -3.1415 -3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5985 -2711 180";
+		rotation = "0.872655 -3.1415 -3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "-83.5985 -2665 134";
+		rotation = "0.436323 -3.1415 -3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "-83.599 -2675 140.098";
+		rotation = "0.698121 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "-83.5986 -2665 134";
+		rotation = "0.523588 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "-83.5979 -2660 131";
+		rotation = "0.349056 -3.1415 -3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -1670 118";
+		rotation = "0 -3.1415 -3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "-83.5973 -2640 124";
+		rotation = "0.261789 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "-83.5965 -2626 120";
+		rotation = "0.174522 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "-83.5963 -2626 119.5";
+		rotation = "0.0872654 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "-83.5955 -2599 118.5";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "-83.5943 -2575 120.09";
+		rotation = "-0.20943 -3.1415 -3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -550 117.386";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -1414 117.69";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -1280 117.59";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 0 117.38";
+		rotation = "-0.0523588 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -1000 117.39";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -850 117.388";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -700 117.387";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "104 307.591 98";
+		rotation = "-0.226883 3.1415 -1.5707";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -400 117.385";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -250 117.381";
+		rotation = "-0.0523588 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 -1140 117.5";
+		rotation = "0 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-83.5 200 117.379";
+		rotation = "-0.0523588 -3.14149 -3.14149";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-56.326 269.846 122";
+		rotation = "0 -1.5707 -0.785389";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "9.08299 311.532 123";
+		rotation = "0 -1.5707 -1.16928";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "151.233 294 90";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "184 294 95.9929";
+		rotation = "0 1.5707 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-78.4397 -2605.5 118.5";
+		rotation = "0 1.5707 0.0349056";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-88.8432 -2606 118.5";
+		rotation = "0 -1.5707 -0.0349056";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "-73.556 247.408 125";
+		rotation = "0 -1.5707 -0.383963";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridge1" {
+		fileName = "EXPBRIDGE.dis";
+		isContainer = "1";
+		position = "32.0046 311.03 120";
+		rotation = "0 -1.57069 -1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.341 294 115";
+		rotation = "0 -0.10471 1.5707";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.359 308.321 120";
+		rotation = "0 1.57069 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.35 296 120";
+		rotation = "0 1.5707 1.5707";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.348 302.31 113";
+		rotation = "0 0.785389 1.5707";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.352 308.314 113";
+		rotation = "0 -0.785387 1.57068";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.356 308.318 116";
+		rotation = "0 1.57068 1.57068";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.348 296 114";
+		rotation = "0 1.5707 1.5707";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.351 300.689 120";
+		rotation = "0 1.57069 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.352 300.69 116";
+		rotation = "0 1.57068 1.57068";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.35 296 116";
+		rotation = "0 1.57069 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.347 305 112";
+		rotation = "0 -0 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.347 292 114";
+		rotation = "0 1.5707 1.5707";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.339 280 115";
+		rotation = "0 0 1.5707";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.346 294 112";
+		rotation = "0 -0 1.57068";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.339 281 115";
+		rotation = "0 1.5707 1.5707";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.346 288 114";
+		rotation = "0 1.57069 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.345 287 112";
+		rotation = "0 -0 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.343 287 114";
+		rotation = "0 -0 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.345 288 115";
+		rotation = "0 1.57069 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "180.89 285 117";
+		rotation = "1.5707 0 3.1415";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.34 281 114";
+		rotation = "0 1.57069 1.57069";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "lcargo21" {
+		fileName = "Lcargo2.dis";
+		isContainer = "0";
+		position = "179.342 287 116";
+		rotation = "0 -0 1.57069";
+		lightParams = "0 ";
+	};
+	instant Item "RepairPack1" {
+		dataBlock = "RepairPack";
+		name = "";
+		position = "3 -143 1987";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPack1" {
+		dataBlock = "RepairPack";
+		name = "";
+		position = "-2 -143 1987";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPack1" {
+		dataBlock = "RepairPack";
+		name = "";
+		position = "4 -143 1987";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPack1" {
+		dataBlock = "RepairPack";
+		name = "";
+		position = "-4 -143 1987";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPack1" {
+		dataBlock = "RepairPack";
+		name = "";
+		position = "-3 -143 1987";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant InteriorShape "logo31" {
+		fileName = "logo3.dis";
+		isContainer = "1";
+		position = "-86.9538 -2391.25 766";
+		rotation = "0 1.5707 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "logo31" {
+		fileName = "logo3.dis";
+		isContainer = "1";
+		position = "-86.9493 -2524 767";
+		rotation = "0 1.5707 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "ehoverpost1" {
+		fileName = "ehoverpost.dis";
+		isContainer = "1";
+		position = "-77 -2527.5 836";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "ehoverpost1" {
+		fileName = "ehoverpost.dis";
+		isContainer = "1";
+		position = "-77 -2527.5 794.067";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-82.9117 -2837 893.083";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-83.6442 -2836.81 892.761";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-81.6437 -2837.5 891.905";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-82.9117 -2837 893.083";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-82.9483 -2837.1 887.675";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-82.1397 -2836.83 892.732";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-84 -2837.05 891.802";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-83.6784 -2837.29 891.041";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-83.2591 -2837.56 890.357";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "scargo11" {
+		fileName = "Scargo1.dis";
+		isContainer = "0";
+		position = "-82.9793 -2837.35 889.527";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "eround1" {
+		fileName = "eround.dis";
+		isContainer = "1";
+		position = "0 0 298";
+		rotation = "0 0 3.14151";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "36 -1500 1030";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "30 -1500 1030";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-8 -1500 1038";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "14 -1500 1030";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-2 -1500 1046";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-2 -1500 1030";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-8 -1500 1042";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-21 -1500 1030";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "4 -1500 1038";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-33 -1500 1030";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "24 -1500 1034";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "24 -1500 1038";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "30 -1500 1038";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "36 -1500 1038";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "36 -1500 1042";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "4 -1500 1042";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "30 -1500 1046";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "26 -1500 1046";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "14 -1500 1034";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "14 -1500 1038";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "14 -1500 1042";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "14 -1500 1046";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "4 -1500 1034";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-8 -1500 1034";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-31 -1500 1034";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-35 -1500 1034";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-23 -1500 1034";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-19 -1500 1034";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-17 -1500 1038";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-27 -1500 1038";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-37 -1500 1038";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-16 -1500 1042";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-38 -1500 1042";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-15 -1500 1046";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-39 -1500 1046";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "34 -1500 1045";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "28 -1500 1031";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "3 -1500 1032";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-7 -1500 1032";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant InteriorShape "BElcargo21" {
+		fileName = "BELCargo2.dis";
+		isContainer = "1";
+		position = "-7 -1500 1045";
+		rotation = "0 0 0";
+		lightParams = "8 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+	};
+	instant StaticShape "AntennaSmall1" {
+		dataBlock = "SmallAntenna";
+		name = "";
+		position = "-81.7748 -2356.13 888.554";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "AntennaSmall1" {
+		dataBlock = "SmallAntenna";
+		name = "";
+		position = "-84.2609 -2356.13 888.583";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant InteriorShape "logo11" {
+		fileName = "logo1.dis";
+		isContainer = "1";
+		position = "-79.4357 -2786 885";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant StaticShape "AntennaLarge1" {
+		dataBlock = "LargeAntenna";
+		name = "";
+		position = "-25 -1946.5 925.677";
+		rotation = "-1.56465 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "AntennaLarge1" {
+		dataBlock = "LargeAntenna";
+		name = "";
+		position = "-22.9929 -1946.5 925.679";
+		rotation = "-1.56468 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant StaticShape "AntennaLarge1" {
+		dataBlock = "LargeAntenna";
+		name = "";
+		position = "-24 -1946.5 925.678";
+		rotation = "-1.56466 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+	};
+	instant InteriorShape "logo11" {
+		fileName = "logo1.dis";
+		isContainer = "1";
+		position = "-94.0995 -2638.5 851";
+		rotation = "0 1.57075 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "logo11" {
+		fileName = "logo1.dis";
+		isContainer = "1";
+		position = "-94.0992 -2689.35 851";
+		rotation = "0 1.57075 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "0 -461.797 1088";
+		rotation = "1.48349 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "0 -243 1230";
+		rotation = "-1.1868 -3.14157 -3.14157";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "0 -240.397 1240.5";
+		rotation = "-1.30896 -3.14156 -3.14156";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "0 -255 1205";
+		rotation = "-1.04717 -3.14157 -3.14157";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "expbridgecap1" {
+		fileName = "EXPBRIDGECAP.dis";
+		isContainer = "1";
+		position = "0 -268 1185";
+		rotation = "-0.907569 -3.14157 -3.14157";
+		lightParams = "0 ";
+	};
+	instant Item "RepairKit1" {
+		dataBlock = "RepairKit";
+		name = "";
+		position = "-4.66826 -1945.11 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairKit1" {
+		dataBlock = "RepairKit";
+		name = "";
+		position = "-1.76555 -1945.02 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairKit1" {
+		dataBlock = "RepairKit";
+		name = "";
+		position = "1.00519 -1944.93 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairKit1" {
+		dataBlock = "RepairKit";
+		name = "";
+		position = "-7.57096 -1945.19 968.998";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "-8.64217 -1947.46 968.998";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "-7.71823 -1947.48 968.998";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "-6.66231 -1947.5 968.998";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "-5.73838 -1947.5 968.998";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "-4.81445 -1947.51 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "-3.89052 -1947.52 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "-2.96658 -1947.53 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "-2.04265 -1947.54 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "-0.854749 -1947.56 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "0.0691818 -1947.57 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "1.12509 -1947.58 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPatch1" {
+		dataBlock = "RepairPatch";
+		name = "";
+		position = "2.44499 -1947.6 969";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+			instant Trigger "End" {
+			dataBlock = "GroupTrigger";
+			name = "End";
+			position = "125.038 307.59 99.1998";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+			num = "End";
+		};
+	instant SimGroup "Checkpoints" {
+		instant Trigger "0" {
+			dataBlock = "GroupTrigger";
+			name = "0";
+			position = "125.038 307.59 99.1998";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "Checkpoint0";
+		};
+		instant Trigger "1" {
+			dataBlock = "GroupTrigger";
+			name = "1";
+			position = "-0.00100289 -152.49 1986.5";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+			num = "Checkpoint1";
+		};
+		instant Trigger "2" {
+			dataBlock = "GroupTrigger";
+			name = "2";
+			position = "-0.107873 -467.333 1850.44";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "Checkpoint2";
+		};
+		instant Trigger "3" {
+			dataBlock = "GroupTrigger";
+			name = "3";
+			position = "-0.0997263 -468.585 1082.73";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "Checkpoint3";
+		};
+		instant Trigger "4" {
+			dataBlock = "GroupTrigger";
+			name = "4";
+			position = "18.5616 -1910.82 964.625";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "Checkpoint4";
+		};
+		instant Trigger "5" {
+			dataBlock = "GroupTrigger";
+			name = "5";
+			position = "-48.8158 -1952.04 914.878";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "Checkpoint5";
+		};
+		instant Trigger "6" {
+			dataBlock = "GroupTrigger";
+			name = "6";
+			position = "-77.8226 -2031.43 872.25";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "Checkpoint6";
+		};
+		instant Trigger "7" {
+			dataBlock = "GroupTrigger";
+			name = "7";
+			position = "-83.1434 -2373.08 889.09";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "Checkpoint7";
+		};
+		instant Trigger "8" {
+			dataBlock = "GroupTrigger";
+			name = "8";
+			position = "-86.1065 -2784.59 888.999";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "Checkpoint8";
+		};
+		instant Trigger "9" {
+			dataBlock = "GroupTrigger";
+			name = "9";
+			position = "-83.5332 -2563.5 122.533";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "Checkpoint9";
+		};
+	};
+	instant SimGroup "Antennas" {
+		instant StaticShape "AntennaLarge1" {
+			dataBlock = "LargeAntenna";
+			name = "";
+			position = "119.917 298.896 93.9857";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+		instant StaticShape "AntennaLarge1" {
+			dataBlock = "LargeAntenna";
+			name = "";
+			position = "119.904 316.324 94";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+		instant StaticShape "Generator1" {
+			dataBlock = "Generator";
+			name = "";
+			position = "182.867 292.931 116.454";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+		instant StaticShape "AntennaLarge1" {
+			dataBlock = "LargeAntenna";
+			name = "";
+			position = "-2.66992 -146.455 1986.5";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+		instant StaticShape "AntennaLarge1" {
+			dataBlock = "LargeAntenna";
+			name = "";
+			position = "2.96605 -146.076 1986.5";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+	};
+	instant SimGroup "timer" {
+		instant Trigger "GroupTrigger1" {
+			dataBlock = "GroupTrigger";
+			name = "";
+		//	position = "-0.00100287 -152.488 1978.95";
+			position = "-0.00100289 -152.49 1986.5";
+			rotation = "0 0 0";
+			boundingBox = "-7.5 -7.5 -7.5 7.5 7.5 7.5";
+			isSphere = "True";
+						num = "timer";
+		};
+	};
+		instant SimGroup "NewPacks" {
+		instant Item "RepairPack1" {
+			dataBlock = "RepairPack";
+			name = "";
+			position = "39.0472 -1931.88 933.999";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "RepairPack1" {
+			dataBlock = "RepairPack";
+			name = "";
+			position = "3.4387 -1918.17 936";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "RepairPack1" {
+			dataBlock = "RepairPack";
+			name = "";
+			position = "35.4962 -1910.06 964.627";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "RepairPack1" {
+			dataBlock = "RepairPack";
+			name = "";
+			position = "38.5311 -1912.06 940.821";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "RepairPack1" {
+			dataBlock = "RepairPack";
+			name = "";
+			position = "-56.3803 -1964.63 947.001";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "RepairPack1" {
+			dataBlock = "RepairPack";
+			name = "";
+			position = "-83.2188 -2522 768.992";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "RepairPack1" {
+			dataBlock = "RepairPack";
+			name = "";
+			position = "-86.0078 -2692.54 845.08";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "RepairPack1" {
+			dataBlock = "RepairPack";
+			name = "";
+			position = "-20.6394 -40.0169 2023.03";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "RepairPack1" {
+			dataBlock = "RepairPack";
+			name = "";
+			position = "21.104 -39.9928 2023.18";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "shieldpack1" {
+		dataBlock = "shieldpack";
+			name = "RepairPackA";
+			position = "-142.356 -2835.86 889.147";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+		instant Item "shieldpack1" {
+		dataBlock = "shieldpack";
+			name = "RepairPackA";
+			position = "-142.356 -2835.86 893.147";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+	};
+	instant SimGroup "MapMarkers" {
+		instant Marker "Checkpoint One" {
+			dataBlock = "MapMarker";
+			name = "Checkpoint One";
+			position = "0.0689028 -146.441 1986.5";
+			rotation = "0 0 0";
+		};
+		instant Marker "Checkpoint Two" {
+			dataBlock = "MapMarker";
+			name = "Checkpoint Two";
+			position = "-1.0064 -461.993 1846.76";
+			rotation = "0 0 0";
+		};
+		instant Marker "Checkpoint Three" {
+			dataBlock = "MapMarker";
+			name = "Checkpoint Three";
+			position = "0.168571 -467.281 1075.08";
+			rotation = "0 0 0";
+		};
+		instant Marker "Checkpoint Four" {
+			dataBlock = "MapMarker";
+			name = "Checkpoint Four";
+			position = "18.9194 -1910.66 964.625";
+			rotation = "0 0 0";
+		};
+		instant Marker "Checkpoint Five" {
+			dataBlock = "MapMarker";
+			name = "Checkpoint Five";
+			position = "-48.2056 -1951.27 914.878";
+			rotation = "0 0 0";
+		};
+		instant Marker "Checkpoint Six" {
+			dataBlock = "MapMarker";
+			name = "Checkpoint Six";
+			position = "-77.4996 -2031.54 872.25";
+			rotation = "0 0 0";
+		};
+		instant Marker "Checkpoint Seven" {
+			dataBlock = "MapMarker";
+			name = "Checkpoint Seven";
+			position = "-83.2873 -2373.17 889.09";
+			rotation = "0 0 0";
+		};
+		instant Marker "Checkpoint Eight" {
+			dataBlock = "MapMarker";
+			name = "Checkpoint Eight";
+			position = "-86.2122 -2784.81 888.999";
+			rotation = "0 0 0";
+		};
+		instant Marker "Checkpoint Nine" {
+			dataBlock = "MapMarker";
+			name = "Checkpoint Nine";
+			position = "-83.4597 -2563.73 122.485";
+			rotation = "0 0 0";
+		};
+		instant Marker "Finish Line" {
+			dataBlock = "MapMarker";
+			name = "Finish Line";
+			position = "121.543 307.053 94";
+			rotation = "0 0 0";
+		};
+	};
+		instant Item "shieldpack1" {
+		dataBlock = "shieldpack";
+		name = "";
+		position = "-83.7174 -2827.63 884.009";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "shieldpack1" {
+		dataBlock = "shieldpack";
+		name = "";
+		position = "-80.4917 -2828.72 885.346";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "shieldpack1" {
+		dataBlock = "shieldpack";
+		name = "";
+		position = "-86.9085 -2828.57 885.325";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+};
+//--- export object end ---//
+exec(dm);
+exec("UbersChallenge_One.cs");
+$DMScoreLimit = 50;
+// exec(objectives);
+$Game::missionType = "CTF";
+$cdTrack = 4;
+$cdPlayMode = 1;
+schedule("Credits();", 10);
+
+function Credits()
+{		
+messageAll(3, "Map by :UberWear:");
+messageAll(3, "You feel the weight of the world on your shoulders...");
+messageAll(3, "Get to the end of the obstacle course for retribution!");
+messageAll(3, "~wfemale1.wdoh.wav");
+}
+
+
+//resetSimTime();
+// from function Server::loadMission and function onConnection
+
+// NEW START
+function Player::enterMissionArea(%this)
+{
+	%client = Player::getClient(%this);
+	if(%client.inDuel)
+	{
+		Client::sendMessage(Player::getClient(%this),1,"You may not enter the mission area.");
+		%this.outArea=1;
+		alertPlayer(%this, 4);
+		if($LegendzLT::Active)
+			bouncePlayerBack(%client);
+		return;
+	}
+	if(%client.inArena) //fix for 5.0 arena map terrain -DaJ4ck3L
+	{
+		Client::sendMessage(Player::getClient(%this),1,"You may not enter the mission area.");
+		%this.outArea=1;
+		alertPlayer(%this, 4);
+		if($LegendzLT::Active)
+			bouncePlayerBack(%client);
+		return;
+	}
+	//if(!Player::getClient(%this).inArena) // New Arena/Duel code -DaJ4ck3L
+	//{
+		%set = nameToID("MissionCleanup/ObjectivesSet");
+		%this.outArea = "";
+		Client::sendMessage(Player::getClient(%this),1,"You have entered the mission area.");
+		for(%i = 0; (%obj = Group::getObject(%set, %i)) != -1; %i++)
+			GameBase::virtual(%obj, "playerEnterMissionArea", %this);
+	//}
+}
+
+function Player::leaveMissionArea(%this)
+{
+	%client = Player::getClient(%this);
+	if(%client.inDuel || %client.inArena)
+	{
+		%this.outArea = "";
+		return;
+	}
+	//if(!Player::getClient(%this).inArena) // New Arena/Duel code -DaJ4ck3L
+	//{
+		%this.outArea=1;
+		Client::sendMessage(Player::getClient(%this),1,"You have left the mission area.");
+		alertPlayer(%this, 4);
+	//}
+}
+
+function rocket::leaveMissionArea(%this)
+{
+	Anni::Echo("proj out of area");
+	messageall(1,"projectile out of area, foo!");
+}
+	
+function Vector::Multiply(%vecA, %vecB)
+{
+	return getWord(%vecA, 0)*getWord(%vecB, 0)@" "@getWord(%vecA, 1)*getWord(%vecB, 1)@" "@getWord(%vecA, 2)*getWord(%vecB, 2);
+} 
+
+// hahaha.. -Death666
+function bouncePlayerBack(%player)
+{
+	if(Player::isDead(%player))
+	{
+	%Govel = (Item::getVelocity(%player) / 1.6);
+	%DeadVel = Vector::neg(%Govel);
+	Item::setVelocity(%player, %DeadVel);
+	return;
+	}
+
+	%CurrentSpread = GameBase::getDamageLevel(%player);
+	%armor = Player::getArmor(%player);
+	%Toast = %armor.maxDamage;
+	%Butter = "0.05";
+           	%Jelly = %CurrentSpread + %Butter;
+	%c = Player::getClient(%player);
+
+	if(%player.driver == "1")
+	{
+		Player::setDamageFlash(%player, 0.5);
+	}
+
+if(%c.hasfirstcount)
+{
+schedule(%c@".hasfirstcount= true;",25,%c);
+schedule(%c@".hasfirstcount= false;",15,%c);
+schedule(%c@".hassecondcount= false;",25.5,%c);
+
+	Player::setDamageFlash(%player, 0.1);
+	GameBase::setDamageLevel(%player,%Jelly);
+	%vel = Item::getVelocity(%player);
+	%newVel = Vector::neg(%vel);
+	Item::setVelocity(%player, %newVel);
+
+		if(%CurrentSpread + %Butter > %Toast)
+		{
+	if(%player != -1 && getObjectType(%player) == "Player" && !Player::isDead(%player))
+	{	
+		Player::setDamageFlash(%player, 0.5);
+		if($Annihilation::blood)
+		player::blood(%player);
+		Player::blowUp(%player);
+		playNextAnim(%player);
+		Player::kill(%player);
+	}	
+		}
+}
+if(%c.hasfirstcount == "false")
+{
+		Player::setDamageFlash(%player, 0.1);
+		GameBase::setDamageLevel(%player,%Jelly);
+		%vel = Item::getVelocity(%player);
+		%newVel = Vector::neg(%vel);
+		Item::setVelocity(%player, %newVel);
+
+		if(%CurrentSpread + %Butter > %Toast)
+		{
+	if(%player != -1 && getObjectType(%player) == "Player" && !Player::isDead(%player))
+	{	
+		Player::setDamageFlash(%player, 0.5);
+		if($Annihilation::blood)
+		player::blood(%player);
+		Player::blowUp(%player);
+		playNextAnim(%player);
+		Player::kill(%player);
+	}	
+		}
+}
+ 	if(%c.hassecondcount == "false" && %c.hasfirstcount == "false")
+	{
+		%vel = (Item::getVelocity(%player) / 1.2); // 
+		Item::setVelocity(%player, %vel); // %newVel
+		schedule(%c@".hasfirstcount= true;",0.1,%c);
+		schedule(%c@".hassecondcount= true;",0.1,%c);
+	}
+} // Made a meal out of the border abusers..
+   
+//plasmatic	
+function alertPlayer(%player, %count)
+{
+	if(%player.isDuck) //new bootcamp code -DaJ4ck3L
+		return;
+
+	if(%player.outArea == 1 && $Annihilation::OutOfArea)
+	{
+		if(%count > 0)
+		{
+			Client::sendMessage(Player::getClient(%player),0,"~wLeftMissionArea.wav");
+			schedule("alertPlayer(" @ %player @ ", " @ %count - 1 @ ");",1.5,%player);
+		}
+		else
+		{
+			%set = nameToID("MissionCleanup/ObjectivesSet");
+			for(%i = 0; (%obj = Group::getObject(%set, %i)) != -1; %i++)
+				GameBase::virtual(%obj, "playerLeaveMissionArea", %player);
+		}
+		
+	}
+	if(%player.outArea == 1 && !$Annihilation::OutOfArea) 
+	{
+	%type = getObjectType(%player);
+	if(%type == "Player") 
+	{
+		if(Player::isAIControlled(%player))
+		{
+		GameBase::setDamageLevel(%player,GameBase::getDamageLevel(%player) + 0.6);
+		}
+	}
+		%clientId = Player::getClient(%player);
+		Client::sendMessage(%clientId,1,"~wLeftMissionArea.wav");
+		if(%count > 1)
+			schedule("alertPlayer(" @ %player @ ", " @ %count - 1 @ ");",1.5,%player);
+		else if($LegendzLT::Active == false) //New LT code -DaJ4ck3L
+		{
+			schedule("leaveMissionAreaDamage(" @ %clientId @ ");",1,%clientId);
+			
+		}
+		else
+		{
+			schedule("leaveMissionAreaDamage(" @ %clientId @ ");",1,%clientId);
+			%set = nameToID("MissionCleanup/ObjectivesSet");
+			for(%i = 0; (%obj = Group::getObject(%set, %i)) != -1; %i++)
+				GameBase::virtual(%obj, "playerLeaveMissionArea", %player);
+		}
+		
+		if($LegendzLT::Active == false) //moved here -DaJ4ck3L
+			bouncePlayerBack(%player);
+	}	
+}
+
+//plasmatic
+function leaveMissionAreaDamage(%client)
+{
+	%player = Client::getOwnedObject(%client);
+	if(%player.outArea == 1) 
+	{
+		if(!Player::isDead(%player)) 
+		{
+			if(%player.driver == "1")//plasmatic 2.3
+			{
+				Client::sendMessage(%client,1,"~wLeftMissionArea.wav");			
+				%vehicle = Player::getMountObject(%player);
+				GameBase::setDamageLevel(%vehicle,GameBase::getDamageLevel(%vehicle) + 0.15);
+			}	
+			Player::setDamageFlash(%client,0.1);
+			GameBase::setDamageLevel(%player,GameBase::getDamageLevel(%player) + 0.05);
+			schedule("leaveMissionAreaDamage(" @ %client @ ");",1, %client);
+		}
+		//else //why is this here -DaJ4ck3L
+		//{ 
+		//	playNextAnim(%client);
+		//	Client::onKilled(%client, %client);
+		//}
+	}
+}
+
+// NEW END
+
+schedule("RacerMessage();", 15);
+
+
+function RacerMessage()
+{		
+messageAll(3, "Annihilation Skiing Racer ~wbutton_soft.wav");	
+messageAll(1, "Ski through the checkpoints and complete as many laps as possible.");
+schedule("RacerMessage();", 90);		
+}
+
+function Game::playerSpawn(%clientId, %respawn)
+{
+	if(!$ghosting)
+		return false;
+	%clientId.AdminobserverMode = "";
+	Client::clearItemShopping(%clientId);
+	%spawnMarker = Game::pickPlayerSpawn(%clientId, %respawn);
+	
+	if(%clientId.inArena) // New Arena code -DaJ4ck3L
+	{
+		if($ArenaTD::Active)
+			if(%clientId.isArenaTDDead) return;
+		if($ArenaTD::Active && !%clientId.inArenaTD) return;
+		if($Arena::Winners && %clientId.inArenaWin == "") return;
+		if($Arena::Mapchange) return; // dont want anyone spawning before arena loads O.O
+		
+		//if(!$Arena::Terrain)
+			%spawnMarker = Arena::pickRandomSpawn(%clientId);
+			
+		//echo(%spawnMarker@" <<<<< Game::playerSpawn(%clientId, %respawn); <<<< ArenaTerrainSpawn <<< GAME");
+	}
+	
+	if(%spawnMarker)
+	{
+		%clientId.guiLock = "";
+		%clientId.dead = "";
+		//%adterrain = Legendz::pickWaypoint();
+		if($ArenaTD::Active && %clientId.inArenaTD)
+		{
+			if(%clientId.inArenaTDOne)
+			{
+				if($Arena::Terrain)
+				{
+					%spawnPosx = GetOffsetRot(GameBase::getPosition(%spawnMarker),"0 0 0",$ArenaTD::TerrainPos);
+					//%spawnPosx = GameBase::getPosition(%spawnMarker);
+					%spawnObjx = Terrain::CheckPos(%spawnPosx);
+					%spawnObj = Vector::add(%spawnObjx,"0 0 3");
+					%obj = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+					AddToSet("MissionCleanup",%obj);
+					GameBase::setPosition(%obj,%spawnObj);
+					GameBase::setRotation(%obj,$Pi@" 0 0");
+					%spawnPosz = Terrain::CheckPos(%spawnPosx);
+					%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+					//echo(%spawnPos@" <<<<< td 1 SPAWN <<<< ArenaTerrainSpawn");
+					%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+					Schedule("deleteObject("@ %obj @");",5,%obj);
+				}
+				else
+				{
+					%spawnPos = GameBase::getPosition(%spawnMarker);
+					%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+				}
+				//echo(">>> "@%spawnPos@" <<< Arena TD 1 spawnRot >>> "@%spawnRot@" <<< Arena TD 1 spawnRot >>> Team One <<< GAME");
+			}
+			else if(%clientId.inArenaTDTwo)
+			{
+	
+				if($Arena::Terrain)
+				{
+					%spawnPosx = GetOffsetRot(GameBase::getPosition(%spawnMarker),"0 0 0",$ArenaTD::TerrainPos);
+					//%spawnPosx = GameBase::getPosition(%spawnMarker);
+					%spawnObjx = Terrain::CheckPos(%spawnPosx);
+					%spawnObj = Vector::add(%spawnObjx,"0 0 3");
+					%obj = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+					AddToSet("MissionCleanup",%obj);
+					GameBase::setPosition(%obj,%spawnObj);
+					GameBase::setRotation(%obj,$Pi@" 0 0");
+					%spawnPosz = Terrain::CheckPos(%spawnPosx);
+					%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+					//echo(%spawnPos@" <<<<< td 2 SPAWN <<<< ArenaTerrainSpawn");
+					%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+					Schedule("deleteObject("@ %obj @");",5,%obj);
+				}
+				else
+				{
+					%spawnPos = GameBase::getPosition(%spawnMarker);
+					%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+				}
+				//echo(">>> "@%spawnPos@" <<< Arena TD 2 spawnRot >>> "@%spawnRot@" <<< Arena TD 2 spawnRot >>> Team Two <<< GAME");
+			}
+		}
+		else if(%clientId.inArena)
+		{
+			if($Arena::Terrain)
+			{
+				%spawnPosx = GameBase::getPosition(%spawnMarker);
+				%spawnObjx = Terrain::CheckPos(%spawnPosx);
+				%spawnObj = Vector::add(%spawnObjx,"0 0 3");
+				%objx = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+				AddToSet("MissionCleanup",%objx);
+				GameBase::setPosition(%objx,%spawnObj);
+				GameBase::setRotation(%objx,$Pi@" 0 0");
+				%spawnPosz = Terrain::CheckPos(%spawnPosx);
+				%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+				//echo(%spawnPos@" <<<<< arena SPAWN <<<< ArenaTerrainSpawn");
+				%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+				Schedule("deleteObject("@ %objx @");",5,%objx);
+			}
+			else
+			{
+				%spawnPos = GameBase::getPosition(%spawnMarker);
+				%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+			}
+			//echo(">>> "@%spawnPos@" <<< Arena spawnRot >>> "@%spawnRot@" <<< Arena spawnRot >>> Team Two <<< GAME");
+		}
+		else if(%clientId.inDuel) // New Arena code -DaJ4ck3L
+		{
+			if($Dueling[%clientId] == false) return;
+			if($Duel::Mapchange) return; // dont want anyone spawning before arena loads O.O
+		
+			//%duelnum = Duel::getnum();
+			//if(%duelnum <= 2)
+			//{
+				if(!$Duela)
+				{					
+					%pos = "0 10 0";
+					%spawnPosx = GetOffsetRot(%pos,"0 0 0",$Duel::Spawn);
+					%spawnObj = Vector::add(%spawnPosx,"0 0 3");
+					%obj = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+					AddToSet("MissionCleanup",%obj);
+					GameBase::setPosition(%obj,%spawnObj);
+					GameBase::setRotation(%obj,$Pi@" 0 0");
+					%spawnPosz = Terrain::CheckPos(%spawnPosx);
+					%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+					Schedule("deleteObject("@ %objx @");",11,%objx);
+					%spawnRot = "0 -0 -3";
+					$Duela = true;
+				}
+				else
+				{
+					%pos = "0 -10 0";
+					%spawnPosx = GetOffsetRot(%pos,"0 0 0",$Duel::Spawn);
+					%spawnObj = Vector::add(%spawnPosx,"0 0 3");
+					%obj = NewObject("Spawn Antenna",StaticShape,"LargeAntenna",true);
+					AddToSet("MissionCleanup",%obj);
+					GameBase::setPosition(%obj,%spawnObj);
+					GameBase::setRotation(%obj,$Pi@" 0 0");
+					%spawnPosz = Terrain::CheckPos(%spawnPosx);
+					%spawnPos = Vector::add(%spawnPosz,"0 0 3");
+					Schedule("deleteObject("@ %objx @");",11,%objx);
+					%spawnRot = "0 -0 -0";
+					$Duela = false;
+				}
+			//}
+			
+			//%spawnMarker = Duel::pickRandomSpawn();
+		}
+		else if(%spawnMarker == -1)
+		{
+			%spawnPos = "0 0 300";
+			%spawnRot = "0 0 0";
+		}
+		else
+		{
+			%spawnPos = GameBase::getPosition(%spawnMarker);
+			// make sure the player doesnt end up with goofy rotation and screw up deploying items.. -plasmatic
+			%spawnRot = "0 0 "@ getword(GameBase::getRotation(%spawnMarker),2);
+		}
+		//plasmatic 3.0
+		if($build)
+		{
+			$DefaultArmor[Male] = armormBuilder;
+			$DefaultArmor[Female] = armorfBuilder;	
+		}
+		else if(%clientId.inArena) // New Arena code -DaJ4ck3L
+		{
+			if($LegendzArena::SpawnType == "AnniSpawn") //New Arena toggle -DaJ4ck3L
+			{
+				$DefaultArmor[Male] = armormWarrior;
+				$DefaultArmor[Female] = armorfWarrior;	
+			}
+			if($LegendzArena::SpawnType == "TitanSpawn")
+			{
+				$DefaultArmor[Male] = armorTitan;
+				$DefaultArmor[Female] = armorTitan;
+			}
+			if($LegendzArena::SpawnType == "EliteSpawn")
+			{
+				$DefaultArmor[Male] = armormMercenary;
+				$DefaultArmor[Female] = armorfMercenary;
+			}
+			if($LegendzArena::SpawnType == "BaseSpawn")
+			{
+				$DefaultArmor[Male] = armormLightArmor;
+				$DefaultArmor[Female] = armorfLightArmor;
+			}
+		}
+		else if(%clientId.inDuel) // New Duel code -DaJ4ck3L
+		{
+			if(%clientId.DuelArmor == "AnniSpawn") //New Duel toggle, stores by clientId -DaJ4ck3L
+			{
+				$DefaultArmor[Male] = armormWarrior;
+				$DefaultArmor[Female] = armorfWarrior;	
+			}
+			if(%clientId.DuelArmor == "EliteSpawn")
+			{
+				$DefaultArmor[Male] = armormMercenary;
+				$DefaultArmor[Female] = armorfMercenary;
+			}
+			if(%clientId.DuelArmor == "BaseSpawn")
+			{
+				$DefaultArmor[Male] = armormLightArmor;
+				$DefaultArmor[Female] = armorfLightArmor;
+			}
+			if(%clientId.DuelArmor == "BuilderSpawn")
+			{
+				$DefaultArmor[Male] = armormBuilder;
+				$DefaultArmor[Female] = armorfBuilder;
+			}
+			if(%clientId.DuelArmor == "TitanSpawn")
+			{
+				$DefaultArmor[Male] = armorTitan;
+				$DefaultArmor[Female] = armorTitan;
+			}
+		}
+		else if($LegendzLT::Active == true) // New Arena code -DaJ4ck3L
+		{
+			if($LegendzLT::SpawnType == "AnniSpawn") //New Arena toggle -DaJ4ck3L
+			{
+				$DefaultArmor[Male] = armormWarrior;
+				$DefaultArmor[Female] = armorfWarrior;	
+			}
+			if($LegendzLT::SpawnType == "EliteSpawn")
+			{
+				$DefaultArmor[Male] = armormMercenary;
+				$DefaultArmor[Female] = armorfMercenary;
+			}
+			if($LegendzLT::SpawnType == "BaseSpawn")
+			{
+				$DefaultArmor[Male] = armormLightArmor;
+				$DefaultArmor[Female] = armorfLightArmor;
+			}
+		}
+		else if($UberWear::Active == true)
+		{
+			$DefaultArmor[Male] = armormLightArmor;
+			$DefaultArmor[Female] = armorfLightArmor;
+		}
+		else
+		{
+			$DefaultArmor[Male] = armormLightArmor;
+			$DefaultArmor[Female] = armorfLightArmor;
+			
+			// $DefaultArmor[Male] = armormWarrior;
+			// $DefaultArmor[Female] = armorfWarrior;			
+		}
+		%armor = $DefaultArmor[Client::getGender(%clientId)];
+
+		%pl = spawnPlayer(%armor, %spawnPos, %spawnRot);
+		Anni::Echo("SPAWN: "@ Client::getName(%clientID)@ " cl:" @ %clientId @ " pl:" @ %pl @ " marker:" @ %spawnMarker @ " armor:" @ %armor);
+		%pl.cloakable = true;	//for base cloaker -plasmatic
+		%clientId.AdminobserverMode = "";
+		%clientId.observerMode = "";
+		%pl.teled = "";	// for teleporter 2.2 model -plasmatic
+		%clientId.ConnectBeam = "";	//for zappy invs -plasmatic
+		%clientId.InvTargetable = "";	//zap!
+		%ClientId.InvConnect = "";	//Zap!
+		
+		if(%pl != -1)
+		{
+			//Client::clearItemShopping(%clientId);
+			GameBase::setTeam(%pl, Client::getTeam(%clientId));
+			Client::setOwnedObject(%clientId, %pl);
+			//echo("start"); //debug for the damn player::useitem crap -DaJ4ck3L
+			Game::playerSpawned(%pl, %clientId, %armor, %respawn);
+			%pl.cloakable = true;
+			$jailed[%pl] = "";
+			$released[%pl] = "";
+			if($matchStarted)
+			{
+				Client::setControlObject(%clientId, %pl);
+				%clientId.droid=false;
+			}
+			else
+			{
+				%clientId.observerMode = "pregame";
+				Client::setControlObject(%clientId, Client::getObserverCamera(%clientId));
+				Observer::setOrbitObject(%clientId, %pl, 3, 3, 3);
+			}
+//==================  respawn Invulnerable -plasmatic
+			if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+				$respawnInvulnerableTime = 0;
+			if(%respawn)	
+			{
+				if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+					$respawnInvulnerableTime = 0;
+				if($siegeFlag)	
+					Siege::waypointClient(%clientId);
+			}
+			if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+           		%damage = %armor.maxDamage - 0.001;
+            GameBase::setEnergy(%pl, %armor.maxEnergy);	///2);
+			if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+			{
+            	GameBase::setAutoRepairRate(%pl, %damage / $respawnInvulnerableTime);
+            	%pl.invulnerable = true;
+			}
+            %pl.cloakable = true;	//fer base cloaker -plasmatic
+            $jailed[%pl] = "";	//just to be certain for jail..
+            $released[%pl] = "";
+      		if($LegendzLT::Active == false) //get rid of safe gaurds on start //New LT code -DaJ4ck3L
+            	incInvulnerable(%pl, 0);
+		    %weapon = Player::getMountedItem(%pl,$WeaponSlot);
+		    if(%weapon != -1) //lol, I would put money on it this is what kept unmounting the item on spawn -DaJ4ck3L 
+			{
+			      %pl.lastWeapon = %weapon;
+			      Player::unMountItem(%pl,$WeaponSlot); //w.e might be here for a reason, my quick fix wont fuck with this -DaJ4ck3L
+			}
+       		if(!%respawn)
+			{
+			// initial drop
+		if($siegeFlag)
+		{
+			schedule("Client::sendMessage("@%clientId@", 0, \"Welcome to Siege! Capture or hold the switch to complete the mission.\");",5, %clientId);
+			schedule("Siege::InitialwaypointClient("@%clientId@");",5,%clientId);
+		}
+		if(%clientId.SpecialMessage == true)
+			CustomMessage(%clientId);
+		ModSettingsInfo(%clientId, true);
+		//Anni::Echo("join team "@Client::getTeam(%clientId)@" old team = "@%clientId.lastteam);
+		if(%clientId.LastTeam != -1 && %clientId.LastTeam != Client::getTeam(%clientId))
+		{
+			if($annihilation::DisableTurretsOnTeamChange)
+				Turret::DisableClients(%clientId);	
+		}
+		
+		%clientId.LastTeam = Client::getTeam(%clientId);
+	}  
+			
+		}
+		return true;
+	}
+	else 
+	{
+		Client::sendMessage(%clientId,0,"Sorry No Respawn Positions Are Empty - Try again later ");
+		return false;
+	}
+}
+
+function incInvulnerable(%player, %time)
+{
+   if(%time > $respawnInvulnerableTime)
+   {
+	  if(!%player.inArenaTD)
+		%player.invulnerable = "";
+      GameBase::setAutoRepairRate(%player, 0);
+	%weapon = Player::getMountedItem(%player,$WeaponSlot);
+	   if(%player.lastWeapon != "" && %weapon == -1) {
+		   Player::useItem(%player,%player.lastWeapon);
+		   %player.lastWeapon = "";
+	    }
+   }
+   else
+   { 
+      schedule("incInvulnerable(" @ %player @ ", "@ %time + 0.5 @ ");", 0.5, %player);
+   }
+}
+
+
+function Game::playerSpawned(%pl, %clientId, %armor)
+{
+	// hard coded here -plasmatic
+	
+	schedule("Client::clearItemShopping("@%clientId@");",1, %clientId);
+	
+	if($Annihilation::UsePersonalSkin)
+		Client::setSkin(%clientId, $Client::info[%clientId, 0]);
+	else 
+		Client::setSkin(%clientId, $Server::teamSkin[Client::getTeam(%clientId)]);
+	
+	//%pl = Client::getOwnedObject(%clientId);
+	
+	if($build && !%clientId.inArena && !%clientId.inDuel)
+	{
+		Player::setItemCount(%clientId, iarmorBuilder, 1);	
+		Player::setItemCount(%clientId, Railgun, 1);
+		Player::setItemCount(%clientId, Grabbler, 1);
+		Player::setItemCount(%clientId, RocketLauncher, 1);
+		Player::setItemCount(%clientId, TargetingLaser, 1);
+		   
+		Player::setItemCount(%clientId, RailAmmo, 300);		   
+		Player::setItemCount(%clientId, RocketAmmo, 300);
+		Player::setItemCount(%clientId, EnergyPack, 1);
+
+		if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+		   Player::useItem(%pl,EnergyPack);	  ///FUCK -DaJ4ck3L
+		   
+		Legendz::useItem(%pl,Grabbler); //New function used to get that weapon out!! -DaJ4ck3L		
+	}
+	else if(%clientId.inArena) // New Arena code -DaJ4ck3L
+	{
+		if($LegendzArena::SpawnType == "AnniSpawn") //New Arena toggle -DaJ4ck3L
+		{
+			if($LegendzArena::WeaponOpt == "Normal")
+			{
+				Player::setItemCount(%clientId, iarmorWarrior, 1);	
+				Player::setItemCount(%clientId, DiscLauncher, 1);
+				Player::setItemCount(%clientId, PlasmaGun, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmo, 30);		   
+				Player::setItemCount(%clientId, PlasmaAmmo, 30);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 20);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 5);
+				Player::setItemCount(%clientId, Grenade, 8);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncher);
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "DiscOnly")
+			{
+				Player::setItemCount(%clientId, iarmorWarrior, 1);	
+				Player::setItemCount(%clientId, DiscLauncher, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmo, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 5);
+				Player::setItemCount(%clientId, Grenade, 8);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncher);
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "MaxAmmo")
+			{
+				Player::setItemCount(%clientId, iarmorWarrior, 1);	
+				Player::setItemCount(%clientId, DiscLauncher, 1);
+				Player::setItemCount(%clientId, PlasmaGun, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmo, 100);		   
+				Player::setItemCount(%clientId, PlasmaAmmo, 100);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 5);
+				Player::setItemCount(%clientId, Grenade, 8);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncher);
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			
+			//Player::mountItem(%clientId,BlowUpDoll,7);
+		}
+		if($LegendzArena::SpawnType == "TitanSpawn") //New Arena Titan -DaJ4ck3L
+		{
+			Player::setItemCount(%clientId, iarmorTitan, 1);	
+			Player::setItemCount(%clientId, RocketLauncher, 1);
+			Player::setItemCount(%clientId, ParticleBeamWeapon, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, RocketAmmo, 100);
+	   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 5);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			Player::setItemCount(%clientId, MineAmmo, 5);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncher);
+			if(%clientId.isLegendz)
+				MountWings(%clientId);
+		}
+		if($LegendzArena::SpawnType == "EliteSpawn")
+		{
+			if($LegendzArena::WeaponOpt == "Normal")
+			{
+				//Player::setItemCount(%clientId, iarmorMercenary, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherElite, 1);
+				Player::setItemCount(%clientId, PlasmaGunBase, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoElite, 15);		   
+				Player::setItemCount(%clientId, PlasmaAmmoBase, 40);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 6);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherElite);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "DiscOnly")
+			{
+				//Player::setItemCount(%clientId, iarmorMercenary, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherElite, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoElite, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 6);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherElite);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "MaxAmmo")
+			{
+				//Player::setItemCount(%clientId, iarmorMercenary, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherElite, 1);
+				Player::setItemCount(%clientId, PlasmaGunBase, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoElite, 100);		   
+				Player::setItemCount(%clientId, PlasmaAmmoBase, 100);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 6);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherElite);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+		}
+		if($LegendzArena::SpawnType == "BaseSpawn")
+		{
+			if($LegendzArena::WeaponOpt == "Normal")
+			{
+				//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherBase, 1);
+				Player::setItemCount(%clientId, PlasmaGunBase, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+				Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 5);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherBase);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "DiscOnly")
+			{
+				//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoBase, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 5);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherBase);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+			else if($LegendzArena::WeaponOpt == "MaxAmmo")
+			{
+				//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+				Player::setItemCount(%clientId, DiscLauncherBase, 1);
+				Player::setItemCount(%clientId, PlasmaGunBase, 1);
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+				Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+				Player::setItemCount(%clientId, DiscAmmoBase, 100);		   
+				Player::setItemCount(%clientId, PlasmaAmmoBase, 100);
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 100);
+		   
+				Player::setItemCount(%clientId, RepairKit, 1);
+				Player::setItemCount(%clientId, Beacon, 3);
+				Player::setItemCount(%clientId, Grenade, 5);	   
+				//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+				Player::setItemCount(%clientId, EnergyPack, 1);
+				if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+					Player::useItem(%pl,EnergyPack);
+				Legendz::useItem(%pl,DiscLauncherBase);
+			
+				if(%clientId.isLegendz)
+					MountWings(%clientId);
+			}
+		}
+		
+	}
+	else if(%clientId.inDuel) // New Duel code -DaJ4ck3L
+	{
+		if(%clientId.DuelArmor == "AnniSpawn") //New Arena toggle -DaJ4ck3L
+		{
+			Player::setItemCount(%clientId, iarmorWarrior, 1);	
+			Player::setItemCount(%clientId, DiscLauncher, 1);
+			Player::setItemCount(%clientId, PlasmaGun, 1);
+    	    Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmo, 30);		   
+			Player::setItemCount(%clientId, PlasmaAmmo, 30);
+			Player::setItemCount(%clientId, GrenadeAmmoBase, 20);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 5);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncher);
+		}
+		if(%clientId.DuelArmor == "EliteSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorMercenary, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, DiscLauncherElite, 1);
+			Player::setItemCount(%clientId, PlasmaGunBase, 1);
+    	    Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmoElite, 15);		   
+			Player::setItemCount(%clientId, PlasmaAmmoBase, 40);
+			Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 3);
+			Player::setItemCount(%clientId, Grenade, 6);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherElite);
+		}
+		if(%clientId.DuelArmor == "BaseSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, DiscLauncherBase, 1);
+			Player::setItemCount(%clientId, PlasmaGunBase, 1);
+    	    Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+			Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+			Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 3);
+			Player::setItemCount(%clientId, Grenade, 5);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherBase);
+		}
+		if(%clientId.DuelArmor == "BuilderSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, Railgun, 1);
+			Player::setItemCount(%clientId, RocketLauncher, 1);
+    	    Player::setItemCount(%clientId, Fixit, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, RailAmmo, 15);		   
+			Player::setItemCount(%clientId, RocketAmmo, 10);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			//Player::setItemCount(%clientId, Beacon, 1);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			//Player::setItemCount(%clientId, MineAmmo, 3);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherBase);
+		}
+		if(%clientId.DuelArmor == "TitanSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, ParticleBeamWeapon, 1);
+			Player::setItemCount(%clientId, RocketLauncher, 1);
+    	    Player::setItemCount(%clientId, PhaseDisrupter, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, RocketAmmo, 20);		   
+			Player::setItemCount(%clientId, PhaseAmmo, 30);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 5);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			//Player::setItemCount(%clientId, MineAmmo, 5);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,RocketLauncher);
+		}
+		
+	}
+	else if($LegendzLT::Active == true) //New LT code -DaJ4ck3L
+	{	
+		if($LegendzLT::SpawnType == "AnniSpawn") //New LT toggle -DaJ4ck3L
+		{
+			Player::setItemCount(%clientId, iarmorWarrior, 1);	
+			Player::setItemCount(%clientId, DiscLauncher, 1);
+			Player::setItemCount(%clientId, PlasmaGunBase, 1);
+			if($LegendzLT::AnniWeapon == "Shotgun")
+				Player::setItemCount(%clientId, Shotgun, 1);
+			else if($LegendzLT::AnniWeapon == "GrenadeLauncher")
+				Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			else if($LegendzLT::AnniWeapon == "Blaster")
+				Player::setItemCount(%clientId, Blaster, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmo, 30);		   
+			Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+			if($LegendzLT::AnniWeapon == "Shotgun")
+				Player::setItemCount(%clientId, ShotgunShells, 30);
+			else if($LegendzLT::AnniWeapon == "GrenadeLauncher")
+				Player::setItemCount(%clientId, GrenadeAmmoBase, 20);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 5);
+			Player::setItemCount(%clientId, Grenade, 8);	   
+			Player::setItemCount(%clientId, MineAmmo, 3); //No mines in LT -DaJ4ck3L
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncher);
+		}
+		if($LegendzLT::SpawnType == "EliteSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorMercenary, 1); //Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, DiscLauncherElite, 1);
+			Player::setItemCount(%clientId, ChaingunElite, 1);
+    	    Player::setItemCount(%clientId, Blaster, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmoElite, 15);		   
+			Player::setItemCount(%clientId, BulletAmmoElite, 150);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 3);
+			Player::setItemCount(%clientId, Grenade, 6);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+			
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherElite);
+		}
+		if($LegendzLT::SpawnType == "BaseSpawn")
+		{
+			//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+			Player::setItemCount(%clientId, DiscLauncherBase, 1);
+			Player::setItemCount(%clientId, ChaingunBase, 1);
+    	    Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+			
+			Player::setItemCount(%clientId, TargetingLaser, 1);
+			   
+			Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+			Player::setItemCount(%clientId, BulletAmmoBase, 100);
+			Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+		   
+			Player::setItemCount(%clientId, RepairKit, 1);
+			Player::setItemCount(%clientId, Beacon, 3);
+			Player::setItemCount(%clientId, Grenade, 5);	   
+			//Player::setItemCount(%clientId, MineAmmo, 0);
+		   	   
+			Player::setItemCount(%clientId, EnergyPack, 1);
+			if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+				Player::useItem(%pl,EnergyPack);
+			Legendz::useItem(%pl,DiscLauncherBase);
+		}
+	}
+	else if($UberWear::Active == true)
+	{
+		//Player::setItemCount(%clientId, iarmorLightArmor, 1);	//Removed since this isn't an actual item -DaJ4ck3L
+		Player::setItemCount(%clientId, DiscLauncherBase, 1);
+		Player::setItemCount(%clientId, PlasmaGunBase, 1);
+        Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+		
+		Player::setItemCount(%clientId, TargetingLaser, 1);
+		   
+		Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+		Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+		Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+	   
+		Player::setItemCount(%clientId, RepairKit, 1);
+		Player::setItemCount(%clientId, Beacon, 3);
+		Player::setItemCount(%clientId, Grenade, 5);	   
+		//Player::setItemCount(%clientId, MineAmmo, 0);
+	   	   
+		Player::setItemCount(%clientId, EnergyPack, 1);
+		if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+			Player::useItem(%pl,EnergyPack);
+		Legendz::useItem(%pl,DiscLauncherBase);
+	}
+	else
+	{	
+		%clientId.hasmessageend = true;
+		Player::setItemCount(%clientId, DiscLauncherBase, 1);
+		Player::setItemCount(%clientId, PlasmaGunBase, 1);
+        Player::setItemCount(%clientId, GrenadeLauncherBase, 1);
+		
+		Player::setItemCount(%clientId, TargetingLaser, 1);
+		
+//		Player::setItemCount(%clientId, GrapplingHook, 1);
+//		Player::setItemCount(%clientId, GateGun, 1);
+		   
+		Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+		Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+		Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+	   
+		Player::setItemCount(%clientId, RepairKit, 1);
+		Player::setItemCount(%clientId, Beacon, 3);
+		Player::setItemCount(%clientId, Grenade, 5);	   
+		   	   
+		Player::setItemCount(%clientId, EnergyPack, 1);
+		if(Player::getMountedItem(%pl,$backpackSlot) != EnergyPack)
+			Player::useItem(%pl,EnergyPack);	   
+		Legendz::useItem(%pl,DiscLauncherBase);
+  		$currentLeg[%clientId] = 1;
+		schedule("vehicle::setWayPoint(" @ %clientId @ ", 1);", 1);
+		%laptime = getSimTime() - %clientId.finishtime;
+		if(%laptime < 0)
+		%laptime = -%laptime;
+		%clientId.finishtime = getSimTime();
+	}
+}	
+
+function StartUp() {
+	//grab the checkpoint locations regardless of order
+	%group = nameToId("MissionGroup\\Checkpoints");
+	$numCheckPoints = Group::objectCount(%group);
+	for(%i = 0; %i < $numCheckPoints; %i++) {
+		%obj = Group::getObject(%group, %i);
+		for(%ii = 0; %ii < $numCheckPoints; %ii++) {
+			if(%obj.num == "Checkpoint" @ %ii) {
+				$checkpoints[%ii] = GameBase::getPosition(%obj);
+				break;
+			}
+		}
+	}
+}
+
+function Game::initialMissionDrop(%clientId)
+{
+	Client::setGuiMode(%clientId, $GuiModePlay);
+
+   $CompletedRounds[%clientId] = 0;
+   $TotalRounds[%clientId] = 0;
+   $currentLeg[%clientId] = 1;
+   BeginRace(%clientId);
+
+	if($Server::TourneyMode)
+	{
+		GameBase::setTeam(%clientId, -1);
+		if(%clientId.isTeamCaptin) //get rid of team captins on map change -DaJ4ck3L
+		{
+			%clientId.isTeamCaptin = false;
+		}
+		if($Legendz::MuteAllTourney)
+		{
+			echo("missiondrop!!");
+			$Legendz::MuteAllTourney = false;
+			Legendz::MuteAllTourney("unmute");
+		}
+		Game::refreshClientScore(%clientId);
+	}
+	else
+	{
+		if(%clientId.observerMode == "observerFly" || %clientId.observerMode == "observerOrbit")
+		{
+			%clientId.observerMode = "observerOrbit";
+			%clientId.guiLock = "";
+			Observer::jump(%clientId);
+			return;
+		}
+		%numTeams = getNumTeams()-1;
+		%curTeam = Client::getTeam(%clientId);
+
+		if(%curTeam >= %numTeams || (%curTeam == -1 && (%numTeams < 2 || $Server::AutoAssignTeams)) )
+			Game::assignClientTeam(%clientId);
+			
+		Game::refreshClientScore(%clientId); // New Arena code -DaJ4ck3L
+	}	 
+	Client::setControlObject(%clientId, Client::getObserverCamera(%clientId));
+	%camSpawn = Game::pickObserverSpawn(%clientId);
+	Observer::setFlyMode(%clientId, GameBase::getPosition(%camSpawn), GameBase::getRotation(%camSpawn), true, true);
+
+	if(Client::getTeam(%clientId) == -1)
+	{
+		%clientId.observerMode = "pickingTeam";
+
+		if($Server::TourneyMode && ($matchStarted || $matchStarting))
+		{
+			%clientId.observerMode = "observerFly";
+			return;
+		}
+		else if($Server::TourneyMode)
+		{
+			if($Server::TeamDamageScale)
+				%td = "ENABLED";
+			else
+				%td = "DISABLED";
+			bottomprint(%clientId, "<jc><f1>Server is running in Competition Mode\nTeam damage is " @ %td, 0);
+		}
+		
+		if($Legendz::TourneyPickTeam == true)
+		{
+			Client::buildMenu(%clientId, "Pick a team:", "InitialPickTeam");
+			Client::addMenuItem(%clientId, "0Observe", -2);
+			Client::addMenuItem(%clientId, "1Automatic", -1);
+			for(%i = 0; %i < getNumTeams()-1; %i = %i + 1)
+				Client::addMenuItem(%clientId, (%i+2) @ getTeamName(%i), %i);
+			%clientId.justConnected = "";
+		}
+	}
+	else 
+	{
+		//plasmatic
+	if($Annihilation::UsePersonalSkin)
+		Client::setSkin(%clientId, $Client::info[%clientId, 0]);
+	else Client::setSkin(%clientId, $Server::teamSkin[Client::getTeam(%clientId)]);		
+		
+//		Client::setSkin(%clientId, $Server::teamSkin[Client::getTeam(%clientId)]);
+		if(%clientId.justConnected)
+		{
+			if(%clientId.isadmin)
+				schedule("client::sendmessage("@%clientId@",0,\"~wfemale3.whello.wav\");",1,%clientId);
+			centerprint(%clientId, $Server::JoinMOTD, 0);
+			%clientId.observerMode = "justJoined";
+			%clientId.justConnected = "";			
+		}
+		else if(%clientId.observerMode == "justJoined")
+		{
+			centerprint(%clientId, "");
+			%clientId.observerMode = "";
+			%clientId.AdminobserverMode = "";
+			Game::playerSpawn(%clientId, false);
+		}
+		else
+			Game::playerSpawn(%clientId, false);
+
+	}
+	if($TeamEnergy[Client::getTeam(%clientId)] != "Infinite")
+		$TeamEnergy[Client::getTeam(%clientId)] += $InitialPlayerEnergy;
+	%clientId.teamEnergy = 0;
+}
+
+// function Game::clientKilled(%playerId, %killerId)
+// {
+//	Anni::Echo("Game::clientKilled");
+//	if($teamplay)
+//	{
+//		if(%killerId == -1 || %playerId == -1)
+//		{
+//			return;
+//		}
+//		%kteam = Client::getTeam(%killerId);
+//		%pteam = Client::getTeam(%playerId);
+//		
+//		if(%kteam == %pteam)
+//			$teamScore[%kteam] = $teamScore[%kteam] - 1;
+//		else
+//			$teamScore[%kteam] = $teamScore[%kteam] - 1;
+//		
+//		DMTEAM::checkMissionObjectives();
+//	}
+//	else
+
+
+//	%set = nameToID("MissionCleanup/ObjectivesSet");
+//	for(%i = 0; (%obj = Group::getObject(%set, %i)) != -1; %i++)
+//		GameBase::virtual(%obj, "clientKilled", %playerId, %killerId);
+//		DM::checkMissionObjectives(%killerId);
+//		$CompletedRounds[%playerId]--; //this is what removes a lap when a player is killed -death666
+//		if($CompletedRounds[%playerId] < 0) $CompletedRounds[%playerId] = 0;
+//		Game::refreshClientScore(%playerId);
+//		updateTopScore();
+// }
+
+function Client::onKilled(%playerId, %killerId, %damageType) //going to look the whole thing over with Legendz -DaJ4ck3L
+{
+	//%playerId = clientid -plasmatic
+	
+//	%ip = Client::getTransportAddress(%playerId); 
+
+	// AIid is passed through AIKiller, not the AI's name.
+
+	if(!%killerId && %playerId.AIkiller)
+		%killerId = %playerId.AIkiller;
+
+	%name = Client::getName(%playerId);
+	%kname = Client::getName(%killerId);
+		
+	if(%damageType == 12 && %killerId && %killerId.oprocketowner) //Plasmatic
+	{
+ 		%killerId = %killerId.oprocketowner;
+ 		%killerId.oprocketowner = "";
+ 	}
+
+	if ( %killerId )
+		Anni::Echo("GAME: " @ %kname @" "@%killerId @ " Killed " @ %name @" "@ %playerId @ " " @ %damageType@", "@timestamppatch());
+	else
+		Anni::Echo("GAME: Turret Killed " @ %name @" "@ %playerId @ " " @ %damageType@", "@timestamppatch());
+	//%playerId.guiLock = true; remove this maybeeeeee so people can view shit when they dead -DaJ4ck3L
+	Client::setGuiMode(%playerId, $GuiModePlay);
+	if(!String::ICompare(Client::getGender(%playerId), "Male"))
+	{
+		%playerGender = "his";
+	}
+	else
+	{
+		%playerGender = "her";
+	}
+	%ridx = floor(getRandom() * ($numDeathMsgs - 0.01));
+	%victimName = Client::getName(%playerId);
+	
+	if(%playerId.AIkiller == %killerId && %playerId.AIkiller != "False")
+	{
+		messageAll(0, %playerId.AIkiller @" demonstrated AI for "@%victimName, $DeathMessageMask);
+		%playerId.scoreDeaths++; 
+		%playerId.TDeaths++;
+		%playerId.Killspree = 0;
+		%playerId.isKillPride = false;
+		%playerId.AIkiller = "";
+		
+	}
+	else if(!%killerId && (!%playerId.AIkiller || %playerId.AIkiller != "False"))
+	{
+		messageAll(0, strcat(%victimName, " dies."), $DeathMessageMask);
+		%playerId.scoreDeaths++;
+		%playerId.TDeaths++;
+		%playerId.Killspree = 0;
+		%playerId.isKillPride = false;
+		
+	}	
+	else if(%killerId == %playerId)
+	{
+		//fixed here for landing damage.. -plasmatic
+		if(%damageType == $LandingDamageType)
+		{		
+			%oopsMsg = sprintf($deathMsg[%damageType, %ridx], %victimName, %playerGender);
+			messageAll(0, %oopsMsg, $DeathMessageMask);
+			%playerId.scoreDeaths++;
+			%playerId.TDeaths++;
+			%playerId.Killspree = 0;
+			%playerId.isKillPride = false;
+		$CompletedRounds[%playerId]--; //this is what removes a lap when a player is killed -death666
+		if($CompletedRounds[%playerId] < 0) $CompletedRounds[%playerId] = 0;
+			if($LegendzLT::Active == false) //New LT code -DaJ4ck3L
+				%playerId.score--;
+			if(%playerId.inArenaTD && $ArenaTD::Active)
+			{
+				echo("ArenaTD Killed Landing");
+				%playerId.isArenaTDDead = true;						
+				ArenaTD::CheckPlayers();
+				//Observer::enterObserverMode(%playerId);
+				//processMenuPickTeam(%playerId, -2);
+			}
+			Game::refreshClientScore(%playerId);				
+		}
+		else if(%damageType == $JettingDamage) // -Plasmatic 2.3
+		{		
+			%oopsMsg = sprintf($deathMsg[%damageType, %ridx], %victimName, %playerGender);
+			messageAll(0, %oopsMsg, $DeathMessageMask);
+			%playerId.scoreDeaths++;
+			%playerId.TDeaths++;
+			%playerId.Killspree = 0;
+			%playerId.isKillPride = false;
+			if($LegendzLT::Active == false) //New LT code -DaJ4ck3L
+				%playerId.score--;
+			Game::refreshClientScore(%playerId);
+			if(%playerId.inArenaTD && $ArenaTD::Active)
+			{
+				echo("ArenaTD Killed CtrlK");
+				%playerId.isArenaTDDead = true;
+				ArenaTD::CheckPlayers();
+				//Observer::enterObserverMode(%playerId);
+				//processMenuPickTeam(%playerId, -2);
+			}			
+		}
+		else //ctrl k -DaJ4ck3L
+		{
+			%oopsMsg = sprintf($deathMsg[-2, %ridx], %victimName, %playerGender);
+			messageAll(0, %oopsMsg, $DeathMessageMask);
+			//%playerId.scoreDeaths++;
+			//%playerId.TDeaths++;
+			%playerId.TSuicide++;
+			%playerId.Killspree = 0;
+			%playerId.isKillPride = false;
+			if($LegendzLT::Active == false) //New LT code -DaJ4ck3L
+				%playerId.score--;
+			if(%playerId.inArenaTD && $ArenaTD::Active)
+			{
+				echo("ArenaTD Killed CtrlK");
+				%playerId.isArenaTDDead = true;
+				ArenaTD::CheckPlayers();
+				//Observer::enterObserverMode(%playerId);
+				//processMenuPickTeam(%playerId, -2);
+			}
+			Game::refreshClientScore(%playerId);
+		}
+	}
+	else
+	{
+		if(!String::ICompare(Client::getGender(%killerId), "Male"))
+		{
+			%killerGender = "his";
+		}
+		else
+		{
+			%killerGender = "her";
+		}
+		
+		if($Legendz::Rabbit == true && !%killerId.inArena && !playerId.inArena && !%killerId.inDuel && !playerId.inDuel) //why not -DaJ4ck3L
+		{
+			%obitMsg = sprintf($deathMsg[%damageType, %ridx], Client::getName(%killerId),
+			%victimName, %killerGender, %playerGender);
+			messageAll(0, %obitMsg, $DeathMessageMask);
+			%killerId.scoreKills++; 
+			%killerId.TKills++; //add killspree here -DaJ4ck3L
+			
+			if(%playerId.isNotBot) {
+			%killerId.Killspree++;
+			%recKillstreak = %killerId.TKillstreakBest;
+			if(%recKillstreak > %killerId.Killspree)
+			{
+			
+			}
+			else if(%recKillStreak == %killerId.Killspree) // tied personal record
+			{
+				Bottomprint(%killerId,"<jc><f2>You have just tied your Killstreak personal record!\n<f1>You have <f2>"@%killerId.Killspree@"<f1> kills.",10);
+			}
+			else if(%recKillStreak < %killerId.Killspree) // new personal record
+			{
+				%killerId.TKillstreakBest = %killerId.Killspree;
+
+				Bottomprint(%killerId,"<jc><f2>You have just broken your Killstreak personal record!\n<f1>You have <f2>"@%killerId.Killspree@"<f1> kills, your previous record was <f2>"@%recKillStreak@"<f1>!",10);
+				Client::sendMessage(%killerId,0,"~wbuysellsound.wav");
+			} } //get rid of bots 4 kill spree -DaJ4ck3L
+			
+			%playerId.scoreDeaths++; 
+			%playerId.TDeaths++;// test play mode
+			%playerId.Killspree = 0;
+			%playerId.isKillPride = false;
+			if(%playerId.inArenaTD && $ArenaTD::Active)
+			{
+				echo("ArenaTD Killed Rabbit");
+				%playerId.isArenaTDDead = true;
+				for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+				{
+					if(%cl.observerTarget == %playerId)
+					{
+						Observer::setTargetClient(%cl, %killerId); //might need to add in support for if dead or not, we will see -DaJ4ck3L
+					}
+				}
+				ArenaTD::CheckPlayers();
+				Observer::setTargetClient(%playerId, %killerId); //new -DaJ4ck3L
+				//Observer::enterObserverMode(%playerId);
+				//processMenuPickTeam(%playerId, -2);
+			}
+			
+			%killerId.score++;
+			%killerId.Credits++;
+			%now = getSimTime(); //AFK System -DaJ4ck3L
+			%killerId.lastActiveTimestamp = %now; //AFK System -DaJ4ck3L
+			%playerId.lastActiveTimestamp = %now; //AFK System -DaJ4ck3L
+			
+			%time = getIntegerTime(true) >> 5;
+			%oppositeTeam = Client::GetTeam(%playerId) ^ 1;
+			if ( (%time == $Stats::FlagDropped[%oppositeTeam]) && ($Stats::PlayerDropped[%oppositeTeam] == %playerId) ) //New Stats code -DaJ4ck3L
+					%killerId.CapperKills++;
+
+			if(%playerId.inDuel)
+				Duel::Finish(%playerId);
+			Game::refreshClientScore(%killerId);
+			Game::refreshClientScore(%playerId);
+			return;
+		}
+		
+		if(Client::getTeam(%killerId) == Client::getTeam(%playerId) && %killerId.inArenaTD && %playerId.inArenaTD) // New Arena code -DaJ4ck3L
+		{
+			if(%damageType != $MineDamageType) 
+				messageAll(0, strcat(Client::getName(%killerId), " mows down ", %killerGender, " teammate ", %victimName), $DeathMessageMask);
+			else 
+				messageAll(0, strcat(Client::getName(%killerId), " killed ", %killerGender, " teammate ", %victimName ," with a mine."), $DeathMessageMask);
+			//%killerId.scoreDeaths++;
+			//%playerId.TDeaths++;
+			%playerId.TTKills++;
+			if($ArenaTD::Active)
+			{
+				echo("ArenaTD Killed TK");
+				%playerId.isArenaTDDead = true;
+				for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+				{
+					if(%cl.observerTarget == %playerId)
+					{
+						Observer::setTargetClient(%cl, %killerId);
+					}
+				}
+				ArenaTD::CheckPlayers();
+				Observer::setTargetClient(%playerId, %killerId); //new -DaJ4ck3L
+				//Observer::enterObserverMode(%playerId);
+			}
+			%playerId.Killspree = 0;
+			%playerId.isKillPride = false;
+			if($LegendzLT::Active == false) //New LT code -DaJ4ck3L
+				%killerId.score--;
+			Game::refreshClientScore(%killerId);
+		}
+		else if($teamplay && (Client::getTeam(%killerId) == Client::getTeam(%playerId)) && !%killerId.inArena && !%playerId.inArena && !%killerId.inDuel && !%playerId.inDuel) // New Arena code -DaJ4ck3L
+		{
+			if(%damageType != $MineDamageType) 
+				messageAll(0, strcat(Client::getName(%killerId), " mows down ", %killerGender, " teammate ", %victimName), $DeathMessageMask);
+			else 
+				messageAll(0, strcat(Client::getName(%killerId), " killed ", %killerGender, " teammate ", %victimName ," with a mine."), $DeathMessageMask);
+			//%killerId.scoreDeaths++;
+			//%playerId.TDeaths++;
+			%playerId.TTKills++;
+			%playerId.Killspree = 0;
+			%playerId.isKillPride = false;
+			if($LegendzLT::Active == false) //New LT code -DaJ4ck3L
+				%killerId.score--;
+			Game::refreshClientScore(%killerId);
+		}
+		else
+		{
+			%obitMsg = sprintf($deathMsg[%damageType, %ridx], Client::getName(%killerId),
+			%victimName, %killerGender, %playerGender);
+			messageAll(0, %obitMsg, $DeathMessageMask);
+			%killerId.scoreKills++; 
+			%killerId.TKills++; 
+			
+			if(%playerId.isNotBot) {
+			%killerId.Killspree++;
+			%recKillstreak = %killerId.TKillstreakBest;
+			if(%recKillstreak > %killerId.Killspree)
+			{
+			
+			}
+			else if(%recKillStreak == %killerId.Killspree) // tied personal record
+			{
+				Bottomprint(%killerId,"<jc><f2>You have just tied your Killstreak personal record!\n<f1>You have <f2>"@%killerId.Killspree@"<f1> kills.",10);
+			}
+			else if(%recKillStreak < %killerId.Killspree) // new personal record
+			{
+				%killerId.TKillstreakBest = %killerId.Killspree;
+
+				Bottomprint(%killerId,"<jc><f2>You have just broken your Killstreak personal record!\n<f1>You have <f2>"@%killerId.Killspree@"<f1> kills, your previous record was <f2>"@%recKillStreak@"<f1>!",10);
+				Client::sendMessage(%killerId,0,"~wbuysellsound.wav");
+			} } //get rid of bots 4 kill spree -DaJ4ck3L
+			
+			%playerId.scoreDeaths++; 
+			%playerId.TDeaths++;// test play mode
+			//echo("whooooo comes first???????? Client");	
+			if(%playerId.inArenaTD && $ArenaTD::Active)
+			{
+				echo("ArenaTD Killed Kill");
+				%playerId.isArenaTDDead = true;
+				for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+				{
+					if(%cl.observerTarget == %playerId)
+					{
+						Observer::setTargetClient(%cl, %killerId);
+					}
+				}
+				ArenaTD::CheckPlayers();
+				Observer::setTargetClient(%playerId, %killerId); //new -DaJ4ck3L
+				//Observer::enterObserverMode(%playerId);
+				//processMenuPickTeam(%playerId, -2);
+			}
+			%playerId.Killspree = 0;
+			%playerId.isKillPride = false;
+			
+			%killerId.score++;
+			%killerId.Credits++;
+			%now = getSimTime(); //AFK System -DaJ4ck3L
+			%killerId.lastActiveTimestamp = %now; //AFK System -DaJ4ck3L
+			%playerId.lastActiveTimestamp = %now; //AFK System -DaJ4ck3L
+			
+			%time = getIntegerTime(true) >> 5;
+			%oppositeTeam = Client::GetTeam(%playerId) ^ 1;
+			if ( (%time == $Stats::FlagDropped[%oppositeTeam]) && ($Stats::PlayerDropped[%oppositeTeam] == %playerId) ) //New Stats code -DaJ4ck3L
+					%killerId.CapperKills++;
+			
+			Game::refreshClientScore(%killerId);
+			Game::refreshClientScore(%playerId);
+		}
+	}
+	//if(%killerId.inDuel)
+	//	Duel::Finish(%killerId, %playerId); //just need the dead guy -DaJ4ck3L
+	if(%playerId.inArenaWin && $Arena::Winners)
+	{
+		if(%killerId == %playerId)
+			ArenaWin::Finish(%killerId,false);
+		else
+			ArenaWin::Finish(%killerId,%playerId);
+	}
+	if(%playerId.inDuel)
+		Duel::Finish(%playerId);
+}
+
+function finishedLap(%clientId) {
+	%laptime = getSimTime() - %clientId.finishtime;
+	if(%laptime < 0)
+		%laptime = -%laptime;
+	if(%laptime < $bestlap[%clientId])
+		$bestlap[%clientId] = %laptime;
+	if($BestLapTime[$missionName] == "") $BestLapTime[$missionName] = 9999;
+	if(%laptime < $BestLapTime[$missionName]) {
+		$BestLapTime[$missionName] = %laptime;
+		$BestLapTimeName[$missionName] = Client::getName(%clientId);
+		export("$BestLapTime*", "config\\UbersChallenge_One.cs", False);
+		messageall(0, Client::getName(%clientId) @ " set a new fastest lap record!~wCapturedTower.wav");
+	}
+	%clientId.finishtime = getSimTime();
+	$CompletedRounds[%clientId]++;
+	$TotalRounds[%clientId]++;
+	Game::refreshClientScore(%clientId);
+	$currentLeg[%clientId] = 1;
+	DM::missionObjectives();
+	DM::checkMissionObjectives(%clientId);
+	%prevtop = $lastLeader;
+	updateTopScore();
+	%armor = player::getarmor(%clientId);
+	%armorlist = " (" @ $ArmorName[%armor].description @ ") ";
+	if($lastLeader == %clientId) 
+		%end = "! (" @ formattedbest(%laptime) @ ")~wshell_click.wav";
+	else 
+		%end = ". (" @ formattedbest(%laptime) @ ")~wshell_click.wav";
+	if(%prevtop != %clientId && $lastLeader == %clientId) {
+		%prevname = Client::getName(%prevtop);
+		if(%prevname != "")
+			%msg = " takes the lead from " @ %prevname @ " with ";
+		else
+			%msg = " takes the lead with ";
+	} else
+		%msg = " has completed ";
+	if($CompletedRounds[%clientId] == 1)
+		%msg = Client::getName(%clientId) @ %msg @ "1 lap" @ %end;
+	else
+		%msg = Client::getName(%clientId) @ %msg @ $CompletedRounds[%clientId] @ " laps" @ %end;		
+	messageAll(1, %msg);
+	messageAll(1, %armorlist);
+	Client::sendMessage(%clientId, 0, "~wflagreturn.wav");
+			Player::setItemCount(%clientId, DiscAmmoBase, 15);		   
+		Player::setItemCount(%clientId, PlasmaAmmoBase, 30);
+		Player::setItemCount(%clientId, GrenadeAmmoBase, 10);
+	   
+		Player::setItemCount(%clientId, RepairKit, 1);
+		Player::setItemCount(%clientId, Beacon, 3);
+		Player::setItemCount(%clientId, Grenade, 5);
+//	Player::setItemCount(%clientId, GrapplingHook, 1);
+}
+
+function timerset(%clientId) 
+{
+	%laptime = getSimTime() - %clientId.finishtime;
+	if(%laptime < 0)
+	%laptime = -%laptime;
+	%clientId.finishtime = getSimTime();
+}
+
+function checkpointmessage(%clientId) 
+{
+	%laptime = getSimTime() - %clientId.finishtime;
+	%vel = Item::getVelocity(%clientId);
+	%speed = vector::getdistance(%vel,"0 0 0");
+	bottomprint(%clientId, "<f1><jc> CHECKPOINT! \n<f2><jc>SPEED: "@%speed @" \n<f3><jc> TIME: "@formattedbest(%laptime) @" ");
+	Client::sendMessage(%clientId, 0, "~wmine_act.wav");
+}
+
+function Server::onClientDisconnect(%clientId)
+{
+
+	$CompletedRounds[%clientId] = 0;
+	$TotalRounds[%clientId] = 0;
+	updateTopScore();
+
+	%clientId.Invalid = True;
+	if ( !PlayerProfile::onClientDisconnect(%clientId) ) // Avoid conflict.
+		Ann::PlayerInfo::Disconnect(%clientId);	// Tracker. Plas 3.0 1/30/2005 8:46PM
+
+	if($annihilation::DisableTurretsOnTeamChange)
+		Turret::DisableClients(%clientId);
+	
+	//cleaning up some variables, the ones that could cause problems... -plasmatic 2.2
+	%clientId.score = 0; //New Stats code -DaJ4ck3L
+	%clientId.MidAirs = 0;
+	%clientId.scoreKills = 0;
+	%clientId.scoreDeaths = 0;
+	%clientId.ratio = 0;
+	%clientId.DiscDamage = 0;
+	%clientId.NadeDamage = 0;
+	%clientId.ChainDamage = 0;
+	%clientId.BlasterDamage = 0;
+	%clientId.PlasmaDamage = 0;
+	%playerId.ShotgunDamage = 0;
+	%clientId.CapperKills = 0;
+	%clientId.FlagReturns = 0;
+	%clientId.ScoreCaps = 0;
+	%clientId.Killspree = 0;
+	%playerId.isNotBot = false;
+	%clientId.isArenaBanned = false;
+	%clientId.isLegendz = false;
+	%clientId.isPackin = false;
+	%clientId.isGayPride = false;
+	%clientId.isKillPride = false;
+	%clientId.tmuted = "";
+	%clientId.noVpack = "";
+	%clientId.silenced = "";
+	%clientId.BlockMySound = "";
+	
+	%clientId.isUntouchable = false;	//2.2 admin plasmatic
+	%clientId.isAdmin = false; 
+	%clientId.isSuperAdmin = false; 
+	%clientId.isGod = false;
+	%clientId.isOwner = false;	
+	
+	%clientId.fetchdata = "";
+	%ClientId.FlagCurse = "";
+	%clientId.droid = "";	
+	%clientId.bk = "";
+	%clientId.ListType = "";
+	%clientId.invo = ""; 
+	%clientId.ListType = "";	
+	%ClientId.InvConnect = "";
+	%clientId.InvTargetable = "";
+	%clientId.ConnectBeam = "";	
+	%clientId.isSpy = "";	
+	%clientId.OrigTeam = "";	
+	%clientId.locked = "";		
+	%ClientId.SecretAdmin = "";
+	%clientId.novote = "";
+	
+	if(%clientId.isTDCaptOne)
+		ArenaTD::Leave(%clientId); //Make sure capt gets handed off. -DaJ4ck3L
+	
+	if(%clientId.isTDCaptTwo)
+		ArenaTD::Leave(%clientId);
+		
+	//Arena Stuff
+		%clientId.inArena = false;
+	
+	//ArenaTD
+		%clientId.inArenaTD = false;
+		%clientId.isArenaTDDead = false;
+	
+	//Team 1
+		%clientId.inArenaTDOne = false;
+		%clientId.isTDCaptOne = false;
+		%clientId.TDRequestOne = false;
+		%clientId.TDMRequestOne = false;
+		
+	//Team 2
+		%clientId.inArenaTDTwo = false;
+		%clientId.isTDCaptTwo = false;
+		%clientId.TDRequestTwo = false;
+		%clientId.TDMRequestTwo = false;
+	
+	//Capt Prefs
+		%clientId.ArenaTDMap = "None";
+		%clientId.ArenaTDSpawnType = "None";
+		%clientId.ArenaTDWeaponOpt = "None";
+	
+	if(%clientId.inDuel)
+		Duel::Leave(%clientId); //get rid of duel too.
+	
+	%cl = %clientId.whisperFrom;	//whisper drop fix. 1/11/2006 11:43AM
+	%cl.whisper = "";	
+	%clientId.whisper = "";
+	
+	deleteVariables("$Client::info"@%clientId@"*"); // Clean up custom info. - Kigen
+	
+	//Overflow passwording -Plasmatic 3.0
+	%numPlayers = getNumClients()-1;
+	//$AnnihilationServer::Password = $Server::Password;
+	if(%numPlayers < $Annihilation::OverflowLimit)
+	{
+		
+		$Server::Password = $AnnihilationServer::Password;
+		%lock = ". Below overflow limit, removing overflow password. New password= \""@$Server::Password@"\"";		
+	}
+//	Anni::Echo("Password = \""@$server::password@"\" Backup = \""@$AnnihilationServer::Password@"\" Overflow limit = \""@$Annihilation::OverflowLimit@"\" Overflow Password = \""@$Annihilation::OverflowPassword@"\"");	
+//	Anni::Echo("Number of Clients: "@%numPlayers@%lock);	
+	
+	// Need to kill the player off here to make everything
+	// is cleaned up properly.
+	%player = Client::getOwnedObject(%clientId);
+	if(%player != -1 && getObjectType(%player) == "Player" && !Player::isDead(%player)) 
+	{
+		playNextAnim(%player);
+		Player::kill(%player);
+	}
+	Client::setControlObject(%clientId, -1);
+	if($VoteisActive==true)
+	{
+		if($VoteID == %clientId)
+		{
+			%address = Client::getTransportAddress(%clientId);
+			banlist::add(%address, 900);
+		}
+	}
+	Client::leaveGame(%clientId);
+
+	Game::CheckTourneyMatchStart();
+	if($Annihilation::FairTeams)
+		schedule("FairTeamCheck();",2);	//plasmatic schedule added for 2.2
+	if($Annihilation::ResetServer != false)
+		if(getNumClients() == 1) // this is the last client.
+			Server::refreshData();
+}
+
+function updateTopScore() {
+	%numClients = getNumClients();
+	for(%k = 0 ; %k < %numClients; %k++) 
+		%clientList[%k] = getClientByIndex(%k);
+	%doIt = 1;
+	while(%doIt == 1)
+	{
+		%doIt = "";								
+		for(%k= 0 ; %k < %numClients; %k++)
+		{
+			if($CompletedRounds[%clientList[%k]] < $CompletedRounds[%clientList[%k+1]])
+			{
+				%hold = %clientList[%k];
+				%clientList[%k] = %clientList[%k+1];
+				%clientList[%k+1] = %hold;
+				%doIt=1;
+			}
+		}
+	}
+	%topScore = $CompletedRounds[%clientList[0]];
+	if($CompletedRounds[%clientList[1]] == $CompletedRounds[%clientList[0]]) {
+		if(%topScore == 0) return;
+		if($CompletedRounds[%clientList[1]] == $CompletedRounds[%clientList[2]]) {
+			if($CompletedRounds[%clientList[2]] == $CompletedRounds[%clientList[3]]) {
+				%msg = "It is <f1>tied<f0> at ";
+			} else {
+				%msg = "<f1>" @ Client::getName(%clientList[0]) @ "<f0>, <f1>" @ Client::getName(%clientList[1]) @ "<f0>, and <f1>" @ Client::getName(%clientList[2]) @ "<f0> are tied for first place with ";
+			}
+		} else {
+			%msg = "<f1>" @ Client::getName(%clientList[0]) @ "<f0> and <f1>" @ Client::getName(%clientList[1]) @ "<f0> are tied for first place with ";
+		}
+		%tied = true;
+	} else
+		%msg = "<f0>The current leader is <f1>" @ Client::getName(%clientList[0]) @ "<f0> with ";
+	if(%topScore == 1)
+		%msg = %msg @ "<f1>1<f0> lap";
+	else
+		%msg = %msg @ "<f1>" @ %topScore @ "<f0> laps";
+	if(%tied)
+		%msg = %msg @ "!";
+	else
+		%msg = %msg @ ".";
+	if(%topScore == 0)
+		%msg = "<f2>No one is winning!";
+	bottomprintall("<jc>" @ %msg, 0);
+	if(%tied || %topScore == 0)
+		$lastLeader = 0;
+	else
+		$lastLeader = %clientList[0];
+}
+
+function vehicle::setWayPoint(%clientId, %way) {
+	dbecho(2,"setting up waypoints...");
+	%x = getWord($checkpoints[%way], 0);
+	%y = getWord($checkpoints[%way], 1);
+	if(%way == 0)
+		issueCommand(%clientId, %clientId, 0, "Waypoint set to the Finish Line!", %x, %y);
+	else
+		issueCommand(%clientId, %clientId, 0, "Waypoint set to Checkpoint " @ %way, %x, %y);
+}       
+
+function GroupTrigger::onEnter(%this, %object)
+{
+	%cl = GameBase::getControlClient(%object);
+// new
+		if(%this.num == "Multidoor") {
+			//this trigger operates multiple doors
+			%group = getGroup(%this) @ "\\Door";  
+			for (%ii = 0; %ii < 4; %ii++) {
+				%door = Group::getObject(%group @ %ii, 1);
+				%door.status = "open";
+				Door::onMove(%door);
+			}
+			}
+// new
+	if(%this.num == ("Checkpoint" @ $currentLeg[%cl])) 
+	{
+		if($currentLeg[%cl] == 0)
+		finishedLap(%cl);
+	else 
+	{
+	checkpointmessage(%cl);
+	$currentLeg[%cl]++;
+	if($currentLeg[%cl] == $numCheckPoints) $currentLeg[%cl] = 0;							   }
+	           Vehicle::setWayPoint(%cl, $currentLeg[%cl]);
+	 }
+	else if(%this.num == "timer")
+	{
+		timerset(%cl);
+	}
+					else if(%this.num == "End")
+				{
+     					Client::SendMessage(%cl,1,"You have been teleported. ~wteleport2.wav");
+     					%positionIn = "-20.6394 -40.0169 2023.03";
+					%rotationIn = "0 0 0";
+					Item::setVelocity(%object,"0 0 0");
+        				GameBase::setPosition(%cl, %positionIn);
+					GameBase::setrotation(%cl, %rotationIn);
+				}
+}
+
+function GroupTrigger::onLeave(%this,%object)
+{
+	%type = getObjectType(%object);
+	if(%type == "Player" || %type == "Flier") {
+		%group = getGroup(%this); 
+		%count = Group::objectCount(%group);
+		if(%this.num == "Multidoor") {
+			//this trigger operates multiple doors
+			%group = %group @ "\\Door";
+			for (%ii = 0; %ii < 4; %ii++) {
+				%door = Group::getObject(%group @ %ii, 1);
+				%door.status = "close";
+				%door.triggerTrigger = 1;
+				Door::onMove(%door);
+			}
+		} else {
+			//normal
+			for (%i = 0; %i < %count; %i++) 
+				GameBase::virtual(Group::getObject(%group,%i),"onTrigLeave",%object,%this);
+		}
+	}
+}
+
+function formattedbest(%secs) {
+	if(%secs == 9999)
+		return escapestring("00:00");
+	%mins = floor(%secs / 60);
+	if(%mins < 0)
+		%mins = -%mins;
+	%secs = floor(%secs - (%mins * 60));
+	if(%secs < 0)
+		%secs = -%secs;
+	if(%mins < 10)
+		%str = "0" @ %mins @ ":";
+	else
+		%str = %mins @ ":";
+	if(%secs < 10)
+		%str = %str @ "0" @ %secs;
+	else
+		%str = %str @ %secs;
+	return escapestring(%str);
+}
+
+function Game::refreshClientScore(%clientId)
+{
+//	%clientId.ratio = getEfficiencyRatio(%clientId);
+	if($teamplay)
+   	Client::setScore(%clientId, "%n\t  " @ $CompletedRounds[%clientId] @ "\t  " @ $TotalRounds[%clientId] @ "\t   " @ %clientId.scoreDeaths @ "\t%p\t %l", $CompletedRounds[%clientId]);
+	else
+   	Client::setScore(%clientId, "%n\t  " @ $CompletedRounds[%clientId] @ "\t  " @ $TotalRounds[%clientId] @ "\t   " @ %clientId.scoreDeaths @ "\t%p\t %l", $CompletedRounds[%clientId]);
+	DM::missionObjectives();
+}
+
+function Mission::init()
+{
+
+	$numTeams = getNumTeams()-1;
+	for(%i = 0; %i < $numTeams; %i++)
+		$teamScore[%i] = 0;
+
+	if($teamplay = !($numTeams == 1))
+	{
+		setTeamScoreHeading("");
+  		setClientScoreHeading("Player Name\t\x60Laps\t\x84Total\t\xB0Deaths\t\xE4Ping\t\xFFPL");
+	}
+	else
+	{
+		$SensorNetworkEnabled = false;
+		setTeamScoreHeading("");
+  		setClientScoreHeading("Player Name\t\x60Laps\t\x84Total\t\xB0Deaths\t\xE4Ping\t\xFFPL");
+	}
+	$dieSeqCount = 0;
+	//setup ai if any
+	AI::setupAI();
+	DM::missionObjectives();
+}
+
+function BeginRace(%clientId) {
+//	schedule("bottomprint(" @ %clientId @ ", \"<f2><jc>Tribes Racer v2.5\\n<f1>Ski the course and complete the most Laps!\\nKeep an eye out for health kits on the track to heal yourself.\\n\\n<f2>Let the race begin!\", 10);", 1);
+//	schedule("vehicle::setWayPoint(" @ %clientId @ ", 1);", 1);
+	$bestlap[%clientId] = 9999;
+//	%clientId.finishtime = getSimTime();
+	$teamplay = false;
+}
+
+function DM::checkMissionObjectives(%playerId) 
+{
+	//temporary fix here..
+	$DMScoreLimit = 0;
+	
+	Anni::Echo("DM::checkMissionObjectives");
+	if(DM::missionObjectives(%playerId)) 
+		schedule("nextMission();", 0);
+	if($DMScoreLimit > 0)
+	{
+		if((Player::getClient(%playerId)).scoreKills >= $DMScoreLimit) 
+		{
+			$timeLimitReached = true;
+			$timeReached = 1;
+			DM::missionObjectives();
+			if($Legendz::RandomMission)
+				Server::nextMission(false,true);
+			else
+				Server::nextMission();
+		}
+	}
+}
+
+function DM::missionObjectives() {
+	%numClients = getNumClients();
+	for(%k = 0; %k < %numClients; %k++) 
+		%clientList[%k] = getClientByIndex(%k);
+	%doIt = 1;
+	while(%doIt == 1)
+	{
+		%doIt = "";								
+		for(%k= 0 ; %k < %numClients; %k++)
+		{
+			if($CompletedRounds[%clientList[%k]] < $CompletedRounds[%clientList[%k+1]])
+			{
+				%hold = %clientList[%k];
+				%clientList[%k] = %clientList[%k+1];
+				%clientList[%k+1] = %hold;
+				%doIt=1;
+			}
+		}
+	}
+   if(!$Server::timeLimit)
+      %str = "<f1>   - No time limit on the game.";
+   else if($timeLimitReached)
+      %str = "<f1>   - Time limit reached.";
+   else
+      %str = "<f1>   - Time remaining: " @ floor($Server::timeLimit - (getSimTime() - $missionStartTime) / 60) @ " minutes.";
+	for(%l = -1; %l < 1 ; %l++) {		
+		%lineNum = 0;
+		if($timeReached == "") {
+	 	  	Team::setObjective(%l, %lineNum, " ");
+	  		Team::setObjective(%l, %lineNum++, "<f5>Mission Information:");
+			Team::setObjective(%l, %lineNum++, "<f1>   - Mission Name: " @ $missionName); 
+	      	Team::setObjective(%l, %lineNum++, %str);
+	      	Team::setObjective(%l, %lineNum++, " ");
+	 	  	Team::setObjective(%l, %lineNum++, "<f5>Mission Objectives:");
+	 	  	Team::setObjective(%l, %lineNum++, "<f1>   -Complete as many Laps as possible!");
+	 	  	Team::setObjective(%l, %lineNum++, "<f1>   -Stay Alive! If you die from fall damage you lose a Lap!");
+	 	  	Team::setObjective(%l, %lineNum++, " ");
+	 	  	Team::setObjective(%l, %lineNum++, "<f1>Follow your waypoint and race around the track going through each checkpoint along the way.\n\nVisit thelandofoz.net/br");
+	 	  	Team::setObjective(%l, %lineNum++, " ");
+			if($BestLapTime[$missionName])
+				Team::setObjective(%l, %lineNum++, "<F1>Record fastest lap for this misison: <F5>" @ $BestLapTimeName[$missionName] @ " (" @ formattedbest($BestLapTime[$missionName]) @ ")");
+	 	  	Team::setObjective(%l, %lineNum++, " ");
+		  	Team::setObjective(%l, %lineNum++, "<f5>TOP PLAYERS ARE: " );
+	    } else {
+			Team::setObjective(%l, %lineNum++, "<f5>Mission Summary:");
+	 	  	Team::setObjective(%l, %lineNum++, " " );
+			if($CompletedRounds[%clientList[0]] == $CompletedRounds[%clientList[1]])
+				Team::setObjective(%l, %lineNum++, "<L14><f5>It ended in a tie!" );
+			else {
+				Team::setObjective(%l, %lineNum++, "<L14><f1>The winner is: " );
+				if($CompletedRounds[%clientList[0]] == 1)
+					Team::setObjective(%l, %lineNum++, "<L14><f5><Bskull_big.bmp>\n" @ Client::getName(%clientList[0]) @ "<f5> with 1 Completed Lap!");
+				else
+					Team::setObjective(%l, %lineNum++, "<L14><f5><Bskull_big.bmp>\n" @ Client::getName(%clientList[0]) @ "<f5> with " @ $CompletedRounds[%clientList[0]] @ " Completed Laps!");
+
+			}
+			if($BestLapTime[$missionName])
+				Team::setObjective(%l, %lineNum++, "<F1>Record fastest lap for this misison: <F5>" @ $BestLapTimeName[$missionName] @ " (" @ formattedbest($BestLapTime[$missionName]) @ ")");
+	        Team::setObjective(%l, %lineNum++, " ");
+		}
+
+        Team::setObjective(%l, %lineNum++, " " );
+	 	Team::setObjective(%l, %lineNum++, "<L29>Completed Laps\t\tTotal Laps\t\tDeaths\t\tBest Lap");
+        %i=0;
+         while(%i < %numClients){
+            %plyr = %clientList[%i];
+			%best = formattedbest($bestlap[%plyr]);
+			Team::setObjective(%l, %lineNum++, "<f2>"@(%i + 1) @ ". " @ Client::getName(%plyr) @ "<L29><f0>\t\t\t" @ $CompletedRounds[%plyr] @ "\t\t\t\t\t\t\t" @ $TotalRounds[%plyr] @ "\t\t\t\t\t" @ %plyr.ScoreDeaths @ "\t\t\t  " @ %best);
+            %i++;
+         }
+
+		for(%s = %lineNum+1; %s < 30 ;%s++)
+			Team::setObjective(%l, %s, " ");
+	}
+	$timeReached="";
+}
+
+function ObjectiveMission::getNumPlayers(%team)
+{
+	%numPlayers = 0;
+	%totalPlayers = getNumClients();
+	for(%i = 0; %i < %totalPlayers; %i++)
+	{
+		%client = getClientByIndex(%i);
+		if(!%client.inArena && !%client.inDuel && %team == Client::getTeam(%client))
+			%numPlayers++;
+	}
+	return %numPlayers;
+}
+
+function TowerSwitch::onCollision(%this, %object)
+{	
+	if($debug) 
+		event::collision(%this,%object);
+	
+	//Messy fucking bootcamp code
+	if(GameBase::getMapName(%this) == "Chain!!")
+	{
+		spawnbot11(%object);
+		schedule("spawnbot11(" @ %object @ ");", 11);
+		client::sendmessage(Player::getClient(%object), 0, "~wMachgun3.wav");
+	}
+      if(GameBase::getMapName(%this) == "PlasmaTwo!!")
+	{
+		spawnbot6(%object);
+		schedule("spawnbot6(" @ %object @ ");", 6);
+		client::sendmessage(Player::getClient(%object), 0, "~wrifle1.wav");
+	}
+	if(GameBase::getMapName(%this) == "Mortar Bot Switch")	
+	{
+		spawnbot3(%object);
+		spawnbot4(%object);
+		spawnbot5(%object);
+		client::sendmessage(Player::getClient(%object), 0, "~wmale1.wretreat.wav");
+	}
+      if(GameBase::getMapName(%this) == "Plasma!!")
+	{
+		spawnbot7(%object);
+		schedule("spawnbot7(" @ %object @ ");", 7);
+		client::sendmessage(Player::getClient(%object), 0, "~wplasma2.wav");
+	}
+	if(GameBase::getMapName(%this) == "Disc!!")
+	{
+		spawnbot10(%object);
+		schedule("spawnbot10(" @ %object @ ");", 10);
+		client::sendmessage(Player::getClient(%object), 0, "~wdiscreload.wav");
+	}
+	if(GameBase::getMapName(%this) == "ALL!!")	
+	{
+		spawnbot6(%object);
+                spawnbot7(%object);
+		spawnbot10(%object);
+		spawnbot11(%object);
+	}
+
+	if(GameBase::getMapName(%this) == "MA Switch ALL")
+	{
+		Duck::PullMA::Start(%this, %object);
+	}
+	if(GameBase::getMapName(%this) == "MA Switch 1")
+	{
+		%ducksite = 0;
+		duck::Pull(%ducksite, %object);
+	}
+	if(GameBase::getMapName(%this) == "MA Switch 2")
+	{
+		%ducksite = 1;
+		duck::Pull(%ducksite, %object);
+	}
+	if(GameBase::getMapName(%this) == "MA Switch 3")
+	{
+		%ducksite = 2;
+		duck::Pull(%ducksite, %object);
+	}
+	if(GameBase::getMapName(%this) == "MA Switch 4")
+	{
+		%ducksite = 3;
+		duck::Pull(%ducksite, %object);
+	}
+	if(GameBase::getMapName(%this) == "Sniper Switch 1")
+	{
+		%ducksite = 4;
+		duck::Pull(%ducksite, %object);
+	}
+	if(GameBase::getMapName(%this) == "Sniper Switch 2")
+	{
+		%ducksite = 5;
+		duck::Pull(%ducksite, %object);
+        	if(GameBase::getMapName(%this) == "Sniper Switch 5")
+	{
+		%ducksite = 5;
+		duck::Pull(%ducksite, %object);
+	}
+	}
+	if(GameBase::getMapName(%this) == "Sniper Switch 3")
+	{
+		%ducksite = 6;
+		duck::Pull(%ducksite, %object);
+	}
+	if(GameBase::getMapName(%this) == "Sniper Switch 4")
+	{
+		%ducksite = 7;
+		duck::Pull(%ducksite, %object);
+	}
+        if(GameBase::getMapName(%this) == "p1")
+	{
+		%ducksite = 11;
+		duck::Pull(%ducksite, %object);
+	}
+
+         if(GameBase::getMapName(%this) == "p2")
+	{
+		%ducksite = 12;
+		duck::Pull(%ducksite, %object);
+	}
+           if(GameBase::getMapName(%this) == "p3")
+	{
+		%ducksite = 13;
+		duck::Pull(%ducksite, %object);
+	}
+            if(GameBase::getMapName(%this) == "p4")	
+	{
+		%ducksite = 14;
+		duck::Pull(%ducksite, %object);
+	}
+    if(GameBase::getMapName(%this) == "p5")	
+	{
+		%ducksite = 30;
+		duck::Pull(%ducksite, %object);
+	}
+    if(GameBase::getMapName(%this) == "p6")	
+	{
+		%ducksite = 31;
+		duck::Pull(%ducksite, %object);
+	}
+                    if(GameBase::getMapName(%this) == "Sniper duck 7")
+	{
+		%ducksite = 15;
+		duck::Pull(%ducksite, %object);
+        }
+    	if(GameBase::getMapName(%this) == "Sniper duck 8")
+	{
+		%ducksite = 28;
+		duck::Pull(%ducksite, %object);
+        }
+	 if(GameBase::getMapName(%this) == "Sniper duck 9")
+	{
+		%ducksite = 29;
+		duck::Pull(%ducksite, %object);
+        }
+        if(GameBase::getMapName(%this) == "Sniper Switch 6")
+	{
+		%ducksite = 16;
+		duck::Pull(%ducksite, %object);
+	}
+           if(GameBase::getMapName(%this) == "Sniper Switch 5")	
+	{
+		%ducksite = 17;
+		duck::Pull(%ducksite, %object);
+	}
+             if(GameBase::getMapName(%this) == "PlasmaTwo 1")
+	{
+		%ducksite = 18;
+		duck::Pull(%ducksite, %object);
+	}
+                 if(GameBase::getMapName(%this) == "PlasmaTwo 2")
+	{
+		%ducksite = 19;
+		duck::Pull(%ducksite, %object);
+	}
+     if(GameBase::getMapName(%this) == "PlasmaTwo 3")
+	{
+		%ducksite = 20;
+		duck::Pull(%ducksite, %object);
+	}
+        if(GameBase::getMapName(%this) == "MA Switch 5")
+	{
+		%ducksite = 24;
+		duck::Pull(%ducksite, %object);
+	}
+	if(GameBase::getMapName(%this) == "MA Switch 6")
+	{
+		%ducksite = 25;
+		duck::Pull(%ducksite, %object);
+	}
+	if(GameBase::getMapName(%this) == "MA Switch 7")
+	{
+		%ducksite = 26;
+		duck::Pull(%ducksite, %object);
+	}
+	if(GameBase::getMapName(%this) == "MA Switch 8")
+	{
+		%ducksite = 27;
+		duck::Pull(%ducksite, %object);
+	}
+
+
+
+	if(GameBase::getMapName(%this) == "Info!!!")
+	{
+		%clientId = Player::getClient(%object);
+		TA::BlackOut(%clientId,12);
+		schedule("Client::sendMessage(" @ %clientId @ ", 1,\"~wteleport2.wav\");", 0);
+		schedule("bottomprint(" @ %clientId @ ", \"<jc><f1> ]-[eY, " @ Client::getName(%clientId) @ "!\", 4);", 0);
+		schedule("Client::sendMessage(" @ %clientId @ ", 1,\"~wusepack.wav\");", 3);
+		schedule("bottomprint(" @ %clientId @ ", \"<jc><f1>Welcome to the <f3>B00zE <F0>B00T CAMP! (Version 3)\", 4);", 3);
+		schedule("Client::sendMessage(" @ %clientId @ ", 1,\"~wshell_click.wav\");", 6);
+		schedule("centerprint(" @ %clientId @ ", \"<jc><f1>Map created by <F0>B00zE\", 5);", 6);
+	}
+   	if(GameBase::getMapName(%this) == "F4A!")
+	{
+	 //GameBase::setPosition(%object,"-752.519 107.002 125.592"); 
+		GameBase::setPosition(%object,GetOffsetRot("-752.519 107.002 125.592","0 0 0",$Arena::Spawn));
+	}
+ 	if(GameBase::getMapName(%this) == "Climbing Arena!")
+	{
+	GameBase::setPosition(%object,"-1078.81 191.206 573.663");       
+	}
+ 	if(GameBase::getMapName(%this) == "Top")
+	{
+	GameBase::setPosition(%object,"-848.679 234.076 2183.38");       
+	}
+	if(GameBase::getMapName(%this) == "Part 2")
+	{
+	GameBase::setPosition(%object,"1257.03 528.936 1248.76");       
+	}
+	 if(GameBase::getMapName(%this) == "Woooo-hoooo")
+	{
+	GameBase::setPosition(%object,"-1078.81 191.206 573.663");     
+	messageall(1, Client::getName(%playerClient) @ " **** Woooooo-hoooooooo ****"); 
+	schedule("bottomprint(" @ %playerClient @ ", \"<jc><f1>**** Good Job !! ****\", 1);", 0);
+	}
+        if(GameBase::getMapName(%this) == "Plasma Range!")
+	{
+	 //GameBase::setPosition(%object,"-390.959 -1048.62 171.786");
+		GameBase::setPosition(%object,GetOffsetRot("-390.959 -1048.62 171.786","0 0 0",$Arena::Spawn));	 
+	 }
+          if(GameBase::getMapName(%this) == "Back 2 the base!")
+	{
+	 //GameBase::setPosition(%object,"-384.875 91.5404 147.5");   
+		GameBase::setPosition(%object,GetOffsetRot("-384.875 91.5404 147.5","0 0 0",$Arena::Spawn));	 
+	}
+         if(GameBase::getMapName(%this) == "MA Range!")
+	{
+	 //GameBase::setPosition(%object,"251.025 358.568 182.652");
+		GameBase::setPosition(%object,GetOffsetRot("251.025 358.568 182.652","0 0 0",$Arena::Spawn));
+	}
+         if(GameBase::getMapName(%this) == "Mortar Range!")
+	{
+	 GameBase::setPosition(%object,"498.895 -216.583 146.949");
+	}
+         if(GameBase::getMapName(%this) == "Sniper Range!")
+	{
+	// GameBase::setPosition(%object,"70.298 -371.778 197.386");
+		GameBase::setPosition(%object,GetOffsetRot("70.298 -371.778 197.386","0 0 0",$Arena::Spawn));
+	}
+       if(GameBase::getMapName(%this) == "PlasmaTwo Range!")
+	{
+	 GameBase::setPosition(%object,"-881.963 -441.796 111.078");
+	}
+        if(GameBase::getMapName(%this) == "B00zE Bot Range!")
+	{
+	 GameBase::setPosition(%object,"33.7819 -6.85908 202.304");          
+	}
+        if(GameBase::getMapName(%this) == "Outside!")
+	{
+	 GameBase::setPosition(%object,"139.237 22.7593 162.525");          
+	}
+if(GameBase::getMapName(%this) == "Duel Base!")
+	{
+	 GameBase::setPosition(%object,"-170 -1884 154");          
+	}
+	if(GameBase::getMapName(%this) == "Dueler 2")
+	{
+	 GameBase::setPosition(%object,"-200.766 -1814.85 169.503");          
+	}
+	if(GameBase::getMapName(%this) == "Dueler 1")
+	{
+	 GameBase::setPosition(%object,"-140.767 -1814.86 169.504");          
+	}
+	if(GameBase::getMapName(%this) == "Start!")
+	{
+	 messageall(1, Client::getName(%playerClient) @ " Start the Fight!!");
+	}
+if(GameBase::getMapName(%this) == "Vertical climbing!")
+	{
+	GameBase::setPosition(%object,"-3137.1 -2682.86 -720.795");       
+	}
+	if(GameBase::getMapName(%this) == "Part 2!")
+	{
+		GameBase::setPosition(%object,"-3196.87 -1436.85 -959.511");       
+	}
+	if(GameBase::getMapName(%this) == "Energetic Switch")
+	{
+		client::sendmessage(Player::getClient(%object), 0, "~wshell_click.wav");
+		Player::setItemCount(%playerClient,RepairKit,1);
+			%playerClient = Player::getClient(%object);
+		if (GameBase::getDamageLevel(Client::GetOwnedObject(%playerclient)) > 0)
+		{
+		GameBase::SetDamageLevel(Client::GetOwnedObject(%playerclient),0);
+		}
+	}
+	
+	if(Player::getClient(%object).inArena) return;
+	
+	%playerClient = Player::getClient(%object);
+	if(getObjectType(%object) != "Player" || %playerClient.isSpy || Player::isDead(%object))
+		return;
+
+	%playerTeam = GameBase::getTeam(%object);
+	%oldTeam = GameBase::getTeam(%this);
+	if(%oldTeam == %playerTeam)
+		return;
+
+	if ( %this.NoCapture )
+	{
+		client::sendMessage(%playerClient, 1, "Wait a bit foo.~waccess_denied.wav");
+		return;
+	}
+
+	%this.trainingObjectiveComplete = true;
+	
+	%touchClientName = Client::getName(%playerClient);
+	%group = GetGroup(%this);
+	Group::iterateRecursive(%group, GameBase::setTeam, %playerTeam);
+
+	%dropPoints = nameToID(%group @ "/DropPoints");
+	%oldDropSet = nameToID("MissionCleanup/TeamDrops" @ %oldTeam);
+	%newDropSet = nameToID("MissionCleanup/TeamDrops" @ %playerTeam);
+
+	$deltaTeamScore[%oldTeam] -= %this.deltaTeamScore;
+	$deltaTeamScore[%playerTeam] += %this.deltaTeamScore;
+	$teamScore[%oldTeam] -= %this.scoreValue;
+	$teamScore[%playerTeam] += %this.scoreValue;
+
+	if(%dropPoints != -1)
+	{
+		for(%i = 0; (%dropPoint = Group::getObject(%dropPoints, %i)) != -1; %i++)
+		{
+			if(%oldDropSet != -1)
+				removeFromSet(%oldDropSet, %dropPoint);
+			addToSet(%newDropSet, %dropPoint);
+		}
+	}
+
+	if(%oldTeam == -1)
+	{
+		MessageAllExcept(%playerClient, 0, %touchClientName @ " claimed " @ %this.objectiveName @ " for the " @ getTeamName(%playerTeam) @ " team!");
+		Client::sendMessage(%playerClient, 0, "You claimed " @ %this.objectiveName @ " for the " @ getTeamName(%playerTeam) @ " team!");
+ 	}
+	else
+	{
+		if(%this.objectiveLine)
+		{
+			MessageAllExcept(%playerClient, 0, %touchClientName @ " captured " @ %this.objectiveName @ " from the " @ getTeamName(%oldTeam) @ " team!");
+			Client::sendMessage(%playerClient, 0, "You captured " @ %this.objectiveName @ " from the " @ getTeamName(%oldTeam) @ " team!");
+			%this.numSwitchTeams++;
+			%playerClient.TTowerCaps++;
+			schedule("TowerSwitch::timeLimitCheckPoints(" @ %this @ "," @ %playerClient @ "," @ %this.numSwitchTeams @ ");",60,%playerClient);
+		}
+	}
+	if(%this.objectiveLine)
+	{
+		TeamMessages(1, %playerTeam, "Your team has taken an objective.~wCapturedTower.wav");
+		TeamMessages(0, %playerTeam, "The " @ getTeamName(%playerTeam) @ " has taken an objective.");
+		if(%oldTeam != -1)
+			TeamMessages(1, %oldTeam, "The " @ getTeamName(%playerTeam) @ " team has taken your objective.~wLostTower.wav");
+		ObjectiveMission::ObjectiveChanged(%this);
+	}
+	%this.NoCapture = True;
+	schedule(%this@".NoCapture = False;", 5, %this);
+	ObjectiveMission::checkScoreLimit();
+}
+
+StartUp();
+

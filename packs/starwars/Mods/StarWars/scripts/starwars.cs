@@ -17,36 +17,54 @@ $Server::teamSkin5 = "base";
 $Server::teamSkin6 = "base";
 $Server::teamSkin7 = "base";
 
-// REPACK FIX 2026-08-27: bootstrap this mod's own script tree.
+// REPACK FIX 2026-08-29: the 2026-08-27 fix below this line was built on a WRONG
+// premise and is reverted here. Player report 2026-08-29: "hosted Star Wars, it is
+// essentially base weapons still, skins even too".
 //
-// Base execs <ModName>.cs as the mod entry (console.cs:187 ExecModScripts, called at :267,
-// AFTER base's own client/server/game at :249-252, so what we define here overrides base).
-// This file set team names and nothing else, which was correct for the ORIGINAL StarWars:
-// that release shipped 118 scripts entirely FLAT, and base's fixed exec list IS the loader
-// for a flat mod -- exec("server.cs") found the MOD's server.cs.
+// ★What actually happened.★ `Mods\TribesStarWars.zip` ships TWO complete trees:
+// `1.11 TribesStarWars\StarWars\Scripts` (130 files, FLAT -- this IS the Star Wars
+// mod) and `1.40 TribesStarWars\base\scripts` (201 files under server/ client/ gui/
+// tags/ -- a STOCK "Bootstrap 1.40" client, MEASURED 199-of-200 byte-identical to
+// the same tree inside the unrelated TribesAnnihilation package, and containing ZERO
+// Star Wars content: no ARM_*, no WPN_*, no atgarcannon, no turbolaser).
 //
-// The build shipped here is a restructured release: 256 scripts under server/ client/ gui/
-// tags/. 63 of the original's flat scripts moved into subdirectories -- item.cs ->
-// server/items, station.cs -> server/items/stations, server.cs and game.cs -> server. The
-// search path is FLAT, so those bare names hit BASE's copies and the mod half-loaded:
-// armordata.cs and baseProjData.cs stayed flat, so player models and weapon sounds were
-// right while inventory and weapons came from base (player report 2026-08-26).
+// The deploy merged both and kept ONE copy per basename, preferring the nested path.
+// That silently DELETED all 26 Star Wars forks whose names also exist somewhere in
+// the 1.40 subtree -- item.cs, turret.cs, station.cs, vehicle.cs, sensor.cs, game.cs,
+// player.cs, objectives.cs, ai.cs, nsound.cs, staticshape.cs, beacon.cs, Mine.cs,
+// admin.cs, menu.cs, GUI.CS, Options.cs, PlayerSetup.cs, server.cs and the rest --
+// i.e. exactly the gameplay. The correlation is exact: every dropped fork has a
+// same-named file in the 1.40 subtree; every fork that SURVIVED (ArmorData.cs,
+// baseProjData.cs, client.cs, sae.cs ...) has none. That is why armours and weapon
+// projectiles were right while inventory, turrets and stations came from base.
 //
-// So: exec the nested equivalents of exactly what base execs by name. server/server.cs
-// carries this mod's createServer, which is what chains server/loadall, sound/nsound and
-// server/items/loadall at server creation -- the mod's own design, left alone.
+// So the 08-27 reading -- "63 flat scripts MOVED into subdirectories" -- was wrong:
+// nothing moved, the Star Wars copies were dropped and stock same-named files stood
+// in their place. Exec'ing `server/server` + `server/game` + `client/loadall` then
+// loaded that stock tree ON PURPOSE, which is what Joe played.
 //
-// ONLY the three collision-free helpers are pulled in, NOT common.cs. common.cs additionally
-// does run("Include") and run("Schedule"), and those are BARE names that config\Presto also
-// defines (Presto/Include.cs, Presto/Schedule.cs). Exec'ing common.cs therefore pulled in
-// Presto's tree, whose Event.cs <-> writer/event.cs <-> events.cs exec each other forever:
-// MEASURED, a -mod StarWars host died with rc=3221225725 (STACK_OVERFLOW) and a log full of
-// repeating "Executing presto\Event.cs / presto\writer\event.cs". Run/Autoload/Sprintf have
-// no Presto counterpart. The engine's own schedule() covers the schedule() calls in the
-// server chain, so SW's Schedule.cs is not needed.
-exec( "Run" );
-exec( "Autoload" );
+// ★The fix.★ The 26 forks are restored from the 1.11 tree, so this mod now has the
+// same flat script set every other working mod here ships (DeltaAirForce, RMRPG, RPG,
+// SEX, SWRPG, TSC, Tac, War40k all carry server.cs/item.cs/turret.cs/game.cs/
+// station.cs -- StarWars, Annihilation and Starsiege were the only three without, and
+// all three played as base). base's own exec list at console.cs:215-265 and inside
+// createServer IS the loader for a flat mod: `exec(Item)` etc. resolve to the MOD's
+// copy because `StarWars\scripts` precedes `base\scripts` on the search path, and the
+// restored server.cs ends its chain with `exec(swloadscripts)` -- the file that
+// registers the 11 WPN_*, 7 VEH_* and 14 ARM_* datablocks, which until now NOTHING
+// in the tree exec'd.
+//
+// The 1.40 subtree is left on disk but is now exec'd by nothing (inert). The 37 flat
+// 1.11 files that are byte-identical to our modern base\scripts are deliberately NOT
+// restored -- base's copies serve them, so the mod tracks base for those.
+//
+// Only the three collision-free helpers stay. NOT common.cs: it also does
+// run("Include") / run("Schedule"), bare names that config\Presto also defines, and
+// exec'ing it pulled in Presto's tree whose Event.cs <-> writer/event.cs recurse
+// forever -- MEASURED, a -mod StarWars host died rc=3221225725 (STACK_OVERFLOW).
+// Sprintf is required (game.cs and BotHud.cs call sprintf); Timestamp and Compat
+// supply timestamp::format / String::rpad, the 1.40 plugin commands admin.cs and the
+// iplog path expect.
 exec( "Sprintf" );
-exec( "server/server" );
-exec( "server/game" );
-exec( "client/loadall" );
+exec( "Timestamp" );
+exec( "Compat" );

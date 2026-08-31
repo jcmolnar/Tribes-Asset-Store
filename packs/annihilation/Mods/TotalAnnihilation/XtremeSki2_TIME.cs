@@ -1,0 +1,14 @@
+$BestLapTime2XtremeSki2(Skiing) = "84.0950999999999";
+$BestLapTimeDaytona = "23.7439999999999";
+$BestLapTimeDaytona(VehicleRacing) = "25.1838999999999";
+$BestLapTimeExtremities = "93.3119999999999";
+$BestLapTimeJumpers_Wheel = "6.43199999999999";
+$BestLapTimeName2XtremeSki2(Skiing) = "Jedi";
+$BestLapTimeNameDaytona = "Maniac";
+$BestLapTimeNameDaytona(VehicleRacing) = "Jedi";
+$BestLapTimeNameExtremities = "geno's mom";
+$BestLapTimeNameJumpers_Wheel = "assasin";
+$BestLapTimeNameSkiWay = "hrdsyh";
+$BestLapTimeNameTheClimb = "dante";
+$BestLapTimeNameThe_race = "assasin";
+$BestLapTimeTheClimb = "275.199999999999";
