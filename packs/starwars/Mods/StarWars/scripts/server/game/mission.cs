@@ -73,6 +73,17 @@ function Game::startMatch() {
 
 	Game::resetScores();
 
+	// REPACK FIX 2026-08-28: re-arm the 1s scoreboard sweeper here, per match. Its 1998 arm
+	// (playerscores.cs top level) runs during ExecModScripts, BEFORE any ConsoleScheduler
+	// exists ("schedule: scheduler is not running" in every boot log), and loadMission
+	// deletes/recreates the scheduler per mission anyway -- so the loop never survived to
+	// gameplay on ANY host type. kills.cs never refreshes scores directly, so without this
+	// sweeper a kill only showed on the scoreboard after the victim's respawn. This context
+	// provably has a live scheduler (the replenishTeamEnergy schedule below is stock).
+	// Re-Add with the same tag is safe: Schedule::Add bumps the tag id, orphaning any prior
+	// pending exec, so double-starts cannot stack loops.
+	Schedule::Add( "UpdateScores();", 1 );
+
 	%numTeams = getNumTeams();
 	for(%i = 0; %i < %numTeams; %i = %i + 1) {
 		if($TeamEnergy[%i] != "Infinite")
