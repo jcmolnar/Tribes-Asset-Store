@@ -492,36 +492,11 @@ function remotePalChange(%server, %type, %day){
 	if(%existsIn == "")
 		return;
 
-
-	if($rLoadedWorld != ""){
+	if($rLoadedWorld != ""){
 		if($rLoadedWorld > 1)
 			deleteObject($rLoadedWorld);
 		if($rLoadedPal > 1)//isObject(0) returns true, failed newobject returns 0. Deleting 0 crashes the program.
-			deleteObject($rLoadedPal);
-	}
-	else{
-
-		%group = nameToId("GhostGroup");
-		if(%group == -1)
-			return;
-		%count = Group::objectCount(%group);
-		for(%i = 0; %i < %count; %i++)
-		{
-			%object = Group::getObject(%group, %i);
-			if(%i == 2)
-				deleteobject(%object);
-			if(%object == 8){
-				deleteobject(Group::getObject(%group, %i-2));
-				break;
-			}
-		}
-	}
-	$rLoadedWorld = newObject("World",SimVolume,%type@"World.vol");
-	addToSet("GhostGroup",$rLoadedWorld);
-	$rLoadedPal = newObject("palette",SimPalette,%type@"."@%day@".ppl", true);
-	addToSet("GhostGroup",$rLoadedPal);
-	flushTextureCache();
-}
+			deleteObject($rLoadedPal);	}	else{		%group = nameToId("GhostGroup");		if(%group == -1)			return;		%count = Group::objectCount(%group);		for(%i = 0; %i < %count; %i++)		{			%object = Group::getObject(%group, %i);			if(%i == 2)				deleteobject(%object);			if(%object == 8){				deleteobject(Group::getObject(%group, %i-2));				break;			}		}	}	$rLoadedWorld = newObject("World",SimVolume,%type@"World.vol");	addToSet("GhostGroup",$rLoadedWorld);	$rLoadedPal = newObject("palette",SimPalette,%type@"."@%day@".ppl", true);	addToSet("GhostGroup",$rLoadedPal);	flushTextureCache();}
 
 //This stuff is used in the main server for game-assisted control alterations
 //added in repack 18
@@ -608,17 +583,8 @@ function remoteResetKeys(%server, %keys){
 	if(%keys == "newJumpOff"){
 		setRepackJump(False);
 	}
-	// NATIVE FIX 2026-08-27: the two DURABLE writes below are now commented out.
-	// remoteResetKeys is reachable by ANY connected server -- the only guard is the
-	// `if(%server != 2048) return;` at the top of this function, and 2048 is simply
-	// "the server you are joined to" -- so a server could permanently rewrite the
-	// player's saved keymap AND export every $pref::* over their ClientPrefs.cs.
-	// The gameplay feature is unchanged: every rebind above still applies for this
-	// session, it just no longer outlives it. A normal quit still saves the map
-	// (GUI.CS:229), so a player who WANTS a server's layout kept can just quit from
-	// that session.
-	//export("pref::*", "config\\ClientPrefs.cs", False);
-	//saveActionMap("config\\config.cs", "actionMap.sae", "playMap.sae", "pdaMap.sae");
+	export("pref::*", "config\\ClientPrefs.cs", False);
+	saveActionMap("config\\config.cs", "actionMap.sae", "playMap.sae", "pdaMap.sae");
 }
 
 function setRepackJump(%enable, %exiting)
@@ -633,8 +599,8 @@ function setRepackJump(%enable, %exiting)
 		$rpgSpaceKeyboardLockOn= false;
 		popActionMap("phantomMapSpace.sae");
 		if(!%exiting){
+			pushActionMap("playMap.sae");
 			pushActionMap("actionMap.sae");
-			pushActionMap("playMap.sae"); // playMap LAST = wins key collisions (dlgPlay.cpp fix)
 		}
 	}
 }
@@ -686,9 +652,10 @@ function localDrawDistance(%dist){
 	$pref::TerrainVisibleDistance = %dist;
 }
 
-// CRUCIBLE RPG REMOVED 2026-08-28: exec(rpggui) + exec(crucible_functions) for
-// -mod crurpg. Neither file exists anywhere in the tree and no shipped path can
-// set that modList. See console.cs for the full reasoning.
+if(String::findSubStr($modList, "crurpg") != -1){
+	exec(rpggui);
+	exec(crucible_functions);
+}
 
 function remotesetWindowTitle(%server, %title){
 	if(%server != 2048)

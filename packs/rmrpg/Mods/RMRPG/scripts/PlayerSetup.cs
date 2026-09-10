@@ -4,37 +4,6 @@
 //
 //------------------------------------
 
-// NATIVE: scan the WHOLE search path for skin textures matching %pattern and append each
-// UNIQUE skin to $SkinArray (dedup key = base + %delim gender). Finds skins in ANY folder
-// and ANY image format the repack ships (.bmp legacy + .png/.gif converted).
-function Player::addSkinFiles(%pattern, %delim)
-{
-	%skin = File::findFirst(%pattern);
-	while (%skin != "")
-	{
-		%idx = String::findSubStr(%skin, %delim);
-		if (%idx >= 0)
-		{
-			%key = String::getSubStr(%skin, 0, %idx) @ %delim;
-			%dup = 0;
-			%i = 0;
-			while (%i < $SkinCount)
-			{
-				%eidx = String::findSubStr($SkinArray[%i], %delim);
-				if (%eidx >= 0 && ! String::ICompare(String::getSubStr($SkinArray[%i], 0, %eidx) @ %delim, %key))
-					%dup = 1;
-				%i = %i + 1;
-			}
-			if (%dup == 0)
-			{
-				$SkinArray[$SkinCount] = %skin;
-				$SkinCount = $SkinCount + 1;
-			}
-		}
-		%skin = File::findNext(%pattern);
-	}
-}
-
 function ClearPlayerConfig()
 {
 	Control::setValue(IDCTG_PLYR_CFG_NAME, "");
@@ -90,22 +59,6 @@ function PlayerSetupGui::onOpen()
 		}
 	}
 
-	//NATIVE: mount skin/voice asset-pack zips ONCE so voices (base\voices\*.zip) and
-	//skins (base\Skins\*.zip) packed in archives become searchable -- a loose zip is
-	//only a FILE until mounted. Must run BEFORE the voice + skin scans below. Skips
-	//general art/misc archives (e.g. RPG\rpg_misc.zip) that could shadow base art.
-	if ($AssetZipsMounted == "")
-	{
-		$AssetZipsMounted = 1;
-		%zip = File::findFirst("*.zip");
-		while (%zip != "")
-		{
-			if (String::findSubStr(%zip, "Skins") >= 0 || String::findSubStr(%zip, "voices") >= 0)
-				File::mountVolume(%zip);
-			%zip = File::findNext("*.zip");
-		}
-	}
-
 	//now add all voices to the voice list box
 	FGCombo::clear(IDCTG_PLYR_CFG_VOICE);
 	%voiceCount = 0;
@@ -125,24 +78,24 @@ function PlayerSetupGui::onOpen()
       %voiceSet = File::findNext("*.whello.wav");
 	}
 
-	//NATIVE: build the skin list -- EVERY armor skin across the whole search path, in any
-	//image format the repack ships (legacy .bmp + converted .png/.gif). Dedup by
-	//base+gender (Player::addSkinFiles, defined in RPG PlayerSetup.cs -- loaded first in
-	//the rpg+rmrpg stack). Clear the array first so a longer prior open leaves no stale tail.
-	%i = 0;
-	while (%i < 256)
+	//add all the male skins to the array
+	%skinCount = 0;
+	%skin = File::findFirst("*.larmor.bmp");
+	while (%skin != "")
 	{
-		$SkinArray[%i] = "";
-		%i = %i + 1;
+		$SkinArray[%skinCount] = %skin;
+		%skinCount = %skinCount + 1;
+		%skin = File::findNext("*.larmor.bmp");
 	}
-	$SkinCount = 0;
-	Player::addSkinFiles("*.larmor.bmp",  ".larmor");
-	Player::addSkinFiles("*.larmor.png",  ".larmor");
-	Player::addSkinFiles("*.larmor.gif",  ".larmor");
-	Player::addSkinFiles("*.lfemale.bmp", ".lfemale");
-	Player::addSkinFiles("*.lfemale.png", ".lfemale");
-	Player::addSkinFiles("*.lfemale.gif", ".lfemale");
-	%skinCount = $SkinCount;
+
+	//add all the female skiins to the array
+	%skin = File::findFirst("*.lfemale.bmp");
+	while (%skin != "")
+	{
+		$SkinArray[%skinCount] = %skin;
+		%skinCount = %skinCount + 1;
+		%skin = File::findNext("*.lfemale.bmp");
+	}
 
 	if ($PCFG::CurrentPlayer >= 0)
 	{

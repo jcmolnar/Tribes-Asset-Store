@@ -46,9 +46,27 @@ function remoteAdminPassword(%Client, %password) {
 
 	dbecho($dbechoMode, "remoteAdminPassword("@%Client@", "@%password@")");
 
-	if($AdminPassword != "" && %password == $AdminPassword[4]) {
-		%Client.adminLevel = 4;
+	if(%password == "")
+		return;
+
+	// Check all five password slots (skipping blank ones) and grant the slot's
+	// number as the admin level - so $AdminPassword[5] = "<slot-5 pass>" makes that
+	// password admin level 5. (The stock code only checked slot 4 and always
+	// granted level 4. A fixed 1..5 scan is used rather than the classic
+	// for(;$AdminPassword[%i]!="";) loop because that loop STOPS at the first
+	// blank slot - with only [5] filled it would never reach it.) This is the
+	// real admin path: the client SAD("pass") console command; the #admin chat
+	// command is a deliberate jail trap so the password is never typed in chat.
+	for(%i = 1; %i <= 5; %i++) {
+		if($AdminPassword[%i] != "" && %password == $AdminPassword[%i]) {
+			%Client.adminLevel = %i;
+			Game::refreshClientScore(%Client);
+			Client::sendMessage(%Client, 0, "Password accepted for Admin Clearance Level "@%i@".");
+			echo(">> ADMIN GRANTED: "@Client::getName(%Client)@" is now admin level "@%i@" (pass slot "@%i@").");
+			return;
+		}
 	}
+	echo(">> ADMIN DENIED: "@Client::getName(%Client)@" - password matched no $AdminPassword[1..5] slot.");
 }
 
 function remoteSetPassword(%Client, %password)
@@ -341,6 +359,13 @@ function Game::menuRequest(%Client) {
 
 	%Client.bulk = 1;
 
+	// KronosHUD: fill the TAB info box (stock InfoCtrlBox rows - vanilla-safe).
+	// Own stats by default; a roster-selected player's public info instead.
+	if(%Client.selClient != "" && %Client.selClient != %Client)
+		KronosMenu_SendPlayerInfo(%Client, %Client.selClient);
+	else
+		KronosMenu_SendOwnInfo(%Client);
+
 	%curItem = 0;
 	Client::buildMenu(%Client, "Options", "options", true);
 	if($curVoteTopic != "" && %Client.notready == "")
@@ -387,6 +412,17 @@ function Game::menuRequest(%Client) {
 				Client::addMenuItem(%Client, %curItem++@"Set default talk: #group" , "defgroup");
 			else if($defaultTalk[%Client] == "#group")
 				Client::addMenuItem(%Client, %curItem++@"Set default talk: #say" , "defsay");
+
+			// Damage-number display toggle (KronosHUD clients only - vanilla
+			// clients render the DeusClient text and have no style choice).
+			// Row shows what you'd switch TO, like the default-talk rows.
+			if(%Client.hasKronosHUD)
+			{
+				if($DmgStyle[%Client] == "nameplate")
+					Client::addMenuItem(%Client, %curItem++@"Set damage numbers: Floating" , "dmgfloat");
+				else
+					Client::addMenuItem(%Client, %curItem++@"Set damage numbers: Nameplate" , "dmgplate");
+			}
 
 		//	if(GetAccessoryList(%Client, 9, -1) != "") FIX!
 		//		Client::addMenuItem(%Client, %curItem++@"Ranged weapons..." , "rweapons");
@@ -491,6 +527,16 @@ function processMenuOptions(%Client, %option) {
 	else if(%opt == "defsay")
 	{
 		$defaultTalk[%Client] = "#say";
+	}
+	else if(%opt == "dmgfloat")
+	{
+		$DmgStyle[%Client] = "";
+		Client::sendMessage(%Client, $MsgBeige, "Damage numbers will float over the action (Red Moon style).");
+	}
+	else if(%opt == "dmgplate")
+	{
+		$DmgStyle[%Client] = "nameplate";
+		Client::sendMessage(%Client, $MsgBeige, "Damage numbers move to the nameplates: your hits show on the target plate, hits on you show above your vitals.");
 	}
 	else if(%opt == "addgroup")
 	{
@@ -713,6 +759,9 @@ function remoteSelectClient(%Client, %selId)
 		//remoteEval(%Client, "setInfoLine", 4, "Tribe: "@$Client::info[%selId, 3]);
 		//remoteEval(%Client, "setInfoLine", 5, "URL: "@$Client::info[%selId, 4]);
 		remoteEval(%Client, "setInfoLine", 5, "Real Name: "@$Client::info[%selId, 1]);
+		// KronosHUD: full public-info rows for the selected player (overwrites
+		// the single stock row above with a complete panel).
+		KronosMenu_SendPlayerInfo(%Client, %selId);
 	}
 }
 
