@@ -1,0 +1,266 @@
+SHIFTER 09-28-2000 -- PORT NOTES FOR THE MODERN CLIENT (1.50)
+Ported 2026-09-12.  Source archive: shifter_09-28-2000.zip
+
+
+WHAT THIS IS
+------------
+Shifter by Emo1313 (Taylor Suchan), Dopplegangers.  The 09-28-2000 release: the
+build the community means when it says "Shifter", and the one GreyFlcn's later
+fork keeps calling "9-28 spec" whenever it reverts toward it.
+
+That fork is a SEPARATE mod and is packaged separately, as Mods\Shifter_v1G.
+It is not a newer version of this.  See its own docs\PORT-NOTES.txt.
+
+Shifter is a pure script mod.  It ships no shapes, textures, skins, sounds or
+maps, which is why this port needed no asset conversion at all.
+
+
+INSTALL SHAPE
+-------------
+Upstream ships one archive, scripts.vol, containing 90 files.  That archive is
+NOT installed.  Only loose scripts are installed, under Mods\Shifter\scripts\.
+
+Ship exactly one form.  The Modern Client re-ranks a mod's scripts.vol by
+search-path position (console.cs, File::rankVolume), and the mod ROOT ranks
+above <mod>\scripts -- so with both present the ARCHIVE wins and every fix in
+this port would be silently discarded.
+
+
+THE 30 FILES THAT WERE DROPPED, AND WHY
+---------------------------------------
+This is the part of the port that matters most.  The author built his volume by
+editing a copy of base's, so 30 of the 90 files in it are 1998 stock code that
+Shifter never touched.  Shipping them would have shadowed the Modern Client's
+own newer versions of those files -- the skin system, the video options screen,
+the mission editor, sound, keys, the string tables -- for no Shifter gameplay
+whatever.  Each one below was verified byte-for-byte before being dropped.
+
+  Byte-identical to what the Modern Client already ships (pure no-ops):
+    EditMission.cs          IRCClient.cs            baseDebrisData.cs
+    changeMission.cs        commander.cs            darkstar.strings.cs
+    editor.strings.cs       esf.strings.cs          help.strings.cs
+    interiorLight.cs        keys.cs                 loadShow.cs
+    marker.cs               registervolume.cs       sfx.strings.cs
+    sound.cs                tag.cs                  ted.cs
+    trees.cs                tsDefaultMatProps.cs
+
+  Verbatim stock 1998 copies where the Modern Client ships a newer file
+  (keeping them would have been a downgrade):
+    Options.cs              PlayerSetup.cs          clientDefaults.cs
+    commonEditor.strings.cs fear.strings.cs         med.cs
+    move.cs                 sae.cs
+
+  editor.cs -- the one judgement call.  Not byte-identical: it differs from
+    stock by three $ME:: drop-mode preferences and one exec of a file that has
+    never existed in any Tribes install (regdis.cs).  Those are the author's
+    personal editor settings, not mod content, and keeping the file would have
+    shadowed the Modern Client's reworked mission editor -- including MESave and
+    METoggleMode, which the client's C++ calls directly.  Dropped.
+
+  config.cs -- a stock keybind file.  config\config.cs sits at search position 1
+    and outranks anything under a mod, so this copy could never have taken
+    effect.  Dropped rather than left in place looking authoritative.
+
+  makefile.mak -- a build artifact from the author's machine.
+
+60 files were kept.  Every one of them is either Shifter-original or a base file
+Shifter genuinely modified.
+
+
+DEFECTS FIXED
+-------------
+0.  staticshape.cs:1366 -- THE BIG ONE, and it was only found by booting.  The
+    MeteorGunProj1 datablock is written on a single line, and an inline comment
+    sits in the middle of it:
+
+        damageClass = 1;       // 0 impact, 1, radius damageValue = 12.00; ... };
+
+    The "//" runs to end of line, so it swallowed the rest of the datablock
+    INCLUDING its closing brace.  The parser reported "StaticShape.cs Line: 1367
+    - Syntax error" and, as always in this language, discarded everything after
+    it.  Fixed by deleting the comment, which is exactly what GreyFlcn did in
+    v1G; the field values are untouched.
+    A scan of both mods and of base for the same shape (a "//" that opens inside
+    an unclosed block on a line that closes it later) found this one line and
+    nothing else -- base scored zero, so the scan is not producing noise.
+
+1.  game.cs:711 called cneterprint() -- a typo for centerprint().  In tourney
+    mode this is the "Press FIRE when ready" prompt, so the prompt never
+    appeared and the console logged an unknown command instead.  GreyFlcn hit
+    the same bug and fixed it the same way in his fork; his line is otherwise
+    character-for-character identical, which is what confirms the intent.
+
+2.  checkMaxDrop() is called by player.cs and admin.cs on the admin "penis
+    curse" path and is defined nowhere -- not in this release and not in v1G.
+    It has always been an unresolved call.  scripts\ShifterCompat.cs now defines
+    it as the no-op it already was, to keep the line out of the console log.  It
+    deliberately has an empty body: what the author meant by it is not recorded
+    anywhere in the shipped code, and inventing one would change admin
+    behaviour.
+
+3.  GameBase::getHeatFactor() is base's stub, dropped by Shifter's game.cs while
+    turret.cs and baseProjData.cs still dispatch to it for heatseeker and
+    rocket-turret target checks.  With no definition the dispatch returns the
+    empty string instead of a number.  Restored in ShifterCompat.cs.  Both ""
+    and 0.0 fail the >= 0.5 test at every call site, so no targeting decision
+    changes -- this only removes a silent empty-string path.
+
+4.  refreshWindowSize() is defined in base's GUI.CS, which Shifter's GUI.cs
+    shadows.  Because Shifter's Options.cs was one of the stock passengers
+    dropped above, base's Options.cs now survives -- and it calls
+    refreshWindowSize() when video options are applied.  Restored verbatim in
+    ShifterCompat.cs.
+
+5.  serverConfig.cs stamped $Server::HostName, $Server::Port and
+    $pref::LastMission unconditionally.  It is exec'd by the admin menu's "Reset
+    Server To Defaults", so a host that used that button was dragged to port
+    28001 and Broadside no matter what the Host Game menu had asked for.  All
+    three are now seed-only.
+
+6.  serverConfig.cs replaced the master-server list with Dynamix hosts that have
+    been dead for two decades, plus five raw 1999 IPs in the XLMaster list that
+    now belong to other people.  Both lists are still read by this client.  The
+    whole block is commented out; the client's own master list is left alone.
+
+7.  serverConfig.cs set $TelnetPort = 23 with $TelnetPassword = "password".
+    $TelnetPort is live in this engine (simTelnetPlugin.cpp) and opens a
+    listening remote console the moment it is assigned.  Both lines are
+    commented out; the engine default is off.
+
+8.  Mine.cs -- MineNet and MineNetKnot both set projectileType = HoverMine, but
+    the HoverMine datablock was defined 190 lines FURTHER DOWN the same file.
+    The engine resolves projectileType at assignment time and writes -1 when the
+    name is not yet registered (FearDynamicDataPlugin.cpp:1402), so both turrets
+    were permanently inert -- and MineNet is not dead code: MineNetModule is an
+    inventory item for five armour types and vehicle.cs:182 spawns the turret.
+    The definition block was moved above its first use.  Nothing else changed:
+    the move was done line-exactly and checked to preserve the whole multiset of
+    lines, one added blank separator aside.
+    ** THIS IS THE ONE CHANGE IN THIS PORT THAT ALTERS GAMEPLAY.**  MineNet
+    turrets now actually fire the mines the author wrote for them.  If you want
+    strict 1998 behaviour instead, move the block back.
+
+9.  turret.cs -- the Arbitor Beacon set "explosionId = defaultDebrisSmall", but
+    defaultDebrisSmall is a DebrisData block, not an Explosion one.  The engine
+    logged it as undefined and set the field to -1.  The line is commented out,
+    which leaves the field at exactly that -1, so the beacon behaves identically.
+    Deliberately NOT respelled as debrisId (v1G's choice): this block already
+    sets debrisId = flashDebrisMedium, and overriding it WOULD change behaviour.
+
+10. item.cs -- the two Merc booster pack images set "ammoType = BoosterAmmo",
+    and no BoosterAmmo datablock exists in this release, in v1G, or in base.
+    Commented out, as GreyFlcn did.  The booster runs on minEnergy/maxEnergy;
+    ammoType was already -1, so nothing changes but the log.
+
+
+WHAT WAS DELIBERATELY LEFT ALONE
+--------------------------------
+22 datablocks across coolturret.cs and item.cs set their projectile field to the
+literal string "Undefined".  That is the author's own placeholder convention --
+the count is identical in the 09-28-2000 release and in v1G, so it survived a
+year of someone else's maintenance untouched.  The engine logs each one as an
+undefined projectile at boot.  It is noise, not breakage, and rewriting 22 turret
+datablocks on a guess about what they were meant to fire would be inventing
+gameplay.  Left exactly as shipped.
+
+
+HOW THIS WAS VERIFIED
+---------------------
+Harness run run-1bc1aa85, Modern Client build 74ee9e92, untainted throughout.
+
+  * A base-only host was booted FIRST as a control, so that pre-existing engine
+    noise could be told apart from anything Shifter caused.  Nine lines are
+    baseline and appear under base too: the banlist.cs / GenericTriggers.cs /
+    badwords.cs / cowboyCmdHUD.cs / prestoEvent.cs exec misses, FOOTBALL.DSC,
+    the scripts.vol mount miss, and the Xtreme_Arena_Zero and Integration .dsc
+    syntax errors.  None of those are Shifter's.
+  * A Shifter host booted on Broadside: "Executing Shifter.cs", "Executing
+    ShifterCompat.cs", "[MOD] Shifter 09-28-2000 active", then Shifter's own
+    boot chain by name -- comchat, shban, remote, spawn, game_dmsg, damage, all
+    seven station_* files, bindings, objTree, and fairteams.  Every one of those
+    filenames exists nowhere in base, so that is the mod's own code running, not
+    base wearing its name.
+  * A GUI client joined the host, spawned, and rendered correctly: HUD, minimap,
+    health and energy, mission clock, no error overlay.  The bottom-of-screen
+    line is Shifter's own, from its message-of-the-day path.
+  * The mission was changed mid-session (Broadside -> 1vs1).  Shifter's files
+    still executed afterwards, which is the check that matters: the classic way
+    a mod of this shape fails is that createServer-time execs are the mod's and
+    every mission-time exec silently falls back to base.
+  * The search path was echoed four times during that session (this mod calls
+    EvalSearchPath from SHBan.cs) and carried base every single time.  That is
+    the concrete answer to the $modList hazard: console.cs:101-110 re-appends
+    "base" whenever it is missing, so a mod reassigning $modList cannot strand
+    itself.  This release does not reassign it server-side anyway.
+  * Final boot: zero syntax errors from Shifter, zero undefined datablocks
+    beyond the 22 deliberate "Undefined" placeholders above.
+
+
+WHAT A FLAT MOD COSTS, STATED PLAINLY
+-------------------------------------
+Shifter ships its own server.cs, game.cs, client.cs, item.cs and so on, and
+those win over base's.  Modern Client features that live in the files Shifter
+replaces therefore do not run under Shifter.  Measured, not guessed -- 29
+functions, of which these are the ones you would notice:
+
+  - remoteRawKey       the raw-key relay, so modern raw keybinds (the F1-F12
+                       saved-loadout row) do not reach the server under Shifter.
+  - Client::onPark /   park and resume, called from the client's C++.
+    Client::onResume
+  - Server::CheckMatchStarted, Game::timeLimitTick, Game::syncClientClock,
+    Game::clientClockValue, Flag::checkFlagsTime -- the modern match clock.
+    Shifter has its own match and tourney handling in v1G; this release does
+    not.
+  - AI::buildGraph / rebuildGraph / graphOn / graphOff -- nav-graph building
+    from the console.  Shifter removed both the definitions and its own calls
+    to them, so nothing dangles; you simply build graphs under base instead.
+  - createTrainingServer -- the training missions.
+
+  - FLAG HANDLING ON CTF MAPS IS NOT RELIABLY SHIFTER'S.  Found after this
+    port was staged, while verifying Reality Bites 2 (2026-09-12).  The Modern
+    Client's BotBrain re-executes config\botbrain_hooks.cs -- base's own
+    Flag::onCollision, drop and Flag::checkReturn -- at every CTF mission init,
+    for every mod, and it loads AFTER this mod's objectives.cs precisely to
+    replace it (botWorld.cpp:241 has no mod check, despite that file's "BASE
+    mod only" header).  Measured on every Shifter host in run-1bc1aa85:
+    botbrain_hooks.cs executed after Shifter's objectives.cs on each CTF load.
+    A reload of the SAME map re-runs objectives.cs without re-running the
+    hooks, so Shifter's own flag rules come back until the next map change.
+    Net effect: on CTF, flag pickup, drop and return follow base's rules after
+    most map loads and Shifter's after some.  This is a client bug, not a
+    Shifter one; it is raised as its own task and not patched here.
+
+Exactly ONE call was left dangling by all this, refreshWindowSize, and it is
+fixed above.  That was verified mechanically against the final installed file
+set, not by reading.
+
+This is the accepted cost of a flat mod and it is not worth "fixing" by blending
+Shifter's files with base's -- that produces a mod that is neither.
+
+
+ALSO WORTH KNOWING
+------------------
+  - Shifter's server.cs writes temp\serverTempData<port>.cs with export() and
+    execs it back.  The lexer bug that used to make that round trip lose
+    everything after a negative array index is already fixed in this engine
+    (consoleInternal.cpp), so this is safe here.
+
+  - Shifter is already listen-host aware: SHBan.cs and server.cs both test for
+    the LOOPBACK transport address explicitly, and there is no dot-counting
+    address loop anywhere in the mod.  That is the usual hang in mods of this
+    era and Shifter does not have it.
+
+  - SHBadwordlist.cs shipped loose beside the archive rather than inside it, and
+    is exec'd by game.cs when $Shifter::noSwearing is set.  It is installed into
+    scripts\ here so that option works.
+
+  - matchtrack.cs, dtrack.cs and matchConfig.cs are exec'd by admin.cs but were
+    never in any Shifter download.  They are match-mode extras a host supplies.
+    Nothing breaks without them; the exec simply finds nothing.
+
+
+LICENCE
+-------
+See Shifter_Copyright.txt in this folder.  Shifter is Taylor Suchan's work and
+the copyright notice sets conditions on redistribution under the Shifter name.
+Nothing in this port changes that; it is the original mod, repackaged to run.
