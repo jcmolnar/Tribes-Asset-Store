@@ -1,4 +1,14 @@
 exec("game.cs");								
+// Modern Tribes: the TC shipped its bot settings as config\spoonbot_starwars.cs (armours,
+// sabers/blasters per class, intervals). The pack dropped that file, so every gear variable
+// was empty: bots mounted "" and BotMove::Move re-posted itself with a 0-second delay (hang).
+// It ships inside the mod now. When the engine's BotBrain drives the bots ($Server::BotBrain)
+// the TC's own auto-spawn and respawn stay off -- two AI layers on one bot was the fight.
+if ($Spoonbot::StarWarsLoaded == "")
+	exec("spoonbot_starwars.cs");
+if ($Server::BotBrain == 1)
+	$Spoonbot::AutoSpawn = False;
+
 $flagReturnTime = 45;
 
 function ObjectiveMission::missionComplete()
@@ -337,6 +347,14 @@ function Mission::init()
    if ($Spoonbot::ThinkingInterval == 0)
 	{
 	$Spoonbot::ThinkingInterval = 3;
+	}
+
+   // Modern Tribes: the TC's original config\spoonbot_starwars.cs (1.5 s) was dropped from the
+   // pack; BotMove::Move re-schedules itself on this variable and an unset one is a 0-second
+   // delay, which the sim delivers in the same step forever (the game hangs once a bot moves).
+   if ($Spoonbot::MovementInterval == 0)
+	{
+	$Spoonbot::MovementInterval = 1.5;
 	}
 
    AI::setupAI();

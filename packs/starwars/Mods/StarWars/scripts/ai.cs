@@ -480,6 +480,12 @@ function AI::onPeriodic( %aiName )
 
 function AI::onDroneKilled(%aiName)
 {
+   // Modern Tribes: BotBrain respawns and re-arms its own bots; the TC's respawn here spawned
+   // a second bot of the same name ("AutoSpawn error"), mounted an empty weapon and started
+   // a second movement loop on the engine's bot.
+   if ($Server::BotBrain == 1)
+      return;
+
    $Spoonbot::NumBots = $Spoonbot::NumBots - 1;
    if( ! $SinglePlayer )
    {

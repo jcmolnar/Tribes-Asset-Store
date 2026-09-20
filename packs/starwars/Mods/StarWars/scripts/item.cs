@@ -554,11 +554,13 @@ $NextWeapon[TorpLauncher] = FlakCannon;
 $NextWeapon[FlakCannon] = BlasterRifle;
 $NextWeapon[BlasterRifle] = RSaber;
 
-$PrevWeapon[RSabre] = FlakCannon;
-$PrevWeapon[GSabre] = RSabre;
-$PrevWeapon[Msabre] = GSabre;
-$PrevWeapon[Bsabre] = MSabre;
-$PrevWeapon[ForceThrow] = BSabre;
+// Modern Tribes: these were spelled "Sabre" while the datablocks are "Saber", so cycling
+// to the previous weapon logged "getItemCount: incorrect item type" and skipped the sabers.
+$PrevWeapon[RSaber] = FlakCannon;
+$PrevWeapon[GSaber] = RSaber;
+$PrevWeapon[MSaber] = GSaber;
+$PrevWeapon[BSaber] = MSaber;
+$PrevWeapon[ForceThrow] = BSaber;
 $PrevWeapon[ForceLightning] = ForceThrow;
 $PrevWeapon[ForceSpeed] = ForceLightning;
 $PrevWeapon[ScoutGun] = ForceSpeed;
