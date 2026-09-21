@@ -1,0 +1,186 @@
+
+
+//if(Player::isJetting(%curTarget))
+
+
+
+
+//----------------------------------------------------------------------------
+
+ItemImageData RemoteTurretPackImage
+{
+	shapeFile = "remoteturret";
+	mountPoint = 2;
+	mountOffset = { 0, -0.12, -0.1 };
+	mountRotation = { 0, 0, 0 };
+	mass = 2.5;
+	firstPerson = false;
+};
+
+ItemData RemoteTurretPack
+{
+	description = "Turret";
+	shapeFile = "remoteturret";
+	className = "Backpack";
+   heading = "dDeployables";
+	imageType = RemoteTurretPackImage;
+	shadowDetailMask = 4;
+	mass = 2.0;
+	elasticity = 0.2;
+	price = 350;
+	hudIcon = "deployable";
+	showWeaponBar = true;
+	hiliteOnActive = true;
+};
+
+function RemoteTurretPack::onUse(%player,%item)
+{
+	if (Player::getMountedItem(%player,$BackpackSlot) != %item) {
+		Player::mountItem(%player,%item,$BackpackSlot);
+	}
+	else {
+		Player::deployItem(%player,%item);
+	}
+}
+
+function RemoteTurretPack::onDeploy(%player,%item,%pos)
+{
+	if (RemoteTurretPack::deployShape(%player,%item)) {
+		Player::decItemCount(%player,%item);
+	}
+}
+
+//----------------------------------------------------------------------------
+
+ItemImageData RocketTurretPackImage
+{
+	shapeFile = "RocketTurret";
+	mountPoint = 2;
+	mountOffset = { 0, -0.12, -0.1 };
+	mountRotation = { 0, 0, 0 };
+	mass = 2.5;
+	firstPerson = false;
+};
+
+ItemData RocketTurretPack
+{
+	description = "Turret";
+	shapeFile = "RocketTurret";
+	className = "Backpack";
+   heading = "dDeployables";
+	imageType = RocketTurretPackImage;
+	shadowDetailMask = 4;
+	mass = 2.0;
+	elasticity = 0.2;
+	price = 350;
+	hudIcon = "deployable";
+	showWeaponBar = true;
+	hiliteOnActive = true;
+};
+
+function RocketTurretPack::onUse(%player,%item)
+{
+	if (Player::getMountedItem(%player,$BackpackSlot) != %item) {
+		Player::mountItem(%player,%item,$BackpackSlot);
+	}
+	else {
+		Player::deployItem(%player,%item);
+	}
+}
+
+function RocketTurretPack::onDeploy(%player,%item,%pos)
+{
+	if (RocketTurretPack::deployShape(%player,%item)) {
+		Player::decItemCount(%player,%item);
+	}
+}
+
+//----------------------------------------------------------------------------
+
+ItemImageData PlasmaTurretPackImage
+{
+	shapeFile = "PlasmaTurret";
+	mountPoint = 2;
+	mountOffset = { 0, -0.12, -0.1 };
+	mountRotation = { 0, 0, 0 };
+	mass = 2.5;
+	firstPerson = false;
+};
+
+ItemData PlasmaTurretPack
+{
+	description = "Turret";
+	shapeFile = "PlasmaTurret";
+	className = "Backpack";
+   heading = "dDeployables";
+	imageType = PlasmaTurretPackImage;
+	shadowDetailMask = 4;
+	mass = 2.0;
+	elasticity = 0.2;
+	price = 350;
+	hudIcon = "deployable";
+	showWeaponBar = true;
+	hiliteOnActive = true;
+};
+
+function PlasmaTurretPack::onUse(%player,%item)
+{
+	if (Player::getMountedItem(%player,$BackpackSlot) != %item) {
+		Player::mountItem(%player,%item,$BackpackSlot);
+	}
+	else {
+		Player::deployItem(%player,%item);
+	}
+}
+
+function PlasmaTurretPack::onDeploy(%player,%item,%pos)
+{
+	if (PlasmaTurretPack::deployShape(%player,%item)) {
+		Player::decItemCount(%player,%item);
+	}
+}
+
+//----------------------------------------------------------------------------
+
+ItemImageData IndoorTurretPackImage
+{
+	shapeFile = "IndoorTurret";
+	mountPoint = 2;
+	mountOffset = { 0, -0.12, -0.1 };
+	mountRotation = { 0, 0, 0 };
+	mass = 2.5;
+	firstPerson = false;
+};
+
+ItemData IndoorTurretPack
+{
+	description = "Turret";
+	shapeFile = "IndoorTurret";
+	className = "Backpack";
+   heading = "dDeployables";
+	imageType = IndoorTurretPackImage;
+	shadowDetailMask = 4;
+	mass = 2.0;
+	elasticity = 0.2;
+	price = 350;
+	hudIcon = "deployable";
+	showWeaponBar = true;
+	hiliteOnActive = true;
+};
+
+function IndoorTurretPack::onUse(%player,%item)
+{
+	if (Player::getMountedItem(%player,$BackpackSlot) != %item) {
+		Player::mountItem(%player,%item,$BackpackSlot);
+	}
+	else {
+		Player::deployItem(%player,%item);
+	}
+}
+
+function IndoorTurretPack::onDeploy(%player,%item,%pos)
+{
+	if (IndoorTurretPack::deployShape(%player,%item)) {
+		Player::decItemCount(%player,%item);
+	}
+}

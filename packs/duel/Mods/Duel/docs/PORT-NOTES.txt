@@ -1,0 +1,340 @@
+DUEL TOURNAMENT -- MODERN CLIENT (1.50) PORT NOTES
+==================================================
+Ported 2026-09-20 from Downloads\pub-arghs-3f48a1ad6fc3 -- a source-repo export of
+the "=Argh!='s Duel" dedicated server (PlayT1.com).
+
+The mod itself is Duel Tournament by [HvC]NaTeDoGG (havoc.sirris.com), later
+maintained by Krayvok, Lestat and =Argh!=. The download was a whole 1.11 server
+install, not a mod folder: 156 MB, of which 102 MB was stock Tribes .vol files
+byte-identical to the 1998 release.
+
+
+WHAT THE PACKAGE ACTUALLY WAS
+-----------------------------
+  base\scripts\      175 loose .cs files, dumped straight into base
+  base\missions\     233 missions (159 of them arena/duel maps)
+  base\custom.vol    7 custom arena interiors -- the only non-stock .vol
+  base\*.vol         35 other .vol files, ALL byte-identical to stock 1.11
+  plugins\*.dll      4 binary plugins for a patched 1.x exe
+  mem.dll            the plugin loader (see below)
+  Tribes_Col_Time.exe  a patched 1.11 server binary
+
+It boots in an unusual way and this is the single most important thing to know
+before changing anything: there is no -mod entry point upstream. 159 of the
+mission files carry `exec(duelmod);` in the mission itself, and duelmod.cs is
+what pulls in the rest. See the header of Duel.cs for the full boot shape.
+
+
+THE BINARY PLUGINS -- NONE ARE SHIPPED
+--------------------------------------
+All four are 2011-2013 x86 DLLs that patch hardcoded addresses in the original
+Tribes exe via VirtualProtect. They cannot load on this client. What each did,
+and what replaced it:
+
+  mem.dll            THE LOADER. Impersonates Tribes' allocator DLL (internal
+                     name TribesPlugin.dll, exporting MS_Malloc / MS_Free /
+                     MS_Calloc / MS_Realloc) to get code execution at startup,
+                     then appends plugins\scripts to the search path, execs
+                     PluginLoader.cs, and LoadLibrary's every Plugins\*.dll
+                     looking for a getPlugin export. It also reads
+                     HKLM\...\Windows NT\CurrentVersion DigitalProductId +
+                     InstallDate and formats them into a machine fingerprint.
+                     NOT NEEDED -- nothing in the shipped mod requires it.
+
+  Attachment.dll     Function before/after hooks, stored as $Before::<fn>N /
+                     $After::<fn>N. REPLACED: this engine has the same feature
+                     natively -- `function X(%a) before Target { }` and `after`,
+                     with `halt` to short-circuit and `return_chained` to rewrite
+                     the result (eval.cpp RegisterConsoleHook / dispatchCall).
+                     The two live call sites were converted in place:
+                       TDNewScores.cs     BeforeTeam::setObjective
+                       TDStatDetection.cs Before::Detonate
+                     (Five more Attachment:: calls exist in code.notifications.cs
+                     and code.overtime.cs, but nothing execs those files -- they
+                     belong to the Uber4 sub-mod, which is not reachable.)
+
+  Extras.dll         Added two callbacks, RocketDumb::OnCollision and
+                     Console::EchoPipe. The RocketDumb handler in
+                     TDStatDetection.cs is kept -- if something else invokes it
+                     the logic runs; without the plugin it simply never fires,
+                     which is a grenade-collision stat refinement, not gameplay.
+
+  DoSFix.dll         remoteEval flood throttle. NOT NEEDED, and note it was
+                     ALREADY BROKEN upstream: the DLL evaluates remoteFilter(...)
+                     / remoteBadFilter(...), but the bundled DoSFix.cs defines
+                     Filterremote / BadFilterremote. The names never matched, so
+                     the throttle never ran on the live server either. This
+                     engine drops unknown remote* commands silently anyway
+                     (simBase.cpp:626), and the mod's own AntiCrash.cs -- which
+                     IS shipped and does work -- catches the control-character
+                     chat flood.
+
+  mem___.dll         An older (2007) variant of the loader using
+                     SetWindowsHookExA. Inert even upstream; only mem.dll is
+                     loaded by name.
+
+
+WHAT WAS DROPPED
+----------------
+62 of the 175 loose scripts were VERBATIM stock 1998 copies riding along -- the
+author built his tree by editing a copy of base\scripts, so every file he did not
+touch came with it. Shipping them would have downgraded this client's own newer
+versions. 18 of the 62 would have actively shadowed a file base ships a fixed
+version of: Options.cs (video options), PlayerSetup.cs (skins), fear.strings.cs,
+editor.cs, sae.cs, move.cs, menu.cs, GUI.CS, RegisterObjects.cs, dm.cs,
+commonEditor.strings.cs, med.cs, serverDefaults.cs and the rest.
+
+49 more were unreachable: nothing in the boot graph execs them. That includes
+duelmatch.cs (an older, separate 1v1 duel mod this build superseded), DMMain2.cs,
+TDTesting.cs, TDUnused.cs, tdobj_backup_12_2_2016.CS, Uber4.cs + code.*.cs, the
+Training_*.cs set, the *.terrain.cs world files, and Arenas.cs -- which turns out
+to be a 1,349-line editor object dump with no functions and no caller at all.
+
+The ship/drop split was derived from a reachability walk of the exec() graph
+rooted at duelmod.cs, the stock console.cs and createServer() chains, and the
+zz<Arena>.cs tables that DMMain/TDArena load by name -- not chosen by hand.
+
+Also dropped: 102 MB of stock .vol files (this client has them), scripts.vol
+(loose beats archive, and shipping both is how a port loses its own fixes),
+clientDefaults.cs (client-side packet prefs; base 1.40's are better), and
+server.cs + client.cs -- their entire mod delta was four trivial items, while
+base's versions carry ~185 and ~150 lines of fixes worth keeping. The one thing
+worth rescuing from client.cs, remoteAN, is in DuelCompat.cs.
+
+AND base\custom.vol -- the 7 custom arena interiors (floatpad, flyTower, kiel,
+sbunker, siam, tblock, watchTower). They were unpacked loose into the mod root
+first, then dropped once checked: this client already ships all 35 files in
+base\custom.zip, BYTE-IDENTICAL. Shipping them again would have duplicated
+834 KB and, worse, put loose copies at the mod root where they outrank base's
+archive -- so if base ever reships custom.zip the pack's stale copies would win.
+The per-mission .vol files (Emerald_Valley.vol, Frost_Giant.vol, ...) DO ship:
+they hold the per-instance relit lightmaps (floatpad.0.dis, floatpad-000-0.dil),
+which are map data, not the shared geometry.
+
+Three more were dropped late, after reading them rather than trusting the graph:
+  2fuckedup.cs   scratch. One function (remoteShadow, a client-callable Player
+                 spawner with no gate) followed by a block of loose statements
+                 OUTSIDE any function, copied out of FlagHunter -- exec'ing it
+                 would run them at top level against undefined locals.
+  map1.cs        a dev test script (remoteBlah / SpawnShip / PutThisThere).
+  resetduel.cs   Elevator / MineAmmo / Lightning datablock callbacks, which
+                 duelmod.cs deliberately has commented out (//exec(resetduel);).
+klyecastle.cs is kept: nothing execs it either, but it is genuine project data an
+admin loads by name and AdminRemotes.cs carries the matching $KlyeCastleMain code.
+
+MISSIONS. 227 of 233 ship. The six UbersChallenge maps were dropped (five plus
+the UbersChallenge5-1 variant): they exec duelmod and then exec a parallel
+`base\base.*.cs` script set (20 files) to undo it and run "Uber" rules. That set
+is not in the export -- not loose, and not in any of the 141 .vol archives, which
+were all scanned. uber5.cs and code.admin/server/trigger.cs are missing for the
+same reason.
+
+
+REBASED ONTO 1.40 RATHER THAN SHADOWING IT
+------------------------------------------
+game.cs and objectives.cs ship as base's 1.40 files with the mod's real delta
+re-applied on top (marked "1.50 PORT: mod delta"), because the mod's own copies
+were 1.11 plus four small edits and would have cost the unlimited-match clock and
+the PS1 armour hook. The mod's edits kept:
+  game.cs        DiscLauncher casing; observers may open the menu; no
+                 auto-team-assign (TDMenu/TDMain own team placement)
+  objectives.cs  the time-limit path no longer calls missionComplete() --
+                 duelmod drives end-of-map itself and it would fire twice
+
+The heavy mod files (item.cs +3.7k lines, ArmorData.cs +1k, baseProjData.cs
++950, staticshape.cs, observer.cs, comchat.cs, station.cs, turret.cs, vehicle.cs,
+sensor.cs, Mine.cs, admin.cs, nsound.cs, baseExpData.cs, baseDebrisData.cs) ship
+as the mod's versions -- 1.40 changed them barely at all. The two 1.40 fixes that
+mattered were carried across by hand:
+  station.cs  the dangling-lastPlayer guard (a deleted player's object id can be
+              reused by a connection object; touching a field on it faults)
+  comchat.cs  the 240-character clamp on an incoming chat line
+
+NOT carried across: the validateShape / validateMaterials flags 1.40 adds to
+stock datablocks. They are a load-time diagnostic, and turning them on for this
+mod's several hundred custom datablocks risks failing a load over a shape name
+that was always slightly wrong. Worth revisiting once the mod has soaked.
+
+
+BUGS FIXED (all pre-existing -- these were broken on the live server too)
+------------------------------------------------------------------------
+1. AdminRemotes.cs projectload() / projectname(): the loop that restricts a
+   filename to [A-Za-z0-9] walked %message, which neither function ever sets, so
+   it exited immediately and the check never ran. projectload() then called
+   exec(%name) on whatever the player typed into chat. Now validates %name.
+   (Reached via the TDMenu "Load Project" item, which arms %cl.projectloading;
+   comchat.cs then routes the player's next chat line into it.)
+
+2. TDSupport.cs: gamebase::startFadout -> startFadeOut. No such command as the
+   former, so the bot never faded in.
+
+3. TDStatDetection.cs: DefaultBeaconitem::setvelocity -> Item::setVelocity. Same
+   class of typo -- the beacon never got its upward kick.
+
+4. SunnySide Arena.mis: the only "Duel" map that never exec'd duelmod. It exec'd
+   arena.cs, which does not exist anywhere in the export, so the map loaded under
+   plain base objectives. Now execs duelmod like the other 158.
+
+5. Vector::Rotate, called 8 times by item.cs to place a built object relative to
+   the player, does not exist in any engine version -- every call returned "" and
+   the object went to a junk position. Implemented in DuelCompat.cs from
+   Vector::getFromRot (exactly, no trig; see the comment there).
+
+6. 14 of the 227 .dsc mission descriptions were malformed and failed to parse, so
+   those maps showed no description in the browser. Two defect classes:
+     - a stray ' @' AFTER the terminating ';'  (7 files)
+     - a string literal wrapped across physical lines (7 files). The lexer rule is
+       \"(\\.|[^\\"\n\r])*\"  -- a string CANNOT contain a newline -- so a wrapped
+       description is a hard syntax error, not a cosmetic one.
+   Three needed hand repair: Whacked.dsc (unterminated final fragment, and "n"
+   where "\n" was meant), ArenaInTheTower.dsc (an orphan "007MAPS" fragment left
+   AFTER the terminator -- folded back in before it), Sunny_Side2.dsc (the
+   briefing string ran off the end of the file).
+   All 227 now parse. Note base\missions has two of its own broken .dsc files
+   (Xtreme_Arena_Zero, Integration) -- those are base's, not this pack's.
+
+7. DuelRecord.cs: duelmod.cs execs it at load but the pack had no default, so a
+   fresh install logged "exec: invalid script file DuelRecord.cs" and started
+   with the record variables unset. A default now ships in scripts\. **The
+   fastest-win record is a LOWER-is-better comparison (duelmod.cs:628,
+   `%t < $Duel::RecordTime`), so its "no record yet" value is a large sentinel;
+   at 0 no duel could ever beat it and that record would be dead forever.** A
+   host's own config\DuelRecord.cs wins over this file once written.
+
+
+MISSING UPSTREAM FUNCTIONS
+--------------------------
+A cross-file reference check (every name called by a shipped file vs every name
+defined by the shipped set, base 1.40 and its vols, and the engine's ~2,600
+registered commands) found 20 names with no definition anywhere. Tribes fails
+such a call SILENTLY -- it returns empty and execution continues -- so all 20 now
+have a definition in scripts\DuelCompat.cs: four repaired from files this port
+drops, two implemented, and fourteen given documented no-op stubs.
+
+Set $Duel::WarnMissing = true to have each stub announce itself the first time it
+is hit.
+
+
+SECURITY / PRIVACY SCRUB
+------------------------
+The upstream arghs.cs carried the live server's real credentials: the join
+password, two admin passwords, the $AboveAdmin super-admin password, the telnet
+password, the operator's named-admin roster, a list of banned player IPs, and an
+IRC auto-connect to irc.tribalwar.com on boot. That file is replaced by
+serverConfig.cs at the mod root, with every credential blank and documented, IRC
+off by default, and the ban list gone. duelmod.cs execs serverConfig.cs where it
+used to exec arghs.cs.
+
+Five more things were found while sweeping for the operator's own data, and these
+are the ones that mattered:
+
+1. AUTHENTICATION BYPASS, admin.cs remoteAdminPassword(). The test was
+       if($AdminPassword != "" && %password == $AdminPassword || %password == $AboveAdmin)
+   '&&' binds tighter than '||', so that is
+       ($AdminPassword != "" && %password == $AdminPassword) || (%password == $AboveAdmin)
+   and the second arm has NO non-empty guard. $AboveAdmin is unset by default and
+   on any host that never wanted a super-admin tier, so a client sending
+   remoteAdminPassword(2048, "") matched it and was granted isAdmin + isSuperAdmin
+   + AboveAdmin -- the tier that can kick, ban and mute other admins. Any client
+   can send that. Both arms are guarded now and the two tiers are separated.
+   It was latent upstream only because that server always set $AboveAdmin.
+
+2. ADMIN BACKDOOR, duelmod.cs Server::onClientConnect. The connecting client's IP
+   was matched against a hardcoded address and, on a match, given isAdmin +
+   isSuperAdmin + AboveAdmin with no password and no log line ("force admin the
+   loopback dude"). It shipped inside duelmod.cs, so every host running this mod
+   granted it to whoever holds that address. Removed.
+
+3. PASSWORD LEAK, admin.cs. Every login attempt ran
+       echo("admin attempt "@%password@" "@$adminpassword@" AA:"@$AboveAdmin);
+   which put the server's REAL admin and super-admin passwords into console.log in
+   plain text. Removed. The attempt itself is still recorded to
+   config\AdminAttempts.cs via IPLog::logAddress -- that is the operator's audit
+   trail and only ever contains what the client typed. Operators should know that
+   file exists.
+
+4. HARDCODED TRUSTED ADMIN, TDSupport.cs: `$TrustedAdmin[3] = "4u2h8";` at file
+   scope. TDSupport loads AFTER serverConfig, so it silently overwrote slot 3 and
+   handed trusted-admin status to anyone using that name, on every host. Removed;
+   the roster lives in serverConfig.cs. (Authorization() does require
+   .isSuperAdmin first, so the name list is a second factor, not a way in alone.)
+
+5. PERSONAL DATA / PER-PLAYER HACKS. TDSupport.cs makeFriends() hardcoded 26 real
+   player handles that nothing in the mod reads -- emptied. AdminRemotes.cs forced
+   one named player's armour from light to medium on every host -- removed.
+   duelmod.cs put the literal "=Argh!='s Duel" on the top-level menu of every host
+   -- it now follows $Server::HostName.
+
+The stock 1998 "DaJackal" Easter egg in Server::onClientConnect is Dynamix's own
+and is left alone.
+
+
+THE REMOTE SURFACE
+------------------
+Every console function whose name starts with "remote" is reachable straight off
+the wire -- a client sends remoteEval and simBase.cpp dispatches "remote<Name>".
+This mod defines 133 of them, and most were written with no permission check,
+which was survivable on one private server and is not in a pack anyone can
+install. All 133 were audited. Seven were fixed:
+
+  remotePP            A REMOTE CONSOLE. Took an arbitrary command string from the
+                      client, built "<word0>(<args>);" and eval()'d it -- and the
+                      "$" branch eval()'d an arbitrary assignment. No check at
+                      all, so every player had full script execution on the
+                      server. Now restricted to $AboveAdmin, which is empty by
+                      default, so out of the box nobody can reach it.
+
+  remoteFreezeToggle  Started Freeze(), which re-scheduled ITSELF every 0.0001s
+                      -- 10,000 times a second -- spawning a Player, running a
+                      9000-unit LOS trace and deleting it each pass. It could not
+                      be turned off either: Freeze() never tested $Freeze, so the
+                      "off" toggle set the flag and the loop carried on until the
+                      process was killed. Removed.
+
+  remoteFreeze        `while($Freeze) { $Boredom++; }` -- an unbounded busy loop
+                      in the server's script VM. Removed.
+
+  remoteLag           `while($lagpl != "")` running a 9000-unit LOS trace per
+                      iteration, and NOTHING in the mod ever clears $lagpl, so
+                      the loop had no exit. One call from any player hung the
+                      server permanently. Removed.
+
+  remotebla           Deleted every object in $BuildGroup -- everything every
+                      player had built -- and broadcast a line per object.
+                      Now admin-only.
+
+  remoteCleanup       Deleted and recreated the klyeCleanup group. Now admin-only.
+                      (It declared no parameters upstream; the engine passes the
+                      caller as the first argument to every remote* function, so
+                      the client id was always there to check.)
+
+  remoteexportnexus   Wrote config\Nexus.cs, and each call subtracted the arena
+                      offset from $FlagHunter::NexusPos AGAIN, so repeated calls
+                      walked the nexus away and persisted the corruption.
+                      Now admin-only.
+
+Eleven ungated ones remain and are deliberate: they spawn objects (remoteBadass,
+remoteCreateBorder, remoteBadas2s, remoteRound, remoteMCS, remoteCF, remoteCBFS,
+remoteMakeNexus, remoteSP) which IS the mod's player-facing arena building system,
+plus remoteMenuSelect (the stock menu dispatcher, which already strips quotes and
+backslashes and only evals processMenu<mode>) and remoteDS (execs one fixed
+filename). Gating those would change gameplay, so they are left as the mod
+intends. An operator who does not want players building should say so in the
+server rules -- or gate them with Duel::requireAdmin() the same way, which is in
+scripts\DuelCompat.cs.
+
+
+NOT DONE / KNOWN GAPS
+---------------------
+* The 5 UbersChallenge maps and the Uber4 sub-mod are not recoverable from this
+  export. If the base\base.*.cs set ever turns up, they can come back.
+* FlipSide.mis loses its own kill-zone triggers (flipside_triggers.cs is not in
+  the export). The map loads and plays as an ordinary duel arena.
+* code.notifications.cs / code.overtime.cs (overtime, cap-out warning,
+  time-limit countdown) are shipped-but-unreachable upstream -- nothing execs
+  them. They are NOT in this pack. If you want those features, they would need
+  wiring into duelmod.cs and their five Attachment:: calls converting to the
+  native before/after form the way TDNewScores.cs and TDStatDetection.cs were.
+* $SPAM::window / $SPAM::throttle in serverConfig.cs are read by the 1998 server
+  binary's own throttle, not by any script. They do nothing here. AntiCrash.cs is
+  the flood guard that actually runs.

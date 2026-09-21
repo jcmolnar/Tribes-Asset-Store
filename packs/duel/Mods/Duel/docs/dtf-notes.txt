@@ -1,0 +1,77 @@
+deletevariables("$DTFData*");
+deletevariables("$TedListCount*");
+
+	for(%x = 0; $TedList[%x] != ""; %x++)
+	{
+		for(%y = 0; $TedName[$TedNum[%y]] != ""; %y++)
+		{
+			//echo(%x@":"@%y@" - "@$DTFData[$TedList[%x], %y]);
+
+
+			//echo("X:"@%x@" Y:"@%y@" "@$TedName[$TedNum[%x]]@" "@$TedList[%y]);
+			if($TedName[$TedNum[%y]] == $TedList[%x])
+			{
+				%dtf = $TedName[$TedNum[%y]];
+				echo("GOTCHA");
+
+
+				%z=0;
+				echo(%z@": "@%dtf);
+				while($DTFData[%dtf, %z] != ""){
+				%z++;
+				}
+				$DTFData[%dtf, %z] = $TedNum[%y];
+			}
+		//	echo("Break");
+			//break;
+
+			//if($TedName[$TedNum[%x]] != $TedList[%y] && $TedList[%y+1] == "")
+			//{
+			//	$TedList[%y+1] = $TedName[$TedNum[%x]];
+			//	echo("Match??");
+			//}
+		}
+		//$TedListCount[%x] = %y;
+	//}
+
+			//$TedList[%y]
+
+			%y=0;
+			echo(%x@": "@%dtf);
+			while($DTFData[%dtf, %y] != ""){
+			%y++;
+			}
+		$DTFData[%dtf, %y] = $TedNum[%x];
+
+	}
+	//export("$TedList*", "config\\TedListCountK.cs", true);
+	export("$DTFData*", "config\\DTFDATAK.cs", true);
+
+//deletevariables("$Debuglist*");
+deletevariables("$$DTFData*");
+
+function addtolist(%obj)
+{
+	if(%obj!="")
+{
+	echo("Unknown object! checking... "@ %obj);
+	for(%x = 0; $Debuglist[%x] != "" && $Debuglist[%x]!= %obj; %x++)
+	{
+		//echo(%x@": "@$Debuglist[%x]);
+	}
+	//echo("Debug list: "@%x@"-"@$Debuglist[%x]);
+	if($Debuglist[%x] == "")
+	{
+		$Debuglist[%x] = %obj;
+		$Debuglist[$missionName]++;
+		echo("Obj added to list.");
+	}
+	else
+	{
+		echo("Obj found on list!");
+	}
+	//for(%x = 0; $Debuglist[%x] != ""; %x++)
+	//{
+	//	echo(%x@": "@$Debuglist[%x]);
+	}
+}

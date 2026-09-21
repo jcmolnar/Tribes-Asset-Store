@@ -1,0 +1,13 @@
+$project0 = "InteriorShape W64gatedoor -3095.5 3095.57 160.075 0 0 0";
+$project1 = "InteriorShape W64gatedoor -3095.5 3095.56 160.074 0 -0 -1.57078";
+$project10 = "StaticShape PlantOne -3090.41 3095.56 164.055 0 0 0";
+$project11 = "StaticShape PlantOne -3093.48 3092.68 164.224 0 0 0";
+$project7 = "StaticShape PlantOne -3091.14 3092.27 166.074 -2.77359e-06 -3.14159 -3.14159";
+$project2 = "InteriorShape W64gatedoor -3095.5 3095.53 166.071 1.56976 0 0";
+$project3 = "InteriorShape W64gatedoor -3095.5 3087.55 160.073 0 0 0";
+$project4 = "InteriorShape W64gatedoor -3095.5 3095.57 128.075 0 -0 -1.57077";
+$project5 = "InteriorShape W64gatedoor -3095.5 3095.55 160.073 1.56988 0 0";
+$project6 = "InteriorShape W64gatedoor -3087.5 3095.53 160.071 0 -0 -1.57077";
+$project12 = "StaticShape PlantOne -3090.5 3092.5 162.075 0 0 0";
+$project8 = "StaticShape PlantOne -3090.57 3089.54 163.902 0 0 0";
+$project9 = "StaticShape PlantOne -3087.48 3092.36 164.049 0 0 0";

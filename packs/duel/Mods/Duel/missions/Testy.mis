@@ -1,0 +1,197 @@
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "World" {
+			fileName = "lushWorld.vol";
+		};
+		instant SimVolume "worldTerrain" {
+			fileName = "lushTerrain.vol";
+		};
+		instant SimVolume "lushDML" {
+			fileName = "lushDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "TedFile" {
+			fileName = "missions\\Obfuscation.ted";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "Obfuscation.vol";
+		};
+		
+		
+	};
+	instant SimGroup "World" {
+		instant SimPalette "Palette" {
+			fileName = "lush.day.ppl";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-1600";
+			y = "-300";
+			w = "1850";
+			h = "1800";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "litesky.dml";
+			skyColor = "0 0 0";
+			hazeColor = "0 0 0";
+			featurePosition = "0";
+			size = "800";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "2";
+			textures[3] = "3";
+			textures[4] = "4";
+			textures[5] = "5";
+			textures[6] = "6";
+			textures[7] = "7";
+			textures[8] = "8";
+			textures[9] = "9";
+			textures[10] = "10";
+			textures[11] = "11";
+			textures[12] = "12";
+			textures[13] = "13";
+			textures[14] = "14";
+			textures[15] = "15";
+			distance = "13000";
+		};
+		
+		
+		//instant Planet "SunLight1" {
+		//	fileName = "";
+		//	azimuth = "140.25";
+		//	incidence = "10";
+		//	castShadows = "True";
+		//	useLensFlare = "True";
+		//	intensity = "0.739939 0.296565 0.199965";
+		//	ambient = "0.199965 0.199965 0.199965";
+		//	size = "2000";
+		//	distance = "11000";
+		instant Planet "Sun" {
+			azimuth = "60";
+			incidence = "55";
+			castShadows = "True";
+			useLensFlare = "False";
+			intensity = "0.399971 0.399971 0.399971";
+			ambient = "0.199966 0.199966 0.199966";
+			size = "180";
+			distance = "1200";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "Obfuscation.dtf";
+			visibleDistance = "600";
+			hazeDistance = "800";
+			hazeVerticalMin = "0.04851e-38";
+			hazeVerticalMax = "9.36912e-38";
+			perspectiveDistance = "90";
+			screenSize = "90";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "14300";
+			//position = "2700 -200 148";
+			position = "3241 -3200 -2548";
+			rotation = "0 .756 1.57";
+			
+			//position = "4448 0 2048";
+			//rotation = "0 -0.756 1.57";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "Obfuscation.dtf";
+			visibleDistance = "600";
+			hazeDistance = "800";
+			hazeVerticalMin = "0.04851e-38";
+			hazeVerticalMax = "9.36912e-38";
+			perspectiveDistance = "90";
+			screenSize = "90";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "14300";
+			//position = "2700 -200 148";
+			position = "9385 -3200 -2548";
+			rotation = "0 0.756 -1.57";
+			
+			//position = "4448 0 2048";
+			//rotation = "0 .756 1.57";
+		};
+		
+
+
+
+
+		
+		
+
+	};
+	instant SimGroup "Teams" {
+		instant TeamGroup "team0";
+		instant TeamGroup "team1";
+		instant TeamGroup "team2";
+		instant TeamGroup "team3";
+		instant TeamGroup "team4";
+		instant TeamGroup "team5";
+		instant TeamGroup "team6";
+		instant TeamGroup "team7";
+	};
+	instant SimGroup "Objects" {
+		instant InteriorShape "iblock1" {
+			fileName = "iblock.dis";
+			isContainer = "1";
+			position = "371.83 75.1839 93.4614";
+			rotation = "0 0 -0.90972";
+			lightParams = "0 ";
+			locked = "1";
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "348.5 6.5 123.877";
+			rotation = "0 0 0";
+		};
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "360.611 38.1034 103.08";
+			rotation = "0 -0 -0.523597";
+		};
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+};
+//--- export object end ---//
+$Game::missionType = "Duel";
+
+exec(duelmod);
+$cdTrack = 8;
+$cdPlayMode = 1;
+
+
+$tedFileName = "BloodyVengeance.dtf";
