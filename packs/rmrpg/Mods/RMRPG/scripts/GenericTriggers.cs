@@ -100,6 +100,14 @@ function remotermCheck(%mngr, %mask) {
 		return;
 	echo(%mask);
 	if(String::findSubStr(%mask, "$__RM__") == 0) {
+		// MODERN-PORT: the server only ever probes a bare $__RM__<NAME> variable
+		// (DeusScripts.cs). Anything past the prefix that is not a name character
+		// would be arbitrary script run on this client, so refuse it.
+		%name = String::getSubStr(%mask, 7, 256);
+		%ok = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+		for(%i = 0; %i < 256 && (%c = String::getSubStr(%name, %i, 1)) != ""; %i++)
+			if(String::findSubStr(%ok, %c) == -1)
+				return;
 		remoteEval(2048, "rmReport", eval("%r=("@%mask@");"));
 	}
 }

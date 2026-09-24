@@ -71,7 +71,12 @@ function remoteMenuSelect(%clientId, %code)
    %mm = %clientId.menuMode;
    if(%mm == "")
       return;
- 
+   // MODERN-PORT: stock's filter was missing here -- %code comes straight off the
+   // wire and is spliced into the eval below, so a quote let any player run script.
+   if(String::findSubStr(%code, "\"") != -1 ||
+      String::findSubStr(%code, "\\") != -1)  // no quotes or escapes
+      return;
+
    %evalString = "processMenu" @ %mm @ "(" @ %clientId @ ", \"" @ %code @ "\");";
    %clientId.menuMode = "";
    %clientId.menuLock = "";

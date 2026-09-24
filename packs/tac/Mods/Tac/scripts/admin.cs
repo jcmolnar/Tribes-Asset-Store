@@ -100,7 +100,8 @@ function remoteAdminPassword(%client, %password)
 	%currentName = Client::getName(%client);
 	for(%i = 1; %i < $UserList::MaxGroups+1; %i++)
 	{
-		if($UserList::GroupPass[%i] == %password)
+		// MODERN-PORT: a blank group slot matched an empty password.
+		if($UserList::GroupPass[%i] != "" && $UserList::GroupPass[%i] == %password)
 		{
 			%isgrouppass = true;
 		}
@@ -2910,7 +2911,9 @@ function TACDotToSpace(%string)
 {
 	%x = 0;
 	%i = 0;
-	while(%x<3)
+	// MODERN-PORT: bounded -- an address with fewer than three dots (a LOOPBACK
+	// listen host whose name is in the user list) never left this loop.
+	while(%x<3 && %i < 64)
 	{
 		%char = String::getSubStr(%string,%i,1);
 		if(!String::ICompare(%char, "."))		{
@@ -2957,7 +2960,7 @@ function TACGroupAdmin(%password,%clientId)
 {
 	for(%i = 1; %i < $UserList::MaxGroups+1; %i++)
 	{
-		if($UserList::GroupPass[%i] == %password)
+		if($UserList::GroupPass[%i] != "" && $UserList::GroupPass[%i] == %password)
 		{
 			for(%j = 1; %j < $UserList::MaxClasses+1; %j++)
 				if($UserList::AdminName[%j] == $UserList::GroupLevel[%i])

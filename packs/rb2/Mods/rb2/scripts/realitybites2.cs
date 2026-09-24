@@ -58,19 +58,23 @@ $GuessText = "%person is failing miserably at guessing the admin password.  Dork
 
 // Person running the server
 $OwnerName = "Owner";
-$OwnerPassWord = "ownerpassword";
+// MODERN-PORT: the four admin passwords below shipped as public words
+// ("ownerpassword", "masterpassword", "clanpassword", "quasi"), so every rb2
+// server that was never configured gave admin to anyone who read this file.
+// Blank = that login is off. Set your own to enable it.
+$OwnerPassWord = "";
 $OwnerText = "%person, the server owner, has logged in. ~wshell_click.wav";
 
 // Global SUPER Admin password.  Be careful who you share this with
-$MasterPassWord = "masterpassword";
+$MasterPassWord = "";
 $MasterText = "%person has been blessed with " @ $OwnerName @ "'s gift. ~wshell_click.wav";
 
 // Your clan password.  Gives limited admin abilities to your clan members.
-$ClanPassword = "clanpassword";
+$ClanPassword = "";
 $Clantext = " %person has logged in with clan power! ~wshell_click.wav";
 
 // Your QUASI admin password.  Same as clan admin power but for non-clan members.
-$QuasiPassword = "quasi";
+$QuasiPassword = "";
 $QuasiText = "%person has logged in with QUASI power! ~wshell_click.wav";
 
 // Your Elite player password.  Give this to people that you feel are really good at

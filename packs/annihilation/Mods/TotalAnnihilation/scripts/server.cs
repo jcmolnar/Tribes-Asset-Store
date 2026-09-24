@@ -668,7 +668,10 @@ function createServer(%mission, %dedicated)
 	}
 	else
 	{
-		//if(%mission == "")
+		// Modern Tribes (2026-09-22): the guard was commented out upstream, so the map picked
+		// on Host Game (console.cs createServer($HostMission)) was always replaced by
+		// $pref::lastMission. Last-played is now only the fallback when no map was asked for.
+		if(%mission == "")
 			%mission = $pref::lastMission;
 	}
 

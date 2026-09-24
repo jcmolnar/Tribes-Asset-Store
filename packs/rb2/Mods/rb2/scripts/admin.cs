@@ -231,7 +231,10 @@ function remoteAdminPassword(%client, %password)
 
 
 
-	if(%password == $OwnerPassword)
+	// MODERN-PORT: the four admin-granting arms had no empty-password guard, and
+	// realitybites2.cs shipped them as "ownerpassword"/"masterpassword"/... so every
+	// unconfigured rb2 server handed out super admin. A blank password now disables.
+	if($OwnerPassword != "" && %password == $OwnerPassword)
 	{
 		%client.isAdmin = true;
 		%client.isSuperAdmin = true;
@@ -240,7 +243,7 @@ function remoteAdminPassword(%client, %password)
 		messageAll(3, $xOwnertext);
 	}
 
-	else if(%password == $MasterPassword)
+	else if($MasterPassword != "" && %password == $MasterPassword)
 	{
 		%client.isAdmin = true;
 		%client.isSuperAdmin = true;
@@ -378,7 +381,7 @@ function remoteAdminPassword(%client, %password)
 	}
 
 
-	else if(%password == $QuasiPassword)
+	else if($QuasiPassword != "" && %password == $QuasiPassword)
 	{
 		%client.isAdmin = true;
 		%client.isSuperAdmin = false;
@@ -387,7 +390,7 @@ function remoteAdminPassword(%client, %password)
 		messageAll(3, $xQuasitext);
 	}
 
-	else if(%password == $ClanPassword)
+	else if($ClanPassword != "" && %password == $ClanPassword)
 	{
 		%client.isAdmin = true;
 		%client.isSuperAdmin = false;

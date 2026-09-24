@@ -11,10 +11,13 @@ $UserList::Activated = 1;
 $UserList::MaxClasses = 6;
 
 // How many Users In your list?
-$UserList::MaxUsers = 2;
+// MODERN-PORT: shipped as 2 -- the TAC author's own accounts (see the user setup
+// below), one of them SuperAdmin from ANY address with the password "pass".
+$UserList::MaxUsers = 0;
 
 // How many group passwords are there in your list?
-$UserList::MaxGroups = 1;
+// MODERN-PORT: shipped as 1 with the published group password "refpass".
+$UserList::MaxGroups = 0;
 
 //================================================================================================
 //=======                         This is the admin group setup.                           =======
@@ -127,16 +130,14 @@ $Userlist::AdminAutoLogin[6] = true;
 //
 //===============================================================================================
 
-$UserList::UserName[1] = "Wizard_TPG";
-$UserList::UserPass[1] = "mypass";
-$UserList::UserLevel[1] = "AutoSuper";
-$UserList::UserIP1[1] = "139.130.60.150";
-$UserList::UserIP2[1] = "198.142.*.*";
-
-$UserList::UserName[2] = "[TPG]SaNTa[DTM]";
-$UserList::UserPass[2] = "pass";
-$UserList::UserLevel[2] = "SuperAdmin";
-$UserList::UserIP1[2] = "*.*.*.*";
+// MODERN-PORT: the two shipped users were the TAC author's real accounts -- a
+// no-password AutoSuper login from their address ranges, and SuperAdmin for anyone
+// named [TPG]SaNTa[DTM] from any IP with the password "pass". Add your own, and
+// raise $UserList::MaxUsers at the top to match.
+//$UserList::UserName[1] = "YourName";
+//$UserList::UserPass[1] = "YourPassword";
+//$UserList::UserLevel[1] = "SuperAdmin";
+//$UserList::UserIP1[1] = "*.*.*.*";
 
 
 
@@ -159,6 +160,7 @@ $UserList::UserIP1[2] = "*.*.*.*";
 //
 //===============================================================================================
 
-$UserList::GroupPass[1] = "refpass";
-$UserList::GroupLevel[1] = "RefAdmin";
+// MODERN-PORT: shipped live with the example password above. Pick your own.
+//$UserList::GroupPass[1] = "refpass";
+//$UserList::GroupLevel[1] = "RefAdmin";
 

@@ -57,5 +57,8 @@ $Server::XLMasterN1 = "IP:209.67.28.148:28000";
 $Server::XLMasterN2 = "IP:198.74.40.67:28000";
 $Server::FloodProtectionEnabled = true;
 
-$Server::AutoAdmin[0] = "DeadTaco";
-$Server::AutoAdmin[1] = "(Dead|Taco)";
+// MODERN-PORT: these two shipped entries made anyone named DeadTaco or (Dead|Taco)
+// super admin FROM ANY ADDRESS on connect -- an empty $Server::AutoAdminAddr matches
+// every IP (AutoAdmin.cs SHCheckAutoAdmins). Add your own name + IP prefix pairs here.
+//$Server::AutoAdmin[0] = "YourName";
+//$Server::AutoAdminAddr[0] = "IP:192.168.";

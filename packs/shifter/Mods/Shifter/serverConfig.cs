@@ -137,12 +137,15 @@ $Shifter::GlobalTChat = True;			// True - All players can chat global in Tourney
 
 //==== NOTE : ALL OF THESE LINES MUST BE PRESENT FOR AUTO/SAD ADMIN TO WORK - PER PLAYER!!!
 
-$Server::Admin["autoa", "Player"] = 1;			//== (0 or 1) 1 Turns ON AutoAdmin
-$Server::Admin["noban", "Player"] = 1;			//== (0 or 1) 1 Adds player to NOBan list
-$Server::Admin["ipadr", "Player"] = "IP:128.0.0";	//== Ip mask for AutoAdmining check (Left blank will NOT Autoadmin, MUST contain an IP mask to Autoadmin)
-$Server::Admin["sadpw", "Player"] = "passworded";	//== Optional SAD password for user - Left blank user will NOT be able to use SAD ability.
-$Server::Admin["admin", "Player"] = 1;			//== (0 or 1) 1 Sets User to Normal Admin 
-$Server::Admin["super", "Player"] = 1;			//== (0 or 1) 1 Sets User to BOTH Normal/SuperAdmin
+//==== MODERN-PORT: this example shipped LIVE -- anyone named "Player" who typed the SAD
+//==== password "passworded" became super admin (and unbannable). Copy it, uncomment, and
+//==== put your own name, IP mask and password in.
+//$Server::Admin["autoa", "Player"] = 1;			//== (0 or 1) 1 Turns ON AutoAdmin
+//$Server::Admin["noban", "Player"] = 1;			//== (0 or 1) 1 Adds player to NOBan list
+//$Server::Admin["ipadr", "Player"] = "IP:128.0.0";	//== Ip mask for AutoAdmining check (Left blank will NOT Autoadmin, MUST contain an IP mask to Autoadmin)
+//$Server::Admin["sadpw", "Player"] = "passworded";	//== Optional SAD password for user - Left blank user will NOT be able to use SAD ability.
+//$Server::Admin["admin", "Player"] = 1;			//== (0 or 1) 1 Sets User to Normal Admin
+//$Server::Admin["super", "Player"] = 1;			//== (0 or 1) 1 Sets User to BOTH Normal/SuperAdmin
 
 
 //=========================================================================================================================================

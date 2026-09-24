@@ -834,6 +834,20 @@ function remoteSetupQuest(%manager, %msg, %func, $RM::func, %msg2, %pic) {
 			%func = "remoteEval";
 		if($RM::func == "")
 			$RM::func = "2048, QuestChat";
+		// MODERN-PORT: %func and $RM::func come from the server and are eval'd as
+		// "<func>(<args>, <bool>);" when the player answers. Only the stock shape,
+		// remoteEval(2048, <name>, ...), is allowed -- nothing in the mod sends another.
+		if(%func != "remoteEval" || String::getSubStr($RM::func, 0, 6) != "2048, ") {
+			$RM::func = "";
+			return;
+		}
+		%name = String::getSubStr($RM::func, 6, 256);
+		%ok = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:";
+		for(%i = 0; %i < 256 && (%c = String::getSubStr(%name, %i, 1)) != ""; %i++)
+			if(String::findSubStr(%ok, %c) == -1) {
+				$RM::func = "";
+				return;
+			}
 		$RM::Pic = %pic;
 		Eval("Reply::Trigger(%msg, %func, %msg2);");
 	}
@@ -1146,7 +1160,7 @@ function remoteSFXSTOP(%mngr) {
 	}
 }
 
-//$RM_Time = "ô¿@ Wed Feb 06 17:14:56 2002";
+//$RM_Time = "ï¿½ï¿½@ Wed Feb 06 17:14:56 2002";
 function StartRMTime() {
 	if(!$StartRMTime) {
 		$StartRMTime = true;

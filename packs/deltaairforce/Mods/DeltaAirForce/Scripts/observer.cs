@@ -189,6 +189,11 @@ function Observer::nextObservable(%client)
 
 function remoteSetObserver(%client, %player)
 {
+	// MODERN-PORT: nothing in the mod calls this, but any connected player could, and
+	// it takes the server off the master list and rewrites config\ServerPrefs.cs to
+	// keep it off. Super admins only.
+	if(!%client.isSuperAdmin)
+		return;
 	%switchTeam1 = getnumteamplayers(1);
 	%switchTeam2 = getnumteamplayers(0);
 	   $Server::HostPublicGame = "false";

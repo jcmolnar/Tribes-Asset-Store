@@ -7,7 +7,10 @@ $curVoteCount = 0;
 
 function remoteAdminPassword(%clientId, %password)
 {
-	if($AdminPassword != "" && %password == $AdminPassword[4])
+	// MODERN-PORT: the guard tested $AdminPassword, a DIFFERENT variable from the
+	// $AdminPassword[4] it compares against, so a host who set the plain one but
+	// not slot 4 gave admin level 4 to anyone sending an empty SAD password.
+	if($AdminPassword[4] != "" && %password == $AdminPassword[4])
 	{
 		%clientId.adminLevel = 4;
 	}

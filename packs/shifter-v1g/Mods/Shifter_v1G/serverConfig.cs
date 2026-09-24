@@ -128,17 +128,23 @@ function AddSad(%name, %pass, %super, %ip)
 {
 	$Server::Admin["autoa", %name] = 1;
 	$Server::Admin["noban", %name] = 1;
-	$Server::Admin["ipadr", %name] = "IP:" @ %ip;
+	// MODERN-PORT: a blank %ip became "IP:", which prefix-matches EVERY address, so
+	// "can be left blank" meant password-free auto admin for anyone using the name.
+	if(%ip != "")
+		$Server::Admin["ipadr", %name] = "IP:" @ %ip;
 	$Server::Admin["sadpw", %name] = %pass;
 	$Server::Admin["admin", %name] = 1;
 	$Server::Admin["super", %name] = %super;
 }
 
-addsad("=H|C=Grey Flcn", "CHANGETHIS", 1, "63.202");
+// MODERN-PORT: these shipped LIVE -- the author's name with the password "CHANGETHIS"
+// was super admin on every v1G server, and password-free from any 63.202.x.x address.
+// Uncomment one with your own name, password and IP prefix.
+//addsad("=H|C=Grey Flcn", "CHANGETHIS", 1, "63.202");
 //       Name             password   super  IP(can be left blank)
-addsad("=H|C=Grey Flcn", "CHANGETHIS", 1, "63.202");
-addsad("=H|C=Grey Flcn", "CHANGETHIS", 1, "63.202");
-addsad("=H|C=Grey Flcn", "CHANGETHIS", 1, "63.202");
+//addsad("=H|C=Grey Flcn", "CHANGETHIS", 1, "63.202");
+//addsad("=H|C=Grey Flcn", "CHANGETHIS", 1, "63.202");
+//addsad("=H|C=Grey Flcn", "CHANGETHIS", 1, "63.202");
 
 
 //=============================================================================
