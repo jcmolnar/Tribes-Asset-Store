@@ -835,10 +835,16 @@ function processMenummisc(%clientId, %option) {
 		%clientId.projectnaming = true;
 		return;
 	}
+	// 1.50 PORT -- FIXED (password disclosure). The menu ITEM is only added for
+	// AboveAdmin, but remoteMenuSelect dispatches whatever option string the client
+	// sends, so any player in the Miscellany menu could send "SetSAD" and was told
+	// the live $AdminPassword. Gate the handler itself, and never echo the password.
+	// (The chat step it used to arm, SetSAD in DuelCompat.cs, never changed anything.)
 	if(%o == "SetSAD")
 	{
-		client::sendmessage(%clientId, 0, "Please type the new admin password. Current admin password: "@$Adminpassword);
-		%clientId.SetSAD = true;
+		if(!%clientId.AboveAdmin)
+			return;
+		client::sendmessage(%clientId, 0, "Admin passwords are set by the host (TribesHost / server.ini), not in game.");
 		return;
 	}
 	if(%o == "LoadDMProject")

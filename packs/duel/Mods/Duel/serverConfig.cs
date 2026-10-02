@@ -18,29 +18,44 @@
 //
 // IDENTITY
 //
-$Server::HostName      = "Duel Tournament";
-$Server::Info          = "Duel Tournament -- 1v1 and team duels, arenas and tournaments.\nPress TAB for the duel menu, then pick a player to challenge.";
-$Server::MaxPlayers    = 16;
-$Server::HostPublicGame = true;
+// ★The host owns these.★ TribesHost (config\hostgui.cs), tribes-server and
+// config\ServerPrefs.cs set the server name, player cap, join password, public
+// flag and admin password BEFORE this file runs -- and this file runs again on
+// every map load (each Duel mission execs duelmod.cs, which execs it). Setting
+// them unconditionally here replaced the host's name with "Duel Tournament" and
+// blanked the admin password, so nobody could log in. Each line below now only
+// fills a value the host left empty. To force a value, set it in TribesHost /
+// server.ini, or in a config\serverConfig.cs copy of this file.
+if($Server::HostName == "")
+   $Server::HostName   = "Duel Tournament";
+if($Server::Info == "")
+   $Server::Info       = "Duel Tournament -- 1v1 and team duels, arenas and tournaments.\nPress TAB for the duel menu, then pick a player to challenge.";
+if($Server::MaxPlayers == "")
+   $Server::MaxPlayers = 16;
 
-// Join password. Leave empty for an open server -- only set one if you want to
-// keep people OUT.
-$Server::Password      = "";
+// $Server::HostPublicGame and the join password ($Server::Password) are left to
+// the host entirely. (Upstream forced the server public and the password empty.)
 
 //
 // ADMIN
 //
-// $adminpassword  -- normal admin. Empty disables admin login entirely.
+// $AdminPassword  -- normal admin. Set it in TribesHost (Admin password) or
+//                    server.ini [server] admin_password; this file no longer
+//                    touches it. Empty disables admin login. Players log in by
+//                    typing   SAD("password");   in the console (~ key).
 // $AboveAdmin     -- "super admin": can act on other admins (kick/ban/mute them)
 //                    and is exempt from the admin-vs-admin guards in TDMenu.
-//                    Leave empty unless you actually want that tier.
+//                    Only settable here or in config\serverConfig.cs. Leave it
+//                    empty unless you actually want that tier; log in with
+//                    SAD("<that password>"); the same way.
 //
-// **Set these before you host publicly. An empty password disables the tier;
-//  it does NOT mean "anyone may log in".**
+// **An empty password disables the tier; it does NOT mean "anyone may log in".**
+//
+// (Console variable names are case-insensitive: $adminpassword IS $AdminPassword,
+//  which is why the old  $adminpassword = "";  line wiped the host's password.)
 //
 $AllowAdminMods = true;
-$adminpassword  = "";
-$AboveAdmin     = "";
+// $AboveAdmin  = "your super-admin password";
 
 // Named admins -- these players get admin without typing a password, matched on
 // exact player name. Name matching is spoofable on a public server; prefer the
