@@ -303,6 +303,23 @@ function Score::PreMidAirCheck(%damagedClient, %shooterClient, %damagedPlayer, %
 		Score::MidAirCheck(%damagedClient, %shooterClient, %damagedPlayer, %shooterPlayer, %type, %distance);
 	}
 }
+// 1.50 hit sounds: the engine asks after a hit that did damage whether shooter and victim
+// are enemies. Native teams cannot say -- duels and DM move players between team values, and
+// one client on another team made every duel pair "friendly". Mirrors the teammate test in
+// Player::onDamage below (script-side .team set, neither side in DM) plus team deathmatch.
+function hitCueRelation(%shooterClient, %victimClient)
+{
+	if(%shooterClient == %victimClient)
+		return "";
+	if(Client::getTeam(%victimClient) != Client::getTeam(%shooterClient))
+		return "enemy";
+	if(%shooterClient.team != "" && %victimClient.team != "" && %victimClient.dm != "true" && %shooterClient.dm != "true")
+		return "friendly";
+	if($DeathMatch::Teams && %shooterClient.dm && %victimClient.dm)
+		return "friendly";
+	return "enemy";
+}
+
 function Player::onDamage(%this,%type,%value,%pos,%vec,%mom,%vertPos,%quadrant,%object)
 {
 	//both("DAMAGE TIME: "@getsimtime());
