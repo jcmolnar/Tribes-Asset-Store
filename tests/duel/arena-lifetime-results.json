@@ -1,0 +1,250 @@
+{
+  "date_local": "2026-10-03",
+  "runtime": "Windows native dedicated host and private headless client on loopback",
+  "mission": "Duelmap4",
+  "receive_delay_ms_each_direction": 50,
+  "injected_loss_percent": 0,
+  "injected_jitter_ms": 0,
+  "shots_per_phase": 12,
+  "trigger_hold_ms": 80,
+  "shot_interval_seconds": 2.2,
+  "measurement_warmup_seconds": 12,
+  "arena_replacement_interval_seconds": 0.2,
+  "host_executable_sha256": "6d8bc63b60f44cb1e99844ee5f344ab8ea7df8425c0e7aa36107fbd43da5ac5f",
+  "client_executable_sha256": "848f520611c29443599e1367bf7350a10b536ea631018979d3ac722c12b2d23f",
+  "source_and_tested_host_sha256": {
+    "Mods/Duel/scripts/DMMain.cs": "cb702379ea889b8bd55d3822fb807f44b9bb46659314fe9b303532888497c97e",
+    "Mods/Duel/scripts/DuelCompat.cs": "9252667b5299d37e60736719106eb974bd1c0e2ea4327a48905677655408aec6",
+    "Mods/Duel/scripts/TDArena.cs": "78cd67a2045f95ab9657b4534414481fc0133086e0d47603ee5bdd0f71bfbfe1",
+    "Mods/Duel/scripts/TDMain.cs": "ba14e5f8290a545e023e4877c279a7be431839e24dabb9bd676bdcaacf339f50",
+    "Mods/Duel/scripts/TDSupport.cs": "9b149873ed356a05f1ed35b9ca20e5154768e32829b97fa2daebae08505ae13a",
+    "Mods/Duel/scripts/TDStatDetection.cs": "c025d2d0a053af38fce3c71f9103790a266008b3cd09ec16b2c38729a29d62b8"
+  },
+  "lifecycle": {
+    "checks": 145,
+    "failures": 0,
+    "objects_before": 129,
+    "objects_after": 129,
+    "log_sha256": "5d5cfe51681dd4c28fe8fc66340cda2951b1935d8d2ab7799ddd6ec453bcc9b1"
+  },
+  "latency": [
+    {
+      "mode": "legacy",
+      "shots": 36,
+      "local_predictions": 0,
+      "ghost_table_size": 1024,
+      "maximum_sampled_ghosts": 129,
+      "arena_replacement_log": [
+        "[DBARENAS] phase=1 replacements=24 total=132 group=8824 children=98 offset=1000 1000 2000",
+        "[DBARENAS] phase=2 replacements=24 total=132 group=8824 children=98 offset=1000 1000 2000"
+      ],
+      "phases": [
+        {
+          "phase": 0,
+          "server_ms": {
+            "n": 12,
+            "mean": 107.11482500076295,
+            "median": 108.14164999771118,
+            "p95": 136.29770000457765,
+            "maximum": 139.87460000610352,
+            "minimum": 74.04180000305176
+          },
+          "feedback_ms": {
+            "n": 12,
+            "mean": 208.3200250008901,
+            "median": 202.54675,
+            "p95": 242.43920000457763,
+            "maximum": 288.304,
+            "minimum": 145.9143999938965
+          },
+          "delivery_ms": {
+            "n": 12,
+            "mean": 101.20520000012715,
+            "median": 92.91969999694824,
+            "p95": 132.59810000610352,
+            "maximum": 180.39320000457764,
+            "minimum": 68.895
+          }
+        },
+        {
+          "phase": 1,
+          "server_ms": {
+            "n": 12,
+            "mean": 106.13765833282471,
+            "median": 93.95965000152587,
+            "p95": 139.26410000610352,
+            "maximum": 172.45809999847413,
+            "minimum": 77.52669999694824
+          },
+          "feedback_ms": {
+            "n": 12,
+            "mean": 194.41225833384198,
+            "median": 186.2641000022888,
+            "p95": 247.5635,
+            "maximum": 263.52109999847414,
+            "minimum": 154.6915
+          },
+          "delivery_ms": {
+            "n": 12,
+            "mean": 88.27460000101725,
+            "median": 90.8735,
+            "p95": 94.03980000305175,
+            "maximum": 109.36040000152587,
+            "minimum": 76.82630000305176
+          }
+        },
+        {
+          "phase": 2,
+          "server_ms": {
+            "n": 12,
+            "mean": 102.37299166615804,
+            "median": 108.75615000152588,
+            "p95": 120.12590000152588,
+            "maximum": 124.32689999389649,
+            "minimum": 77.3975
+          },
+          "feedback_ms": {
+            "n": 12,
+            "mean": 192.14229999923705,
+            "median": 188.9026000022888,
+            "p95": 232.79580000305177,
+            "maximum": 233.05630000305175,
+            "minimum": 153.31189999389647
+          },
+          "delivery_ms": {
+            "n": 12,
+            "mean": 89.76930833307902,
+            "median": 86.09729999923707,
+            "p95": 112.66990000152587,
+            "maximum": 124.595,
+            "minimum": 75.91439999389648
+          }
+        }
+      ],
+      "log_sha256": {
+        "client": "4cf2caccafe7431c0ba3b34a0e6ea1a25cc6acd0c5b0d3a14ae63769ed28a1ce",
+        "host": "afe57bcc7d404cc55b5eab0e39a84d81d59e960f27d37fa819e2d0e7c5c46725"
+      },
+      "harness_asset_warnings": [
+        "[MISSING-ASSET] group=4 (Static Shape) block=4/68: Unable to model: arrow5_g.dts.  The server has new art data you are missing.  Check server info for possible download locations.",
+        "[MISSING-ASSET] group=14 (Bullet) block=8/8: Unable to load ProjectileData shape: pyrm2.dts",
+        "[MISSING-ASSET] group=16 (Rocket) block=20/26: Unable to load ProjectileData shape: arrow5_b.dts",
+        "[MISSING-ASSET] group=16 (Rocket) block=21/26: Unable to load ProjectileData shape: arrow5_g.dts",
+        "[MISSING-ASSET] group=16 (Rocket) block=22/26: Unable to load ProjectileData shape: arrow5_r.dts",
+        "[MISSING-ASSET] group=16 (Rocket) block=23/26: Unable to load ProjectileData shape: arrow5_y.dts"
+      ]
+    },
+    {
+      "mode": "modern150",
+      "shots": 36,
+      "local_predictions": 0,
+      "ghost_table_size": 4096,
+      "maximum_sampled_ghosts": 129,
+      "arena_replacement_log": [
+        "[DBARENAS] phase=1 replacements=24 total=132 group=8824 children=98 offset=1000 1000 2000",
+        "[DBARENAS] phase=2 replacements=24 total=132 group=8824 children=98 offset=1000 1000 2000"
+      ],
+      "phases": [
+        {
+          "phase": 0,
+          "server_ms": {
+            "n": 12,
+            "mean": 104.98638333511353,
+            "median": 108.44959999847413,
+            "p95": 126.3915,
+            "maximum": 138.21889999389649,
+            "minimum": 77.81080000305175
+          },
+          "feedback_ms": {
+            "n": 12,
+            "mean": 201.49845833524068,
+            "median": 204.26745000457765,
+            "p95": 230.7555,
+            "maximum": 232.04620000457763,
+            "minimum": 170.65559999847412
+          },
+          "delivery_ms": {
+            "n": 12,
+            "mean": 96.51207500012715,
+            "median": 93.15454999542237,
+            "p95": 110.04869999694824,
+            "maximum": 122.60890000152588,
+            "minimum": 77.01070000457764
+          }
+        },
+        {
+          "phase": 1,
+          "server_ms": {
+            "n": 12,
+            "mean": 121.79855833435059,
+            "median": 123.01505000305175,
+            "p95": 153.6520999984741,
+            "maximum": 199.84039999389648,
+            "minimum": 77.55960000610352
+          },
+          "feedback_ms": {
+            "n": 12,
+            "mean": 228.22218333435058,
+            "median": 224.60079999923707,
+            "p95": 286.9754000015259,
+            "maximum": 310.88,
+            "minimum": 171.52380000305175
+          },
+          "delivery_ms": {
+            "n": 12,
+            "mean": 106.423625,
+            "median": 107.1972500038147,
+            "p95": 133.32330000305177,
+            "maximum": 148.67479999542238,
+            "minimum": 77.10040000152588
+          }
+        },
+        {
+          "phase": 2,
+          "server_ms": {
+            "n": 12,
+            "mean": 107.78622499974568,
+            "median": 109.03834999847413,
+            "p95": 125.735,
+            "maximum": 139.88109999847413,
+            "minimum": 77.386
+          },
+          "feedback_ms": {
+            "n": 12,
+            "mean": 216.17758333396912,
+            "median": 210.60314999771117,
+            "p95": 250.28070000457762,
+            "maximum": 290.4650999984741,
+            "minimum": 158.29940000152587
+          },
+          "delivery_ms": {
+            "n": 12,
+            "mean": 108.39135833422343,
+            "median": 96.64184999847413,
+            "p95": 126.55280000305176,
+            "maximum": 213.07909999847413,
+            "minimum": 78.34070000457764
+          }
+        }
+      ],
+      "log_sha256": {
+        "client": "5904f62dcc952b37e487dae6f364659d1dd6570f33cb64702665bfdcacbe22c7",
+        "host": "68c7b05d6cd25c4ef217a50cf161c9e04624149d0b02d245c93af811b9b19125"
+      },
+      "harness_asset_warnings": [
+        "[MISSING-ASSET] group=4 (Static Shape) block=4/68: Unable to model: arrow5_g.dts.  The server has new art data you are missing.  Check server info for possible download locations.",
+        "[MISSING-ASSET] group=14 (Bullet) block=8/8: Unable to load ProjectileData shape: pyrm2.dts",
+        "[MISSING-ASSET] group=16 (Rocket) block=20/26: Unable to load ProjectileData shape: arrow5_b.dts",
+        "[MISSING-ASSET] group=16 (Rocket) block=21/26: Unable to load ProjectileData shape: arrow5_g.dts",
+        "[MISSING-ASSET] group=16 (Rocket) block=22/26: Unable to load ProjectileData shape: arrow5_r.dts",
+        "[MISSING-ASSET] group=16 (Rocket) block=23/26: Unable to load ProjectileData shape: arrow5_y.dts"
+      ]
+    }
+  ],
+  "limitations": [
+    "Actual affected Linux/Wine WAN session was not recorded.",
+    "No physical mouse-to-rendered-frame measurement or populated team scoring match.",
+    "Arena construction remains synchronous.",
+    "Harness-only missing arrow/pyramid art warnings matched the earlier controls; standard disc assets loaded."
+  ]
+}

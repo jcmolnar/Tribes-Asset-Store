@@ -141,13 +141,14 @@ function CPmsg(%cl)
 }
 
 //-----------------------------------------------------------------------------
-// DeathMatch::ClearObjects -- DMMain.cs calls it when a deathmatch arena is torn
-// down. The definition was in DMMain2.cs (the superseded DMMain), where every
-// branch of it is an EMPTY body -- it was already a no-op upstream. Kept as one,
-// explicitly, so the call resolves.
+// Deathmatch teardown owns only its arena, never MissionCleanup or BuildGroup.
+// TDArena.cs supplies the shared slot/offset release after bootstrap.
 //-----------------------------------------------------------------------------
 function DeathMatch::ClearObjects()
 {
+   DuelArena::Release($DeathMatch::ArenaGroup);
+   $DeathMatch::ArenaGroup = "";
+   $DeathMatch::CountDown = false;
 }
 
 

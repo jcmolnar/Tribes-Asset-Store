@@ -1236,6 +1236,20 @@ function addtodb2(%obj)
 
 function NexusInit()
 {
+   // DM restarts hide this set for reuse. Do not leak another pair of always-
+   // scoped interiors every time the next round initializes the Nexus.
+   %complete = true;
+   for(%i = 0; %i < 5; %i++)
+      if(!isObject($FlagHunter::Nexus[%i]) || !$FlagHunter::Nexus[%i].nexus)
+         %complete = false;
+   if(%complete)
+   {
+      if($FlagHunter::Master) MakeNexus();
+      return;
+   }
+   for(%i = 0; %i < 5; %i++)
+      if(isObject($FlagHunter::Nexus[%i]) && $FlagHunter::Nexus[%i].nexus)
+         deleteObject($FlagHunter::Nexus[%i]);
 		$FlagHunter::Nexus[4] = newObject("","Trigger",NexusTrigger,true,"");
 		$FlagHunter::Nexus[3] = newObject("ehoverpost.dis","InteriorShape","ehoverpost.dis",false);
 		$FlagHunter::Nexus[2] = newObject("BEScargo2.dis","InteriorShape","BEScargo2.dis",false);
@@ -1313,11 +1327,7 @@ function remoteMakeNexus(%clientID)
 	%objpos[5] = "0 0 10";
 	%objpos[6] = "0 0 -16";
 	%objpos[7] = "0 0 8";
-	$FlagHunter::Nexus[4] = newObject("","Trigger",NexusTrigger,true,"");
-	$FlagHunter::Nexus[3] = newObject("ehoverpost.dis","InteriorShape","ehoverpost.dis",false);
-	$FlagHunter::Nexus[2] = newObject("BEScargo2.dis","InteriorShape","BEScargo2.dis",false);
-	$FlagHunter::Nexus[1] = newObject("ElectricalBeam","StaticShape","ElectricalBeam",false);
-	$FlagHunter::Nexus[0] = newObject("FlagStand","StaticShape","FlagStand",false);
+	NexusInit();
 	for(%x = 0; %x < 5; %x++)
 	{
 		$FlagHunter::Nexus[%x].nexus = true;
@@ -3117,7 +3127,7 @@ function Delete(%clientId)
 function SecondaryClear(%Team1, %Team2, %nono)
 {
 	if(%Team1 == "" || %Team2 == "")	{		return echo("False SecondaryClear");	}
-	$ArenaInUse[$TeamDuel::Arena[%Team1], $TeamDuel::ArenaNum[%Team1]] = false;
+	TeamDuel::ClearArena(%Team1);
 	if($TDebug && $TeamDuel::Master)
 	{
 		LogFunction(SecondaryClear);

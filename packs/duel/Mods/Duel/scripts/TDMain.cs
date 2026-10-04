@@ -289,7 +289,12 @@ function MatchSetup(%Team1, %Team2, %extraT1, %extraT2)
 		}
 		if($TeamDuel::Score[%Team1] == "0" && $TeamDuel::Score[%Team2] == "0")
 		{
-			TeamDuel::MakeArena($TeamDuel::Arena[%Team1], %Team1, %Team2);
+         if(!TeamDuel::MakeArena($TeamDuel::Arena[%Team1], %Team1, %Team2))
+         {
+            PrintTeam(%Team1@" "@%Team2, "No free arena space. Try again after another match ends.", center);
+            SecondaryClear(%Team1, %Team2, "arena-unavailable");
+            return;
+         }
 		}
 		SetupTeamSpawn(%Team1);
 		SetupTeamSpawn(%Team2);
@@ -830,7 +835,7 @@ function EndRound(%Team1, %Team2)
 		$DuelSpotIndex[%client2] = "";
 	if(%winner != "" && %Team1 != "" && %Team2 != "")
 	{
-		$ArenaInUse[$TeamDuel::Arena[%winner], $TeamDuel::ArenaNum[%winner]] = false;
+		TeamDuel::ClearArena(%winner);
 
 		$TeamDuel::ArenaStatus[$TeamDuel::Arena[%winner]] = "Free";
 		$TeamDuel::ArenaStatus[$TeamDuel::Arena[%loser]] = "Free";

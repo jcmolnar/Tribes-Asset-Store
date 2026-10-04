@@ -628,7 +628,6 @@ function DeathMatch::Stop()
 			Observer::EnterObserverMode(%cl);
 		}
 	}
-	$ArenaInUse[$DeathMatch::Arena,$DeathMatch::ArenaNum] = false;
 	$TeamDuel::ArenaStatus[$DeathMatch::Arena] = "Free";
 	if($FlagHunter::Master)
 	{
@@ -638,10 +637,15 @@ function DeathMatch::Stop()
 }
 function DeathMatch::Start()
 {
-	DeathMatch::MakeArena($DeathMatch::Arena);
+   if(!DeathMatch::MakeArena($DeathMatch::Arena))
+   {
+      DeathMatch::Message($Red, "No free arena space. Try again after another match ends.");
+      return false;
+   }
+   %arenaGroup = $DeathMatch::ArenaGroup;
 	if($FlagHunter::Master)
 	{
-		schedule("NexusInit();",3.5);
+		schedule("NexusInit();", 3.5, %arenaGroup);
 	}
 
 	//DeathMatch::MakeSpawns($DeathMatch::Arena);
@@ -658,15 +662,15 @@ function DeathMatch::Start()
 			Observer::setOrbitObject(%cl, %pl, 5, 5, 5);
 		}
 	}
-	schedule("DeathMatch::Message($White, \"Match will begin in 10 seconds\");", 2.5);
-	schedule("DeathMatch::Message($White, \"Match will begin in 5 seconds\");", 7.5);
-	schedule("DeathMatch::Message($White, \"Match will begin in 4 seconds\");", 8.5);
-	schedule("DeathMatch::Message($White, \"Match will begin in 3 seconds\");", 9.5);
-	schedule("DeathMatch::Message($White, \"Match will begin in 2 seconds\");", 10.5);
-	schedule("DeathMatch::Message($White, \"Match will begin in 1 seconds\");", 11.5);
-	schedule("DeathMatch::Message($Red, \"Fight!\");", 12.5);
-	schedule("$DeathMatch::CountDown = false;", 12.39);
-	schedule("DeathMatch::StartFight();", 12.4);
+	schedule("DeathMatch::Message($White, \"Match will begin in 10 seconds\");", 2.5, %arenaGroup);
+	schedule("DeathMatch::Message($White, \"Match will begin in 5 seconds\");", 7.5, %arenaGroup);
+	schedule("DeathMatch::Message($White, \"Match will begin in 4 seconds\");", 8.5, %arenaGroup);
+	schedule("DeathMatch::Message($White, \"Match will begin in 3 seconds\");", 9.5, %arenaGroup);
+	schedule("DeathMatch::Message($White, \"Match will begin in 2 seconds\");", 10.5, %arenaGroup);
+	schedule("DeathMatch::Message($White, \"Match will begin in 1 seconds\");", 11.5, %arenaGroup);
+	schedule("DeathMatch::Message($Red, \"Fight!\");", 12.5, %arenaGroup);
+	schedule("$DeathMatch::CountDown = false;", 12.39, %arenaGroup);
+	schedule("DeathMatch::StartFight();", 12.4, %arenaGroup);
 }
 
 function DeathMatch::Message(%color, %message)
@@ -1009,42 +1013,38 @@ for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
 
 function DeathMatch::MakeArena(%arena, %project)
 {
-	%cleanup="MissionCleanup";
-	//both("Proj "@%project);
-	if(%project != "")
-	{
-		%cleanup = $BuildGroup;
-	}
+   if(%project != "" && !isObject($BuildGroup)) return false;
+   if(%project == "") DeathMatch::ClearObjects();
+   %instance = DuelArena::Allocate(%arena, %project);
+   if(!isObject(%instance)) return false;
+   if(%project != "") %cleanup = $BuildGroup;
+   else
+   {
+      %cleanup = %instance;
+      $DeathMatch::ArenaGroup = %instance;
+      $DeathMatch::ArenaNum = %instance.arenaSlot;
+   }
 
-
-	for(%x = 1; %x < 10; %x++)
-	{
-		if(!$ArenaInUse[%arena, %x])
-		{
-			echo(%x @" is free to use for arena "@%arena);// "@$arena[%arena]);
-			break;
-		}
-	}
-	$ArenaInUse[%arena, %x] = true;
-	$DeathMatch::ArenaNum = %x;
-
+   $z = 0;
 	exec("zz"@%arena@".cs");
 
-	echo("*** Creating: "@%arena@": DeathMatch slot: "@%x@" *** Z:"@$z);//@"Building: "@ %x);
+	echo("*** Creating: "@%arena@": DeathMatch slot: "@%instance.arenaSlot@" *** Z:"@$z);//@"Building: "@ %x);
 
-	%offset = $ArenaOffSet[$ArenasMade++];
-	$DeathMatch::Offset = %offset;
+	%offset = $ArenaOffset[%instance.offsetIndex];
+   if(%project == "") $DeathMatch::Offset = %offset;
 
 	if($BVMapSet[%arena]&&$missionname=="BloodyVengeance")
 	{
 		%offset = vector::sub(%offset, "0 0 1000");
 	}
 
-	deleteVariables("$DeathMatch::Spawn*");
 	if(%arena == "Rockslide")
 	{
 		%offset = "0 0 0";
 	}
+   if(%project == "")
+   {
+	deleteVariables("$DeathMatch::Spawn*");
 
 	echo("DM SPAWN: "@$DM::Spawn[0]);
 	for(%x = 0; $DM::Spawn[%x] != ""; %x++)
@@ -1058,9 +1058,9 @@ function DeathMatch::MakeArena(%arena, %project)
 	//	echo(%x@" "@%pos@" Z: "@$z);
 	}
 	$DeathMatch::TotalSpawns = %x;
+   }
 	//if(!$ArenaIsMade[%arena,%x])
 	//{
-		$ArenaIsMade[%arena,%x] = true;
 		for(%a = 0; %a < $z+1; %a++)
 		{
 
@@ -1114,17 +1114,19 @@ function DeathMatch::MakeArena(%arena, %project)
 			if(%project != "")
 			{
 				%spawn.project = %project;
+            addToSet(%instance, %spawn);
 			}
 				//echo(%spawn @" "@%a@"|"@$z@" "@$obj[%a]@" "@$objtype[%a]@" Pos: "@floor(getword(%pos, 0))@" "@floor(getword(%pos, 1))@" "@floor(getword(%pos, 2)));
 		}
 		%spawn.weld = true;
 	//}
-	$DeathMatch::Center =  Getword(%totalpos, 0)/$z@" "@  Getword(%totalpos, 1)/$z@" "@  Getword(%totalpos, 2)/$z ;
+   if(%project == "") $DeathMatch::Center =  Getword(%totalpos, 0)/$z@" "@  Getword(%totalpos, 1)/$z@" "@  Getword(%totalpos, 2)/$z ;
 
 		deleteVariables("$DM::Spawn*");
 		deleteVariables("$TeamDuel::Spawn[X*");
 		deleteVariables("$TeamDuel::SpawnRot[X*");
 		deletevariables("$obj*");
+   return true;
 
 
 

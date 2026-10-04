@@ -8,6 +8,21 @@ maintained by Krayvok, Lestat and =Argh!=. The download was a whole 1.11 server
 install, not a mod folder: 156 MB, of which 102 MB was stock Tribes .vol files
 byte-identical to the 1998 release.
 
+2026-10-03 -- ARENA LIFETIME / LEGACY DISC DELAY
+----------------------------------------------
+Deathmatch and team-match arenas now own their objects and delete them when
+the match ends or the arena is replaced. Freed slots and world offsets are
+reused; full pools fail cleanly. Separate matches retain separate geometry.
+Player project imports keep their objects directly in BuildGroup, and no
+longer overwrite the active deathmatch's spawn locations. Nexus setup reuses
+its five objects, and deathmatch countdowns expire with their owning arena.
+
+This fixes the retained-interior buildup that exhausted the legacy client's
+1,023 usable ghost slots and delayed received discs. Disc fire/reload times,
+statistics, packet settings and the legacy wire format are unchanged. Arena
+construction is still synchronous. Existing running missions should be
+restarted after updating the pack to remove objects made by the old scripts.
+
 
 WHAT THE PACKAGE ACTUALLY WAS
 -----------------------------

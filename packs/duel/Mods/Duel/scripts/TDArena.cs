@@ -82,6 +82,9 @@ if($goldeneye)
 }
 
 $ArenasMade = -1;
+deleteVariables("$DuelArena::*");
+deleteVariables("$TeamDuel::ArenaGroup*");
+$DeathMatch::ArenaGroup = "";
 
 $SpecialArena[Full_Force_Arena-D] = true;
 $SpecialArena[Arena-D] = true;
@@ -293,30 +296,96 @@ $loaded["TDArena.cs"] = true;
 
 
 
+// Arena objects live only as long as their match. A project reservation is a
+// non-owning set: project objects stay directly in BuildGroup for its menus.
+function DuelArena::Allocate(%arena, %project)
+{
+   for(%i = 0; %i < 36; %i++)
+   {
+      %old = $DuelArena::OffsetOwner[%i];
+      if(isObject(%old) && %old.projectArena && Group::objectCount(%old) == 0)
+         DuelArena::Release(%old);
+   }
+   for(%slot = 1; %slot < 10; %slot++)
+      if(!$ArenaInUse[%arena, %slot]) break;
+   for(%index = 0; %index < 36; %index++)
+      if(!isObject($DuelArena::OffsetOwner[%index])) break;
+   if(%slot == 10 || %index == 36)
+   {
+      echo("[Duel] No free arena slot or world offset for ", %arena);
+      // Object zero is the simulation manager, not an allocation failure.
+      return -1;
+   }
+   if(%project != "") %group = newObject("", SimSet);
+   else %group = newObject("", SimGroup);
+   if(!isObject(%group)) return -1;
+   addToSet(MissionCleanup, %group);
+   %group.duelArena = true;
+   %group.projectArena = (%project != "");
+   %group.arenaName = %arena;
+   %group.arenaSlot = %slot;
+   %group.offsetIndex = %index;
+   $DuelArena::OffsetOwner[%index] = %group;
+   $ArenaInUse[%arena, %slot] = true;
+   $ArenaIsMade[%arena, %slot] = true;
+   $ArenasMade++;
+   return %group;
+}
+
+function DuelArena::Release(%group)
+{
+   if(!isObject(%group) || !%group.duelArena) return;
+   $ArenaInUse[%group.arenaName, %group.arenaSlot] = false;
+   $ArenaIsMade[%group.arenaName, %group.arenaSlot] = false;
+   if($DuelArena::OffsetOwner[%group.offsetIndex] == %group)
+      $DuelArena::OffsetOwner[%group.offsetIndex] = "";
+   if($DeathMatch::ArenaGroup == %group)
+   {
+      $DeathMatch::ArenaGroup = "";
+      $DeathMatch::ArenaNum = "";
+   }
+   if(%group.team1 != "" && $TeamDuel::ArenaGroup[%group.team1] == %group)
+   {
+      $TeamDuel::ArenaGroup[%group.team1] = "";
+      $TeamDuel::ArenaNum[%group.team1] = "";
+   }
+   if(%group.team2 != "" && $TeamDuel::ArenaGroup[%group.team2] == %group)
+   {
+      $TeamDuel::ArenaGroup[%group.team2] = "";
+      $TeamDuel::ArenaNum[%group.team2] = "";
+   }
+   // SimGroup deletes its children; SimSet only releases project references.
+   deleteObject(%group);
+}
+
+function TeamDuel::ClearArena(%team)
+{
+   DuelArena::Release($TeamDuel::ArenaGroup[%team]);
+}
+
 function TeamDuel::MakeArena(%arena, %t1, %t2)
 {
-	if($TeamDuel::RealTeam[%t1] != "0")
-	{
-		%hold = %Team1;
-		%Team1 = %Team2;
-		%Team2 = %hold;
-	}
-	for(%x = 1; %x < 10; %x++)
-	{
-		if(!$ArenaInUse[%arena, %x])
-		{
-			echo("The "@%x @" slot is free to use for arena "@%arena);// "@$arena[%arena]);
-			break;
-		}
-	}
-	$ArenaInUse[%arena, %x] = true;
-	$Arena::ArenaNum = %x;
+   %existing = $TeamDuel::ArenaGroup[%t1];
+   if(isObject(%existing) && %existing == $TeamDuel::ArenaGroup[%t2])
+      return (%existing.arenaName == %arena);
+   if(isObject(%existing) || isObject($TeamDuel::ArenaGroup[%t2])) return false;
+   %group = DuelArena::Allocate(%arena, "");
+   if(!isObject(%group)) return false;
+   %group.team1 = %t1;
+   %group.team2 = %t2;
+   $TeamDuel::ArenaGroup[%t1] = %group;
+   $TeamDuel::ArenaGroup[%t2] = %group;
+   $TeamDuel::ArenaNum[%t1] = %group.arenaSlot;
+   $TeamDuel::ArenaNum[%t2] = %group.arenaSlot;
+   $Arena::ArenaNum = %group.arenaSlot;
 
+   // Some tables only append with $z++; start each build with an empty table.
+   $z = 0;
 	exec("zz"@%arena@".cs");
 
-	echo("*** Creating: "@%arena@": Arena slot: "@%x@" *** Z:"@$z);//@"Building: "@ %x);
+	echo("*** Creating: "@%arena@": Arena slot: "@%group.arenaSlot@" *** Z:"@$z);//@"Building: "@ %x);
 
-	%offset = $ArenaOffSet[$ArenasMade++];
+	%offset = $ArenaOffset[%group.offsetIndex];
 	if($BVMapSet[%arena]&&$missionname=="BloodyVengeance")
 	{
 		$TeamDuel::MissionArea[%t1] = 270;
@@ -340,9 +409,8 @@ function TeamDuel::MakeArena(%arena, %t1, %t2)
 		$TeamDuel::SpawnRot[%t2, %x] = $TeamDuel::SpawnRot[O, %x+1] ;
 
 	}
-	if($ArenaIsMade[%arena,%x]=="" || $ArenaIsMade[%arena,%x]=="-1")
+	// Every match owns a fresh instance; there is no unbounded geometry cache.
 	{
-		$ArenaIsMade[%arena,%x] = true;
 		ECHO("Starting spawn process..."@%offset);
 		for(%a = 0; %a < $z+1; %a++)
 		{
@@ -354,7 +422,7 @@ function TeamDuel::MakeArena(%arena, %t1, %t2)
 					$obj[%a] = "AmmoStation";
 				}
 				%spawn = newObject($obj[%a],$objtype[%a],$obj[%a],false);
-				addToSet("MissionCleanup", %spawn);
+				addToSet(%group, %spawn);
 				%pos = Getword($objpos[%a], 0)+Getword(%offset, 0)@" "@Getword($objpos[%a], 1)+Getword(%offset, 1)@" "@Getword($objpos[%a], 2)+Getword(%offset, 2) ;
 				gamebase::setposition(%spawn, %pos);
 				gamebase::setrotation(%spawn, $objrot[%a]);
@@ -365,7 +433,7 @@ function TeamDuel::MakeArena(%arena, %t1, %t2)
 			if($objtype[%a] == "InteriorShape")
 			{
 				%spawn = newObject($obj[%a]@".dis",$objtype[%a],$obj[%a]@".dis",true);
-				addToSet("MissionCleanup", %spawn);
+				addToSet(%group, %spawn);
 				%pos = Getword($objpos[%a], 0)+Getword(%offset, 0)@" "@Getword($objpos[%a], 1)+Getword(%offset, 1)@" "@Getword($objpos[%a], 2)+Getword(%offset, 2) ;
 				gamebase::setposition(%spawn, %pos);
 				gamebase::setrotation(%spawn, $objrot[%a]);
@@ -388,7 +456,7 @@ function TeamDuel::MakeArena(%arena, %t1, %t2)
 					%amount = "5";
 				}
 				%spawn = newObject($obj[%a],"Item",$obj[%a],%amount,true,true,false);
-				addToSet("MissionCleanup", %spawn);
+				addToSet(%group, %spawn);
 				%pos = Getword($objpos[%a], 0)+Getword(%offset, 0)@" "@Getword($objpos[%a], 1)+Getword(%offset, 1)@" "@Getword($objpos[%a], 2)+Getword(%offset, 2) ;
 				gamebase::setposition(%spawn, %pos);
 				gamebase::setrotation(%spawn, %rot);
@@ -405,4 +473,5 @@ function TeamDuel::MakeArena(%arena, %t1, %t2)
 	deleteVariables("$TeamDuel::Spawn[O*");
 	deleteVariables("$TeamDuel::SpawnRot[O*");
 	deletevariables("$obj*");
+   return true;
 }
