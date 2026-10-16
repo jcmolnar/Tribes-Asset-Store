@@ -1,0 +1,11 @@
+$InvHead[ihVeh] = "aVehicles";
+$InvHead[ihArm] = "aArmor";
+$InvHead[ihWea] = "bWeapons";
+$InvHead[ihBac] = "cPacks";
+$InvHead[ihGui] = "dMissile Systems";
+$InvHead[ihMis] = "eMiscellaneious";
+$InvHead[ihDWe] = "fTurrets";
+$InvHead[ihDSe] = "gSensor System";
+$InvHead[ihDOb] = "hObjects";
+$InvHead[ihVpa] = "jVehicles";
+$InvHead[ihAmm] = "xAmmo";

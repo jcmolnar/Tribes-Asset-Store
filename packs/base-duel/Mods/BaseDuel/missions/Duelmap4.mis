@@ -1,0 +1,462 @@
+exec(DuelMOD);          
+$cdTrack = 11;
+$cdPlayMode = 1;
+$Game::missionType = "Duel";
+$DuelSpawn[1] = "42.341 133.188 74.7965";
+$DuelSpawn[2] = "-368.931 101.273 115.419";
+$DuelSpawn[3] = "-983.324 147.745 78.4525";
+$DuelSpawn[4] = "-1821.59 244.995 77.9554";
+$DuelSpawn[5] = "-1753.34 819.903 93.4375";
+$DuelSpawn[6] = "-1230.62 1046.32 65.0268";
+$DuelSpawn[7] = "-638.762 1009.62 65.2869";
+$DuelSpawn[8] = "-62.7255 1033.28 87.7025";
+$DuelSpawn[9] = "-348.834 1579.03 42.0839";
+$DuelSpawn[10] = "-515.053 2194.92 91.2504";
+$DuelSpawn[11] = "821.563 1639.87 79.7543";
+$DuelSpawn[12] = "375.142 1250.49 128.257";
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "World" {
+			fileName = "alienWorld.vol";
+		};
+		instant SimVolume "WorldTerrain" {
+			fileName = "alienTerrain.vol";
+		};
+		instant SimVolume "alienDML" {
+			fileName = "alienDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "TedFile" {
+			fileName = "AntHill.ted";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "AntHill.vol";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "Palette" {
+			fileName = "alien.night.ppl";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-461";
+			y = "-232";
+			w = "900";
+			h = "900";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "aliengreysky.dml";
+			skyColor = "0 0 0";
+			hazeColor = "0 0 0";
+			featurePosition = "0";
+			size = "1000";
+			textures[0] = "1";
+			textures[1] = "2";
+			textures[2] = "3";
+			textures[3] = "4";
+			textures[4] = "5";
+			textures[5] = "6";
+			textures[6] = "7";
+			textures[7] = "8";
+			textures[8] = "9";
+			textures[9] = "10";
+			textures[10] = "11";
+			textures[11] = "12";
+			textures[12] = "13";
+			textures[13] = "14";
+			textures[14] = "15";
+			textures[15] = "0";
+			distance = "800";
+		};
+		instant Planet "Planet" {
+			fileName = "";
+			azimuth = "115";
+			incidence = "60";
+			castShadows = "True";
+			useLensFlare = "False";
+			intensity = "0.699897 0.699897 0.699897";
+			ambient = "0.299899 0.299899 0.299899";
+			size = "1000";
+			distance = "11000";
+			locked = "0";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "AntHill.dtf";
+			visibleDistance = "1000";
+			hazeDistance = "800";
+			hazeVerticalMin = "-NAN";
+			hazeVerticalMax = "1.26455e-38";
+			perspectiveDistance = "90";
+			screenSize = "70";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 0";
+			rotation = "0 0 0";
+			locked = "0";
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "60.4453 150.852 92.8715";
+			rotation = "0 -4.69182e-09 2.83995";
+			locked = "1";
+		};
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "-43.8162 311.983 92.1058";
+			rotation = "0 -0 -0.339995";
+			locked = "1";
+		};
+	};
+	instant SimGroup "Teams" {
+		instant TeamGroup "team0" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-5.2311 114.974 140.708";
+						rotation = "0 -0 -1.80316";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-1.1323 116.958 140.708";
+						rotation = "0 -0 -2.70316";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2.97208 118.849 140.708";
+						rotation = "0 -0 2.67994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "5.88624 112.423 140.708";
+						rotation = "0 -0 1.35995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "1.87583 110.521 140.708";
+						rotation = "0 -0 0.439993";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-1.81216 108.672 140.708";
+						rotation = "0 -0 -0.439993";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-0.812887 114.553 134.708";
+						rotation = "0 -0 -2.32316";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "4.20477 116.877 134.708";
+						rotation = "0 -0 -3.12316";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "9.28113 104.854 134.708";
+						rotation = "0 -0 0.799991";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "4.71759 102.719 134.708";
+						rotation = "0 -0 0.0199994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-1.27007 128.159 134.708";
+						rotation = "0 -0 1.23995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-11.1867 131.309 134.708";
+						rotation = "0 -0 -1.87995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-3.46551 132.717 128.708";
+						rotation = "0 -0 1.99994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-1.77368 129.099 128.708";
+						rotation = "0 -0 2.01994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-9.93613 125.265 128.708";
+						rotation = "0 -0 -1.13995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-11.6625 128.863 128.708";
+						rotation = "0 -0 -1.11995";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "0.783283 104.339 140.708";
+						rotation = "0 -0 -1.13995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-11.2311 108.687 132.708";
+						rotation = "0 -0 -1.15995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-11.0707 132.47 140.708";
+						rotation = "0 -0 -1.13995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "65.2165 137.297 98.5107";
+						rotation = "0 -0 1.97994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "50.8217 139.434 80.625";
+						rotation = "0 -0 -2.72316";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "68.0225 129.089 138.417";
+						rotation = "0 -0 1.99994";
+					};
+				};
+			};
+		};
+		instant TeamGroup "team1" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "22.0747 345.837 140.267";
+						rotation = "0 -0 1.21995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "17.9305 343.903 140.267";
+						rotation = "0 -0 0.459993";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "13.8273 341.969 140.267";
+						rotation = "0 -0 -0.379994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "10.6805 348.789 140.267";
+						rotation = "0 -0 -1.87995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "14.7343 350.831 140.267";
+						rotation = "0 -0 -2.72316";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "18.4553 352.472 140.267";
+						rotation = "0 -0 2.85994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "12.1015 344.267 134.267";
+						rotation = "0 -0 -0.0399992";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "12.3865 358.823 134.267";
+						rotation = "0 -0 3.11994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "28.3238 332.443 128.267";
+						rotation = "0 -0 1.97994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "26.6753 336.097 128.267";
+						rotation = "0 -0 2.03994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "20.0884 328.5 128.267";
+						rotation = "0 -0 -1.11995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "18.3786 332.192 128.267";
+						rotation = "0 -0 -1.13995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "19.7537 329.41 134.267";
+						rotation = "0 -0 -0.499993";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "27.9164 333.331 134.267";
+						rotation = "0 -0 1.37995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "7.06547 356.739 134.267";
+						rotation = "0 -0 -2.33994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "17.4302 346.762 134.267";
+						rotation = "0 -0 0.799991";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "16.7136 357.403 140.267";
+						rotation = "0 -0 2.01994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-51.2154 332.201 137.209";
+						rotation = "0 -0 -1.11995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-48.551 323.638 98.5555";
+						rotation = "0 -0 -1.11995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-34.3938 322.101 80.6316";
+						rotation = "0 -0 0.439993";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "27.8368 328.837 140.267";
+						rotation = "0 -0 1.95995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "27.8481 352.645 132.267";
+						rotation = "0 -0 1.97994";
+					};
+				};
+			};
+		};
+	};
+	instant SimGroup "Pokey" {
+		instant Marker "Map Marker1" {
+			dataBlock = "MapMarker";
+			name = "Designed by Pokey";
+			position = "229.267 593.026 65.1259";
+			rotation = "0 0 0";
+		};
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-48.2041 314.549 67.2414";
+		rotation = "0 -0 0.579995";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "-78.9199 196.776 65.4035";
+		rotation = "0 -0 0.399997";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "49.6306 141.376 70.7943";
+		rotation = "0 -0 0.399997";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "53.9073 151.7 63.147";
+		rotation = "0 -0 0.399996";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "94.8667 263.192 68.3865";
+		rotation = "0 -0 0.339997";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "iblock1" {
+		fileName = "iblock.dis";
+		isContainer = "1";
+		position = "104.605 258.776 61.2406";
+		rotation = "0 -0 0.339996";
+		lightParams = "0 ";
+	};
+};
+//--- export object end ---//
+

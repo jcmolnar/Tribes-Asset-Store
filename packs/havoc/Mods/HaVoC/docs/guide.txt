@@ -1,0 +1,296 @@
+This guide and more can be found on the HaVoC website:  http://havoc.sirris.com
+
+For general help on running a server please refer to Tribe's Players (http://tribesplayers.com).
+
+Before reading this please read racersetup.txt.
+
+This guide will teach you how to configure the HaVoC mod to your liking. Click here to download this guide in a text file. When installing the mod a file called HaVoC.cs is put into your Tribes/config folder. In this file are the various server settings. This guide will take you through setting up each one.
+
+Also be sure to check out the features in the HvCUserList.cs file that comes with the mod.
+
+
+TEAM KILLER FEATURES:
+
+$HaVoC::tkLimit
+This determines how many team kills are allowed before action is taken.
+
+$HaVoC::tkClientLvl *
+This determines what a TK victim can do to the TKer once $HaVoC::tkLimit has been reached.
+
+If set to 0 the victim will have an option on thier TAB menu to vote to kick the TKer. 
+If set to 1 the victim will have an option on thier TAB menu to kick the TKer without a vote. 
+
+$HaVoC::tkServerLvl *
+This determines what the server will do to a TKer once $HaVoC::tkLimit has been reached.
+
+If set to 0 just log TKs, never take any action. 
+If set to 1 the server initiates a votes to kick a someone every $HaVoC::tkLimit TKs. 
+If set to 2 then see $HaVoC::tkMultiple below. 
+If set to 3 the server will kick a TKer when $HaVoC::tkLimit is reached. 
+
+$HaVoC::tkMultiple
+This is used when $HaVoC::tkServerLvl = 2. The server will vote to kick a player at every multiple of $HaVoC::tkLimit. For example, when $HaVoC::tkLimit = 2 the server will vote to kick anyone when they commit 2 and 4 TKs. But, when someone has committed $HaVoC::tkLimit times $HaVoC::tkMultiple TKs the server will kick them without a vote. For example, when $HaVoC::tkLimit = 2 and $HaVoC::tkMultiple = 3 then the server will vote to kick anyone when they commit 2 and 4 TKs and kick them without vote when they reach 6 TKs (2 * 3 = 6).
+
+$HaVoC::BanKickTime *
+This is how long (in seconds) after someone is kicked that they will not be able to reconnect to the server.
+
+$HaVoC::Eye4anEye *
+When this is true and a player has reached $HaVoC::tkLimit number of TKs, then any damage this player does to a teammate is also done to himself. If a player exceeds twice $HaVoC::tkLimit number of TKs then twice the damage this player does to a teammate is also done to himself.
+
+$HaVoC::BaseKillWarning *
+This is the number of Base Kills (destroying your own team's deployables) required before admins will be warned. For example, if $HaVoC::BaseKillWarning = 3 then when a player has destroyed 3 of his own team's turrets, all admins will be warned that the player is Base Killing. Destroying a turret you deployed yourself is not considered a BK. Set to "0" (zero) to disable.
+
+$HaVoC::BaseKillLimit *
+This is the number of Base Kills required before the player is kicked. The Base Killer will be warned when they reach $HaVoC::BaseKillLimit number of BKs that one more BK and they will be kicked. Set to "0" (zero) to disable. 
+
+
+SUPER ADMIN FEATURES
+
+You can set up to 100 Super Admin passwords. Here is an example of how to set up new super admin passwords:
+
+$HaVoC::SADPassword[1] = "evil";
+$HaVoC::SADPassword[2] = "die";
+$HaVoC::SADPassword[3] = "renegades";
+$HaVoC::SADPassword[4] = "stupid";
+
+Any one of those passwords used with the SAD(""); command will grant the user Super Admin Status. 
+
+You can set up to 100 Master Super Admin passwords. Here is an example of how to set up new master super admin passwords:
+
+$HaVoC::MasterSADPassword[1] = "always";
+$HaVoC::MasterSADPassword[2] = "kill";
+$HaVoC::MasterSADPassword[3] = "smurfing";
+$HaVoC::MasterSADPassword[4] = "bums";
+
+Any one of those passwords used with the SAD(""); command will grant the user Master Super Admin Status. Being a Master Super Admin allows you to strip any non-master admin of thier powers. 
+
+
+PUBLIC ADMIN FEATURES
+
+You can set up to 100 public admin passwords and each can have thier own special abilities. Here is an exaple of how to set up new public admin passwords:
+
+$HaVoC::PAPassword[1] = "secret";
+$HaVoC::PAPassword[2] = "ruplstiltskin";
+$HaVoC::PAPassword[3] = "tree";
+$HaVoC::PAPassword[4] = "cheerios";
+
+Any one of those passwords used with the SAD(""); command will grant the player public admin status. 
+
+To restrict a certain password from specific features, you first must enable it by using the number in the brackets of the corresponding password above:
+
+$HaVoC::PASpecial[3] = TRUE;
+
+This will give password number 3 ($HaVoC::PAPassword[3]) special lockouts as specified with these: 
+
+$Special::PATimelimit[3]: Ability to change the time limit. 
+$Special::PAMission[3]: Ability to change the mission. 
+$Special::PATeamDamage[3]: Ability to enable/disable team damage. 
+$Special::PAKick[3]: Ability to kick players. 
+$Special::PABan[3]: Ability to ban players. 
+$Special::PATorture[3]: Ability to access the Torture menu. 
+$Special::PATeamChange[3]: Ability to change a players team. 
+$Special::PAServerOptions[3]: Ability to change $HaVoC::tkServerLvl and $HaVoC::tkClientLvl. 
+$Special::PAFairTeams[3]: Ability to enable/disable Fair Teams. 
+$Special::PATourneyMode[3]: Ability to enter/leave Tournament mode. 
+$Special::PAStartMatch[3]: Ability to start the match in Tournament mode. 
+
+Set these to true or false according to what you want to give password number 3 access to. Repeat using different password numbers to set up any password with special lockouts.
+
+If you do not set up special lockouts on a password then the default lockouts are used. The default lockouts also apply to admins appointed by public vote and players given admin status by another admin. To set up the default lockouts, set the following to what you want to give default public admins access: 
+
+$HaVoC::PATimelimit: Ability to change the time limit. 
+$HaVoC::PAMission: Ability to change the mission. 
+$HaVoC::PATeamDamage: Ability to enable/disable team damage. 
+$HaVoC::PAKick: Ability to kick players. 
+$HaVoC::PABan: Ability to ban players. 
+$HaVoC::PATeamChange: Ability to change a players team. 
+$HaVoC::PAServerOptions: Ability to change $HaVoC::tkServerLvl and $HaVoC::tkClientLvl. 
+$HaVoC::PAFairTeams: Ability to enable/disable Fair Teams. 
+$HaVoC::PATourneyMode: Ability to enter/leave Tournament mode. 
+$HaVoC::PAStartMatch: Ability to start the match in Tournament mode. 
+
+Note: The default public admin lockouts are changeable by Super Admins via the TAB menu under "Server Options".
+
+
+PUBLIC VOTING FEATURES
+
+The following features determine what public players can vote on. Set what you want to give public players access to true. 
+
+$HaVoC::PVMission: Vote to change mission. 
+$HaVoC::PVTeamDamage: Vote to enable/disable team damage. 
+$HaVoC::PVKick: Vote to kick players. 
+$HaVoC::PVAdmin: Vote to make players default public admins. 
+$HaVoC::PVFairTeams: Vote to enabled/disable Fair Teams. 
+$HaVoC::PVTourneyMode: Vote to enter/leave Tournament mode. 
+$HaVoC::PVStartMatch: Vote to start the match in Tournament mode. 
+$HaVoC::PVTime: Vote to increase the time limit $HaVoC::PVTime minutes. Set to "0" (zero) to disable. Note that this only increases the time for the current mission, unlike when an admin increase the time. 
+
+Note: The public voting lockouts are changeable by Super Admins via the TAB menu under "Server Options".
+
+
+LIGHTNING FEATURES:
+
+$HaVoC::Lightning
+This turns random lightning strikes on and off.
+
+$HaVoC::LightningStrength
+This sets how strong the lightning is when it strikes: 
+
+"zero" = no damage. 
+"weak" = barely any damage. 
+"normal" = death to light armors, moderate damage to medium armors and very little to heavies. 
+"strong" = death to light and medium armors, considerable damage to heavies. 
+"random" = usually "weak" or "zero", sometimes "normal", occaisionally "strong". 
+
+$HaVoC::LightningFrequency
+This sets the interval in seconds between lightning strikes. It cannot be set to less than 120 seconds. If $HaVoC::LightningStrength is set to "strong" then the frequency cannot be set to less than 250 seconds.
+
+$HaVoC::LightningHandicap
+This sets the point spread required before lightning will strike the winning team. It cannot be set to less than 3. For example, if $HaVoC::LightningHandicap = 5 and your team is beating my team by 5 points then your team will be hit with a "normal" lightning bolt every 60 seconds. If your team is winning by more than 5 points then your team will be struck with a "strong" lightning bolt every 60 seconds.
+
+Note: $HaVoC::LightningHandicap works independant of the other lightning features.
+
+
+DEATHMATCH FEATURES
+
+Note: These features (except for Inventories) also apply to Team Deathmatch, Flag Hunter, and Kill the Rabbit mission types.
+
+$HaVoC::DMInventories *
+If true then players are spawned with a deployable inventory station on thier back when playing Deathmatch.
+
+$HaVoC::DMSniperWeapons *
+If false then players can't buy any sniping weapons from an inventory in Deathmatch, Flag Hunter, and Kill the Rabbit.
+
+$HaVoC::DMFullWeapons *
+If true then players can buy almost all weapons in Deathmatch, Flag Hunter, and Kill the Rabbit. If false, then in these mission types the time an EMP affects a player is reduced and certain weapons are removed from inventories:
+
+Hyper Disc Launcher 
+Flame Thrower 
+Ion Rifle 
+
+$HaVoC::DMMines *
+If true then mines can be bought from inventories in Deathmatch, Flag Hunter, and Kill the Rabbit. If false they cannot be bought and will not explode unless shot. 
+
+
+FLAG HUNTER FEATURES
+
+These settings are for Flag Hunter missions only. Click here to visit the official Flag Hunter homepage.
+
+$FlagHunter::Inventories *
+If true then players are spawned with a deployable inventory station on thier back when playing Flag Hunter.
+
+$FlagHunter::AltarCampingTimer
+This is the amount of time, in seconds, before the game will warn a player that is too close to the Nexus.
+
+$FlagHunter::FlagFadeTime
+This is the amount of time, in seconds, before dropped flags will fade away.
+
+$FlagHunter::CarryingNumber
+After a player is carrying this many flags, a flag will appear on thier back.
+
+$FlagHunter::YardSaleNumber
+If this or more number of flags are dropped at once it will be announced to everyone in the game and a beacon placed at the location.
+
+$FlagHunter::YardSaleTime
+This is the amount of time, in seconds, that the Yard Sale beacon exists.
+
+$FlagHunter::GreedAmount
+This is the minimum number of flags required before a player can return them to the Nexus when Greed Mode is enabled.
+
+$FlagHunter::HoardStartTime and $FlagHunter::HoardEndTime
+When the time limit, in minutes, reaches $FlagHunter::HoardStartTime then no more flags will be accepted by the Nexus until the time limit reaches $FlagHunter::HoardEndTime. This is only when Haord mode is enabled.
+
+
+TRIBES ARENA FEATURES
+
+These settings are for Arena missions only. Click here to visit the official Tribes Arena homepage.
+
+$Arena::NumberMatchLimit *
+The mission will change after this many matches.  Set to "" to not have the mission automatically change.
+
+$Arena::GameTimeLimit
+This is the amount of time in seconds for each game.
+
+$Arena::Scorelimit
+This is how many games are required to win a match.
+
+$Arena::ReadyTime
+If true then players have 30 seconds to mark themselves ready before a match starts.
+
+$Arena::AutoTeamjoin
+If this is true then players are automatically placed on a team. Otherwise they have to choose thier team from the TAB menu.
+
+
+KILL THE RABBIT FEATURES
+
+These settings are for Kill the Rabbit missions only.
+
+$Rabbit::Inventories *
+If true then players are spawned with a deployable inventory station on thier back when playing Kill the Rabbit.
+
+$Rabbit::ScoreTimer
+This is how long, in seconds, that the flag must be held before earning a point. One point will be earned every $Rabbit::ScoreTimer seconds while holding the flag.
+
+$Rabbit::FlagReturnTime
+This is how long, in seconds, before a flag is returned to its original location after being dropped (Rabbit missions only).
+
+
+OTHER MISC FEATURES
+
+$HaVoC::AutoAssignTribe
+This is set to the first characters of your Tribes name. When turned on from the TAB menu by a Super Admin, all players with these characters at the beginning of thier name will be placed on one team and all other players will be placed on the other team. Good for having a Tribe scrimmage against the public.
+
+$HaVoC::AutoAssignLength
+This is how many characters you want to specify.  If you want to use the tag [HvC] then you want to check the first 5 characters so set this to 5.  For clan <!> you would set it to 3, etc.
+
+For example, all my Tribe members start thier name with [HvC]. So I take the first four characters from that and I would put this in HaVoC.cs:
+$HaVoC::AutoAssignTribe = "[HvC";
+
+$HaVoC::KickMessage
+This message will be displayed in the center of a person's screen when they are kicked. Leave the quotes empty to disable.
+
+$HaVoC::StationTime *
+After $HaVoC::StationTime seconds of standing in an inventory, the server will auto-throw the person out. Cannot be set to less than 10 or greater than 60. To disable set it to "0" (zero).
+
+$HaVoC::PersonalSkin
+If true then the server allows players to select between using the Team Default or thier Personal Skin on the TAB menu.
+
+$HaVoC::TurretPoints *
+If true then when a person is killed by a turret (except laser turrets), whoever deployed that turret will recieve a point just as if they killed the person themselves. Note that this only counts as a point, it doesn't increase the player's number of kills.
+
+$HaVoC::TurretKillMessages *
+If true then when a player is killed by a turret (except laser turrets), instead of it saying "[victim] dies.", the death message will be "[victim] was killed by [person that deployed the turret]'s turret."
+
+$HaVoC::FlagReturnTime
+This is how long (in seconds) the flag will stay where it is dropped before automatically returning to its flag stand.
+
+$HaVoC::FairSpawn
+When a player is spawned and is killed before $HaVoC::FairSpawn seconds are up then the killer gets no points for the kill. If the killer was a teammate then it doesn't count against them as a TK. Cannot be set to more than 10. Set to "0" (zero) to disable.
+
+$HaVoC::AutoRespawn
+If a player doesn't click to respawn this many seconds after being killed then they are automatically respwaned. This keeps players from dying in your base and being able to keep an eye on you. Set to "0" (zero) for no auto respawn.
+
+$HaVoC::FriendlyMines *
+If true then the mines your team deploys won't blow up your teammates. If false any mine stepped on will explode.
+
+$HaVoC::RandomMissions *
+If this is true then missions of the selected types are loaded randomly. To select which types of missions you would like the server to pick from, set the following to either true or false. 
+
+$HaVoC::RandomMissionTypes["Flag Hunter"] 
+$HaVoC::RandomMissionTypes["Deathmatch"] 
+$HaVoC::RandomMissionTypes["Kill the Rabbit"] 
+$HaVoC::RandomMissionTypes["Multiple Team"] 
+$HaVoC::RandomMissionTypes["Capture the Flag"] 
+$HaVoC::RandomMissionTypes["Capture and Hold"] 
+$HaVoC::RandomMissionTypes["Find and Retrieve"] 
+$HaVoC::RandomMissionTypes["Team Deathmatch"] 
+$HaVoC::RandomMissionTypes["Defend and Destroy"] 
+$HaVoC::RandomMissionTypes["Balanced"] 
+$HaVoC::RandomMissionTypes["Open Call"] 
+
+You may add as many of your own mission types as you'd like. Look in the .DSC file that comes with your mission and place the value of $MDESC::Type that you find in that file into the quotes of $HaVoC::RandomMissionTypes[""].
+
+$HaVoC::FairTeams *
+When this is true players can't change teams to a team that has fewer people than the team they are on.
+
+* These features can be changed by Super Admins in game via the TAB menu under "Server Options". 

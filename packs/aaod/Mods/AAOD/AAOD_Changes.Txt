@@ -1,0 +1,422 @@
+
+// Ver b1.01	Tweaked INferno Setting for Speed and rate of fire....
+//				Also Big Changes are removed All global variables used for tracking Exp...
+//				Changed it so hey are extensions of the client variable... for the player
+// b1.01 BUGS	
+//	-	Exp Skills are Not being lost when levels are lost...
+//	-	Not Properly reducing levels
+//	-	Discovered a problem with Turrets assigned to players.. if a player switches teams he still gets points for turrets he deployed
+//	-	Dont Know if there is a fix for the above or if we need to do one.
+//	-	Exp Being Awarded for Capping flag even when no ne else in the game..
+//	-	Mobile Generator Packup causes Generator to dissappear.
+//	-	Skills not being lost even though levels are...
+
+//Ver b1.02		
+//	Added Ambusher AP
+//	Added AmbusherAp damage Type
+//	Added Ambusher AA
+//	Added AmbusherAA damage Type
+//	Added Additional Trace routines to track exp bugs...
+//	Ver++
+//	Added Ambusher Help stuff
+//	Fixed Skills Bugs from 1.01
+//	[d]
+//	Removed more trace code as things seems to be working as hoped...
+//	** AA ambusher says can only deploy on terrain or building changed it to terrain only...
+//	Changed Stasis Gun so That Multiple hits extends the Stasis Duration... The more hits the less effect each time.
+//	Fixed Packup Bug for a number of Static objects like shield gen etc..(Object would dissaper when pack no pack would appear)
+//	[e]
+//	Deployable bunker is deployable on terrain only....
+//	Destroying a Map turret would only give exp for the first time.. not any successive times. Fixed That
+//	Killing a player would result in a 2 x factor on the team modifier for exp..fixed that.
+//	Exp Penalty Points not calculating properly cause.. ratios of 1:0 or 3:0 are happening
+//	[f]
+//	Fixed Stasis Bug for Heavy Armor
+//	[g]
+//	Fixed Ambusher AA messages
+//	Stasis not coming off STILL!!
+//	changed changuns to chainguns in the hoverbike help screen
+//	[h]
+//	More Tweaks to stasis damage......Hopefully Fixing the Stasis bug that if U are shot more than 1 or 2 times u end up stuck in stasis until U die.. (Which sucks)
+//	(Confirmed STASIS Buh is FIXED)
+//	Missile Launcher reload Time is Longer 1.5 Seconds from .75
+//	Missile Launcher Fire Times Reduced to .1 from .2 for faster fire... Not faster rate of fire.
+//	Added Advanced Targeting Pack for Mediums...
+//	Fixed Stealth Bug Stealth was not Working...
+//	Added Stealth/Infiltration Level 2 Gives Players ablity to use enemy stations. Also Means Heat Seekers cannot get a lock on you.. no matter what.
+//	Tweaked objectives msg's so that only one msg appears instead of 2
+//	[i]
+//	Changed Designator so That it is not owned by the deployer .. should fix designator problems (I hope)
+//	Fixed Team Killer Message....
+//	[j]
+//	Added StingerDamage Type so that Missile launcher Kills reflect better where they came from
+//	Added Code in the Kill Section so Team kills by your turrets dont get you kicked...
+//	Added Code in the Reinit Missions so Team kill counts are reset for each mission
+//	Added Team Killer Kick when Team killer destroyed own stations etc...
+
+//	[Up & Coming]
+//	Anti Battery Sensor (When Mortar or Artillery Fire is detected it will Target the source for you)
+//	Mobile Solar Panels for Generating Power 
+//	Mobile Solar Panels for Generating Team Energy
+
+
+//V1.02 Bugs
+//	Regen Bug - Seem to allow multiple loops of regen..(Working on it...)
+//	Bug in Stasis Cannon... Heavy Armored Players in stasis take no damage . (Fixed)
+//	AAPC does not Resupply properly
+//	AAPC shuld only allows players from its own team to mount
+//	AAPC shields should only work against weapons
+//	AAPC with mounted Turret?
+//	Mobile Inventory should not allow Mobile Gen to be more than...100Meter box must contain Generator)
+//	Ambusher AA Turrets Not Giving Messages
+//	Designator Saying that Damage is from Somebody its not....
+//	Max Force Doors Is not working prop......Cropo apparently put up 20 or more (???)
+//	Once a mobileGenerator is deployed on either side the Mobile inventory for either side will work...
+//	[j]
+//	If Killed while flying a vehicle Your Exp Gets reduced to 0 (Not Very Nice)
+//	Still Able to crank out force door and basically place them where-ever
+
+//	V1.5 beta
+//	Fixed Expclac problem when players are killed by collateral damage. (Reducing them to 0 Pts)
+//	Fixed AddExp & Sub Exp Routines so they do not try and add or Subtract EXP from Objects other than players
+//	When Riding in an AAPC Passengers & Driver Are shielded by The AAPC
+//	AAPC Re-supply Routine re-written to reduce lag & boost Speed of resupply for all concerned
+//	AAPC Energy Recorvery TWEAKED upwards a notch or two....
+//	AAPC Cost TWEAKED Upwards to 7500.. credits.. Wow! thats Expensive.....
+//	Trimmed Force Door Routines....fixed Force door limit and position restrictions so they work now....
+//	Changed Force Field Backpacks to something uniqie.. its a little big but it works
+//	ALL Deployables Are re-Packable now.....YEAH!!!
+//	Changed and optimized a lot of code...removed 1000 lines and tweaked and clean up a lot of other stuff.
+//	Forcefields now Deploy on Any Surface
+//	Mort Turret now Deploy on Any Surface
+//	Tweaked OnPlayerDamage routine to try and make it slightly faster
+//	Tweaked all damage type routines & item max routines to refer to Base armor type instead of actual armor
+//		types...(ie flight armor & speed armor/stasis armor) so can now eleiminate boatload of global var's
+//	Mobile generator now works as it should. Will act as backup generator when main goes down.. DOes not have the range of a main generator tho
+//	ALL Large deploybles require power now....AA Turret|Mort Turret|Artillery|Forcfields|Mobile Inventory| Pretty much any large Item requires Power
+//		They will scan a predetermined area.. if there is no power in the area they will not function
+//		if a power generator is placed within its rang of an item it will connct and power any items without power.
+//		Special note for ffields
+
+//	Added Telporters...See notes
+//	Added Jump Platforms
+//	Added CounterBattery Sensors
+//	Added Base Alarmn system
+//	Added Portable Solar Generators
+//	Added Deployable Satelite Power Uplink
+//	Added Power Nodes (Need Satelit uplink to function)
+//	Changed The Designator so that it actually stays with the player it has zapped....
+
+//	1.4z
+//	-- Bugs & Fixes....
+//	Fabrication Generators not supplyng Fabrication Energy - re-wrote routines... should work now
+//	When New Mission Started system would re-check Starting Exp for players.. Should only Check once....
+//		moved check routine to a diff location hopefully t5his will work if not will have to use a flag or something
+//	Capped Levels on Regen, Recharge, Durability & Accuracy.
+//	Tried using an onfire routine to catch artillery etc but when you undefine the projectile it no longer gives you the grenade guide for the weapon...
+//	Remote turrets are not Packable... Added Packup Codes for Remote Turrets
+//	Inferno Mines Deploy on flat Only - Fixed
+//	Velcro turrets deploy on Flat Only - Fixed
+
+//	AA Missile turret Not Hooking up to power or not Requireing it....	- Fixed
+//	Artillery Not Hooking up to power or requiring it...				- Fixed
+//	Mort Deployable only on Flat...										- Fixed
+//	Ambushers Allowed to deploy on buildings							- Fixed
+//	Mobile bunkers pack up & disappear						
+//	Packup Not Working for Chaingun Turret or Mobile Invent'			- Fixed???
+//	DEPLOYABLES Still NOT Fading In.
+//	Jump Pad need more base range on power hookup						- Upped to 150
+//	Solar Panels not Hooking up???
+//	Power Node Deployment needs help Rotation is off.
+//	Sat Power System Needs to Be destroyable as the model is incomplete
+//	Same with Solar Power Fab Gen Model is incomlete
+//	Why Do All Deployables show up as sensors....???
+//	When Main Power Went down the Secondary Power would connect even if it was destroyed...
+//	When Server Changes mission types crashes comletely
+
+//	Ver 1.5b (Additions Changes)
+//	Added a hopefully better help system.
+//	sTEALTH sHOULD NOT gO aWAY AFTER BUYING DIFF ARMOR
+
+Ver 1.5c
+
+	Added an Extrenal Configuration File.... If It exists allows for Server Admins to edit
+	most of the mods preferences etc... Exp Level Requirements etc...
+	If this file is not present it Uses an Internal Config File....with Mod Defaults
+	Changed Experience tracking so that from the config file you can either not track exp
+	or Track it with the user list or have it automatically register users that are not Known.....
+	Can also allow Auto Admins through use of a client scripts tied in with the AAODC Script
+	This will allows for remote admins to access servers knowing that it is fairly secure and imposters will not be 
+	allowed in without the correct password.
+
+Ver 1.5d
+	Fixed an EXP-Calc error that would add or subtract INF exp when the teams were stacked 2 or more to 0
+	Tweaked the Expdisplay 
+	removed a few Trace routines.....
+	Added another parameter to the user Stats that tracks number of times PLayer has been on server
+
+Ver 1.5e
+	Renamed ALL AAOD Items so that the Help routine could tell them from regular items.
+	this will avoid the error msgs's which keep coming up from the help stuff.
+	DISABLED the AAPC Kodiak Fire routine...Since it is not finished and has the potential 
+	in its current state to crash the server.
+	Changed the Exp Tracking routine so that It Writes to a file every 5 min & At the end of every Mission
+	also Put in a check routine so that if the file happens to be busy at the time it is called it will try again in a couple of seconds...
+	(this may have been causing the server to crash if 2 or more players droppd at close to the same time...
+	-Ver e.1
+	-Small tweak to Power Checking routine as it seems to be picking up deployables 
+	 that do not require power as needing power.(fixed)
+	 CheckMax Trace routine elimiated.. replaced with a check to WARN if routine is ever called with
+	 a bad armor type.
+
+Ver 1.5f	
+	Removed some more trace Statements in Stations.cs
+	Getting Syntax Error in Teleport Pad Deploy & Packup Routines..
+	The Teleport Pack is AOD Teleporter msg (Removed it)
+	Changed some of the Objectives Echo Msg's
+	Jump Pad still is nor Working 100%
+	Getting Scanning Msgs for deployment of outdor stuff...(Removed)
+	Tweak Kills tracker so it tracks totals not just mission totals
+	Add flag caps.... to tracking routine
+	Added EXP Vars for all the Static Objects... Killing an object now gets you the base 
+	for that object * its max damage. Makes things like Generators very juicy
+	Fixed Counter Battery Marker so it Tracks properly...
+	Tweaked trace functions in conchat to clean up console a bit
+	Added a purge players command PurgePlayers(); will clear all players whos exp is below 2
+
+Ver 1.5g
+	Fixed Jump Pads and Added 5 To team Max for jump Pads...
+	Screwed Up Ambusher deploy sequences
+
+(** Denotes looking into possible prob)
+
+Ver 1.5h
+	Fixed force doors so that if triggered prior to connecting to power they do not open. 
+	(Force doors were self destructing if they were triggered open before they could establish a power connection)
+	Fixed ambusher deploy routine...(Hopefully for the last time... May also prevent multiple scan loops from starting)
+	fixed Exp Routines for Destorying turrets etc... Had wrong vars in calculation, was giving zeros for all kills
+	fixed the msgs for picking up items you received a xxxx backpack  was displaying the item name not description
+ 
+ Ver 1.5i
+	Again another exp fix for killing objects..Hopefully the last one
+	Added SuperRepair Pack 1st of the Advanced Packs
+	Added Combo Pack 1 Shield & Energy
+	Combo Pack 2	Ammo & Jammer
+	Combo Pack 3	Energy & Ammo
+ ver 1.5j
+	Fixed Combo3 pack so it can be used with laser..
+
+ver 1.5k
+	Fixed the Problem where the force doors deployed at odd angles on some maps.....(Hopefully)
+	Fixed the PLayers File Overrunn Error which would start erasing the player info from the begining
+	if over 100 players had registered....
+
+ver 1.5L
+	Tidied up The CODE....
+	Preparing for Final Notes & Release Info.. 
+	Fixed PowerNode Bug.. Was not Resetting the PowerNode count each mission
+
+ver 1.5M
+	Some EXP Bugs Rearing thier ugly heads.....
+	- Fixed Initial Starting Exp Bug. If a player joined the game with over the max exp he would only get level 8
+		not level 12.
+	- Fixed Exp Add Bug. If a Player had MAX exp he would go up a level everytime he gained any Exp. 
+		Exp Add routine now caps the players exp at Exp Maxx and does not add any more levels to the character.
+
+	- Fixed an EXP Calc bug which would calculate the amout to reduce a players Exp by when killed by a lower level character.. but would 
+		return an absurd number for the award pts for the lower level player. Basically the award pts were getting squared...
+
+	- Added Combo4 Pack The Energy + Repair Combo Pack
+	- Fixed Bug with Combo Packs - When a Heavy was wearing them they secondary Pack was below the heavy
+	- Added ResetPlayers Admin CONSOLE Function To Reset the PLayer DataBase
+
+Ver 1.5N
+	- Fixed The exp Bug.. for kills. Was not Adding exp for Kills properly
+	- Added New $TraceObj Trace to track the creation of objects so that we can see which objects might be causing 
+		some of the Lag Problems....
+Ver 1.5O
+	- Fixed another EXP Bug....(*!^#@(!^@(!^@(&!# &(*^#&! Fucking EXP BUGS!!!
+
+Ver 1.5P
+	- Made change so that a PLayer hit with Stasis Cannon will also loose energy Like turrets do. Also Negates Recharge Ability
+		until stasis is worn off....
+	- Lightened up the combo3 pack (Energy/Ammo) pack
+	- Lightened up the Advanced targeting pack....
+Ver 1.5Q
+	- Fixed Hover bike max's ..somehow got lost in a code shuffle
+	- Changed Team Item Max to 2 for designator turrets	
+
+R Interim patch....not released
+
+Ver 1.5S
+	- Hopefully Fixed Exp Subtract routine so It removes Skill Etc Properly...
+	- fixed A combo Pack Bug which could make the flags dissappear if flag wearer had a 
+		flag on then bought a combo pack.
+	- Added Shared kill Exp tracking... & Started Assist Messages
+	- Fixed being able to pick up flack with combo pack 4
+		Repair+energy pack.
+	- Fixed Power Bug... (Have no Idea where it Came from.....)
+		Portable Generators suddenly Started Not Connecting When Power Went Down.
+	- Also Fixed power bug that created multiple generator connects when a generator 
+		of a multiple set was destoroyed. Ie 2 Solar Panels
+		Now backup system sends no messages until all the main generators are down.....
+	- Fixed bug that would allow you to packup an item with an attached shield node....
+		then redeploy then attach another node....etc.
+
+Ver 1.5T
+	- Team Experience Bug. System will not reduce Team Players exp when the team pool is negative. 
+		Switched things so that the team pool will get distributed when either negative or positive...
+	- Added a bit more checking on who gets assigned into an exp slot on a kill 
+		(Cannot be same team or same player) 
+	- Added New Trace routine.. $traceKills 
+		Set this to True and all Kill Messages will be output to the console
+		with the tag >IDKILL: in front. 
+		This is so We can Export all these to a separate log file in a readable format...
+
+	- For future Ref all msg Traces will use the format >IDxxx: 
+
+	- Changed and Added Traces to all The msgs so they wil now echo in the console 
+		If the $tracemsgs is true Tag for Messages is >IDMSGS:
+	
+	- Changed the Game Kill Routine....(Moved it to AAOD_EXP) added assist messages for the following Situations:
+		- Players kills himself after being damaged by one or more enemies. Name kills himself assisted by & or By
+		- Player gets killed by a turret after being damaged by an enemy.. kill get awarded to team @ player
+	- Added New code so that You must have damaged the player within $ExpValidTime to get exp for hurting him..
+		so if you almost kill a player and he gets away... then gets killed by someone else over $ExpValidTime seconds later 
+		you dont get any exp for it...
+
+Ver 1.5U
+	- Added the StasisEnergyDrain Variable which controls how much energy a Stasis shot drains its target.
+	- Tried tweaking the vehicles stuff so stasis affects them. - Not Much Luck...
+
+Ver 1.5V
+	- If No Players on one team it would hold team exp until there were players on that team...Them Whammo
+		suddenly you lose a whack of exp. Fixed it so it resets after every Team Exp Dump regardless 
+		of whether players are on the team or not.
+		(** This Version Seems to 'LOCK' The server.)
+		The OS still thinks it is running but it is using 100% of the CPU and Nothing is happening)
+		Hmmmmmm........
+		(I Hate These Problems....)
+
+Ver 1.5W:
+	- Fixed a Bug in the Tracking Portion of the Program that would cause the server not to track # of visits properly and 
+		number of flag caps properly.
+	- Removed the AAODInit PLayer function incorporated it into the AAODJoin function
+	- Incorporated the CheckPLayersDisconnect function into AAODLeave function.
+	- ** Seems as though the servers are not tracking EXP for someplayers some of the time...
+		note sure where this is coming from.. Still Looking Into it.
+	- Fixed Assist Messages They Were not showing up because the function was not returning the Msg. 
+	- Energy Is Not Recovering.....Fixed Small Bug Caused by The AAODJoin Move
+	- Fixed a Small Bug in the Power frunction that was causing Generators to hook up to a number of items they did not need to.
+	- Fixed the Base Alarm System..... So that It correctly Reports the Attackers Name
+	- Added some more TracePwr Routines to show the Power Stuff See if that is causing the loops
+	- *** Server LockUp Routine Fixed....
+			(Was a spelling Error in the Engage Backup Power Routine... Was getting into an infinite loop)
+
+Ver 1.5X:
+	- Server Still Locking Up....(UnKnown as to Why)
+	- Removed AAODJoin Trace
+	- Tweaked the AAODLeave Game Routine..() 
+
+Ver 1.5Y
+	- Made Minor Changes to PowerItem Routine..trying to eliminate Syntax Error which shows up occaisionally)
+	- Made changes to Deploy Item Routine.. Should Now Allways Try and use the deploy animation sequence
+	- Changed Pack Up Item so that they reverse the deploy animation sequences
+	- Fixed a Bug In the Mobile Inventory Packup Routine... Station would packup Then dissappear then crash the server
+	- Small Bug in POWER Routines that would claim to be connecting an item to a main generator even when that generator was destroyed...
+	- Fixed Bug in Exp Subtract that would not properly reduce skills etc... When Levels were lost...
+	- This Same error would allways tell you you were at level 1 not level 0
+	- Fixed Backup Power so that they properly engage Forcefields that have lost main power ...
+		(this does not apply to mission forcefields yet.. Am Looking into that one)
+
+Ver 1.5Z
+	- Added New Code for Capture & Hold...Fixes some Experience 'padding' issues.
+	- If an Enemy Captures a tower within 90 seconds of your capturing it You Now lose the exp that you gained for capturing it.
+
+
+Ver 1.6
+	- (CHANGE) Beacon Gun Now Only Targets Inanimate Objects - Will Not Fire Otherwise.
+		(This Fixed due to some very creative uses on the server of a beacon gun)
+	- reduced Kickback of the Beacon to stop use as an impromptu jump pad
+		(A Large Number of Beacons clutter up the map and also increase the load on the server)
+	- (removed Trace) Trying to Buy 
+	- (removed trace) AOD Combo1Pack Trigger Energy Pack
+	- (Code Change) PLayer On Damage function. Changed some of the if statements controlling who got credit for 
+		damaging player. (Added checking to see if the player was dead already)
+	- Changed some power routines..... If Power had been up and down and some of the portable gen's
+		had switched items from one power group to another the Object could 'lose' track of its original group.
+		which could cause a crash if the Main Generator tried to reconnect or a generator was packed up
+		the item would try and place itself back into a non existant set...(Very Bad Karma)
+	- Added 2 new Tracking Variables tkick & banned.
+		.tkick	is the number of times a player has been kicked from the server for team killing
+		.banned is a true/false statement which when true will result in the player 
+			getting auto kicked when he tries to reconnect Telling him he has been Banned for being 
+			a Poor Sport/Annoying Player or Teamkilling.
+	- (REMOVED TRACE) TraceKills as it was redundant.. If TraceMsgs is true kill messages show up!
+	- (CHANGED TRACE) - If the $tracemsgs is true Tag for Messages is >MSG: or >SAY: or >CMD: depending on the source of the msg
+	- (EXP CHANGE) When a Flag is Taken: Losing Team Loses Base Exp for the capture PLayer capping still gets Exp
+	- (EXP CHANGE) When a Dropped Flag is returned Home The Team Gets the EXP not the Player (Since the whole Team Lost Exp its only fair)
+	- (EXP CHANGE) When a Flag is Capped the Losing Team Loses the Base Exp for the Cap.
+	- (EXP CHANGE) Max Number of Exp is now 6200. Level 12 Now Requires 6000 Pts.... Lower Levels Did not Change that Much
+	- (CODE) PowerItem Function (FIX) - If a Deployable item that required power was deployed when the main power system was disabled it would connect to
+		the backup power. If the Backup Power was disabled or removed those Items would not re-connect to the main power. 
+
+	- (NEW Function) UpdatePlayers() This function when run from the console will bring your player File up to Date.
+
+
+ver 1.6a
+	- (CHANGE) Messages will Now display Names not Numbers
+	- (PATCH) Player Update File routine fixed so that It does not get Locked after the first mission
+	- 
+Ver 1.6C
+	- (NEW FUNCTION) Server console ExportStats(); function Which Sends the Player information into a semicolon delimited text file ready for import
+		into a spreadsheet.
+	- (EXP CHANGE) PLayers will no longer be able to damage enemy stuff and repair it..... Thus hopefully stopping them from padding exp by blowing up
+		enemy generators
+
+Ver 1.6D
+(a)	- (BUG FIX)	TowerSwitch::Exp Routine was not penalizing team losing the objective within Time limits. As
+		a Result Exp Padding is Still Taking Place. (Fixed)
+	- (BUG FIX)	NewStaticShapeDamage function Was not Deducting Exp from players who damaged thier own equipment
+		This code was added to prevent Padding By damaging & repairing your own equipment.
+	- Bug Fix.. The export Stats Function was 'wonkey' to say the least....Fixed It
+	- ADDED Player Bounties.... Higher Level Characters Get Bounties Automatically PLaced on them
+		Also When Higher Level Characters Join the amount of Pts they are worth to each player is broadcast
+
+Ver 1.6Ex	
+	- (CODE CHANGE) - Update Players
+	- (Code Change) - Purge Players
+	- (New Funct)	- PLAYERSTATS(UserId,CLientID,Request);
+	- (Code Change)	- AAODLeaveGame
+	- (New Funct)	- TimeStamp(); Places a Time Code in The Server Log.. Does this whenever the Team Exp
+						is Distriibuted. Can Also be called from console//
+	-	(ADDED) Export Stats Will No longer Export Non Tracking Players & or Banned PLayers. But It will Now include The Total Kills & Total Deaths
+		as will As number of Flag Caps.... 
+	-	(ADDED) ExportBad(); function which will export the Banned Players And The locked players into The same type deleimited file as the exportstats function
+	-	(ADDED) Lock(); & Unlock(); Functions Allows you to password the server with a preset Password $LockPassword set in the AAOD_CFG.CS
+		file. I Would think the UNLOCK is Fairly straight forward....
+
+In Developement!!!
+--------------------------------------------
+	-	(NEW Deployable Type) Bldg Allows for the Creation and Deployment of Buildings....
+		specifically deployable bunkers etc....
+	-	(New Deployable Type) NODES. Incorporates Shiled & Power Nodes into the deploystuff routine...
+		Allows for all the deployables to be handled By the one routine....
+
+
+
+		
+
+
+
+
+
+
+
+
+// Things We NEED To ADD
+//	Deploy Sound Needs somthing better
+//	Add Demolition Pack....
+//	Add Stinger Ground to Air Missile
+//	Add The BackStabber Cannon
+//	Counter Battery Sound

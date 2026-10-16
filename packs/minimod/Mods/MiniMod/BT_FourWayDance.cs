@@ -1,0 +1,14 @@
+$BotTree::T_Adjacency0_1 = "99999";
+$BotTree::T_Adjacency0_2 = "99999";
+$BotTree::T_Adjacency1_0 = "99999";
+$BotTree::T_Adjacency1_2 = "2.00998";
+$BotTree::T_Adjacency2_0 = "99999";
+$BotTree::T_Adjacency2_1 = "2.00998";
+$BotTree::T_Adjacency_0 = "0";
+$BotTree::T_Adjacency_1 = "0";
+$BotTree::T_Adjacency_2 = "0";
+$BotTree::T_Count = "0";
+$BotTree::T_Count_Calc = "0";
+$BotTree::T_Pos0 = "-254.521 50.4763 30.4229";
+$BotTree::T_Pos1 = "0 0 0";
+$BotTree::T_Pos2 = "0 0 2.00999";

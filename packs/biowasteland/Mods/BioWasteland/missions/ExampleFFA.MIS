@@ -1,0 +1,360 @@
+//==============================================
+//=== Map Example By Biohazard
+//==============================================
+//=== You need to scroll down and read my comments as they appear.
+//=== Some of the most important comments are at the end, so keep looking.
+//=== This assumes you already know how to use the Tribe's Map Editor.
+//=== To learn the map editor, get my Map Making Tutorial Download.
+//==============================================
+
+
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "tedFile" {
+			fileName = "Broadside.ted";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "lushWorld" {
+			fileName = "lushWorld.vol";
+		};
+		instant SimVolume "lushTerrain" {
+			fileName = "lushTerrain.vol";
+		};
+		instant SimVolume "lushDML" {
+			fileName = "lushDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "Broadside.vol";
+		};
+		instant SimVolume "Volume1" {
+			fileName = "custom.vol";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "palette" {
+			fileName = "lush.day.ppl";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "litesky.dml";
+			skyColor = "0 0 0";
+			hazeColor = "3.39566e+38 3.39566e+38 3.39566e+38";
+			featurePosition = "0";
+			size = "600";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "2";
+			textures[3] = "3";
+			textures[4] = "4";
+			textures[5] = "5";
+			textures[6] = "6";
+			textures[7] = "7";
+			textures[8] = "8";
+			textures[9] = "9";
+			textures[10] = "10";
+			textures[11] = "11";
+			textures[12] = "12";
+			textures[13] = "13";
+			textures[14] = "14";
+			textures[15] = "15";
+			distance = "800";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "Broadside.dtf";
+			visibleDistance = "600";
+			hazeDistance = "400";
+			hazeVerticalMin = "1.16392e-08";
+			hazeVerticalMax = "1.74144e-39";
+			perspectiveDistance = "100";
+			screenSize = "50";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+//==============================================
+//=== Notice I've moved the terrain 200 units below zero in this Example map.
+//=== This is to illustrate a point!  When a map has 8 teams, as this one does,
+//=== for unknown reasons, teams 5 and 6 will sometimes spawn at position 0 0 0.
+//=== For this reason, you need to make the map so that position 0 0 0 is above
+//=== ground, otherwise, the player will spawn underground and fall forever.
+//=== Ideally, make the map so that if he spawns there, it makes sense!
+//=== This terrain was dropped 200 units bacause it has a hill in the center
+//=== of the map which is almost 200 units high.  This assures team 5 and 6 will not
+//=== spawn under that hill.
+//==============================================
+			position = "-3072 -3072 -200";
+			rotation = "0 0 0";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-400";
+			y = "-400";
+			w = "800";
+			h = "800";
+		};
+	};
+	instant SimGroup "Lights" {
+		instant Planet "sunLight" {
+			fileName = "lushdaysun.bmp";
+			azimuth = "178.66";
+			incidence = "49";
+			castShadows = "True";
+			useLensFlare = "True";
+			intensity = "0.699963 0.699963 0.699963";
+			ambient = "0.299967 0.299967 0.299967";
+			size = "180";
+			distance = "1200";
+		};
+	};
+	instant SimGroup "Teams" {
+		instant TeamGroup "team0" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "18.2237 -82.3125 166.705";
+						rotation = "0 -0 -1.65998";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "18.4013 -78.6995 166.705";
+						rotation = "0 -0 -1.59998";
+					};
+				};
+			};
+		};
+		instant TeamGroup "team1" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "50.0328 -82.7328 166.705";
+						rotation = "0 -0 1.61998";
+					};
+				};
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "49.8072 -79.3157 166.705";
+						rotation = "0 -0 1.53998";
+					};
+				};
+			};
+		};
+		instant TeamGroup "team2" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "43.3535 -67.6549 166.705";
+						rotation = "0 -0 2.69996";
+					};
+				};
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "40.2335 -66.2433 166.705";
+						rotation = "0 -0 2.61996";
+					};
+				};
+			};
+		};
+		instant TeamGroup "team3" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "27.9903 -95.511 166.705";
+						rotation = "0 -0 -0.579983";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "24.8875 -93.6514 166.705";
+						rotation = "0 -0 -0.519983";
+					};
+				};
+			};
+		};
+		instant TeamGroup "team4" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "49.2518 -75.4622 166.705";
+						rotation = "0 -0 2.07995";
+					};
+				};
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "47.5326 -72.5005 166.705";
+						rotation = "0 -0 1.99995";
+					};
+				};
+			};
+		};
+		instant TeamGroup "team5" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "28.3277 -73.6098 166.705";
+						rotation = "0 -0 -2.63996";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "31.4272 -71.7447 166.705";
+						rotation = "0 -0 -2.57996";
+					};
+				};
+			};
+		};
+		instant TeamGroup "team6" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "40.6854 -87.5971 166.705";
+						rotation = "0 -0 0.360032";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "37.3537 -89.0061 166.705";
+						rotation = "0 -0 0.420032";
+					};
+				};
+			};
+		};
+		instant TeamGroup "team7" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "20.5627 -89.2072 166.705";
+						rotation = "0 -0 -1.19994";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "19.1178 -85.8909 166.705";
+						rotation = "0 -0 -1.13994";
+					};
+				};
+			};
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "28.7704 -70.5087 178.092";
+			rotation = "-0.898147 0 -3.12106";
+		};
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "37.4943 -89.8978 179.757";
+			rotation = "-0.990141 0 0.347916";
+		};
+	};
+	instant SimGroup "CutsomVolShapes" {
+		instant InteriorShape "floatpad1" {
+			fileName = "floatpad.dis";
+			isContainer = "1";
+			position = "1.66556 -50.7406 167.902";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "watchtower1" {
+			fileName = "watchtower.dis";
+			isContainer = "1";
+			position = "-25.9709 55.0092 224.206";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "tblock1" {
+			fileName = "tblock.dis";
+			isContainer = "0";
+			position = "0.789158 -57.8383 161.859";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "sbunker1" {
+			fileName = "sbunker.dis";
+			isContainer = "1";
+			position = "62.9983 -8.48848 164.628";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "kiel1" {
+			fileName = "kiel.dis";
+			isContainer = "1";
+			position = "-10.9186 -59.7689 170.285";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "flytower1" {
+			fileName = "flytower.dis";
+			isContainer = "1";
+			position = "-34.1919 2.57329 223.556";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "siam1" {
+			fileName = "siam.dis";
+			isContainer = "1";
+			position = "41.6221 -89.9 153.705";
+			rotation = "0 -0 -2.65993";
+			lightParams = "0 ";
+		};
+	};
+};
+//--- export object end ---//
+$teamScoreLimit = 5;
+exec(objectives);
+$cdTrack = 3;
+$cdPlayMode = 1;
+//==============================================
+//=== Here is what defines the map as a DM-Free For All map
+//==============================================
+$Game::missionType = "DM";	//=== can be any map type
+
+noDeployables();	//===disables all deployables.
+teamKillScore();  //===enables team scoring for kills
+

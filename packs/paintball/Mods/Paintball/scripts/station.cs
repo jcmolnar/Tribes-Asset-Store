@@ -1,0 +1,836 @@
+//----------------------------------------------------------------------------
+// List of all items available to buy from inventory station
+
+$InvList[Grenade] = 1;
+$InvList[AngelClip] = 0;
+$InvList[AutoCockerClip] = 0;
+$InvList[SypderClip] = 0;
+$InvList[TipmannSClip] = 0;
+$InvList[DragunClip] = 0;
+$InvList[DeltaClip] = 0;
+$InvList[RepairKit] = 0;
+
+$RemoteInvList[RepairKit] = 1;
+
+$VehicleInvList[ScoutVehicle] = 0;
+$VehicleInvList[LAPCVehicle] = 0;
+$VehicleInvList[HAPCVehicle] = 0;
+
+//----------------------------------------------------------------------------
+
+$DataBlockName[ScoutVehicle] = Scout;
+$DataBlockName[LAPCVehicle] = LAPC;
+$DataBlockName[HAPCVehicle] = HAPC;
+
+$VehicleToItem[Scout] = ScoutVehicle;
+$VehicleToItem[LAPC] = LAPCVehicle;
+$VehicleToItem[HAPC] = HAPCVehicle;
+
+//----------------------------------------------------------------------------
+/// Inventory Station
+
+StaticShapeData InventoryStation
+{
+	description = "Station Supply Unit";
+	shapeFile = "inventory_sta";
+	className = "Station";
+	visibleToSensor = true;
+	sequenceSound[0] = { "activate", SoundActivateInventoryStation };
+	sequenceSound[1] = { "power", SoundInventoryStationPower };
+	sequenceSound[2] = { "use", SoundUseInventoryStation };
+	maxDamage = 1.0;
+	debrisId = flashDebrisLarge;
+	mapFilter = 4;
+	mapIcon = "M_station";
+	damageSkinData = "objectDamageSkins";
+	shadowDetailMask = 16;
+	triggerRadius = 1.5;
+	explosionId = flashExpLarge;
+};
+
+function InventoryStation::onEndSequence(%this,%thread)
+{
+	//echo("End Seq ",%thread);
+	if (Station::onEndSequence(%this,%thread)) 
+		InventoryStation::onResupply(%this,"InvList");
+}
+
+function InventoryStation::onResupply(%this,%InvShopList)
+{
+	dbecho(3, "STATION::Resupply");
+	if (GameBase::isActive(%this)) {
+		%player = Station::getTarget(%this);
+		if (%player != -1 && %this.lastPlayer == %player) {
+			%client = Player::getClient(%player);
+			if (%this.target != %client) {
+				%player.Station = %this;
+				setupShoppingList(%client,%this,%InvShopList);
+				updateBuyingList(%client);
+				%this.target = %client;
+				%this.clTeamEnergy = %client.TeamEnergy;
+				if(!%client.noEnterInventory)
+   					Client::setGuiMode(%client,$GuiModeInventory);
+				Client::sendMessage(%client,0,"Station Access On");
+				%player.ResupplyFlag = 1;
+				%weapon = Player::getMountedItem(%player,$WeaponSlot);
+				if(%weapon != -1) {
+					%player.lastWeapon = %weapon;
+					Player::unMountItem(%player,$WeaponSlot);
+				}
+			}
+			%player.waitThrowTime = getSimTime();
+			schedule("InventoryStation::onResupply(" @ %this @ ");",0.5,%this);
+			if(%player.ResupplyFlag) 
+				%player.ResupplyFlag = resupply(%this);
+			return;
+		}
+		GameBase::setActive(%this,false);
+	}
+	if (%this.target != "") {	   
+		%player = Client::getOwnedObject(%this.target);
+		Client::clearItemShopping(%this.target);
+		Client::sendMessage(%this.target,0,"Station Access Off");
+		Station::onEndSequence(%this);
+		if(GameBase::getDataName(%player.Station) == DeployableInvStation) {
+			Client::setInventoryText(%this.target, "<f1><jc>Current Balace: $" @ Money::Get(%this.target, Money));
+			if(Client::getGuiMode(%this.target) != 1)
+				Client::setGuiMode(%this.target,1);
+			%player.Station = "";
+  			%this.target = "";
+		}
+		if(Player::getMountedItem(%player,$WeaponSlot) == -1){
+			if(%player.lastWeapon != "") {
+				Player::useItem(%player,%player.lastWeapon);		 	
+				%player.lastWeapon = "";
+	  		}
+		}
+	}
+	%this.enterTime="";
+}
+
+
+function resupply(%this)
+{
+	if (GameBase::isActive(%this)) {
+		%player = Station::getTarget(%this);
+		if (%player != -1) {
+			// Hardcoded here for the ammo types
+			%cnt = Station::itemsToResupply(%player);
+			if(getSimTime() - %this.enterTime > 11)
+				%cnt = 0;
+			%client = Player::getClient(%player);
+			if (%cnt != 0) {
+				updateBuyingList(%client);
+				return 1;
+			}
+			Client::sendMessage(%client,0,"Resupply Complete");
+			return 0;
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------------------
+// Ammo Station
+
+StaticShapeData AmmoStation
+{
+   description = "Ammo Supply Unit";
+	shapeFile = "ammounit";
+	className = "Station";
+	visibleToSensor = true;
+	sequenceSound[0] = { "activate", SoundActivateAmmoStation };
+	sequenceSound[1] = { "power", SoundAmmoStationPower };
+	sequenceSound[2] = { "use", SoundUseAmmoStation };
+	maxDamage = 1.0;
+	debrisId = flashDebrisLarge;
+	mapFilter = 4;
+	mapIcon = "M_station";
+	damageSkinData = "objectDamageSkins";
+	shadowDetailMask = 16;
+   explosionId = flashExpLarge;
+};
+
+function AmmoStation::onEndSequence(%this,%thread)
+{
+	//echo("End Seq ",%thread);
+	%player = Station::getTarget(%this);
+	if(%this.clTeamEnergy == "")
+		%this.clTeamEnergy = (Player::getClient(%player)).TeamEnergy;
+	if (Station::onEndSequence(%this,%thread)) {    
+		%weapon = Player::getMountedItem(%player,$WeaponSlot);
+		if(%weapon != -1) {
+			%player.lastWeapon = %weapon;
+			Player::unMountItem(%player,$WeaponSlot);
+		}
+		AmmoStation::onResupply(%this);
+	}
+}									
+											
+function AmmoStation::onResupply(%this)
+{
+	if (GameBase::isActive(%this)) {
+		%player = Station::getTarget(%this);
+		if (%player != -1 && %this.lastPlayer == %player) {
+			// Hardcoded here for the ammo types
+			%cnt = Station::itemsToResupply(%player);
+			if(getSimTime() - %this.enterTime > 11)
+				%cnt = 0;
+			if (%cnt != 0) {
+				%player.waitThrowTime = getSimTime();
+				schedule("AmmoStation::onResupply(" @ %this @ ");",0.5,%this);
+				return;
+			}
+			%player.Station = "";
+			%client = Player::getClient(%player);
+			%this.target = "";
+			Client::sendMessage(%client,0,"Resupply Complete");
+			Client::setInventoryText(%client, "<f1><jc>Current Balance: $" @ Money::Get(%client, Money));
+
+			if(Player::getMountedItem(%player,$WeaponSlot) == -1){
+				if(%player.lastWeapon != "") {
+					Player::useItem(%player,%player.lastWeapon);		 	
+					%player.lastWeapon = "";
+	  			}
+			}			
+		}
+		else if(%this.target != "") {
+			%player = Client::getOwnedObject(%this.target);
+			%player.Station = "";
+			if(Player::getMountedItem(%player,$WeaponSlot) == -1){
+				if(%player.lastWeapon != "") {
+					Player::useItem(%player,%player.lastWeapon);		 	
+					%player.lastWeapon = "";
+	  			}
+			}		
+			%this.target = "";
+		}
+		else {
+			%this.lastPlayer.Station = "";
+			if(Player::getMountedItem(%this.lastPlayer,$WeaponSlot) == -1){
+				if(%this.lastPlayer.lastWeapon != "") {
+					Player::useItem(%this.lastPlayer,%this.lastPlayer.lastWeapon);		 	
+					%this.lastPlayer.lastWeapon = "";
+	  			}
+			}
+			%this.target = "";
+		}
+		GameBase::setActive(%this,false);
+		%this.enterTime="";
+	}
+}
+		 											
+function AmmoStation::resupply(%player,%weapon,%item,%delta)
+{
+	%delta = checkResources(%player,%item,%delta,1);		
+	if(%delta > 0) {						
+		if(%item == RepairPatch) {
+			teamEnergyBuySell(%player,%item.price * %delta * -1);
+			GameBase::repairDamage(%player,0.06);
+		 	return %delta;
+		}
+		else if (%item == MineAmmo || %item == Grenade || %item == RepairKit) {
+			teamEnergyBuySell(%player,%item.price * %delta * -1);
+			Player::incItemCount(%player,%item,%delta);
+		 	return %delta;
+		}
+		else if (Player::getItemCount(%player,%weapon)) {
+			teamEnergyBuySell(%player,%item.price * %delta * -1);
+			Player::incItemCount(%player,%item,%delta);
+		 	return %delta;
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------------------
+// Command Station
+
+StaticShapeData CommandStation
+{
+   description = "Command Station";
+	shapeFile = "cmdpnl";
+	className = "Station";
+	visibleToSensor = true;
+	sequenceSound[0] = { "activate", SoundActivateCommandStation };
+	sequenceSound[1] = { "power", SoundCommandStationPower };
+	sequenceSound[2] = { "use", SoundUseCommandStation };
+	maxDamage = 1.0;
+	debrisId = flashDebrisMedium;
+	mapFilter = 4;
+	mapIcon = "M_station";
+	damageSkinData = "objectDamageSkins";
+	shadowDetailMask = 16;
+	triggerRadius = 1.5;
+   explosionId = flashExpLarge;
+};
+
+function CommandStation::onEndSequence(%this,%thread)
+{
+	//echo("End Seq ",%thread);
+	(Client::getOwnedObject(%this.target)).Station = "";
+	%this.target = "";
+	if (Station::onEndSequence(%this,%thread)) 
+		CommandStation::onResupply(%this);
+}
+
+function CommandStation::onResupply(%this)
+{
+	if (GameBase::isActive(%this)) {
+		%player = Station::getTarget(%this);
+		if (%player != -1 && %this.lastPlayer == %player) {
+			%client = Player::getClient(%player);
+			if (%this.target != %client) {
+				%this.target = %client;
+				%player.CommandTag = 1;
+				Client::setGuiMode(%client,2);
+				Client::sendMessage(%client,0,"Command Access On");
+				%player.station = %this;
+			}
+			schedule("CommandStation::onResupply(" @ %this @ ");",0.5,%this);
+			return;
+		}
+		GameBase::setActive(%this,false);
+	}
+	if (%this.target) {
+		Client::sendMessage(%this.target,0,"Command Access Off");
+		(Client::getOwnedObject(%this.target)).CommandTag = "";
+		checkControlUnmount(%this.target);
+	}
+	(Client::getOwnedObject(%this.target)).Station = "";
+	%this.target = "";
+}
+
+
+//----------------------------------------------------------------------------
+// vehicle Station
+StaticShapeData VehicleStation
+{
+   description = "Station Vehicle Unit";
+	shapeFile = "vehi_pur_pnl";
+	className = "Station";
+	visibleToSensor = true;
+	sequenceSound[0] = { "activate", SoundActivateInventoryStation };
+	sequenceSound[1] = { "power", SoundInventoryStationPower };
+	sequenceSound[2] = { "use", SoundUseInventoryStation };
+//   explosionId = DebrisExp;
+	maxDamage = 1.0;
+	debrisId = flashDebrisLarge;
+	mapFilter = 4;
+	mapIcon = "M_station";
+	damageSkinData = "objectDamageSkins";
+	shadowDetailMask = 16;
+	triggerRadius = 1.5;
+   explosionId = flashExpLarge;
+};
+
+function VehicleStation::onEndSequence(%this,%thread)
+{
+	//echo("End Seq ",%thread);
+	if (Station::onEndSequence(%this,%thread)) 
+		VehicleStation::onBuyingVechicle(%this);
+}
+
+function VehicleStation::onBuyingVechicle(%this)
+{
+	if (GameBase::isActive(%this)) {
+		%player = Station::getTarget(%this);
+		if (%player != -1 && %this.lastPlayer == %player) {
+			%client = Player::getClient(%player);
+			if (%this.target != %client) {
+				setupShoppingList(%client,%this,"VehicleInvList");
+				updateBuyingList(%client);
+				%this.target = %client;
+				%this.clTeamEnergy = Money::Get(%client, Money);
+				Client::setGuiMode(%client,4);
+				Client::sendMessage(%client,0,"Station Access On");
+				%player.Station = %this;
+			 	%numItems = Group::objectCount(GetGroup(%this));
+				for(%i = 0 ; %i<%numItems ; %i++) { 
+					%obj = Group::getObject(GetGroup(%this), %i);
+					%name = GameBase::getDataName(%obj); 
+					if(%name == VehiclePad) { 
+						%this.vehiclePad = %obj;
+						GameBase::setActive(%this.vehiclePad,true);
+						%i = %numItems;
+					}
+				}
+			}
+			schedule("VehicleStation::onBuyingVechicle(" @ %this @ ");",0.5,%this);
+			return;
+		}
+		GameBase::setActive(%this,false);
+	}
+	if (%this.target) {	   
+		Client::clearItemShopping(%this.target);
+		Client::sendMessage(%this.target,0,"Station Access Off");
+		Station::onEndSequence(%this);
+	}
+}
+
+
+function VehicleStation::checkBuying(%client,%item)
+{
+	%player = Client::getOwnedObject(%client);
+	%obj = %player.Station.vehiclePad;
+	if(GameBase::isPowered(%obj) && GameBase::getDamageState(%obj) == "Enabled") {
+		%markerPos = GameBase::getPosition(%obj);
+  		%set = newObject("set",SimSet);
+		%mask = $VehicleObjectType | $SimPlayerObjectType | $ItemObjectType;
+		%objInWay = containerBoxFillSet(%set,%mask,%markerPos,6,5,14,1);
+		%station = %player.Station;
+		if(%objInWay == 1) {
+			%object = Group::getObject(%set, 0);	
+			%sName = GameBase::getDataName(%object);
+			if(%sName.className == Vehicle) {
+				if(GameBase::getControlClient(%object) == -1) {
+					if(%station.fadeOut == "") {
+						if(%item != $VehicleToItem[%sname]) {
+							%object.fading = 1;
+							%station.fadeOut=1;
+							teamEnergyBuySell(%player,$VehicleToItem[%sName].price);
+							$TeamItemCount[Client::getTeam(%client) @ ($VehicleToItem[%sName])]--;
+							GameBase::startFadeOut(%object);
+							schedule("deleteObject(" @ %object @ ");",2.5,%object);
+							schedule(%object @ ".fading = \"\";",2.5,%object);
+							schedule(%station @ ".fadeOut = \"\";",2.5,%station);
+							%objInWay--;
+						}
+						else
+							return 2;
+					}
+					else {
+						Client::SendMessage(%client,0,"ERROR - Vehicle creation pad busy"); 
+						return 0;
+					}
+				}
+				else { 
+					Client::SendMessage(%client,0,"ERROR - Vehicle in creation area is mounted");
+					return 0;
+				}
+			} 
+		}
+		if(!%objInWay) {
+			if (checkResources(%player,%item,1)) {
+	    		%vehicle = newObject("",flier,$DataBlockName[%item],true);
+				Gamebase::setMapName(%vehicle,%item.description);
+            %vehicle.clLastMount = %client;
+				addToSet("MissionCleanup", %vehicle);
+			  	%vehicle.fading = 1;
+				GameBase::setTeam(%vehicle,Client::getTeam(%client));
+				if(%object.fading) { 
+					schedule("GameBase::startFadeIn(" @ %vehicle @ ");",2.5,%vehicle);
+					schedule("GameBase::setPosition(" @ %vehicle @ ",\"" @ %markerPos @ "\");",2.5,%vehicle);
+					schedule("GameBase::setRotation(" @ %vehicle @ ",\"" @ GameBase::getRotation(%obj) @ "\");",2.5,%vehicle);
+					schedule(%vehicle @ ".fading = \"\"; VehiclePad::checkSeq(" @ %obj @ "," @ %player.Station @ ");",5,%vehicle);
+					%obj.busy = getSimTime() + 5;
+				}
+				else {
+					GameBase::startFadeIn(%vehicle);
+					GameBase::setPosition(%vehicle,%markerPos);
+					GameBase::setRotation(%vehicle,GameBase::getRotation(%obj));
+				 	schedule(%vehicle @ ".fading = \"\"; VehiclePad::checkSeq(" @ %obj @ "," @ %player.Station @ ");",3,%vehicle);
+					%obj.busy = getSimTime() + 3;
+				}
+				deleteObject(%set);
+				$TeamItemCount[Client::getTeam(%client) @ %item]++;
+				return 1;
+			}
+		}
+		else
+			Client::SendMessage(%client,0,"ERROR - Object in vehicle creation area");
+		deleteObject(%set);
+	}	
+	else
+		Client::SendMessage(%client,0,"ERROR - Vehicle Pad Disabled");
+
+	return 0;
+}
+
+
+StaticShapeData VehiclePad
+{
+   description = "Vehicle Pad";
+	shapeFile = "vehi_pur_poles";
+	className = "Station";
+	visibleToSensor = true;
+	sequenceSound[0] = { "activate", SoundActivateInventoryStation };
+	sequenceSound[1] = { "power", SoundInventoryStationPower };
+	sequenceSound[2] = { "use", SoundUseInventoryStation };
+	maxDamage = 1.0;
+	debrisId = flashDebrisLarge;
+	mapFilter = 4;
+	mapIcon = "M_station";
+   explosionId = flashExpLarge;
+	damageSkinData = "objectDamageSkins";
+};
+
+
+
+function VehiclePad::onActivate(%this)
+{
+	GameBase::playSequence(%this,1,"use");
+}
+
+function VehiclePad::onDeactivate(%this)
+{
+	GameBase::stopSequence(%this,1);
+}
+
+function VehiclePad::onEnabled(%this)
+{
+}
+
+function VehiclePad::onAdd(%this)
+{
+}
+
+function VehiclePad::onCollision(%this, %object)
+{
+}
+
+function VehiclePad::onPower(%this,%power,%generator)
+{
+	if(!%power)
+		GameBase::setActive(%this,false);
+}
+
+function VehiclePad::checkSeq(%this, %station)
+{
+	if(%station.target == "")
+		GameBase::setActive(%this,false);
+}
+
+//----------------------------------------------------------------------------
+// Default station routines
+
+function Station::onActivate(%this)
+{
+	//echo("Activate " @ %this);
+	%obj = Station::getTarget(%this);
+	if (%obj != -1) {
+		GameBase::playSequence(%this,1,"activate");
+		GameBase::setSequenceDirection(%this,1,1);
+		%this.lastPlayer = %obj;
+	}
+	else 
+		GameBase::setActive(%this,false);
+}
+
+function Station::onDeactivate(%this)
+{
+	//echo("Dectivate " @ %this);
+	GameBase::stopSequence(%this,2);
+	GameBase::setSequenceDirection(%this,1,0);
+}
+
+function Station::onEndSequence(%this,%thread)
+{
+	//echo("End sequence " @ %this);
+ 	if (%thread == 1 && GameBase::isActive(%this)) {
+		GameBase::playSequence(%this,2,"use");
+		return true;
+	}
+	%client = %this.target;
+	if(%client == "") {
+		%player = Station::getTarget(%this);
+		%client = Player::getClient(%player);
+	}
+	if(%client != "") {
+		if(Client::getGuiMode(%client) != 1)
+			Client::setGuiMode(%client,1);
+	}
+	if(%this.target != "") {
+		(Client::getOwnedObject(%this.target)).Station = "";
+		%this.target = "";
+	}
+	if(GameBase::getDataName(%this) == VehicleStation && %this.vehiclePad.busy < getSimTime())
+		VehiclePad::checkSeq(%this.vehiclePad, %this);
+	%this.clTeamEnergy = "";
+	return false;
+}
+
+function Station::onPower(%this,%power,%generator)
+{
+	if (%power) {
+		GameBase::playSequence(%this,0,"power");
+		GameBase::playSequence(%this,1);
+	}
+	else {
+		GameBase::stopSequence(%this,0);
+		GameBase::pauseSequence(%this,1);
+		GameBase::pauseSequence(%this,2);
+		Station::checkTarget(%this);
+	}
+}
+
+function Station::onEnabled(%this)
+{
+	if (GameBase::isPowered(%this)) {		
+		GameBase::playSequence(%this,0,"power");
+		GameBase::playSequence(%this,1);
+	}
+}
+
+function Station::checkTarget(%this)
+{
+	if(%this.target) {
+		Client::setGuiMode(%this.target,1);
+		GameBase::setActive(%this,false);
+	}
+}
+
+function Station::onDisabled(%this)
+{
+	Station::weaponCheck(%this);
+	GameBase::stopSequence(%this,0);
+	GameBase::setSequenceDirection(%this,1,0);
+	GameBase::pauseSequence(%this,1);
+	GameBase::stopSequence(%this,2);
+	Station::checkTarget(%this);
+}
+
+function Station::onDestroyed(%this)
+{
+	Station::weaponCheck(%this);
+	StaticShape::objectiveDestroyed(%this);
+	GameBase::stopSequence(%this,0);
+	GameBase::stopSequence(%this,1);
+	GameBase::stopSequence(%this,2);
+	Station::checkTarget(%this);
+	calcRadiusDamage(%this, $DebrisDamageType, 2.5, 0.05, 25, 13, 2, 0.40, 
+		0.1, 250, 100); 
+}
+
+function Station::weaponCheck(%this)
+{
+	if(%this.lastPlayer != "") {
+		%player = %this.lastPlayer;
+		%player.Station = "";
+		if(Player::getMountedItem(%player,$WeaponSlot) == -1){
+			if(%player.lastWeapon != "") {
+				Player::useItem(%player,%player.lastWeapon);		 	
+				%player.lastWeapon = "";
+	  		}
+		}											
+	 	%this.lastPlayer = "";
+  	}
+}
+
+function Station::getTarget(%this)
+{
+	if(GameBase::getLOSInfo(%this,1.5,"0 0 3.14")) {
+	  	// GetLOSInfo sets the following globals:
+	  	// 	los::position
+	  	// 	los::normal
+	  	// 	los::object
+	  	%obj = getObjectType($los::object);
+		dbecho(3, "STATION: LOS got " @ %obj);
+	  	if (%obj == "Player") {
+         if( Player::isAiControlled( $los::object ) != "True" ) {
+			   return $los::object;
+         }
+		}
+	}
+	dbecho(3, "STATION: LOS Got None");
+	return -1;
+}	
+
+function Station::onCollision(%this, %object)
+{
+	if(%this.target == ""){
+		dbecho(3, "STATION: Collision (" @ %this @ "," @ %object @ ")");
+		%obj = getObjectType(%object);
+		if (%obj == "Player" && isPlayerBusy(%object) == 0) {
+  		 	%client = Player::getClient(%object);
+ 			if(GameBase::getTeam(%object) == GameBase::getTeam(%this) || GameBase::getTeam(%this) == -1) {
+				if (GameBase::getDamageState(%this) == "Enabled") {
+					if (GameBase::isPowered(%this)) { 
+						if(%this.enterTime == "")
+							%this.enterTime = getSimTime();
+						GameBase::setActive(%this,true);
+					}
+					else 
+						Client::sendMessage(%client,0,"Unit is not powered");
+				}
+				else 
+					Client::sendMessage(%client,0,"Unit is disabled");
+			}
+			else if(Station::getTarget(%this) == %object)
+   	   {
+				%curTime = getSimTime();
+				if(%curTime - %object.stationDeniedStamp > 3.5 && GameBase::getDamageState(%this) == "Enabled") {
+					Client::clearItemShopping(%client);
+					Station::onDeactivate(%this);
+					Station::onEndSequence(%this,1);
+					if(Client::getGuiMode(%client) != 1)
+						Client::setGuiMode(%client,1);
+					%object.stationDeniedStamp = %curTime;
+					Client::sendMessage(%client,0,"--ACCESS DENIED-- Wrong Team ~waccess_denied.wav");
+				}
+			}
+		}
+	}
+}
+
+function Station::itemsToResupply(%player)
+{
+	%cnt = 0;
+	%cnt = %cnt + AmmoStation::resupply(%player,"",RepairPatch,1);
+	if (!$Money::Enabled)
+		%cnt = %cnt + AmmoStation::resupply(%player,"",Grenade,2);
+	%cnt = %cnt + AmmoStation::resupply(%player,"",RepairKit,1);
+	%cnt = %cnt + AmmoStation::resupply(%player,Angel,AngelAmmo,200);
+	%cnt = %cnt + AmmoStation::resupply(%player,Dragun,DragunAmmo,200);
+	%cnt = %cnt + AmmoStation::resupply(%player,AutoCocker,AutoCockerAmmo,200);
+	%cnt = %cnt + AmmoStation::resupply(%player,Spyder,SpyderAmmo,200);
+	%cnt = %cnt + AmmoStation::resupply(%player,TipmannS,TipmannSAmmo,200);
+	%cnt = %cnt + AmmoStation::resupply(%player,Mongoose,MongooseAmmo,200);
+	%cnt = %cnt + AmmoStation::resupply(%player,Inferno,InfernoAmmo,200);
+	%cnt = %cnt + AmmoStation::resupply(%player,Psycho,PsychoAmmo,200);
+	%cnt = %cnt + AmmoStation::resupply(%player,Shocker,ShockerAmmo,200);
+	%cnt = %cnt + AmmoStation::resupply(%player,Delta,DeltaAmmo,10);
+	%cnt = %cnt + AmmoStation::resupply(%player,Spyder,SpyderClip,1);
+	%cnt = %cnt + AmmoStation::resupply(%player,Angel,AngelClip,1);
+	%cnt = %cnt + AmmoStation::resupply(%player,AutoCocker,AutoCockerClip,1);
+	%cnt = %cnt + AmmoStation::resupply(%player,Dragun,DragunClip,1);
+	%cnt = %cnt + AmmoStation::resupply(%player,Mongoose,MongooseClip,1);
+	%cnt = %cnt + AmmoStation::resupply(%player,Psycho,PsychoClip,1);
+	%cnt = %cnt + AmmoStation::resupply(%player,Inferno,InfernoClip,1);
+	%cnt = %cnt + AmmoStation::resupply(%player,Delta,DeltaClip,1);
+	%cnt = %cnt + AmmoStation::resupply(%player,Shocker,ShockerClip,1);
+	return %cnt;
+}
+
+// ----------------------------------------------------------------------------
+// Station Handling
+
+function setupShoppingList(%client,%station,%ListType)
+{
+	%max = getNumItems();
+	if(%ListType == "InvList") {
+		for (%i = 0; %i < %max; %i = %i + 1)
+		{
+			%item = getItemData(%i);
+			if (($InvList[%item] != "") && ($InvList[%item]) && (!%station.dontSell[%item])) 
+				Client::setItemShopping(%client, %item);
+		}
+	}
+}
+
+function updateBuyingList(%client)
+{
+	if ($Money::Enabled)
+	{
+		Client::clearItemBuying(%client);
+
+		%station = (Client::getOwnedObject(%client)).Station;
+		%stationName = GameBase::getDataName(%station); 
+
+		Client::setInventoryText(%client, "<f1><jc>Current Balance: $" @ Money::Get(%client, Money) );
+
+		%armor = Player::getArmor(%client);
+		%max = getNumItems();
+		for (%i = 0; %i < %max; %i++)
+		{
+			%item = getItemData(%i);
+
+			if(!%item.showInventory)
+				continue;
+
+			if (($ItemMax[%armor, %item] != "") && (Client::isItemShoppingOn(%client,%i)))
+			{
+				%extraAmmo = 0;
+
+				if (Player::getMountedItem(%client,$BackpackSlot) == ammopack)
+					%extraAmmo = $AmmoPackMax[%item];
+
+				if ($ItemMax[%armor, %item] + %extraAmmo > Player::getItemCount(%client,%item))
+				{
+					if (Money::Get(%client, Money) >= %item.price)
+					{
+						if(%item.className == Weapon)
+						{
+							if(Player::getItemClassCount(%client,"Weapon") < $MaxWeapons[%armor])					
+								Client::setItemBuying(%client, %item);
+						}
+						else { 
+							if($TeamItemMax[%item] != "")
+							{						
+								if($TeamItemCount[GameBase::getTeam(%client) @ %item] < $TeamItemMax[%item])
+									Client::setItemBuying(%client, %item);
+							}
+							else
+								Client::setItemBuying(%client, %item);
+						}
+					}
+				}
+			}
+			else if(%item.className == Armor && %item != $ArmorName[%armor] && Client::isItemShoppingOn(%client,%i)) 
+				Client::setItemBuying(%client, %item);
+		}
+	}
+	else
+	{
+		Client::clearItemBuying(%client);
+
+		%station = (Client::getOwnedObject(%client)).Station;
+		%stationName = GameBase::getDataName(%station); 
+
+		if(%stationName == DeployableInvStation || %stationName == DeployableAmmoStation)
+		{
+			%energy = %station.Energy;
+   			Client::setInventoryText(%client, "<f1><jc>STATION ENERGY: " @ %energy );
+		}
+		else
+		{
+			%energy = $TeamEnergy[Client::getTeam(%client)];
+			Client::setInventoryText(%client, "<f1><jc>TEAM ENERGY: " @ %energy);
+		}
+
+		%armor = Player::getArmor(%client);
+		%max = getNumItems();
+
+		for (%i = 0; %i < %max; %i++)
+		{
+			%item = getItemData(%i);
+
+			if(!%item.showInventory)
+		        	continue;
+
+			if($ItemMax[%armor, %item] != "" && Client::isItemShoppingOn(%client,%i))
+			{
+				%extraAmmo = 0;
+
+				if(Player::getMountedItem(%client,$BackpackSlot) == ammopack)
+					%extraAmmo = $AmmoPackMax[%item];
+
+				if($ItemMax[%armor, %item] + %extraAmmo > Player::getItemCount(%client,%item))
+				{
+					if(%energy >= %item.price )
+					{
+						if(%item.className == Weapon)
+						{
+							if(Player::getItemClassCount(%client,"Weapon") < $MaxWeapons[%armor])
+								Client::setItemBuying(%client, %item);
+						}
+						else
+						{ 
+							if($TeamItemMax[%item] != "")
+							{
+								if($TeamItemCount[GameBase::getTeam(%client) @ %item] < $TeamItemMax[%item])
+									Client::setItemBuying(%client, %item);
+							}
+							else
+								Client::setItemBuying(%client, %item);
+						}
+					}
+				}
+			}
+			else if(%item.className == Armor && %item != $ArmorName[%armor] && Client::isItemShoppingOn(%client,%i)) 
+				Client::setItemBuying(%client, %item);
+			else if(%item.className == Vehicle && $TeamItemCount[client::getTeam(%client) @ %item] < $TeamItemMax[%item] && Client::isItemShoppingOn(%client,%i))
+				Client::setItemBuying(%client, %item);
+		}
+	}
+}

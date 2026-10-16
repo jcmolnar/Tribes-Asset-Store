@@ -1,0 +1,8 @@
+$MDESC::Type = "VIP";
+$MDESC::Text = "<s3><f1>Mission Type: <f0> VIP Assassination" @
+         "\n<f1>Planet: <f0> Zazz" @
+         "\n<f1>Weather: <f0> Smoggy Poluted Haze" @
+         "\n<f1>Time of Day: <f0> Day" @ 
+         "\n<f1># of Teams: <f0> 2" @
+	 "\n<f1>Max Bases: <f0> 3/5" @
+         "\n\n<f1>Briefing:<f0> The world of Zazz is home to an abandoned planetary junkyard.  Interplanetary Salvage Prospectors often search systems in search of just such a junkyard to comb for salvageable metals and other materials.  The life of such a prospector is rife with danger and violence is just another part of the job.  Whether he is defending himself from pirates or fighting off competitors, the life of a salvage prospector is never boring, to say the least.\n\nThe last few months have been relatively quiet, as your prospector has searched unsuccessfully to find a dump to salvage.  Resources have begun to run low and a valuable find is vital if the prospector wishes to remain in business.  Finally, a valuable abandoned salvage yard has been discovered and initial scans show it to be filled with salvageable metals and other materials.  Unfortunately, you are not the only ones to have discovered this salvage yard: a rival prospector has also entered the system intent on claiming the prize for himself!  Your competitor is a veteran prospector and he and his crew are renowned for their skill and ruthlessness: but your prospector has never backed down from a fight before, and certainly not now when he needs this find so badly!\n\nKill the enemy Prospector while defending your own.  The first team to assassinate the enemy Salvage Prospector shall be declared the victor!";

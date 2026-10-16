@@ -1,0 +1,129 @@
+$InvList[TurretPack] = 1;
+$MobileInvList[TurretPack] = 1;
+$RemoteInvList[TurretPack] = 1;
+AddItem(TurretPack);
+
+// changed IonTurretPack to TurretPack and DeployableIonTurret to DeployableIonTurret,
+// for some map compatibility, bah. -plasmatic
+
+$CanAlwaysTeamDestroy[DeployableTurret] = 1;
+
+function deployIonTurret::Initialize()
+{
+	$TeamItemCount[0 @ TurretPack] = 0;
+	$TeamItemCount[1 @ TurretPack] = 0;
+	$TeamItemCount[2 @ TurretPack] = 0;
+	$TeamItemCount[3 @ TurretPack] = 0;
+	$TeamItemCount[4 @ TurretPack] = 0;
+	$TeamItemCount[5 @ TurretPack] = 0;
+	$TeamItemCount[6 @ TurretPack] = 0;
+	$TeamItemCount[7 @ TurretPack] = 0;
+}
+
+ItemImageData TurretPackImage
+{
+	shapeFile = "remoteturret";
+	mountPoint = 2;
+	mountOffset = { 0, -0.12, -0.1 };
+	mountRotation = { 0, 0, 0 };
+	mass = 2.5;
+	firstPerson = false;
+};
+
+ItemData TurretPack
+{
+	description = "Ion Turret";
+	shapeFile = "remoteturret";
+	className = "Backpack";
+	heading = $InvHead[ihTur];
+	imageType = TurretPackImage;
+	shadowDetailMask = 4;
+	mass = 1.37;
+	elasticity = 0.2;
+	price = 350;
+	hudIcon = "deployable";
+	showWeaponBar = true;
+	hiliteOnActive = true;
+};
+
+function TurretPack::onUse(%player,%item) 
+{
+	if(Player::getMountedItem(%player,$BackpackSlot) != %item) 
+		Player::mountItem(%player,%item,$BackpackSlot);
+	else 
+		Player::deployItem(%player,%item);
+}
+
+function TurretPack::onDeploy(%player,%item,%pos) 
+{
+	if(Turret::deployShape(%player, "Ion Turret (" @ Client::getName(Player::getClient(%player)) @ ")", DeployableTurret, %item, $TurretLocAnywhere)&& !$build)
+		Player::decItemCount(%player,%item);
+}
+
+TurretData DeployableTurret
+{
+	className = "Turret";
+	shapeFile = "remoteturret";
+	projectileType = IonBolt;
+	maxDamage = 0.65;
+	maxEnergy = 60;
+	minGunEnergy = 6;
+	maxGunEnergy = 5;
+	sequenceSound[0] = { "deploy", SoundActivateMotionSensor };
+	reloadDelay = 0.4;
+	speed = 4.0;
+	speedModifier = 1.5;
+	range = 55;
+	visibleToSensor = true;
+	shadowDetailMask = 4;
+	dopplerVelocity = 0;
+	castLOS = true;
+	supression = false;
+	mapFilter = 2;
+	mapIcon = "M_turret";
+	debrisId = flashDebrisMedium;
+	shieldShapeName = "shield";
+	fireSound = SoundRemoteTurretFire;
+	activationSound = SoundRemoteTurretOn;
+	deactivateSound = SoundRemoteTurretOff;
+	explosionId = flashExpMedium;
+	description = "Remote Ion Turret";
+	damageSkinData = "objectDamageSkins";
+};
+
+function DeployableTurret::onAdd(%this)
+{
+	schedule("DeployableTurret::deploy(" @ %this @ ");",1,%this);
+	GameBase::setRechargeRate(%this,5);
+	%this.shieldStrength = 0.005;
+	if(GameBase::getMapName(%this) == "") 
+		GameBase::setMapName (%this, "Remote Turret");
+}
+
+function DeployableTurret::deploy(%this) 
+{
+	GameBase::playSequence(%this,1,"deploy");
+}
+
+function DeployableTurret::onEndSequence(%this,%thread) 
+{
+	GameBase::setActive(%this,true);
+}
+
+function DeployableTurret::onDestroyed(%this) 
+{
+	Turret::onDestroyed(%this);
+	%this.OrgTeam = "";
+	$TeamItemCount[GameBase::getTeam(%this) @ "TurretPack"]--;
+}
+
+function DeployableTurret::onPower(%this,%power,%generator) 
+{
+}
+
+function DeployableTurret::onEnabled(%this)
+{
+	GameBase::setRechargeRate(%this,5);
+	GameBase::setActive(%this,true);
+}
+

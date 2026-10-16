@@ -1,0 +1,16 @@
+$InvHead[ihVeh] = "aAircraft";
+$InvHead[ihArm] = "bUniversal Units";
+$InvHead[ihPro] = "cGDI Units";
+$InvHead[ihZer] = "dNOD Units";
+$InvHead[ihScv] = "eSmall Arms";
+$InvHead[ihWea] = "fRifles";
+$InvHead[ihWet] = "gBalistics";
+$InvHead[ihPsi] = "hTurrets";
+$InvHead[ihBul] = "iBuildings";
+$InvHead[ihBac] = "jSensors";
+$InvHead[ihGui] = "kBot systems-non functional";
+//$InvHead[ihGui] = "iafsfas";
+$InvHead[ihMis] = "lPacks";
+$InvHead[ihDWe] = "mExplosives";
+$InvHead[ihDSe] = "nAmmo";
+$InvHead[ihTib] = "o--false--";

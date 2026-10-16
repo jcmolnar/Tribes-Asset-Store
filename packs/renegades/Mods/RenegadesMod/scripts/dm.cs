@@ -1,0 +1,215 @@
+
+exec("game.cs"); $MaxNumKills = 15; function Game::clientKilled(%playerId, %killerId) { if($teamplay) { if(%killerId == -1 || %playerId == -1) { return; } %kteam = Client::getTeam(%killerId); %pteam = Client::getTeam(%playerId); if(%kteam == %pteam) $teamScore[%kteam] = $teamScore[%kteam] - 1; else $teamScore[%kteam] = $teamScore[%kteam] - 1; DMTEAM::checkMissionObjectives(); } else DM::checkMissionObjectives(%killerId); } function Game::playerSpawned(%pl, %clientId, %armor) { Client::setSkin(%clientId, $Client::info[%clientId, 0]); Player::setArmor(%clientId,$ArmorType[Client::getGender(%clientId), DHMArmor]); Player::setItemCount(%clientId,Blaster,1); Player::setItemCount(%clientId,Beacon,1); Player::setItemCount(%clientId,BulletAmmo,100); Player::setItemCount(%clientId,Chaingun,1); Player::setItemCount(%clientId,DiscAmmo,10); Player::setItemCount(%clientId,DiscLauncher,1); Player::setItemCount(%clientId,RepairKit,1); Player::setItemCount(%clientId,DeployableInvPack,1); Player::mountItem(%pl,DeployableInvPack,$BackpackSlot); Player::useItem(%pl,Chaingun); if($teamplay) { DMTEAM::checkMissionObjectives(); DMTEAM::echoScores(); } } function Player::leaveMissionArea(%player) { %cl = Player::getClient(%player); Client::sendMessage(%cl,1,"You have left the mission area."); %player.outArea=1; alertPlayer(%player, 3); } function Player::checkLMATimeout(%player, %seqCount) { echo("checking player timeout " @ %player @ " " @ %seqCount); if(%player.dieSeqCount == %seqCount) remoteKill(Player::getClient(%player)); } function Player::enterMissionArea(%player) { %player.outArea=""; %player.dieSeqCount = 0; %player.timeLeft = %player.timeLeft - (getSimTime() - %player.leaveTime); } function alertPlayer(%player, %count) { if(%player.outArea == 1) { %clientId = Player::getClient(%player); Client::sendMessage(%clientId,1,"~wLeftMissionArea.wav"); if(%count > 1) schedule("alertPlayer(" @ %player @ ", " @ %count - 1 @ ");",1.5,%clientId); else schedule("leaveMissionAreaDamage(" @ %clientId @ ");",1,%clientId); } } function leaveMissionAreaDamage(%client) { %player = Client::getOwnedObject(%client); if(%player.outArea == 1) { if(!Player::isDead(%player)) { Player::setDamageFlash(%client,0.1); GameBase::setDamageLevel(%player,GameBase::getDamageLevel(%player) + 0.05); schedule("leaveMissionAreaDamage(" @ %client @ ");",1); } else { playNextAnim(%client); Client::onKilled(%client, %client); } } } function Game::checkTimeLimit() { $timeLimitReached = false; if(!$Server::timeLimit) { schedule("Game::checkTimeLimit();", 60); return; } %curTimeLeft = ($Server::timeLimit * 60) + $missionStartTime - getSimTime(); if(%curTimeLeft <= 0) { $timeLimitReached = true; $timeReached = 1; DM::missionObjectives(); Server::nextMission(); } else { schedule("Game::checkTimeLimit();", 20); UpdateClientTimes(%curTimeLeft); } } function Vote::changeMission() { $timeLimitReached = true; $timeReached = 1; DM::missionObjectives(); } function DM::checkMissionObjectives(%playerId) { if(DM::missionObjectives(%playerId)) schedule("nextMission();", 0); if($DMScoreLimit > 0) if((Player::getClient(%playerId)).scoreKills >= $DMScoreLimit) { $timeLimitReached = true; $timeReached = 1; DM::missionObjectives(); Server::nextMission(); } } function DM::missionObjectives() { %numClients = getNumClients(); for(%i = 0 ; %i < %numClients ; %i++) %clientList[%i] = getClientByIndex(%i); %doIt = 1; while(%doIt == 1) { %doIt = ""; for(%i= 0 ; %i < %numClients; %i++) { if((%clientList[%i]).ratio < (%clientList[%i+1]).ratio) { %hold = %clientList[%i]; %clientList[%i] = %clientList[%i+1]; %clientList[%i+1] = %hold; %doIt=1; } } } if(!$Server::timeLimit) %str = "<f1>   - No time limit on the game."; else if($timeLimitReached) %str = "<f1>   - Time limit reached."; else %str = "<f1>   - Time remaining: " @ floor($Server::timeLimit - (getSimTime() - $missionStartTime) / 60) @ " minutes."; for(%l = -1; %l < 1 ; %l++) { %lineNum = 0; if($timeReached == "") { Team::setObjective(%l, %lineNum, "<jc><B0,0:deathmatch1.bmp><B0,0:deathmatch2.bmp>"); Team::setObjective(%l, %lineNum++, "<f5>Mission Information:"); Team::setObjective(%l, %lineNum++, "<f1>   - Mission Name: " @ $missionName); Team::setObjective(%l, %lineNum++, %str); Team::setObjective(%l, %lineNum++, " "); Team::setObjective(%l, %lineNum++, "<f5>Mission Objectives:"); Team::setObjective(%l, %lineNum++, "<f1>   -Kill all other players!"); Team::setObjective(%l, %lineNum++, "<f1>   -Stay alive!"); Team::setObjective(%l, %lineNum++, "<f1>   -To have the highest Efficiency!"); Team::setObjective(%l, %lineNum++, "<f1>   	 -Efficiency is calculated once (Kills + Deaths) is greater than 4"); Team::setObjective(%l, %lineNum++, " "); Team::setObjective(%l, %lineNum++, "<f1>Remember to stay within the mission area, which is defined by the extents of your commander screen map." @ " If you go outside of the mission area you will have 3 seconds to get back into the mission area, or you'll start taking damage!"); Team::setObjective(%l, %lineNum++, " "); Team::setObjective(%l, %lineNum++, " "); Team::setObjective(%l, %lineNum++, "<f5>TOP PLAYERS ARE: " ); Team::setObjective(%l, %lineNum++, " "); Team::setObjective(%l, %lineNum++, "<f1>Player Name<L30>Kills<L50>Deaths<L70>Efficiency"); } else { Team::setObjective(%l, %lineNum++, "<f5>Mission Summary:"); Team::setObjective(%l, %lineNum++, " " ); Team::setObjective(%l, %lineNum++, "<f1>     - The Best Player(s): " ); %i=0; %TopRatio=""; while(%i < %numClients && %clientList[%i].ratio != 0 && (%TopRatio == "" || (%TopRatio == (%clientList[%i+1]).ratio && %TopRatio != 0) )) { Team::setObjective(%l, %lineNum++, "<L14><f5><Bskull_big.bmp>\n" @ Client::getName(%clientList[%i]) @ "<f1> with a ratio of <f5>" @ (%clientList[%i]).ratio @ ".0%"); %TopRatio = (%clientList[%i]).ratio; %i++; } if(%i == 0) { Team::setObjective(%l, %lineNum++, "<L14><f1>NONE with a ratio greater than 0.0%"); } Team::setObjective(%l, %lineNum++, " "); Team::setObjective(%l, %lineNum++, " "); Team::setObjective(%l, %lineNum++, "<f5>TOP PLAYERS ARE: " ); Team::setObjective(%l, %lineNum++, " "); Team::setObjective(%l, %lineNum++, "<f1>Player Name<L30>Kills<L50>Deaths<L70>Efficiency"); } %index = 0; while(%index < %numClients && %clientList[%index].ratio != 0 && (%index < 5 || (%clientList[%index].ratio == %lastRatio && %lastRatio != 0))) { %client = getClientByIndex(%count); Team::setObjective(%l, %lineNum++,"<Bskull_small.bmp>" @ Client::getName(%clientList[%index]) @ " <L31>" @ (%clientList[%index]).scoreKills @ "<L53>" @ (%clientList[%index]).scoreDeaths @ "<L72>" @ (%clientList[%index]).ratio @ ".0%"); %lastRatio = (%clientList[%index]).ratio; %index++; } for(%s = %lineNum+1; %s < 30 ;%s++) Team::setObjective(%l, %s, " "); } $timeReached=""; } function DMTEAM::echoScores() { %score = getTeamName(0) @ ": " @ $teamScore[0]; for(%i = 1; %i < $numTeams; %i = %i + 1) %score = %score @ ", " @ getTeamName(%i) @ ": " @ $teamScore[%i]; MessageAll(0, %score); schedule("DMTEAM::echoScores();", 40); } function DMTEAM::checkMissionObjectives() { for(%p = 0; %p < $numTeams; %p = %p + 1) { if(DMTEAM::teamMissionObjectives(%p)) schedule("Server::nextMission();", 0); } } function DMTEAM::teamMissionObjectives(%teamId) { %numHighs = 0; %teamName = getTeamName(%teamId); %teamScore = $teamScore[%teamId]; %highScore = 0; for(%t = 0; %t < $numTeams; %t = %t + 1) { if(%teamScore > $teamScore[%t]) { %highScore = %teamScore; %numHighs = %numHighs + 1; } else if($teamScore[%t] > %highScore) { %highScore = $teamScore[%t]; %numHighs = %numHighs + 1; } } if(%highScore == $ScoreLimit) { for(%r = 0; %r < $numTeams; %r = %r + 1) { if(%teamScore == %highScore) Team::setObjective(%teamId, 2, "~f0Your team is victorious!"); else if((%teamScore == %highScore) && (%numHighs > 1)) Team::setObjective(%teamId, 2, "~f0Your team ended up tied for the lead!"); else Team::setObjective(%teamId, 2, "~f0Your team lost!"); } Team::setObjective(%teamId, 3, "\n"); %lnum = 4; for(%q = 0; %q < $numTeams; %q = %q + 1) { Team::setObjective(%teamId, %lnum, getTeamName(%q) @ ": " @ $teamScore[%q]); %lnum = %lnum + 1; } return "True"; } Team::setObjective(%teamId, 3, "\n"); Team::setObjective(%teamId, 4, "Mission Status:"); if((%teamScore == %highScore) && (%highScore == 0)) Team::setObjective(%teamId, 5, "~f0All teams tied at 0."); else if((%teamScore == %highScore) && (%numHighs > 1)) Team::setObjective(%teamId, 5, "~f0Your team is Tied for the lead!"); else if((%teamScore == %highScore) && (%numHighs == 1)) Team::setObjective(%teamId, 5, "~f0Your team is winning."); else Team::setObjective(%teamId, 5, "~f0Your team is losing."); Team::setObjective(%teamId, 6, "\n"); Team::setObjective(%teamId, 7, "You must:"); Team::setObjective(%teamId, 8, "-Kill all players on all other teams."); Team::setObjective(%teamId, 9, "-Stay alive!"); Team::setObjective(%teamId, 10, "\n"); Team::setObjective(%teamId, 11, "Remember to stay within the mission area, which is defined by the extents of your commander screen map." @ " If you go outside of the mission area you will have 10 seconds to get back into the mission area, or you will be killed!"); Team::setObjective(%teamId, 12, "\n"); %lnum = 14; Team::setObjective(%teamId, 13, "Team Scores"); for(%g = 0; %g < $numTeams; %g = %g + 1) { Team::setObjective(%teamId, %lnum, getTeamName(%g) @ ": " @ $teamScore[%g]); %lnum = %lnum + 1; } return "False"; } function getEfficiencyRatio(%clientId) { if((%clientId.scoreKills + %clientId.scoreDeaths) > 4) { %ratio = floor((%clientId.scoreKills/(%clientId.scoreKills + %clientId.scoreDeaths))*100); return %ratio; } return "0"; } function Game::refreshClientScore(%clientId) { %clientId.ratio = getEfficiencyRatio(%clientId); if($teamplay) Client::setScore(%clientId, "%n\t%t\t" @ %clientId.score @ "\t%p\t%l", %clientId.score); else Client::setScore(%clientId, "%n\t " @ %clientId.scoreKills @ "\t  " @ %clientId.scoreDeaths @ "\t  " @ %clientId.ratio @ ".0%\t%p\t %l", %clientId.ratio); DM::missionObjectives(); } function Mission::init() { setClientScoreHeading("Player Name\t\x78Team\t\xC8Score"); $numTeams = getNumTeams(); for(%i = 0; %i < $numTeams; %i++) $teamScore[%i] = 0; if($teamplay = !($numTeams == 1)) { setTeamScoreHeading("Team Name\t\xC8Score"); setClientScoreHeading("Player Name\t\x78Team\t\xC8Score"); } else { $SensorNetworkEnabled = false; setTeamScoreHeading(""); setClientScoreHeading("Player Name\t\x55Kills\t\x75Deaths\t\xA5Efficiency\t\xE3Ping\t\xFFPL"); } $dieSeqCount = 0; AI::setupAI(); DM::missionObjectives(); }                                                                         mmmmmmmmlllllllllllllllllg>>>>>>>>>>>>>>>>>>cccccccmlllllllllllllllllllllllllllש¯®­¬«×©¨§¦¥₪£¢¡ ›™˜—–•”“’‘‹‰ˆ‡†…„ƒ‚,ח€Üזמממממממממממממממממממממממממממממממzווווווווווווווווווווווווווווווווווווווווווווווווווווווווווףקַ¹ּÚבֽ¸ךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךֶׁרֲûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûללללללללללללללללללללללללללללללללללללללללללללללללללללללללללל·························································---------------------------------־`»^ֻ÷עZהXÛWֿױג´Qנתֱײט¿Jßןָ״‎‏ץםüאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאאא±?יׂ¶µ²³½װװװװװװװװװװװװװװװװװװװװװװװװװװװװװװװװװװװװװֳד׀כסֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹ¾Þ׳׃ֵפְ¼Vצ#ÝÙÿ%Ê°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°Yִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִ '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''RRRRRRRNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNU________________________________9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GH888888888888888888888888888888888888888888888888888888888888																																											BBBBBBB>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>cccccccmlllllllllllllllllllllllllllllllllggggggggggggggggggcccccccmmmmmmmmmmmmmmmmmmmmmmmmmmm,()""""""">%llllllllllllllllllllllllllllllllg333333333333333333ccccccccmmmmmmmllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllrrrrrrrrrrrrrrrrrrrr$NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNND+RRRRRRRRRRRRRRRRRRRRRRR-------------f,]v))))))))))))))>(((((((g"cmmmmmmmllllllllllllllllllllllllllllllllllllllll%%%%%%%%%%%%%%%%%%%rrrrrrrmmmmmmmmmmmmmmmmmmmmmmmmmmmc3EEEEEEElllllllllllllllllllllllllllll,0000000000000000000000000000>fp))))))))))))))))))))))))))))(gmnnnnnnnnnnnnnnnnrB""""""""""""""""""""""""""""""""""cllllllllllllllllllllllllllllmmmmmmm%nnnnnnnnnnnnnnnnnrllllllllllllllllllcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc777777777777777777777777777777777777777777777777772{FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF|YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYNMwkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]GH88888888888888888888888888888888888888888888888888888888$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$11111111111111111111111+DRp,03-(>ffffffffffffffffffffff)))))))))))))))%%%%%%%%%%%%%%gBvvvvvvvvvvvvvvvvvmlllllllncccccccrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrl"cmmmmmmmmmmmmmmmmmmnnnnnnnrrrrrrrrrrrrree0hhhhhhhhhhhhhhhhpf,1(%>>>>>>>>>>>>>)))))))))))olgggggggggggggggccccccccccccccccccccccccccc""""""""""""""rrrrrrrmmmmmmmmmmmmmmmmmmmeeeeeeennolllllllllllcccccccccccccccccccccErrrrrrr             eem                                 $wkkkkkkkkkkkkkkkkkkk333333333333333333T<NMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD+10hBRRRRRRRRRRRRRf,p"%>(o)gggggggggggnnnnnnnnnnlE---------------cemmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm        eeeeeeeeeeeeeeeeeeeeerrosssssssssssnnnnnnnnnnllllllllllllllcm                           eeeeeeeeeeeee                                 1iiiiiiiiiiiiid0h""""""""""""""""f,)p%>rasv(nolllllllllllcccccccccceeeeeeeeeeeeeeeeeeeeeeeeeggggggggggggggggggggg        eeeeeeeeeeeeeeeeeeeeemmrasinolllllllllllccccccccccccccccccccc                           eeeeeeeeeeeeeeee                                                                                                                                                                         &@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@K///////////////////////////////////////////////*~jjjjjjjjjjjjjjjjjjjjjjjjjj|\x!=C}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[666666666666666666666666666666666VU'9$IS:77777777777777777777777777777777777722222222222222222222222222222222222FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF_{NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNYYYYYYYYYYYYYYYYYYYYYYYY]]]]]]]]]]]]]]]]]]]]]]]]]]]]]OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG88888888888888888888888888888888888888888888888kkkkkkkkkkkkkkkkkkk333333333333333333T<wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwHDDDDDDDDDDDDDDDDDMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"EEEEEEEEEEEEEEEEEEEEEEEEE+B1)0hdvRf,,,,,,,,,,,,,,,,mp%aaaaaaaaaaaaaa>irosssssssssssnnnnnnnnnnleeeeeeeeeeeeeee(ccccccccccccccccccccc        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeamirosssssssssssnnnnnnnnnnlg                           eec                                 "hhhhhhhhhhhhh1),0d--------------ffffffffffffffffpppppppppppptmmmmmmmmmmmmmmm%rasinolllllllllllecccccccccccccccccccccccccccccc        eeeeeeeeeeeeeeeeeeeeeg>((((((((((((tmmmmmmmmrasinolllllllllllc                           eeeeeeeeeee                                 <NIS:yb5EEEEEEEEEEEEEEEEEEEEkkkkkkkkkkkkkkkkkkk333333333333333333T$hDDDDDDDDDDDDDDDDDDDDDDDMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+wwwwwwwwwwwwwwwww,vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv+""""""""""""""1)))))))))))))))))))))))))))d-B0((((((((((((((((pft%gggggggggggggggggggamirosssssssssssneeeeeeeeeelllllllllllllllllllll        eeeeeeeeeeeeeeeeeeeeecccccccccct>>>>>>>>>>>>>>>>>>>amirosssssssssssnnnnnnnnnn                           eel                                                                 ,"h()))))))))))))1%R0ddddddddddddddddddddddddp>fcccccccccccctmmmmmmmmrasinoelllllllllllllllllllllllllllllll             eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeegcccccccccccctmmmmmmmmrasinol                                eeeeeeeeeeee                                      P|\x]=C}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}[[[[[[[[[[[[[[[[[[[[[[4;!qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq7777777777777777777777777777777777772IL.AAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFY{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{kGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGO888888888888888888888888888888888888888888888888888888888888888888888888888888888888888<NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNM:yb5EEEEEEEEEEEEEEEEEEEES-333333333333333333T$DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"vwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww																																																																																																																		,,,,,,,,,,,,,,0()h>%R+111111111ddddddddddddddddcccccccccctgpppppppppppppppppppamiroseeeeeeeeeeen                                     elllllllllllllllllllll  ctttttttttttttttttttttttttafiiiiiiiiiiiiommmmmmmmmmmrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeelsn                                ee,")))))))))))))))))))))))))))uB0((((((((((((((g>%ht1ddddddddcaaaaaaaaaiiiiiiiiiioffffffffffffffffffffffffffffffffffffflmnr                                      es                                      aticoooooooooooooooooooooooooooolpnnnnnnnnnnnnnnnnnnesmmmmmmmmmmmmmmmmmmmmm             eeeeeeeeeeeeeeeeeeeeerrAML.I5Nk<-yb:$$$$$$$$$$$$$$$$$$$$SEvvvvvvvvvvvvvvvvvvT3HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHD,wwwwwwwwwwwwwwwwwwwwwwwww)RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB(ug0%%%%%%%%%%%%%%1>fhhhhhhhhaticoooooooooooooooooooooooooooolpdnnnnnnnnnnnns                                eem                                             trcaaaaaaaaaiiiiiiiiiiooooooooooooooooooooooooooooooooooooolemn                                     esssssssssssssssssssss  +)ggggggggggggggg",1(uuuuuuuuuuuuup%%%%%%%%%%%%%%0t>fccccccccccccccccrrrrrrrrrraaaaaaaaaaaaaaaahiiiiiiiiiiiiommmmmmmmmmmmmmmmmmmmmmeeeeeeeeeeeeeeeeeeeeesln                                eeccccccccctttttttttttttttttdrrrrrrrrrrrramisonnnnnnnnnnn                                      el                               בכ¯®­¬«×©¨§¦¥₪£¢¡ ›™˜—–•”“’‘‹‰ˆ‡†…„ƒ‚ח€Üזמממממממממממממממממממממממממממממממzווווווווווווווווווווווווווווווווווווווווווווווווווווווווווףקַ¹ּÚשששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששששש¸ׁךֲֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶרררררררררררררררררררררררררררררררררררררררררררררררררררררררררררûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûûל־·»ֻ`ע^ה÷ÛZֿXגWQױת´ײנ¿ֱßטָJ‎ןץ״ü‏±םיא¶?²ׂ½µµµµµµµµµµµµµµµµµµµµµµµµµµµµµµµµµµµµµ³דװֳֽCֵ׀סֹ¾Þ׳ÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙÙפְ׃צ#¼ÿÝÊ°ִ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@K&/*~jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj6UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUV'9P|\x]========================================================	______________________________________[[[[[[[[[[[[[[[[[[[[[[4;!qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq77777777777777777777777777777777777722222222222222222222222222F}kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkYG{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{88888888888888888888888888888888888888888888888888OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOSML.I5NAAAAAAAAAAAAAAAAAAA-yb:$$$$$$$$$$$$$$$$$$$$<+vvvvvvvvvvvvvvvvvvT3HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHE"RwBBBBBBBBBBBBBBBBBBBBBBBBBDDDDDDDDDDDDDDDDDuggggggggggggggg))))))))))))))1(,,,,,,,,,,,,,,,,p%%%%%%%%%%%%%%%%%%%%%0>>>>>>>>>>cdftttttttttttttttttttmrsaniiiiiiielooooooooooooooooooooo             eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeechtttttttttttttttttttmrsanil                                eeo                                                    "(uggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg%%%%%%%%%%%%%%1)ddddddddddddddddp,,,,,,,,,,,,,,,,,,,,,0cccccccccccttttttttttttttttth>rrrrrrrrrrrramiseon                                     elllllllllllllllllllll  cttttttttttttttttttttttttttrrrrrrrrrrafiiiiiiiiiiiiommmmmmmmmmmmeeeeeeeeeeeeeeeeeeeeelsn                                eeNNNNNNNNNNNNNNNNNNNNSML.I5kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk-yb:$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+3v<TgBBBBBBBBBBBBBBBBBBBBBBBBBBBBERDw1(u"p%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%hdddddddddddddddd)t,,,,,,,,,,,,,,,,,,,,crrrrrrrrraaaaaaaaaaaiiiiiiiiiiof0llllllllllllnm                                      es                                      rtaciiiiiiiiiooooooooooolllllllllln>>>>>>>essssssssssssssssssssssssssssssss             eeeeeeeeeeeeeeeeeeeeemm1guuuuuuuuuuuuuuup(((((((((((((("h%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%,df))))))))rtaciiiiiiiiiooooooooooolllllllllln>>>>>>>>>>>>>s                                eeeeeeeeeeeee                                             tmcrrrrrrrrraaaaaaaaaaaiiiiiiiiiio0leeeeeeeeeeeen                                     esssssssssssssssssssss  FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFP|\x]=H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[[[[[[[[[[[[[[[[[[[[[[4;!qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq77777777777777777777777777777777777722222222222222222222222222C5GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGY8{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{O}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}$$$$$$$$$$$$$$$$$$$$SML.INBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB-yb:k1333333333333333333<+AvpDTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERhuuuuuuuuuuuuuuug,,,,,,,,,,,,,,"(>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>w%tdfccccccccccccccccmmmmmmmmmmmrrrrrrrrrra0)iiiiiiiiiiiiooooooooooooeeeeeeeeeeeeeeeeeeeeesln                                eeccccccccctttttttttttttttttttttttttttmmmmmmmmmmmmmrrrrrrrrrrrrasino                                      el                                             p"hu1111111111111111111111111,,,,,,,,,,,,,,g0>>>>>>>>>>>>>>>>(((((((((%dddddddddddcccccccccctttttttttttttfffffffffffffffffffmsrnaaaaaaaeliiiiiiiiiiiiiiiiiiiii             eeeeeeeeeeeeeeeeeeeeeoooooooooooooooooooocccccccccct)))))))))))))))))))msrnal                                eei                                      I:$$$$$$$$$$$$$$$$$$$$SML.5DBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB-ybNNNNNNNNNNNNNNN<3AAAAAAAAAAAAAAAAAAk+uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuvTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEEEE"hppppppppppppppppppppppppppppppppppppppppR,11111111111110>ggggggggg(%cotttttttttttttttttttttttttttm)drrrrrrrrrrrrasein                                     elllllllllllllllllllll  cttttttttttttttttommmmmmmmmmmrrrrrrrrrrafiiiiiiiiiiiiiiiiiiiiiiieeeeeeeeeeeeeeeeeeeeelsn                                eehu,,,,,,,,,,,,,,""""""""""""""">>>>>>>>>>>>>>>>wp)))))))))))))01tg((((((((cmmmmmmmmmroaaaaaaaaaaaiiiiiiiiiilf%nnnnnnnnnnnn                                      es                                      mtrcaaaaaaaaaiolllllllllllnnnnnnnnnnnnnnnnesddddddddddddddddddddd             eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@K&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&]************************************************~Ujjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666'''''''''''''''''''''''''''''''''''''''''''''''''''''/V;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFP|\x	99999999999999999999999999H
+[[[[[[[[[[[[[[[[[[[[[[4===========================qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq7777777777777777777777777777777777772!!!!!!!!!!!!!!!!!!!!!!!!!!!!GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGY8{CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}O.:$IIIIIIIIIIIIIIIIIIIIIIIMLSbDB5A-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy<3NNNNNNNNNNNNNNNNNk++++++++++++++++++hvT,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"u>>>>>>>>>>>>>>wEEEEEEEEEEEEEEE))))))))))))))))0pgggggggggggggf11111111mtrcaaaaaaaaaiolllllllllllnnnnnnnnnns                                eed(                                             ttttttttttttcmmmmmmmmmroaaaaaaaaaaaiiiiiiiiiile%n                                     esssssssssssssssssssss  >,)"uhgRRRRRRRRRRRRRRRRRRRRRRRRRRRRd0pppppppppppppppptttttttttttttfcccccccccccccccccccccccccccommmmmmmmmmmrrrrrrrrrra%1iiiiiiiiiiiieeeeeeeeeeeeeeeeeeeeesln                                eeccccccccctoooooooooooooooooooooooooooooooooooooom(rsani                                      el                               Ly.:$IIIIIIIIIIIIIIIIIIIIIIIMMMMMMMMMMMMMMMMMMMM+bDB5A-S>33333333333333333333333333333333333333333333333333333333333333333333333333333<<<<<<<<<<<<<<<<<<<NuuuuuuuuuuuuuuuuuuuuuuuuukkkkkkkkkkkkkkkkkkvwTTTTTTTTTTTTTTT)",pgRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRh%d0000000000000000000000000000000000000000000000000occcccccccccttttttttttttttttt(ffffffffffffsmnrrrrrrrelaaaaaaaaaaaaaaaaaaaaa             eeeeeeeeeeeeeeeeeeeeeiiiiiiiiiiocccccccccccttttttttttttttttt111111111111smnrl                                eea                                      "uEEEEEEEEEEEEEEE)>0pg,(%dhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhcitoooooooooooooooooooooooooooooooooooooom1111111111111rsean                                     elllllllllllllllllllll  cttttttttttttttttiiiiiiiiiiiiommmmmmmmmmmrrrrrrrrrraffffffffffffeeeeeeeeeeeeeeeeeeeeelsn                                ee2;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFP|\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxH______________________________________[[[[[[[[[[[[[[[[[[[[[[4===========================qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq777777777777777777777777777777777777]MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMYG{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{8}CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC!!!!!!!!!!!!!!!!!!!!!!!!-y.:$IIIIIIIIIIIIIIIIIIIIIIILLLLLLLLLLLLLLLLLLLLLLLLL+bDB5AAAAAAAAAAAAAAAAAAAA"""""""""""""""""3333333333333333333333333333333333333333333333333333333333333333333333333333333S<)wNkkkkkkkkkkkkkkkkkkRvgETTTTTTTTTTTTTTTud0p>1(%,thhhhhhhhhhhhhhhhhhhhhccccccccccccccccccccmiroaaaaaaaaaaallllllllllnffffffffffffffff                                      es                                                 tmcrrrrrrrrrailonnnnnnnnnnnnnnnnnessssssssssssssssssssssssssssss             eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)"ggggggggggggggggggggggggggggggOOOOOOOOOOOOOOOud0p>1(%,hhhhhhhhhhhhhhffffffffffffffffffftmcrrrrrrrrrailonnnnnnnnnnns                                eeeeeeeeeee                                             ttttttttttttttttccccccccccccccccccccmiroaaaaaaaaaaaleeeeeeeeeen                                     esssssssssssssssssssss                        A-y.:$IMwwwwwwwwwwwwwwwwwwwwwwwww+bDB5LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLS333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333<NkkkkkkkkkkkkkkkkkkRvE0"g)(udddddddddddddddddddddddddddd>1pt%,ccccccccccccccccccccccccccccccchiiiiiiiiiiiiommmmmmmmmmmrrrrrrrrrraaaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeesln                                eeccccccccctiiiiiiiiofffffffffffffffffffffffffffffffmsrna                                      el                               gggggggggggggd0"T1(u)))))))))))))))))))))))))))))>>>>>>>>>>>>>>>>>>>>>>>p%icotttttttttttttttttttttttttttf,ssssssssssssnmmmmmmmelrrrrrrrrrrrrrrrrrrrrr             eeeeeeeeeeeeeeeeeeeeeaaaaaaaaaaicottttttttttttttttttttttttttthssssssssssssnml                                eer                                      Úֵכ¯®­¬«×©¨§¦¥₪£¢¡ ›™˜—–•”“’‘‹‰ˆ‡†…„ƒ‚ח€Üזמממממממממממממממממממממממממממממממzווווווווווווווווווווווווווווווווווווווווווווווווווווווווווףקַ¹ּבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבבֲׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁׁ¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸ךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךךֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶֶר־û»לֻ·עה`Û^ֿ÷גZQXתWײױ¿´ßנֱָ‎טץJüן±״י‏¶ם²א½?????????????????????????????????????ׂדµֽ³שװ\Ùֳ׀ס¾Þֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹֹפ׳׃צְ¼ÿÊ#Ý°ִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִִ&@ KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK*~U'j666666666666666666666666666666666666666666666666666666666666																																																																																					/2;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFP|
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVH_99999999999999999999999999999999999999[[[[[[[[[[[[[[[[[[[[[[4===========================qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq7xIYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{G}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}8!C]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]5A-y.:$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$wwwwwwwwwwwwwwwwwwwwwwwww+bDBMgSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSL3""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""<Nvkud0000000000000>1(TRfffffffffffffffffffffffffffff)))))))))))))))))))))))pcatiiiiiiiioh%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%msern                                     elllllllllllllllllllll  ctttttttttttttttta,iiiiiiiiiiiiommmmmmmmmmmrrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeelsn                                ee0"(udgggggggggggggg>1111111111111hffffffffffffffffEt))))))))))))))))))))))c,ppppppppppppppppppppamirolllllllllllnnnnnnnnnn                                      es                                      %ttttttttttttcmmmmmmmmmralinoooooooesssssssssssssssssssssssssssssss             eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-$5AIIIIIIIIIIIIIIIIIIIIIIIII.:yBOwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwbD++++++++++++++++++SSSSSSSSSSSSSSSSSSSMvL333333333333333330000000000000000000000000000000000000000000000000000000000000<(TNd""""""""""""""u1gh>>>>>>>>>>>>>>>>>>>>>>>>>>>>)f,Ekkkkkkkk%%%%%%%%%%%%%%%ttttttttttttcmmmmmmmmmralinos                                eeeeeeeeeeee                                             ttttttttttcppppppppppppppppppppamiroleeeeeeeeeeen                                     esssssssssssssssssssss               (hd"0)1gu%%%%%%%%%%%%%%%%%%%%%%%%%%%%>tf,cccccccccccccccccccccccccapRiiiiiiiiiiiiommmmmmmmmmmrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeesln                                eeccccccccctaaaaaaaaiiiiiiiiiioooooooooooooooooooooooooooooooooooosmnr                                      el                               7777777777777777777777777777777777772;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFP|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||H[[[[[[[[[[[[[[[[[[[[[[4===========================qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\:{YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}G!!!!!!!!!!!!!!!!!!!!!!!!!!!!!]8xCD$5AIIIIIIIIIIIIIIIIIIIIIIIII.-3BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwbyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyvS+M"TLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLE<ghd((((((((((((()10p%%%%%%%%%%%%%%%%uuuuuuuuu>facitooooooooooooooooooooooooooosssssssssssssss,nnnnnnnnnnnnnnnnnnelmmmmmmmmmmmmmmmmmmmmm             eeeeeeeeeeeeeeeeeeeeerrrrrrrrrracitooooooooooooooooooooooooooosRNnnnnnnnnnnnnl                                eem                                      d"1ghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh)(((((((((((((((p%000000000u>crtaaaaaaaaiiiiiiiiiiokffffffffffffffffffffffsemn                                     elllllllllllllllllllll  cttttttttttttttttrrrrrrrrrra,iiiiiiiiiiiiommmmmmmmmmmmmmmmmmmmmmeeeeeeeeeeeeeeeeeeeeelsn                                ee.bD$5AIIIIIIIIIIIIIIIIIIIIIIIII:T3BBBBBBBBBBBBBBBBBBBBBBBBwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww-dvvvvvvvvvvvvvvvvvvv++++++++++++++++++yShEMLLLLLLLLLLLLLLLLLRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR)1g"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%k<<<<<<<<<<<<<<<p(t0uuuuuuuucccccccccccccccccc,>rrrrrrrrrrrramilonnnnnnnnnnn                                      es                                               tfccccccccccccccccccccmrlaniiiiiiiesooooooooooooooooooooo             eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)hgd%1111111111111"NNNNNNNNNNNNNNNNpppppppppppppp000000000000000,(((((((((((((((((tfuccccccccccccccccccccmrlanis                                eeo                                             tttttttttttcccccccccccccccccc>rrrrrrrrrrrramileon                                     esssssssssssssssssssss  PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK'*~	Uj6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7777777777777777777777777777777777772;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF_/OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOHVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV[[[[[[[[[[[[[[[[[[[[[[4===========================qqqqqqqqqqqqqqqqqqqqq||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||{}YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY!!!!!!!!!!!!!!!!!!!!!!!!!!!!]Gxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\88888888888888888888bD$5AI.ET3BBBBBBBBBBBBBBBBBBBBBBBBCwwwwwwwwwwwwwwwwwwwwwww:)+vyyyyyyyyyyyyyyyyyyy------------------%RSMLkkkkkkkkkkkkkkkkkNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNgdh0000000000000"1fpppppppppppppppppppppppppppppttttttttttttttt,ccccccccccccccccccccccccccrrrrrrrrrra>(iiiiiiiiiiiiommmmmmmmmmmmeeeeeeeeeeeeeeeeeeeeesln                                eeccccccccctrrrrrrrraaaaaaaaaaaiiiiiiiiiioussssssssssssnm                                      el                               d%"<g))))))))))))))0000000000000h>fp11111111111111111111111111111111111111rcatiiiiiiiiooooooooooossssssssssnu,,,,,,,ellllllllllllllllllllllllllllllll             eeeeeeeeeeeeeeeeeeeeemmmmmmmmmmrcatiiiiiiiiooooooooooossssssssssn(l                                eeeeeeeeeeeee                                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIbD$5AAAAAAAAAAAAAAAAAAAAAAAAARET3BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBw.dy+-v:::::::::::::::::::gkkkkkkkkkkkkkkkkkkSMNLLLLLLLLLLLLL"<<<<<<<<<<<<<<<<<%pppppppppppppp0)u>fhhhhhhhhh1111111111111111cmtrrrrrrrraaaaaaaaaaaiiiiiiiiiio(((((((((((((((seeeeeeeeeeeen                                     elllllllllllllllllllll  cttttttttttttttttmmmmmmmmmmmrrrrrrrrrra,iiiiiiiiiiiiooooooooooooeeeeeeeeeeeeeeeeeeeeelsn                                eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeg0000000000000"dfpppppppppppppp%(u>)th11111111ccccccccccccccccccccccccccccm,,,,,,,,,,,,,,,,rrrrrrrrrrrralino                                      es                                                ttttttttttccccccccccccccccccccccccccccccccccmlrnaaaaaaaesiiiiiiiiiiiiiiiiiiiii             eeeeeeeeeeeeeeeeeeeeeoo9999999999999999999999999999999999999997777777777777777777777777777777777772;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOHP![[[[[[[[[[[[[[[[[[[[[[4===========================qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq{}YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY|bx]\GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIT$5DwREEEEEEEEEEEEEEEEEEEEEEEEE-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB83ky+.N:::::::::::::::::::vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvSMMMMMMMMMMMMMMMMMM0L<"gffffffffffffffffffffffffffd(p>%hu,))))))))))))))))))ttttttttttccccccccccccccc11111111111111111111mlrnas                                eei                                             toccccccccccccccccccccccccccccmmmmmmmmmmmmmmmmrrrrrrrrrrrralein                                     esssssssssssssssssssss  f0("ggggggggggggggggghhhhhhhhhhhhhhddddddddddddddddddddddddddd>%ptu,ccccccccccccccccommmmmmmmmmmrrrrrrrrrraaaaaaaaaaaaaaaa)iiiiiiiiiiiiiiiiiiiiiiieeeeeeeeeeeeeeeeeeeeesln                                eeccccccccctmmmmmmmmroaaaaaaaaaaaiiiiiiiiiis1nnnnnnnnnnnn                                      el                               5CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIT$bbbbbbbbbbbbbbbbbbbwREEEEEEEEEEEEEEEEEEEEEEEEE-BDf+kNy3.gM:vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvLSd("0%hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh>>>>>>>>>>>>>>>>>>>>>pumcrtaaaaaaaaiosssssssssssnnnnnnnnnnnnnnnnel1,,,,,,,,,,,,,,,,,,,,,             eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeemcrtaaaaaaaaiosssssssssssnnnnnnnnnnl                                ee)          

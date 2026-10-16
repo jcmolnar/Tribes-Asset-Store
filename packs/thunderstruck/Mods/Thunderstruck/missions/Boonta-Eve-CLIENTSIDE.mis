@@ -1,0 +1,502 @@
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "World" {
+			fileName = "mudWorld.vol";
+		};
+		instant SimVolume "WorldTerrain" {
+			fileName = "mudTerrain.vol";
+		};
+		instant SimVolume "mudDML" {
+			fileName = "mudDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "TedFile" {
+			fileName = "missions\\Boonta-Eve.ted";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "Palette" {
+			fileName = "mud.day.ppl";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-200";
+			y = "-1024";
+			w = "3000";
+			h = "3000";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "mudsky_day.dml";
+			skyColor = "0 0 0";
+			hazeColor = "0 0 0";
+			featurePosition = "0";
+			size = "600";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "2";
+			textures[3] = "3";
+			textures[4] = "4";
+			textures[5] = "5";
+			textures[6] = "6";
+			textures[7] = "7";
+			textures[8] = "8";
+			textures[9] = "9";
+			textures[10] = "10";
+			textures[11] = "11";
+			textures[12] = "12";
+			textures[13] = "13";
+			textures[14] = "14";
+			textures[15] = "15";
+		};
+		instant Planet "Sun" {
+			fileName = "";
+			azimuth = "0";
+			incidence = "60";
+			castShadows = "True";
+			useLensFlare = "False";
+			intensity = "0.699986 0.699986 0.699986";
+			ambient = "0.299986 0.299986 0.299986";
+			size = "2000";
+			distance = "11000";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "Boonta-Eve.dtf";
+			visibleDistance = "400";
+			hazeDistance = "300";
+			hazeVerticalMin = "9.88123e-39";
+			hazeVerticalMax = "8.10709e-39";
+			perspectiveDistance = "20";
+			screenSize = "10";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 0";
+			rotation = "0 0 0";
+			terrainType = "rughills";
+		};
+	};
+	instant SimGroup "Lights";
+	instant SimGroup "Teams" {
+		instant TeamGroup "Team0" {
+			instant InteriorShape "tank181" {
+				fileName = "tank18.dis";
+				isContainer = "1";
+				position = "2053.12 332.552 79.8125";
+				rotation = "0 0 0";
+				lightParams = "0 ";
+				locked = "0";
+			};
+			instant StaticShape "Generator1" {
+				dataBlock = "Generator";
+				name = "";
+				position = "2052.71 332.989 174.203";
+				rotation = "0 0 0";
+				destroyable = "True";
+				deleteOnDestroy = "False";
+			};
+			instant TeamGroup "team1";
+			instant SimGroup "DropPoints" {
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2041.25 327.674 177.809";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2061.55 325.743 177.809";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2033.45 278.34 120.354";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2046.55 277.543 121.506";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2053.75 276.579 120.776";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2063.5 275.665 120.807";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2071.3 275.489 122.27";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2078.66 275.825 124.937";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2088.75 275.626 126.889";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2096.25 273.899 124.27";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2121.75 307.822 108.707";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2094.65 332.534 143.809";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2007.3 334.93 143.809";
+						rotation = "0 0 0";
+					};
+				};
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "2053.86 332.746 177.809";
+						rotation = "0 0 0";
+					};
+				};
+			};
+			instant TeamGroup "team2";
+			instant TeamGroup "team3";
+			instant TeamGroup "team4";
+			instant TeamGroup "team5";
+			instant TeamGroup "team6";
+			instant SimGroup "vehiclepads" {
+				instant SimGroup "1" {
+					instant StaticShape "VehicleStation1" {
+						dataBlock = "VehicleStation";
+						name = "";
+						position = "2008.62 326.522 143.809";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant StaticShape "vehiclePad1" {
+						dataBlock = "vehiclePad";
+						name = "";
+						position = "2008.94 344.434 143.809";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+				};
+				instant SimGroup "2" {
+					instant StaticShape "VehicleStation1" {
+						dataBlock = "VehicleStation";
+						name = "";
+						position = "2094.43 328.214 143.809";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant StaticShape "vehiclePad1" {
+						dataBlock = "vehiclePad";
+						name = "";
+						position = "2094.37 341.467 143.809";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+				};
+				instant SimGroup "3" {
+					instant StaticShape "VehicleStation1" {
+						dataBlock = "VehicleStation";
+						name = "";
+						position = "2052.94 326.312 177.809";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						vehiclePad = "8267";
+						lastPlayer = "8279";
+						enterTime = "22.5919";
+					};
+					instant StaticShape "vehiclePad1" {
+						dataBlock = "vehiclePad";
+						name = "";
+						position = "2052.94 346.158 177.74";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						busy = "28.7278";
+					};
+					instant Item "LaserRifle1" {
+						dataBlock = "LaserRifle";
+						name = "";
+						position = "1987.3 469.334 151.429";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "EnergyPack1" {
+						dataBlock = "EnergyPack";
+						name = "";
+						position = "1987.3 469.334 151.429";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "EnergyPack1" {
+						dataBlock = "EnergyPack";
+						name = "";
+						position = "2124.46 612.256 94.7607";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "LaserRifle1" {
+						dataBlock = "LaserRifle";
+						name = "";
+						position = "2124.46 612.256 94.7607";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "LaserRifle1" {
+						dataBlock = "LaserRifle";
+						name = "";
+						position = "2098.01 804.159 90.103";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "EnergyPack1" {
+						dataBlock = "EnergyPack";
+						name = "";
+						position = "2098.01 804.159 90.103";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "EnergyPack1" {
+						dataBlock = "EnergyPack";
+						name = "";
+						position = "1854.7 807.024 110.223";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "LaserRifle1" {
+						dataBlock = "LaserRifle";
+						name = "";
+						position = "1854.7 807.024 110.223";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "LaserRifle1" {
+						dataBlock = "LaserRifle";
+						name = "";
+						position = "1667.24 873.433 124.769";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "EnergyPack1" {
+						dataBlock = "EnergyPack";
+						name = "";
+						position = "1667.24 873.433 124.769";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "EnergyPack1" {
+						dataBlock = "EnergyPack";
+						name = "";
+						position = "1546.79 715.755 194.725";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "LaserRifle1" {
+						dataBlock = "LaserRifle";
+						name = "";
+						position = "1546.79 715.755 194.725";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "LaserRifle1" {
+						dataBlock = "LaserRifle";
+						name = "";
+						position = "1387.09 686.244 184.4";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+					instant Item "EnergyPack1" {
+						dataBlock = "EnergyPack";
+						name = "";
+						position = "1387.09 686.244 184.4";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "True";
+						collideable = "False";
+						count = "1";
+					};
+				};
+			};
+		};
+	};
+	instant SimGroup "Checkpoints" {
+		instant Trigger "0" {
+			dataBlock = "GroupTrigger";
+			name = "";
+			position = "2057.15 322.845 123.189";
+			rotation = "0 0 0";
+			boundingBox = "-30 -10 -30 30 10 30";
+			isSphere = "True";
+			num = "Checkpoint0";
+		};
+		instant Trigger "1" {
+			dataBlock = "GroupTrigger";
+			name = "";
+			position = "2043.65 766.093 2.88716";
+			rotation = "0 0 0";
+			boundingBox = "-40 -20 -50 40 20 50";
+			isSphere = "True";
+			num = "Checkpoint1";
+		};
+		instant Trigger "2" {
+			dataBlock = "GroupTrigger";
+			name = "";
+			position = "1552 808.824 110.421";
+			rotation = "0 -0 2.3599";
+			boundingBox = "-30 -10 -40 30 10 40";
+			isSphere = "True";
+			num = "Checkpoint2";
+		};
+		instant Trigger "3" {
+			dataBlock = "GroupTrigger";
+			name = "";
+			position = "1003.09 304.754 141.882";
+			rotation = "0 -0 -0.75997";
+			boundingBox = "-35 -10 -35 35 10 35";
+			isSphere = "True";
+			num = "Checkpoint3";
+		};
+		instant Trigger "4" {
+			dataBlock = "GroupTrigger";
+			name = "";
+			position = "919.342 -64.5802 122.251";
+			rotation = "0 0 0";
+			boundingBox = "-30 -10 -37.5 30 10 37.5";
+			isSphere = "True";
+			num = "Checkpoint4";
+		};
+		instant Trigger "5" {
+			dataBlock = "GroupTrigger";
+			name = "";
+			position = "1104.65 -540.615 157.316";
+			rotation = "0 -0 0.559987";
+			boundingBox = "-40 -10 -45 40 10 45";
+			isSphere = "True";
+			num = "Checkpoint5";
+		};
+		instant Trigger "6" {
+			dataBlock = "GroupTrigger";
+			name = "";
+			position = "1845.51 -560.856 132.289";
+			rotation = "0 -0 -0.739931";
+			boundingBox = "-40 -10 -30 40 10 30";
+			isSphere = "True";
+			num = "Checkpoint6";
+		};
+		instant Trigger "7" {
+			dataBlock = "GroupTrigger";
+			name = "";
+			position = "2029.43 -25.6319 208.796";
+			rotation = "0 -0 -0.379995";
+			boundingBox = "-30 -10 -40 30 10 40";
+			isSphere = "True";
+			num = "Checkpoint7";
+		};
+	};
+};
+//--- export object end ---//
+$DMScoreLimit = 10;
+exec(tribesracer);
+$Game::missionType = "Racer";
+$cdTrack = 9;
+$cdPlayMode = 1;

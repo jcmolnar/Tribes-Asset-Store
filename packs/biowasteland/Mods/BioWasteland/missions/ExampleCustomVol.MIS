@@ -1,0 +1,244 @@
+//==============================================
+//=== Map Example By Biohazard
+//==============================================
+//=== You need to scroll down and read my comments as they appear.
+//=== Some of the most important comments are at the end, so keep looking.
+//=== This assumes you already know how to use the Tribe's Map Editor.
+//=== To learn the map editor, get my Map Making Tutorial Download.
+//==============================================
+
+//==============================================
+//=== Keep in mind I didn't make these custom shapes, they have always been a part
+//=== of the game!  For some reason, they weren't included in the editor's menus by
+//=== default.  My mod enables them in the menus, and if you add the volume to your
+//=== maps script, you can use them!
+//===
+//=== Never make your own volumes and use them in a server map, because players
+//=== won't be able to join your maps since they will lack your volume.
+//==============================================
+
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "tedFile" {
+			fileName = "Broadside.ted";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "lushWorld" {
+			fileName = "lushWorld.vol";
+		};
+		instant SimVolume "lushTerrain" {
+			fileName = "lushTerrain.vol";
+		};
+		instant SimVolume "lushDML" {
+			fileName = "lushDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "Broadside.vol";
+		};
+//==============================================
+//=== The following SimVolume enables the Tribe's Custom.vol Shapes!
+//==============================================
+		instant SimVolume "Volume1" {
+			fileName = "custom.vol";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "palette" {
+			fileName = "lush.day.ppl";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "litesky.dml";
+			skyColor = "0 0 0";
+			hazeColor = "3.39563e+38 3.39563e+38 3.39563e+38";
+			featurePosition = "0";
+			size = "600";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "2";
+			textures[3] = "3";
+			textures[4] = "4";
+			textures[5] = "5";
+			textures[6] = "6";
+			textures[7] = "7";
+			textures[8] = "8";
+			textures[9] = "9";
+			textures[10] = "10";
+			textures[11] = "11";
+			textures[12] = "12";
+			textures[13] = "13";
+			textures[14] = "14";
+			textures[15] = "15";
+			distance = "800";
+		};
+//==============================================
+//=== Likewise, never make your own terrain or alter an existing terrain on
+//=== a server side map, because players wont be able to join your maps!
+//=== While making a map, even pressing f4 (which opens the terrain editor)
+//=== will change the terrain file from a default one to a new one, so
+//=== DON'T DO IT, MAN, it ain't worth it.  Think about your family, man! Don't do it!
+//==============================================
+		instant SimTerrain "Terrain" {
+			tedFileName = "Broadside.dtf";
+			visibleDistance = "600";
+			hazeDistance = "400";
+			hazeVerticalMin = "1.16389e-08";
+			hazeVerticalMax = "1.74141e-39";
+			perspectiveDistance = "100";
+			screenSize = "50";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 0";
+			rotation = "0 0 0";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-200";
+			y = "-200";
+			w = "400";
+			h = "400";
+		};
+	};
+	instant SimGroup "Lights" {
+		instant Planet "sunLight" {
+			fileName = "lushdaysun.bmp";
+			azimuth = "178.657";
+			incidence = "49";
+			castShadows = "True";
+			useLensFlare = "True";
+			intensity = "0.69996 0.69996 0.69996";
+			ambient = "0.299964 0.299964 0.299964";
+			size = "180";
+			distance = "1200";
+		};
+	};
+	instant SimGroup "Teams" {
+		instant TeamGroup "team0" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "20.5625 -89.2069 166.702";
+						rotation = "0 -0 -1.19995";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "19.1174 -85.8906 166.702";
+						rotation = "0 -0 -1.13995";
+					};
+				};
+			};
+			instant SimGroup "CustomeVolShapes" {
+				instant InteriorShape "floatpad1" {
+					fileName = "floatpad.dis";
+					isContainer = "1";
+					position = "1.66554 -50.7403 167.9";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "watchtower1" {
+					fileName = "watchtower.dis";
+					isContainer = "1";
+					position = "-25.9706 55.0089 224.203";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "tblock1" {
+					fileName = "tblock.dis";
+					isContainer = "0";
+					position = "0.789164 -57.838 161.857";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "sbunker1" {
+					fileName = "sbunker.dis";
+					isContainer = "1";
+					position = "62.998 -8.48852 164.626";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "kiel1" {
+					fileName = "kiel.dis";
+					isContainer = "1";
+					position = "-10.9183 -59.7686 170.283";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "flytower1" {
+					fileName = "flytower.dis";
+					isContainer = "1";
+					position = "-34.1916 2.57317 223.553";
+					rotation = "0 0 0";
+					lightParams = "0 ";
+				};
+				instant InteriorShape "siam1" {
+					fileName = "siam.dis";
+					isContainer = "1";
+					position = "41.6218 -89.8997 153.703";
+					rotation = "0 -0 -2.65989";
+					lightParams = "0 ";
+					locked = "1";
+				};
+			};
+		};
+		instant TeamGroup "team1" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "49.2516 -75.4619 166.702";
+						rotation = "0 -0 2.07994";
+					};
+				};
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "47.5324 -72.5002 166.702";
+						rotation = "0 -0 1.99994";
+					};
+				};
+			};
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "28.7701 -70.5084 178.089";
+			rotation = "-0.898144 0 -3.12103";
+		};
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "37.494 -89.8975 179.754";
+			rotation = "-0.990138 0 0.347913";
+		};
+	};
+};
+//--- export object end ---//
+
+
+$teamScoreLimit = 50;
+exec(objectives);
+$Game::missionType = "CTF";
+$cdTrack = 3;
+$cdPlayMode = 1;

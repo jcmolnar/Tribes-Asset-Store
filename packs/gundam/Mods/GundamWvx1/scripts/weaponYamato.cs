@@ -1,0 +1,90 @@
+//Storm Grenade Launcher
+$AutoUse[Vulcan] = False;
+$SellAmmo[VulcanAmmo] = 100;
+$WeaponAmmo[Vulcan] = VulcanAmmo;
+$InvList[Vulcan] = 1;
+$InvList[VulcanAmmo] = 1;
+$RemoteInvList[Vulcan] = 1;
+$RemoteInvList[VulcanAmmo] = 1;
+$VehicleInvList[Vulcan] = 1;
+$VehicleInvList[VulcanAmmo] = 1;
+
+addWeapon(Vulcan);
+addAmmo(Vulcan, VulcanAmmo, 50);
+
+GrenadeData VulcanGren
+{
+  bulletShapeName = "Paint.dts";
+  explosionTag = rocketExp;
+  collideWithOwner = True;
+  ownerGraceMS = 250;
+  collisionRadius = 0.2;
+  mass = 1.0;
+  elasticity = 0.3;
+  damageClass = 1;
+  damageValue = 0.32;
+  damageType = $PlasmaDamageType;
+  explosionRadius = 15;
+  kickBackStrength = 0;
+  maxLevelFlightDist = 200;
+  totalTime = 5.0;
+  liveTime = 0.05;
+  projSpecialTime = 0.05;
+  inheritedVelocityScale = 0.5;
+  smokeName = "shotgunex.dts";
+  smokeDist = 1.5;
+};
+
+ItemData VulcanAmmo 
+{
+  description = "Storm Grenades";
+  className = "Ammo";
+  shapeFile = "ammo1";
+  heading = $InvHead[ihAmm];
+  shadowDetailMask = 4;
+  price = 1;
+};
+
+ItemImageData VulcanImage 
+{
+  shapeFile = "grenadeL";
+  mountPoint = 0;
+  mountRotation = 
+  {
+   0, 1.0, 0 }
+  ;
+
+  weaponType = 0;
+  reloadTime = 0.2;
+  fireTime = 0.14;
+  ammoType = VulcanAmmo;
+  projectileType = VulcanGren;
+  accuFire = false;
+  lightType = 3;
+  lightRadius = 3;
+  lightTime = 1;
+  lightColor = { 0.6, 1, 1 };  
+  sfxFire = SoundJetHeavy;
+  sfxReload = SoundDryFire;
+  sfxActivate = SoundPickUpWeapon;
+};
+
+ItemData Vulcan 
+{
+  description = "Storm Greanade Launcher";
+  className = "Weapon";
+  shapeFile = "grenadeL";
+  hudIcon = "chain";
+  heading = $InvHead[ihWet];
+  shadowDetailMask = 4;
+  imageType = VulcanImage;
+  price = 475;
+  showWeaponBar = true;
+};
+
+function Vulcan::onMount(%player,%item) 
+{
+  %client = Player::getClient(%player);
+  Bottomprint(%client, "Storm Grenade Launcher: <f2>Rapid fire grenade launcher.");
+}
+

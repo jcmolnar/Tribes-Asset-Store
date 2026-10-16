@@ -1,0 +1,2 @@
+$MDESC::Text = "<s3><f1>Mission Type: <f0> VIP Assassination\n<f1>Planet: <f0> Sarkanus VII\n<f1>Weather: <f0> Hazy\n<f1>Time of Day: <f0> Noonish\n<f1># of Teams: <f0> 2\n<f1>Max Bases: <f0> 4/7\n\n<f1>Briefing:<f0> The <vServer::teamName0> and <vServer::teamName1> Battle over rolling hills for the possession of 4 small bases, 2 large bases, and a key central base.  The fastest is the best in this map, defend your Commander, or lose him to the pits of hell...\n\n<f1>Mapper: <f0> Scourge";
+$MDESC::Type = "VIP";

@@ -1,0 +1,2 @@
+$MDESC::Type = "Temporary";
+$mdesc::tEXT = "Map By: *|BFW|* Galan\n\n\nAfter the US forces cleared the German base (Base_Assault coop map),\nthe Germans arrived with strong reinforcements and managed to terminate the US forces in the area.\nWhile the germans were re-capturing their base the Soviet forces were passing through it\nand they decided to take this base from the germans under russian control.\n*|BFW|* Galan brings you this Russia-Germany battle in the freezing cold!"; 

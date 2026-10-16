@@ -1,0 +1,8 @@
+$MDESC::Type = "VIP";
+$MDESC::Text = "<s3><f1>Mission Type: <f0> VIP Assassination" @
+         "\n<f1>Planet: <f0> Ferala" @
+         "\n<f1>Weather: <f0> Extremely Foggy" @
+         "\n<f1>Time of Day: <f0> Morning" @ 
+         "\n<f1># of Teams: <f0> 2" @
+         "\n<f1>Max Bases: <f0> 0/0" @
+         "\n\n<f1>Briefing:<f0> The <$server::teamname0> and <$server::teamname1> tribes are fighting over the world of Ferala and both possess masterful spies who had managed to infiltrate their enemy's high command.  Both teams spies are masters of the art of deception and seclusion, and it is suspected that they have been in place for many months, perhaps even years acquiring highly confidential military information.  Amazingly, neither spy was detected until at last they discovered one another each through tips from his informant.  Now both have been forced to cut and run!  The situation looked dire: enemy troops were hot on your spy's heels and he had a clueless informant in tow.  Fortunately for him, the world of Ferala is often extremely foggy, and he managed to seek safety a thick blanket of fog which has reduced visibility to only 100 meters.  \n\nUnder the cover of fog, the spy has rendezvoused with a small covert ops platoon which has been assigned to escort him to safety.  Unfortunately, that same platoon has also been assigned to assassinate both the enemy spy and informant and standing orders state that failure to carry out either objective will result in execution for insubordination!\n\nKill the enemy Spy while defending your own.  The first team to successfully assassinate the enemy Spy will be declared the victor!";	

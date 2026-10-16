@@ -1,0 +1,2 @@
+$MDESC::Type = "Flag Hunter";
+$MDESC::Text = "<s3><f1>Mission Type: <f0> Flag Hunter";

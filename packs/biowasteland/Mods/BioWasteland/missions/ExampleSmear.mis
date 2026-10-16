@@ -1,0 +1,455 @@
+//==============================================
+//=== Map Example By Biohazard
+//==============================================
+//=== You need to scroll down and read my comments as they appear.
+//=== Some of the most important comments are at the end, so keep looking.
+//=== This assumes you already know how to use the Tribe's Map Editor.
+//=== To learn the map editor, get my Map Making Tutorial Download.
+//==============================================
+
+
+//==============================================
+//=== Making a Smear Map is simple.
+//===
+//=== 1.  Add two teams to the mission.
+//=== 2.  The second team needs only one start drop point, and a flag (no stand).
+//=== 3.  At the end of this file, don't use exec(objectives); use exec("smear.cs");
+//===
+//=== That's it. Read comments below for details.
+//==============================================
+
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "World" {
+			fileName = "mudWorld.vol";
+		};
+		instant SimVolume "WorldTerrain" {
+			fileName = "mudTerrain.vol";
+		};
+		instant SimVolume "mudDML" {
+			fileName = "mudDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "TedFile" {
+			fileName = "2_Weapons.ted";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "2_weapons.vol";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "Palette" {
+			fileName = "mud.day.ppl";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "50";
+			y = "-600";
+			w = "300";
+			h = "300";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "mudsky_day.dml";
+			skyColor = "0 0 0";
+			hazeColor = "0 0 0";
+			featurePosition = "0";
+			size = "800";
+			textures[0] = "1";
+			textures[1] = "2";
+			textures[2] = "3";
+			textures[3] = "4";
+			textures[4] = "5";
+			textures[5] = "6";
+			textures[6] = "7";
+			textures[7] = "8";
+			textures[8] = "9";
+			textures[9] = "10";
+			textures[10] = "11";
+			textures[11] = "12";
+			textures[12] = "13";
+			textures[13] = "14";
+			textures[14] = "15";
+			textures[15] = "0";
+			distance = "600";
+		};
+		instant Planet "Sun" {
+			fileName = "";
+			azimuth = "60";
+			incidence = "35";
+			castShadows = "True";
+			useLensFlare = "False";
+			intensity = "0.699984 0.699984 0.699984";
+			ambient = "0.699984 0.699984 0.699984";
+			size = "2000";
+			distance = "11000";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "2_Weapons.dtf";
+			visibleDistance = "250";
+			hazeDistance = "200";
+			hazeVerticalMin = "1.73166e-39";
+			hazeVerticalMax = "1.04571e-38";
+			perspectiveDistance = "100";
+			screenSize = "80";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 0";
+			rotation = "0 0 0";
+		};
+	};
+	instant SimGroup "Lights";
+	instant SimGroup "Teams" {
+//==============================================
+//=== First Team gets lots of drop points, and no flag.
+//==============================================
+		instant TeamGroup "team0" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "203.797 -532.042 176.924";
+						rotation = "0 -0 0.243198";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "106.09 -469.604 199.57";
+						rotation = "0 -0 -1.35997";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "112.663 -484.555 196.717";
+						rotation = "0 -0 -0.979993";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "124.314 -492.338 194.979";
+						rotation = "0 -0 -0.939993";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "142.701 -510.691 191.762";
+						rotation = "0 -0 -0.559995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "250.903 -511.988 169.458";
+						rotation = "0 -0 1.53997";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "249.158 -500.773 172.789";
+						rotation = "0 -0 1.63997";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "246.198 -488.765 179.053";
+						rotation = "0 -0 1.63997";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "239.913 -477.277 180.927";
+						rotation = "0 -0 1.59997";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "180.667 -425.039 156.942";
+						rotation = "0 -0 -1.19997";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "200.035 -457.696 156.293";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "155.015 -448.706 181.61";
+						rotation = "0 -0 -2.23996";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "203.797 -532.042 176.924";
+						rotation = "0 -0 0.243197";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "155.015 -448.707 181.61";
+						rotation = "0 -0 -2.23995";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "200.035 -457.696 156.293";
+						rotation = "0 0 0";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "180.667 -425.039 156.943";
+						rotation = "0 -0 -1.19996";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "239.913 -477.277 180.927";
+						rotation = "0 -0 1.59996";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "246.198 -488.765 179.053";
+						rotation = "0 -0 1.63996";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "249.158 -500.773 172.789";
+						rotation = "0 -0 1.63996";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "250.902 -511.988 169.458";
+						rotation = "0 -0 1.53996";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "142.701 -510.691 191.762";
+						rotation = "0 -0 -0.559994";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "124.314 -492.338 194.979";
+						rotation = "0 -0 -0.939992";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "112.663 -484.555 196.717";
+						rotation = "0 -0 -0.979992";
+					};
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "106.09 -469.604 199.57";
+						rotation = "0 -0 -1.35996";
+					};
+				};
+			};
+			instant Sensor "MedPulse1" {
+				dataBlock = "MediumPulseSensor";
+				name = "";
+				position = "150.814 -527.082 192.851";
+				rotation = "0 -0 -1.01995";
+				destroyable = "True";
+				deleteOnDestroy = "False";
+				shieldStrength = "0.0299999";
+				lastDamageObject = "2049";
+				lastDamageTeam = "0";
+			};
+			instant StaticShape "Generator1" {
+				dataBlock = "Generator";
+				name = "";
+				position = "-500.75 545.045 1.30382";
+				rotation = "0 0 0";
+				destroyable = "True";
+				deleteOnDestroy = "False";
+			};
+			instant StaticShape "AmmoStation1" {
+				dataBlock = "AmmoStation";
+				name = "";
+				position = "211.28 -532.152 193.007";
+				rotation = "0 -0 -1.61997";
+				destroyable = "True";
+				deleteOnDestroy = "False";
+			};
+			instant StaticShape "AmmoStation1" {
+				dataBlock = "AmmoStation";
+				name = "";
+				position = "197.325 -359.611 186.581";
+				rotation = "0 -0 -0.439996";
+				destroyable = "True";
+				deleteOnDestroy = "False";
+				enterTime = "1822.11";
+			};
+		};
+//==============================================
+//=== The second team gets only a drop point and a flag, nothing else.
+//==============================================
+		instant TeamGroup "team1" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "203.797 -532.042 176.924";
+						rotation = "0 -0 0.243198";
+					};
+				};
+			};
+			instant SimGroup "Objective" {
+				instant Item "flag1" {
+					dataBlock = "flag";
+					name = "the Flag";
+					position = "187.038 -487.644 162.459";
+					rotation = "0 0 2.58117";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					rotates = "False";
+					collideable = "False";
+					count = "1";
+					objectiveName = "the Flag";
+					caps7 = "0";
+					caps6 = "0";
+					caps5 = "0";
+					caps4 = "0";
+					caps3 = "0";
+					caps2 = "0";
+					caps1 = "0";
+					caps0 = "0";
+					enemyCaps = "0";
+					holdingTeam = "-1";
+					carrier = "-1";
+					pickupSequence = "0";
+					atHome = "true";
+					originalPosition = "187.04 -487.646 162.549";
+					objectiveLine = "13";
+					scoreValue = "1";
+				};
+			};
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "129.708 -450.504 197.635";
+			rotation = "0 -0 -2.33985";
+		};
+	};
+	instant SimGroup "Stuff" {
+		instant InteriorShape "w64long1" {
+			fileName = "W64long.1.dis";
+			isContainer = "1";
+			position = "155.284 -440.916 149.803";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "mis_ob31" {
+			fileName = "mis_ob3.0.dis";
+			isContainer = "1";
+			position = "187.13 -487.625 154.455";
+			rotation = "0 -0 0.379986";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "w64end1" {
+			fileName = "W64end.1.dis";
+			isContainer = "1";
+			position = "162.855 -514.94 167.956";
+			rotation = "0 -0 -2.01978";
+			lightParams = "0 ";
+			locked = "1";
+		};
+		instant InteriorShape "w64end1" {
+			fileName = "W64end.0.dis";
+			isContainer = "1";
+			position = "255.329 -506.984 146.81";
+			rotation = "0 -0 -2.45985";
+			lightParams = "0 ";
+			locked = "0";
+		};
+		instant InteriorShape "w64long1" {
+			fileName = "W64long.0.dis";
+			isContainer = "1";
+			position = "154.588 -447.166 142.598";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+			locked = "1";
+		};
+	};
+	instant InteriorShape "tank41" {
+		fileName = "tank4.dis";
+		isContainer = "1";
+		position = "204.324 -532.083 151.007";
+		rotation = "0 0 0";
+		lightParams = "0 ";
+	};
+	instant InteriorShape "tank51" {
+		fileName = "tank5.dis";
+		isContainer = "1";
+		position = "191.387 -366.797 155.581";
+		rotation = "0 -0 -0.399996";
+		lightParams = "0 ";
+	};
+	instant Item "RepairPack1" {
+		dataBlock = "RepairPack";
+		name = "";
+		position = "200.221 -363.555 186.581";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+	instant Item "RepairPack1" {
+		dataBlock = "RepairPack";
+		name = "";
+		position = "209.114 -535.511 193.007";
+		rotation = "0 0 0";
+		destroyable = "True";
+		deleteOnDestroy = "False";
+		rotates = "True";
+		collideable = "False";
+		count = "1";
+	};
+};
+//--- export object end ---//
+$cdTrack = 5;
+$cdPlayMode = 1;
+
+//==============================================
+//=== This is what makes the mission a smear mission...
+//==============================================
+exec("smear.cs");
+
+//==============================================
+//=== These following lines are needed to prevent the fair teams checker
+//=== from evening teams during this mission...
+//==============================================
+schedule("$Wasteland::FairCheck = \"2340\";", 10);
+schedule("$Wasteland::FairEvens = \"2340\";", 10);
+
+
+schedule("Messageall(1, \"A map by Bïohazard!~wmale5.wcheer3.wav\");", 80);

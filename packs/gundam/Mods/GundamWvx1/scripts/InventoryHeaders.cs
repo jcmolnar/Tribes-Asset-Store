@@ -1,0 +1,15 @@
+$InvHead[ihVeh] = "aFleets";
+$InvHead[ihArm] = "bGundamW mod by LoD|ZechsMerqise";
+$InvHead[ihPro] = "cGundams";
+$InvHead[ihZer] = "d";
+$InvHead[ihScv] = "eOthers";
+$InvHead[ihWea] = "fPilot/Worker";
+$InvHead[ihWet] = "gWeapons";
+$InvHead[ihPsi] = "hEarth Alliance Weapons";
+$InvHead[ihBac] = "iPacks";
+//$InvHead[ihGui] = "iGuided Systems";
+$InvHead[ihMis] = "jOutfittings";
+$InvHead[ihDWe] = "kTurrets";
+$InvHead[ihDSe] = "lSensor Network";
+$InvHead[ihDOb] = "mMisc.";
+$InvHead[ihAmm] = "nAmmunition";

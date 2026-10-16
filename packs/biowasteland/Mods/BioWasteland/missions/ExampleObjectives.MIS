@@ -1,0 +1,633 @@
+//==============================================
+//=== Map Example By Biohazard
+//==============================================
+//=== You need to scroll down and read my comments as they appear.
+//=== Some of the most important comments are at the end, so keep looking.
+//=== This assumes you already know how to use the Tribe's Map Editor.
+//=== To learn the map editor, get my Map Making Tutorial Download.
+//==============================================
+
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "tedFile" {
+			fileName = "Broadside.ted";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "lushWorld" {
+			fileName = "lushWorld.vol";
+		};
+		instant SimVolume "lushTerrain" {
+			fileName = "lushTerrain.vol";
+		};
+		instant SimVolume "lushDML" {
+			fileName = "lushDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "Broadside.vol";
+		};
+		instant SimVolume "Volume1" {
+			fileName = "custom.vol";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "palette" {
+			fileName = "lush.day.ppl";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "litesky.dml";
+			skyColor = "0 0 0";
+			hazeColor = "3.39564e+38 3.39564e+38 3.39564e+38";
+			featurePosition = "0";
+			size = "600";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "2";
+			textures[3] = "3";
+			textures[4] = "4";
+			textures[5] = "5";
+			textures[6] = "6";
+			textures[7] = "7";
+			textures[8] = "8";
+			textures[9] = "9";
+			textures[10] = "10";
+			textures[11] = "11";
+			textures[12] = "12";
+			textures[13] = "13";
+			textures[14] = "14";
+			textures[15] = "15";
+			distance = "800";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "Broadside.dtf";
+			visibleDistance = "600";
+			hazeDistance = "400";
+			hazeVerticalMin = "1.1639e-08";
+			hazeVerticalMax = "1.74142e-39";
+			perspectiveDistance = "100";
+			screenSize = "50";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 0";
+			rotation = "0 0 0";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-200";
+			y = "-200";
+			w = "400";
+			h = "400";
+		};
+	};
+	instant SimGroup "Lights" {
+		instant Planet "sunLight" {
+			fileName = "lushdaysun.bmp";
+			azimuth = "178.658";
+			incidence = "49";
+			castShadows = "True";
+			useLensFlare = "True";
+			intensity = "0.699961 0.699961 0.699961";
+			ambient = "0.299965 0.299965 0.299965";
+			size = "180";
+			distance = "1200";
+		};
+	};
+	instant SimGroup "Teams" {
+		instant TeamGroup "team0" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "20.5625 -89.207 166.703";
+						rotation = "0 -0 -1.19996";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "19.1175 -85.8907 166.703";
+						rotation = "0 -0 -1.13996";
+					};
+				};
+			};
+			instant SimGroup "BoneCollector" {
+//==============================================
+//=== Bone Collector objective is made by first placing a
+//=== DSlcargo1 to serve as the sarcophagus...
+//==============================================
+				instant InteriorShape "DSlcargo11" {
+					fileName = "DSLCargo1.dis";
+					isContainer = "0";
+					position = "15.385 -84.6672 165.923";
+					rotation = "0 -0 -1.13996";
+					lightParams = "4 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+				};
+//==============================================
+//=== Then place the Ancestor, found under the Objectives menu,
+//=== and roate him so he is laying on the sarcophagus.
+//==============================================
+				instant StaticShape "Ancestor1" {
+					dataBlock = "Ancestor";
+					name = "";
+					position = "15.8659 -85.7036 168.512";
+					rotation = "1.09057 -1.29982 -1.45118";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+			};
+//==============================================
+//=== Energy objectives are made up of two SWcargo21's 
+//=== as the ends of the beam, an Electric Beam, and
+//=== the EnergyTrigger found under the Objectives menu.
+//==============================================
+			instant SimGroup "EnergySteal" {
+				instant InteriorShape "SWscargo21" {
+					fileName = "SWScargo2.dis";
+					isContainer = "0";
+					position = "17.8064 -89.5509 165.952";
+					rotation = "0 -0 0.488691";
+					lightParams = "1 1.200000 1 ";
+				};
+				instant InteriorShape "SWscargo21" {
+					fileName = "SWScargo2.dis";
+					isContainer = "0";
+					position = "17.8064 -89.5509 171.622";
+					rotation = "0 -3.14158 0.488691";
+					lightParams = "1 1.200000 1 ";
+				};
+				instant StaticShape "ElectrBeam1" {
+					dataBlock = "ElectricalBeam";
+					name = "";
+					position = "17.8061 -89.5506 166.786";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+//==============================================
+//=== Resize the EnergyTrigger dimentions to 1 1 4 in the editor,
+//=== and place it over the beam.
+//==============================================
+				instant Trigger "EnergyTrigger1" {
+					dataBlock = "EnergyTrigger";
+					name = "";
+					position = "17.7265 -89.5822 168.751";
+					rotation = "0 0 0";
+					boundingBox = "-0.5 -0.5 -2 0.5 0.5 2";
+					isSphere = "True";
+				};
+			};
+//==============================================
+//=== The power Group is placed here to illustrate a feature of the BioWasteland Mod.
+//=== The Base Capture Switch (BCS), deployed by an Engineer, will capture all items
+//=== which are in a power source's SimGroup including any SimGroups within it.
+//=== In this map, Team0's power source is in the SimGroup called "powerGroup". 
+//=== In this case, the BCS can capture not only the
+//=== the inventory, but the flag as well!
+//=== Notice the FlagGroup is within the same SimGroup as the power source.
+//=== Try the Base Control Switch on Team0's Generator to see an example
+//=== of how power Groups and objective Groups should not be organized, and why.
+//=== Make sure you never place power sources in the same SimGroup
+//=== as an objective, or the switch will also take over the objective.
+//=== Imaging if your team owned the enemy's flag?
+//=== How would you be able to capture it if it was already yours?
+//=== Notice Team1's FlagGroup is not within the same SimGroup as a power source.
+//=== Try the BCS on the other team's Generator to see an example of objectives
+//=== and power groups should be organized.
+//==============================================
+			instant SimGroup "powerGroup" {
+				instant StaticShape "PortGen1" {
+					dataBlock = "Generator";
+					name = "";
+					position = "19.4228 -93.1137 166.703";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+//==============================================
+//=== Add the following lines to a destroyable item to
+//=== make destroying the item an objective.
+//==============================================
+					objectiveLine = "14";
+					objectiveName = "Main Generator";
+					scoreValue = "1";
+				};
+				instant StaticShape "InventoryStation1" {
+					dataBlock = "InventoryStation";
+					name = "";
+					position = "21.3947 -94.5739 166.703";
+					rotation = "0 -0 2.03996";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant SimGroup "FlagGroup" {
+//==============================================
+//=== I placed a flag stand here to remind you to use them in your maps.
+//=== Even Sierra Tribes forgot stands in some of their base maps.
+//=== Without them, flags can't properly be returned by stepping on the empty stand.
+//==============================================
+					instant StaticShape "Stand1" {
+						dataBlock = "flagstand";
+						name = "";
+						position = "13.2375 -80.0968 166.703";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant Item "flag1" {
+						dataBlock = "flag";
+//==============================================
+//=== Name flags like so to use the server's team names to name the flags...
+//==============================================
+						name = "the <vServer::teamName0> flag";
+						position = "13.1956 -80.0968 166.848";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						rotates = "False";
+						collideable = "False";
+						count = "1";
+						objectiveLine = "13";
+						caps7 = "0";
+						caps6 = "0";
+						caps5 = "0";
+						caps4 = "0";
+						caps3 = "0";
+						caps2 = "0";
+						caps1 = "0";
+						caps0 = "0";
+						enemyCaps = "0";
+						holdingTeam = "-1";
+						carrier = "-1";
+						pickupSequence = "0";
+						atHome = "true";
+						originalPosition = "13.1975 -80.0968 166.845";
+						scoreValue = "1";
+//==============================================
+//=== What follows are lines the editor can't do but which you can add.
+//=== deltaTeamScore is points per sec the team gets for holding a flag.
+//=== objectiveName adds detail to the game's objective messages.
+//==============================================
+						//deltaTeamScore = "12";
+						objectiveName = "the <vServer::teamName0> flag";
+					};
+				};
+			};
+		};
+		instant TeamGroup "team1" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "49.2517 -75.462 166.703";
+						rotation = "0 -0 2.07995";
+					};
+				};
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "47.5325 -72.5003 166.703";
+						rotation = "0 -0 1.99995";
+					};
+				};
+			};
+			instant SimGroup "BoneCollector" {
+				instant InteriorShape "DSlcargo11" {
+					fileName = "DSLCargo1.dis";
+					isContainer = "0";
+					position = "53.2671 -65.7727 165.923";
+					rotation = "0 -0 -1.13995";
+					lightParams = "4 1.200000 1 1.200000 1 1.200000 1 1.200000 1 ";
+				};
+				instant StaticShape "Ancestor1" {
+					dataBlock = "Ancestor";
+					name = "";
+					position = "53.7479 -66.809 168.512";
+					rotation = "1.09053 -1.29979 -1.45116";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+			};
+			instant SimGroup "EnergySteal" {
+				instant InteriorShape "SWscargo21" {
+					fileName = "SWScargo2.dis";
+					isContainer = "0";
+					position = "55.0525 -69.9406 165.952";
+					rotation = "0 -0 0.48869";
+					lightParams = "1 1.200000 1 ";
+				};
+				instant InteriorShape "SWscargo21" {
+					fileName = "SWScargo2.dis";
+					isContainer = "0";
+					position = "55.0525 -69.9406 171.622";
+					rotation = "0 -3.14157 0.48869";
+					lightParams = "1 1.200000 1 ";
+				};
+				instant StaticShape "ElectrBeam1" {
+					dataBlock = "ElectricalBeam";
+					name = "";
+					position = "55.0522 -69.9403 166.786";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant Trigger "EnergyTrigger1" {
+					dataBlock = "EnergyTrigger";
+					name = "";
+					position = "54.9727 -69.9719 168.751";
+					rotation = "0 0 0";
+					boundingBox = "-0.5 -0.5 -2 0.5 0.5 2";
+					isSphere = "True";
+				};
+			};
+			instant SimGroup "FlagGroup" {
+				instant StaticShape "Stand1" {
+					dataBlock = "flagstand";
+					name = "";
+					position = "51.2682 -61.2142 166.703";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant Item "flag1" {
+					dataBlock = "flag";
+					name = "";
+					position = "51.2162 -61.2142 167.008";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+					rotates = "False";
+					collideable = "False";
+					count = "1";
+					objectiveLine = "15";
+					caps7 = "0";
+					caps6 = "0";
+					caps5 = "0";
+					caps4 = "0";
+					caps3 = "0";
+					caps2 = "0";
+					caps1 = "0";
+					caps0 = "0";
+					enemyCaps = "0";
+					holdingTeam = "-1";
+					carrier = "-1";
+					pickupSequence = "0";
+					atHome = "true";
+					originalPosition = "51.2162 -61.2142 167.01";
+					scoreValue = "1";
+				};
+			};
+//==============================================
+//=== The power Group is placed here to illustrate a feature of the BioWasteland Mod.
+//=== First read my message under Team0's powerGroup.
+//=== Notice Team1's FlagGroup is not within the same SimGroup as a power source.
+//=== Try the Base Control Switch on this team's Generator to see an example
+//=== of how power Groups and objective Groups should be organized, and why.
+//==============================================
+			instant SimGroup "powergroup" {
+				instant StaticShape "PortGen1" {
+					dataBlock = "Generator";
+					name = "";
+					position = "58.3738 -72.9741 166.703";
+					rotation = "0 -0 3.1032";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant StaticShape "InventoryStation1" {
+					dataBlock = "InventoryStation";
+					name = "";
+					position = "57.6413 -75.4566 166.703";
+					rotation = "0 -0 -1.13999";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+			};
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "28.7702 -70.5085 178.09";
+			rotation = "-0.898145 0 -3.12104";
+		};
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "37.4941 -89.8976 179.755";
+			rotation = "-0.990139 0 0.347914";
+		};
+	};
+	instant SimGroup "CustomeVolShapes" {
+		instant InteriorShape "floatpad1" {
+			fileName = "floatpad.dis";
+			isContainer = "1";
+			position = "1.66554 -50.7404 167.9";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "watchtower1" {
+			fileName = "watchtower.dis";
+			isContainer = "1";
+			position = "-25.9707 55.009 224.204";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "tblock1" {
+			fileName = "tblock.dis";
+			isContainer = "0";
+			position = "0.789156 -57.8381 161.857";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "sbunker1" {
+			fileName = "sbunker.dis";
+			isContainer = "1";
+			position = "62.9981 -8.48846 164.626";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "kiel1" {
+			fileName = "kiel.dis";
+			isContainer = "1";
+			position = "-10.9184 -59.7687 170.283";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "flytower1" {
+			fileName = "flytower.dis";
+			isContainer = "1";
+			position = "-34.1917 2.57327 223.554";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+		instant InteriorShape "siam1" {
+			fileName = "siam.dis";
+			isContainer = "1";
+			position = "41.6219 -89.8998 153.703";
+			rotation = "0 -0 -2.65991";
+			lightParams = "0 ";
+			locked = "1";
+		};
+	};
+//==============================================
+//=== The HelpSwitch is found in the Objectives menu, even though its not
+//=== really an objective.  Bumping it will play the five-line message seen at
+//=== the end of this file.
+//==============================================
+	instant SimGroup "MapHelpSwitch" {
+		instant StaticShape "MapInstructions1" {
+			dataBlock = "HelpSwitch";
+			name = "";
+			position = "31.7413 -71.6863 166.703";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			numSwitchTeams = "0";
+		};
+	};
+	instant SimGroup "BoringSwitchGroup" {
+		instant InteriorShape "BEscargo21" {
+			fileName = "BEScargo2.dis";
+			isContainer = "0";
+			position = "37.5769 -85.3877 166.703";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+//==============================================
+//=== This is an example of a TowerSwitch as the editor places them...
+//==============================================
+		instant StaticShape "Switch1" {
+			dataBlock = "TowerSwitch";
+			name = "Boring Switch";
+			position = "38.2362 -86.9413 166.703";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			numSwitchTeams = "0";
+		};
+	};
+	instant SimGroup "FunSwitchGroup" {
+		instant InteriorShape "BEscargo21" {
+			fileName = "BEScargo2.dis";
+			isContainer = "0";
+			position = "34.5723 -79.3824 166.703";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+//==============================================
+//=== This is an example of a TowerSwitch as you can make it by
+//=== adding additional lines of script to it with a text editor...
+//==============================================
+		instant StaticShape "Switch1" {
+			dataBlock = "TowerSwitch";
+			name = "Fun Switch";
+			position = "35.2929 -81.3775 166.703";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			objectiveLine = "17";		//== Adds the switch to objectives list
+								//== Also makes it go CHUNK when captured
+			objectiveName = "the Fun Switch"; //== Adds name to capture messages
+			scoreValue = "1";			//== Team points for capturing it
+			deltaTeamScore = "12";		//== Team points per sec for holding it
+		};
+//==============================================
+//=== Anything in the same SimGroup (including other SimGroups) as a switch is captured
+//=== along with the switch.  In this case, Spawn DropPoints are capturable!
+//==============================================
+		instant DropPointGroup "DropPoints" {
+			instant Marker "Drop Point1" {
+				dataBlock = "DropPointMarker";
+				name = "";
+				position = "34.6261 -83.0181 166.703";
+				rotation = "0 0 0";
+			};
+			instant Marker "Drop Point1" {
+				dataBlock = "DropPointMarker";
+				name = "";
+				position = "30.8109 -79.2266 166.703";
+				rotation = "0 -0 -1.60316";
+			};
+			instant Marker "Drop Point1" {
+				dataBlock = "DropPointMarker";
+				name = "";
+				position = "34.601 -75.5699 166.703";
+				rotation = "0 -0 3.13995";
+			};
+			instant Marker "Drop Point1" {
+				dataBlock = "DropPointMarker";
+				name = "";
+				position = "38.2735 -79.2902 166.703";
+				rotation = "0 -0 1.59995";
+			};
+		};
+	};
+//==============================================
+//=== This Cemetary MapMarker is placed to mark where lost bones will be placed
+//==============================================
+	instant SimGroup "Cemetary" {
+		instant Marker "Map Marker1" {
+			dataBlock = "MapMarker";
+			name = "Cemetary Marker";
+//==============================================
+//=== Copy and paste this position number into the Cemetary variable below
+//==============================================
+			position = "-10.8084 -60.2805 172.396";
+			rotation = "0 0 0";
+		};
+	};
+};
+//--- export object end ---//
+
+
+//==============================================
+//=== Special Note reguarding teamScoreLimit with Bone Collector maps...
+//=== it should be 10 times the number of bones available,
+//=== because each bone is worth 10 team points.
+//==============================================
+$teamScoreLimit = 50;
+exec(objectives);
+$Game::missionType = "CTF";
+$cdTrack = 3;
+$cdPlayMode = 1;
+
+//==============================================
+//=== The following defines up to five lines of text a player will see when he bumps
+//=== a MapHelp Switch.
+//==============================================
+
+$maphelp1 = "Welcome an Example Map by Biohazard";
+$maphelp4 = "To make really well done maps, you need to go beyond the Map Editor...";
+$maphelp3 = "You need to learn to edit the map's script directly too.";
+$maphelp2 = "Open this map's .mis file using textpad or any other simple word processor...";
+$maphelp5 = "And learn from my comments which I've scripted for you.";
+
+
+//==============================================
+//=== This sets the BoneCollector variables for the map
+//==============================================
+$Bone = 5; 			//=== how many bones the ancestors will have available
+$TBones[0] = $Bone;	//=== Resets the team's bone count
+$TBones[1] = $Bone;	//=== Resets the team's bone count
+
+				//=== Lost bones are dropped at this Cemetary map coordinate
+$Cemetary = "-10.8084 -60.2805 172.396";
+				//===	which you need to type in.
+
+//==============================================

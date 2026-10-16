@@ -1,0 +1,8 @@
+$MDESC::Type = "VIP";
+$MDESC::Text = "<s3><f1>Mission Type: <f0> VIP Assassination" @
+         "\n<f1>Planet: <f0> Vegas III" @
+         "\n<f1>Weather: <f0> Clear" @
+         "\n<f1>Time of Day: <f0> Luminous Night" @ 
+         "\n<f1># of Teams: <f0> 2" @
+	 "\n<f1>Max Bases: <f0> 2/3" @
+         "\n\n<f1>Briefing:<f0> The All-Tribes Games were supposed to be a peaceful event, a chance for Tribes to compete and display their prowess and skill without having to resort to unnecessary bloodshed.  Unfortunately, the noble goal under which the games were originally intended is not to be.  Two tribes, the <$server::teamname0> and the <$server::teamname1> have become engaged in a heated dispute over the other tribe's conduct.  Both have accused the other of cheating and have refused to take further part in any gaming events.  League officials were expressed relief that neither tribe was intent on escalating this conflict to the next level, but in truth both simply did not wish to have to contend with the hired security force of the games.  Now night has fallen and both Tribes intend to seek revenge for the others' wrongdoings.  The two tribes both now stand atop two massive ski-jumps which oppose each other across a lush green field.  Death shall lie in the middle for one of these championship tribes, for both stand only a hop, skip and a jump apart.\n\nDefend your Tribal Coach while attempting to kill the enemy Coach.  The first team to assassinate the enemy Coach shall be declared the victor!  In this situation the center base might mean everything and be the deciding factor between victory and defeat!\n\nThanks to -iA- TripLikeIDo for creating the Ski Jump!";

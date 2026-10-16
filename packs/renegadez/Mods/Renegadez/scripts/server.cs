@@ -1,0 +1,700 @@
+function createTrainingServer()
+{
+    $SinglePlayer = true;
+    createServer($pref::lastTrainingMission, false);
+}
+function remoteSetCLInfo(%clientId, %skin, %name, %email, %tribe, %url, %info, %autowp, %enterInv, %msgMask)
+{
+    $Client::info[%clientId, 0] = %skin;
+    $Client::info[%clientId, 1] = %name;
+    $Client::info[%clientId, 2] = %email;
+    $Client::info[%clientId, 3] = %tribe;
+    $Client::info[%clientId, 4] = %url;
+    $Client::info[%clientId, 5] = %info;
+    if(%autowp)
+        %clientId.autoWaypoint = true;
+    if(%enterInv)
+        %clientId.noEnterInventory = true;
+    if(%msgMask != "")
+        %clientId.messageFilter = %msgMask;
+}
+function Server::storeData()
+{
+    $ServerDataFile = "serverTempData" @ $Server::Port @ ".cs";
+    export("Server::*", "temp\\" @ $ServerDataFile, False);
+    export("pref::lastMission", "temp\\" @ $ServerDataFile, true);
+    EvalSearchPath();
+}
+function Server::refreshData()
+{
+    exec($ServerDataFile);
+    checkMasterTranslation();
+    Server::nextMission(false);
+}
+function Server::onClientDisconnect(%clientId)
+{
+    %player = Client::getOwnedObject(%clientId);
+    if(%player != -1 && getObjectType(%player) == "Player" && !Player::isDead(%player))
+    {
+        playNextAnim(%player);
+        Player::kill(%player);
+    }
+    $shieldTime[%clientId] = 0;
+    $cloakTime[%clientId] = 0;
+    %clientId.isSpy = "";
+    %player.driver = "";
+    %clientId.spamSAD = "";
+    %clientId.isbeingkicked = "";
+    %clientId.freeze = "";
+    Client::setControlObject(%clientId, -1);
+    Client::leaveGame(%clientId);
+    Game::CheckTourneyMatchStart();
+    if(getNumClients() == 1)
+        Server::refreshData();
+}
+function KickDaJackal(%clientId)
+{
+    Net::kick(%clientId, "The FBI has been notified.  You better buy a legit copy before they get to your house.");
+}
+function Server::onClientConnect(%clientId)
+{
+    %ip = Client::getTransportAddress(%clientId);
+    if(!String::NCompare(%ip, "LOOPBACK", 8))
+    {
+        %clientId.isAdmin = true;
+        %clientId.isSuperAdmin = true;
+        %clientId.isGod = true;
+    }
+    else
+    {
+        %nametest = Client::getName(%clientId);
+        if(%nametest == "" || %nametest == ".1" || String::findSubStr(%nametest, ".2") != -1)
+        {
+            if ($ExportCKicks)
+            {
+                $NoNameKick = Client::getName(%client) @ " " @ %ip;
+                export("NoNameKick", "config\\KickList.log", true);
+                $NoNameKick = "";
+            }
+            BanList::add
+                (Client::getTransportAddress(%clientId), 60);
+            Net::kick(%clientId);
+        }
+        if($UserList::Activated == 1)
+            IxAdmin_Authenticate(%clientId, ixPrepIp(%ip));
+        if ($BanByName::IsOn == 1 && !%clientId.isAdmin && !%clientId.noKick)
+            BanByName::kick(%clientId, %ip);
+    }
+    echo("CONNECT: " @ %clientId @ " \"" @ escapeString(Client::getName(%clientId)) @ "\" " @ Client::getTransportAddress(%clientId));
+    if($ConnectLog)
+    {
+        $CLog = Client::getName(%clientId) @ " " @ %ip;
+        export("CLog","config\\Connect.log",true);
+        $CLog = "";
+    }
+        if(0)	// PORT: was a kick of any player named "DaJackal" 20 s after joining
+        schedule("KickDaJackal(" @ %clientId @ ");", 20, %clientId);
+    %clientId.noghost = true;
+    %clientId.messageFilter = -1;
+    if(!$Reneg::DSdisable)
+        %moreDS = " <f0>ID<f1> " @ isonoff($ID::DeathStar) @ " <f0>Redply <f1>" @ isonoff($DS::redeploy);
+    remoteEval(%clientId, SVInfo, version(), $Server::Hostname, $modList, $Server::Info, $ItemFavoritesKey);
+    remoteEval(%clientId, MODInfo, "<f0>Renegadez 1.1 <f0>by: <f2>[[DD]] Nemesis \n<f2> http://renegadez.webhop.net\n<f1>Settings: <f0>SM <f1>" @ isonoff($SpawnMatch) @ " <f0>BR <f1>" @ isonoff($BaseRapeDamage) @ " <f0>OADmg <f1>" @ isonoff($Reneg::OutOfAreaDamage) @ "\n<f0>WF <f1>" @ isonoff($Reneg::SpawnClass) @ " <f0>TD <f1>" @ isonoff($Server::TeamDamageScale) @ " <f0>BA <f1> "@ isonoff($BaseAddons) @ "<f0>  DSs <f1>" @ isonoff(!$Reneg::DSdisable) @ %moreDS @ "\n<f0>WC <f1>" @ isonoff($RandomEvents)); 
+    for(%i = 0; %i < 10; %i++)
+    {
+        $Client::info[%clientId, %i] = "";
+    }
+    $warning[%clientId] = 0;
+    %clientId.custom = False;
+    Game::onPlayerConnected(%clientId);
+}
+function BanByName::Init()
+{
+    $BanByName::Count = 0;
+    $BanByName::List[0,0] = "";
+    $BanByName::List[0,1] = 0;
+}
+function BanByName::Add(%name, %type)
+{
+    if (%name == "")
+        return;
+    if (!%type)
+        %type = 0;
+    %i = BanByName::Search(%name);
+    if (%i == -1)
+    {
+        $BanByName::List[$BanByName::Count,0] = %name;
+        $BanByName::List[$BanByName::Count,1] = %type;
+        $BanByName::Count++;
+    }
+}
+function BanByName::List()
+{
+    for (%i = 0; %i < $BanByName::Count; %i++)
+    {
+        echo($BanByName::List[%i,0] @ " " @ $BanByName::List[%i,1]);
+    }
+}
+function BanByName::Search(%name)
+{
+    if (%name == "")
+        return -1;
+    for (%i = 0; %i <= $BanByName::Count; %i++)
+    {
+        if ($BanByName::List[%i, 1] == 0)
+        {
+            if ($BanByName::List[%i, 0] == %name)
+            {
+                return %i;
+            }
+        }
+        else if ($BanByName::List[%i, 1] == 1)
+        {
+            %x = String::findSubStr(%name, $BanByName::List[%i, 0]);
+            if (%x >= 0)
+                return %i;
+        }
+        else
+        {
+            echo("BanByName::Search(" @ %name @ ") error: undefined %type: " @ $BanByName::List[%i, 1]);
+            return -1;
+        }
+    }
+    return -1;
+}
+function BanByName::Kick(%clientId, %ip)
+{
+    %name = Client::getName(%clientId);
+    %i = BanByName::Search(%name);
+    if(!%clientId.isAdmin && !%clientId.noKick)
+    {
+        if (%i >= 0)
+        {
+            if($ExportCKicks)
+            {
+                $NameBan = Client::getName(%clientId) @ " " @ %ip;
+                export("NameBan", "config\\KickList.log", true);
+                $NameBan = "";
+            }
+            echo("BanByName::Kick(" @ %name @ ")");
+            BanList::add
+                (%ip, 25);
+            MessageAll(1,"Server: Auto-Kick: " @ Client::getName(%clientId));
+            schedule("Net::kick(" @ %clientId @ ");",1);
+        }
+    }
+}
+function BanByName::Remove(%name)
+{
+    %i = BanByName::Search(%name);
+    if (%i >= 0)
+    {
+        for (%j = %i; %j < $BanByName::Count; %j++)
+        {
+            $BanByName::List[%j,0] = $BanByName::List[%j+1,0];
+            $BanByName::List[%j,1] = $BanByName::List[%j+1,1];
+        }
+        $BanByName::Count--;
+    }
+}
+BanByName::Init();
+exec("BBNList.cs");
+$IxAdminDebug = 0;
+function IxAdmin_Authenticate(%clientId, %ip)
+{
+    if ($IxAdminDebug)
+        echo("IxAdmin_Authenticate");
+    if($UserList::Activated)
+    {
+        if ($IxAdminDebug)
+            echo("UserList is activated.");
+        %name = Client::getName(%clientId);
+        if ($IxAdminDebug)
+            echo("\%name = " @ %name);
+        %user = ixGetUser(%name,%ip);
+        if(%user)
+        {
+            if ($IxAdminDebug)
+                echo("\%user = " @ %user);
+            %username = $UserList::User[%user,1];
+            if ($IxAdminDebug)
+                echo("\%username = " @ %username);
+            %flags = $UserList::User[%user,3];
+            if ($IxAdminDebug)
+                echo("\%flags = " @ %flags);
+            $ixUserInfo[%clientId] = $UserList::User[%user];
+            echo("Admin: User: ",%username," identified. Access level: ",%flags);
+            if(%flags == "AutoSuper")
+            {
+                %clientId.isAdmin = true;
+                %clientId.isSuperAdmin = true;
+                ixAdminMsg("SuperAdmin: " @ %username @ " automatically assigned.");
+                if ($ExportAdmin)
+                {
+                    $msg = "SuperAdmin: " @ %username @ " automatically assigned.";
+                    export("msg", "config\\AdminLog.log", true);
+                }
+            }
+            else if(%flags == "God")
+            {
+                %clientId.isAdmin = true;
+                %clientId.isSuperAdmin = true;
+                %clientId.isGod = true;
+                ixAdminMsg("GodAdmin: " @ %username @ " automatically assigned.");
+                if ($ExportAdmin)
+                {
+                    $msg = "GodAdmin: " @ %username @ " automatically assigned.";
+                    export("msg", "config\\AdminLog.log", true);
+                   }
+            }
+            else if(%flags == "AutoPublic")
+            {
+                %clientId.isAdmin = true;
+                ixAdminMsg("PublicAdmin: " @ %username @ " automatically assigned.");
+                if ($ExportAdmin)
+                {
+                    $msg = "PublicAdmin: " @ %username @ " automatically assigned.";
+                    export("msg", "config\\AdminLog.log", true);
+                }
+            }
+            else if(%flags == "Untouchable")
+            {
+                %clientId.isAdmin = true;
+                %clientId.isSuperAdmin = true;
+                %clientId.isGod = true;
+                %clientId.isUntouchable = true;
+                ixAdminMsg("UntouchableAdmin: " @ %username @ " automatically assigned.");
+                bottomprintAll("<j2> U dont Mess with this Guy Untouchable is a Statement and a Promise" @    Client::getName(%client) , 30);
+                if ($ExportAdmin)
+                {
+                    $msg = "UntouchableAdmin: " @ %username @ " automatically assigned.";
+                    export("msg", "config\\AdminLog.log", true);
+                   }
+            }
+            else if(%flags == "NoKick")
+            {
+                %clientId.noKick = true;
+                ixAdminMsg("SpecialStatus: " @ %username @ " automatically assigned.");
+                if ($ExportAdmin)
+                {
+                    $msg = "NoKick: " @ %username @ " automatically assigned.";
+                    export("msg", "config\\AdminLog.log", true);
+                }
+            }
+        }
+        else
+        {
+            echo("Admin: User: ",%name," Unknown.");
+            $ixUserInfo[%clientId] = "0 " @ %name @ " None None " @ %ip;
+        }
+    }
+    $msg = "";
+}
+function ixProcess(%client, %name, %user, %username, %flags, %password)
+{
+    if ($IxAdminDebug)
+        echo("ixProcess");
+    if(!%client.isAdmin)
+    {
+        %realpass = $UserList::User[%user,2];
+        if(!String::ICompare(%password, %realpass))
+        {
+            if((%flags == "PublicAdmin") && (%name == %username))
+            {
+                %client.isAdmin = true;
+            }
+            if((%flags == "SuperAdmin") && (%name == %username))
+            {
+                %client.isAdmin = true;
+                %client.isSuperAdmin = true;
+            }
+            ixAdminMsg(%username @ " Logged in.");
+        }
+        else
+        {
+            Client::sendMessage(%client, 0,"Server: Bad Password");
+            ixAdminMsg(%name @ " login attempt failed. Username: " @ %username);
+        }
+    }
+    else
+    {
+        Client::sendMessage(%client, 0,"Server: You already have admin status.");
+    }
+}
+function ixAdminMsg(%msg)
+{
+    if ($IxAdminDebug)
+        echo("ixAdminMsg");
+    messageAll(1, %msg);
+}
+function ixGetUser(%name,%ip)
+{
+    if ($IxAdminDebug)
+        echo("ixGetUser");
+    for(%i=1;%i <= $UserList::MaxUsers;%i++)
+    {
+        if ($IxAdminDebug)
+            echo("\$UserList::User[\%i,1] = " @ $UserList::User[%i,1]);
+        if(%name == $UserList::User[%i,1] || $UserList::User[%i,1] == "*")
+        {
+            for(%j=4;%j <= $UserList::MaxDataFields;%j++)
+            {
+                %mask = $UserList::User[%i,%j];
+                if(ixCompareIP(%ip,%mask))
+                    return %i;
+            }
+            return 0;
+        }
+    }
+    return 0;
+}
+function ixPrepIP(%transport)
+{
+    if ($IxAdminDebug)
+        echo("ixPrepIP: " @ %transport);
+    %x = String::findSubStr(%transport, ":");
+    if (%x < 0)
+        return "172.16.0.0";
+    %s = String::getSubStr(%transport, %x + 1, 10000);
+    %x = String::findSubStr(%s, ":");
+    if (%x > 0)
+        %s = String::getSubStr(%s, 0, %x);
+    if ($IxAdminDebug)
+        echo(%s);
+    return %s;
+}
+function ixCompareIP(%ip, %mask)
+{
+    if ($IxAdminDebug)
+        echo("ixCompareIP");
+    %ipNow = ixDotToSpace(%ip);
+    %maskNow = ixDotToSpace(%mask);
+    if ($IxAdminDebug)
+        echo("\%ipNow = " @ %ipNow @ " \%maskNow = " @ %maskNow);
+    for(%x=0;%x<4;%x++)
+    {
+        %one = getWord(%ipNow, %x);
+        %two = getWord(%maskNow, %x);
+        if ($IxAdminDebug)
+            echo("\%one = " @ %one @ ", \%two = " @ %two);
+        if((%one != %two) && (%two != "*"))
+            return "false";
+    }
+    return "true";
+}
+function ixStrLen(%string)
+{
+    if ($IxAdminDebug)
+        echo("ixStrLen");
+    for(%i=0; String::getSubStr(%string, %i, 1) != "";%i++)
+        %length = %i;
+    %length++;
+    return %length;
+}
+function ixDotToSpace(%string)
+{
+    if ($IxAdminDebug)
+        echo("ixDotToSpace: \%string = " @ %string);
+    %s = "";
+    for (%i = 0; %i < 3; %i++)
+    {
+        %x = String::findSubStr(%string, ".");
+        %t = String::getSubStr(%string, 0, %x) @ " ";
+        %s = %s @ %t;
+        %string = string::getSubStr(%string, %x+1, 10000);
+        if ($IxAdminDebug)
+            echo("\%x = " @ %x @ " \%t = " @ %t @ " \%s = " @ %s @ " \%string = " @ %string);
+    }
+    return %s @ %string;
+}
+function createServer(%mission, %dedicated)
+{
+    $loadingMission = false;
+    $ME::Loaded = false;
+    if(%mission == "")
+        %mission = $pref::lastMission;
+    if(%mission == "")
+    {
+        echo("Error: no mission provided.");
+        return "False";
+    }
+    if(!$SinglePlayer)
+        $pref::lastMission = %mission;
+    cursorOn(MainWindow);
+    GuiLoadContentCtrl(MainWindow, "gui\\Loading.gui");
+    renderCanvas(MainWindow);
+    if(!%dedicated)
+    {
+        deleteServer();
+        purgeResources();
+        newServer();
+        focusServer();
+    }
+    if($SinglePlayer)
+        newObject(serverDelegate, FearCSDelegate, true, "LOOPBACK", $Server::Port);
+    else
+        newObject(serverDelegate, FearCSDelegate, true, "IP", $Server::Port, "IPX", $Server::Port, "LOOPBACK", $Server::Port);
+    exec("admin.cs");
+    exec(AdminUserList);
+    exec(Marker);
+    exec(Trigger);
+    exec(NSound);
+    exec(BaseExpData);
+    exec(BaseDebrisData);
+    exec(BaseProjData);
+    exec("armordata.cs");
+    exec(Mission);
+    exec("item.cs");
+    exec("player.cs");
+    exec(Vehicle);
+    exec("Turret.cs");
+    exec("Beacon.cs");
+    exec(StaticShape);
+    exec("station.cs");
+    exec(Moveable);
+    exec(Sensor);
+    exec(Mine);
+    exec(AI);
+	exec(saveinfo);
+    exec(InteriorLight);
+    Server::storeData();
+    preloadServerDataBlocks();
+    Server::loadMission( ($missionName = %mission), true );
+    if(!%dedicated)
+    {
+        focusClient();
+        if ($IRC::DisconnectInSim == "")
+        {
+            $IRC::DisconnectInSim = true;
+        }
+        if ($IRC::DisconnectInSim == true)
+        {
+            ircDisconnect();
+            $IRCConnected = FALSE;
+            $IRCJoinedRoom = FALSE;
+        }
+        $Server::Address = "LOOPBACK:" @ $Server::Port;
+        $Server::JoinPassword = $Server::Password;
+        connect($Server::Address);
+    }
+    return "True";
+}
+function Server::nextMission(%replay)
+{
+    if(%replay || $Server::TourneyMode)
+        %nextMission = $missionName;
+    else
+        %nextMission = $nextMission[$missionName];
+    echo("Changing to mission ", %nextMission, ".");
+    Server::loadMission(%nextMission);
+}
+function remoteCycleMission(%clientId)
+{
+    if(%clientId.isAdmin)
+    {
+        messageAll(0, Client::getName(%playerId) @ " cycled the mission.");
+        Server::nextMission();
+    }
+}
+function remoteDataFinished(%clientId)
+{
+    if(%clientId.dataFinished)
+        return;
+    %clientId.dataFinished = true;
+    Client::setDataFinished(%clientId);
+    %clientId.svNoGhost = "";
+    if($ghosting)
+    {
+        %clientId.ghostDoneFlag = true;
+        startGhosting(%clientId);
+    }
+}
+function remoteCGADone(%playerId)
+{
+    if(!%playerId.ghostDoneFlag || !$ghosting)
+        return;
+    %playerId.ghostDoneFlag = "";
+    Game::initialMissionDrop(%playerid);
+    if ($cdTrack != "")
+        remoteEval (%playerId, setMusic, $cdTrack, $cdPlayMode);
+    remoteEval(%playerId, MInfo, $missionName);
+}
+function Server::loadMission(%missionName, %immed)
+{
+    if($loadingMission)
+        return;
+    %missionFile = "missions\\" $+ %missionName $+ ".mis";
+    if(File::FindFirst(%missionFile) == "")
+    {
+        %missionName = $firstMission;
+        %missionFile = "missions\\" $+ %missionName $+ ".mis";
+        if(File::FindFirst(%missionFile) == "")
+        {
+            echo("invalid nextMission and firstMission...");
+            echo("aborting mission load.");
+            return;
+        }
+    }
+    echo("Notfifying players of mission change: ", getNumClients(), " in game");
+    for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+    {
+        Client::setGuiMode(%cl, $GuiModeVictory);
+        %cl.guiLock = true;
+        %cl.nospawn = true;
+        remoteEval(%cl, missionChangeNotify, %missionName);
+    }
+    if($Reneg::crashMission)
+    {
+        if($Reneg::crashMission > 2)
+            return;
+        if($Reneg::crashMission == 1)
+            $pref::lastMission = $missionName;
+        else if($Reneg::crashMission == 2)
+            $pref::lastMission = $nextMission[$missionName];
+        export("pref::lastMission", "config\\StartMission.cs", False);
+    }
+    $loadingMission = true;
+    $missionName = %missionName;
+    $missionFile = %missionFile;
+    $prevNumTeams = getNumTeams();
+    deleteObject("MissionGroup");
+    deleteObject("MissionCleanup");
+    deleteObject("ConsoleScheduler");
+    resetPlayerManager();
+    resetGhostManagers();
+    $matchStarted = false;
+    $countdownStarted = false;
+    $ghosting = false;
+    resetSimTime();
+    newObject(ConsoleScheduler, SimConsoleScheduler);
+    if(!%immed)
+        schedule("Server::finishMissionLoad();", 18);
+    else
+        Server::finishMissionLoad();
+}
+function Server::finishMissionLoad()
+{
+    $loadingMission = false;
+    $TestMissionType = "";
+    setInstantGroup(0);
+    newObject(MissionCleanup, SimGroup);
+    exec($missionFile);
+    Mission::init();
+    Mission::reinitData();
+    if($prevNumTeams != getNumTeams())
+    {
+        messageAll(0, "New teamcount - resetting teams.");
+        for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+            GameBase::setTeam(%cl, -1);
+    }
+    $ghosting = true;
+    for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+    {
+        if(!%cl.svNoGhost)
+        {
+            %cl.ghostDoneFlag = true;
+            startGhosting(%cl);
+        }
+    }
+    if($SinglePlayer)
+        Game::startMatch();
+    else if($Server::warmupTime && !$Server::TourneyMode)
+        Server::Countdown($Server::warmupTime);
+    else if(!$Server::TourneyMode)
+        Game::startMatch();
+    $teamplay = (getNumTeams() != 1);
+    purgeResources(true);
+    schedule("Server::CheckMatchStarted();", 3600);
+    schedule("Server::nextMission();", 18000);
+    return "True";
+}
+function Server::CheckMatchStarted()
+{
+    if(!$matchStarted)
+        Server::nextMission(true);
+}
+function Server::Countdown(%time)
+{
+    $countdownStarted = true;
+    schedule("Game::startMatch();", %time);
+    Game::notifyMatchStart(%time);
+    if(%time > 30)
+        schedule("Game::notifyMatchStart(30);", %time - 30);
+    if(%time > 15)
+        schedule("Game::notifyMatchStart(15);", %time - 15);
+    if(%time > 10)
+        schedule("Game::notifyMatchStart(10);", %time - 10);
+    if(%time > 5)
+        schedule("Game::notifyMatchStart(5);", %time - 5);
+}
+function Client::setInventoryText(%clientId, %txt)
+{
+    remoteEval(%clientId, "ITXT", %txt);
+}
+function centerprint(%clientId, %msg, %timeout)
+{
+    if(%timeout == "")
+        %timeout = 5;
+    remoteEval(%clientId, "CP", %msg, %timeout);
+}
+function bottomprint(%clientId, %msg, %timeout)
+{
+    if(%timeout == "")
+        %timeout = 5;
+    remoteEval(%clientId, "BP", %msg, %timeout);
+}
+function topprint(%clientId, %msg, %timeout)
+{
+    if(%timeout == "")
+        %timeout = 5;
+    remoteEval(%clientId, "TP", %msg, %timeout);
+}
+function centerprintall(%msg, %timeout)
+{
+    if(%timeout == "")
+        %timeout = 5;
+    for(%clientId = Client::getFirst(); %clientId != -1; %clientId = Client::getNext(%clientId))
+        remoteEval(%clientId, "CP", %msg, %timeout);
+}
+function bottomprintall(%msg, %timeout)
+{
+    if(%timeout == "")
+        %timeout = 5;
+    for(%clientId = Client::getFirst(); %clientId != -1; %clientId = Client::getNext(%clientId))
+        remoteEval(%clientId, "BP", %msg, %timeout);
+}
+function topprintall(%msg, %timeout)
+{
+    if(%timeout == "")
+        %timeout = 5;
+    for(%clientId = Client::getFirst(); %clientId != -1; %clientId = Client::getNext(%clientId))
+        remoteEval(%clientId, "TP", %msg, %timeout);
+}
+function ixDotProd(%vec, %scalar)
+{
+    %return = Vector::dot(%vec,%scalar @ " 0 0") @ " " @ Vector::dot(%vec,"0 " @ %scalar @ " 0") @ " " @ Vector::dot(%vec,"0 0 " @ %scalar);
+    return %return;
+}
+function ixSin(%theta)
+{
+    return (%theta - (pow(%theta,3)/6) + (pow(%theta,5)/120) - (pow(%theta,7)/5040) + (pow(%theta,9)/362880) - (pow(%theta,11)/39916800));
+}
+function ixCos(%theta)
+{
+    return (1 - (pow(%theta,2)/2) + (pow(%theta,4)/24) - (pow(%theta,6)/720) + (pow(%theta,8)/40320) - (pow(%theta,10)/3628800));
+}
+function ixApplyKickback(%player, %strength, %lift)
+{
+    if((!%lift) && (%lift != 0))
+        %lift = 0;
+    %rot = GameBase::getRotation(%player);
+    %rad = getWord(%rot, 2);
+    %x = (-1) * (ixSin(%rad));
+    %y = ixCos(%rad);
+    %dir = %x @ " " @ %y @ " 0";
+    %force = ixDotProd(Vector::neg(%dir),%strength);
+    %x = getWord(%force, 0);
+    %y = getWord(%force, 1);
+    %dir = %x @ " " @ %y @ " " @ %lift;
+    Player::applyImpulse(%player,%force);
+}

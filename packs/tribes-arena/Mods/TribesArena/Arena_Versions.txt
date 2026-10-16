@@ -1,0 +1,366 @@
+_____________________________________________________________________________
+TRIBES ARENA VERSION 3.0               									2002-06-15
+Versions 2.4 and above by Lizard (belgarion@tribes2universe.com)
+Original version by Rasia (up to version 2.3)
+_____________________________________________________________________________
+
+
+Version 3.0 (by Lizard)
+=======================
+- Replaced "Score" by Kill/Death (number of kills/number of deaths). This 
+  is a server-side option which can be turned on/off.
+- Added number of kills and death for each team in the Tab menu.
+- Updated Top Scores to display Kill/Death as well.  Top Scores are now
+  sorted by: number of kills, number of deaths, game score.
+- Updated LizStats to work with new scoring system
+- Added a new server option to limit the number of sniper rifles in pub 
+  mode (max. number is selectable).  For match mode, the limit is unchanged.
+- Players can now team themselves back into the game using tab menu in pub 
+  mode (no need for an admin to do it) if they were in observer
+- Matches can only be forced in pre-match mode
+- Fixed the problem where match continues even though one team no longer has 
+  any players left. This happens (sometimes) when a player has been 
+  teamchanged in the middle of the match. That problem has been present in 
+  Arena for as long as I can remember. Hope we finally got rid of that one.
+- Fixed the problem where a player's two inventory visits may be depleted 
+  during match countdown because he/she spawned to close to an inventory. 
+  This is another of the old-timer bugs. Hopefully this one will be gone too!
+- Fixed the double death problem when killed (or when one suicided) while 
+  being OOB. Yup! Yet another old-timer bug.
+- Added a feature that automatically set AFK people in observer. A player is 
+  considered AFK if he has moved (position or direction) in the first 30 
+  seconds of the game, or every 20 seconds afterwards. Since the player can 
+  now team himself back in a team when in observer mode, this doesn't add
+  more work for the admin.  This option can also be set off.
+- Because afkers are now detected, there is no need for the ready up timer, 
+  so it has been disabled (except if AFK detection is not enabled).
+- Added a new admin option that will recreate and re-randomize teams
+- Fixed the team change exploit. Thanks to some people who apparently
+  have a lot of time to waste to do very stupid and useless things.. 
+- The winning score is now fixed to a default value and can not be changed 
+  anymore (optional, server configuration).
+- Added an option to limit the number of admins that can be adminned by 
+  existing admins (yes, that sentence makes sense).
+- Player can not choose his team anymore (only Automatic)
+- Made the AFK delay longer (32s/32s) to avoid people timing out being put 
+  in obs
+- Reenabled Force Match in Match Mode
+- Added a feature to automatically even teams (number of people per team) at
+  game start and when a player drops. This can be enabled/disabled through the
+  $ArenaAutoEvenTeams config switch.
+- Improved auto-even'ing teams. It now first even teams by number of players
+  and then checks if teams are even skill-wise, and does the necessary 
+  adjustments.
+- ServerAdmins (S) and Moderators (M) can unadmin regular admins (A)
+- Super Admin (S) can now admin other players as A, M or S rather than only
+  (A) admin like it used to be.
+- Fixed an incompatibility with some other MODs (like DM, Rabbit, etc.) which
+  was caused by the new admin functions.  This will REQUIRE that the server
+  owner erase the modified admin.cs, comchat.cs and gui.cs from the Base 
+  directory (these files are now named arenaAdmin.cs, arenaComchat.cs and
+  arenaGui.cs). The modified Scripts.VOL should also be replaced by the 
+  original tribes Scripts.VOL file
+  
+
+Version 2.9 (by Lizard)
+=======================
+- Replaced usual player information (Name, Email, Tribe, etc.) by relevant
+  statistics. This is implemented as an option, so server admins who do not
+  wish these (or have not installed/properly installed LizStats) can still
+  have the good ole' tab info (Requires LizStats)
+
+
+Version 2.8 (by Lizard)
+=======================
+- Fixed problem where as the last 5 points (for winning a match) would not
+  be displayed in the score HUD (and the Top Scores would not be updated
+  in LizStats either).
+- Added an option so that public admins may not change to/from Public/Match 
+  Mode
+- Resets player scores when switching from Public to Match mode (and vice
+  et versa)
+- Updated player welcome message ("Hello, and welcome to Tribes Arena...")
+
+
+Version 2.7 (by Lizard)
+=======================
+- Moved top score above map statistics in objectives
+- Re-phrased the TK messages so they are easier to read
+- Fixed a bug where people on the winning team would get their 5 points for
+  winning after the last match is played, but it would not display in the
+  tab score menu.
+- Added a global mute, on a per player basis. Can be temporary (duration) or
+  permanent (until the player disconnects or is unmuted). Behavior controlled
+  by $GlobalMuteDuration. Bye spammers.
+- Added an option so maps don't get played over and over in a short while by
+  checking what the last 4 played maps were, and disallowing votes for that
+  map. This is effective only in pub mode. Requires LizStats.
+- Decreased the delay (was 30 seconds, now is 20 seconds) before an AFK player 
+  is put in obs when he doesn't ready up. Furthermore, players can not unready 
+  up in pub mode anymore. Also, ready up message is now more obvious so new 
+  players are aware of it.
+- Added an self increasing delay before a player can start another vote
+- Added a sad() password that removes the admin from the player who entered
+  the password
+- Added an option to enable player name lookup when someone enters 
+  an admin password. This will be useful for server admins who do not want 
+  their admins to smurf and using the admin password(s).
+- Bug Fix: At match start, when someone is not ready and put in observer,
+  match will be able to start if everyone is ready now.
+  
+  
+Version 2.6 (by Lizard)
+=======================
+- Removed TK warnings and Uneven team warnings in match mode
+- Added player options for server admin
+
+  
+Version 2.5 (by Lizard)
+=======================
+- Add an option to automatically prevent some players (IP based) from ever
+  getting any kind of admin. This is especially useful for these people that
+  constantly abuse their given/voted admin.
+- Add an option to automatically admin some players when they connect (IP
+  based). 
+- Added a few sounds (requires clients to install the .wav files if they
+  want to hear them)
+
+
+Version 2.4 (by Lizard)
+=======================
+- Due to several admin enhancements, the file modified "base\admin.cs" is
+  required now. If this file is not used, then enhanced admin modifications
+  will not be available (and therefore should NOT be enabled). Updating
+  the "base\admin.cs" REQUIRES the latest Tribes 1.11 installation.
+- Added a feature to become regular "A" admin by password. Same usage as to
+  become SuperAdmin, eg: use sad(adminpassword)
+- Added another level of admin. The trusted "s" admin has all the abilities
+  of the regular "A" admin but can not be kicked by a regular admin (either
+  voted or by password). The trusted admin can also strip regular admins,
+  and set password to the server. All trusted admin extra features can be
+  configured by the server owner
+- Added multi-passwords for regular "A" and trusted "s" admins. Now you can
+  have any number of passwords (useful to assign a different password per
+  player you want to give admin to - also makes password leakages more obvious
+  for the server owner).
+- Added a function to log who became admin using password
+- Realigned admin properties by two spaces to the left for compatibility with
+  some 3rd party client-side GUI scripts
+- Added a feature so admins can vote for new maps too (that option was not
+  available before)
+- Added an option so that only Super Admins can change the Ready Up Timer
+- Added an option so that only Super Admins can enable/disable auto team join
+- Added an option so that only Super Admins can change the Time Limit
+- Added an option so that only Super Admins can reset the server to default
+- Admins can now re-team someone, even if he was locked (no more of these
+  "unlock yourself" messages!)
+- Fixed the bug where a player who just connected to the game, and had the
+  same clientID as someone who was previously muted, would be muted as well.
+  This requires that the updated "base\comchat.cs" file is used. Updating
+  the "base\comchat.cs" REQUIRES the latest Tribes 1.11 installation. If this
+  file is not installed, the bug simply will not be fixed (no other 
+  aftereffects). This update is required because it is an inherent Tribes bug
+  and is not related to Arena specifically.
+  More details: when the bug happens, the newly connected player will still
+  be shown as "muted", until he/she tries to speak. In which case, his/her
+  muted status will be verified and if this was the case of a bugged mute,
+  that player will be unmuted.
+- Added several checks in inventory functions in order to prevent a Server
+  Attack exploit. This attack would consist in purchasing many items from
+  inventory station, and dropping them right away. This exploit originates 
+  from the litterbug exploit.
+- Since all Arena ladders are working with a 5 Games/Match setup, 
+  automatically set the winning score to 5 when entering match mode. This will
+  avoid the oh-so-numerous times everyone forgets to change the winning score
+  when playing a scrim/match.
+- Added an option for a protected IP list: those playing on these IP can
+  not be kicked or banned
+- Log all sadsetpassword() operations
+- Added a line to a player info in the score menu (TAB) that displays the 
+  player's score, kills, deaths, suicides and TKs
+- Added support for lizStats v1.0 and updated Objectives screen to display
+  these statistics.
+- Added an autokick IP list. Any player whose IP is in that list will 
+  automatically be kicked for a specific duration whenever he/she tries to
+  join.
+- Added mechanism to warn all connected admins when teams are uneven 
+- Added an option so that a message in RED is sent to a player when he TKs
+- Added an option so that all connected admins are notified in RED when a
+  player is TKing on purpose
+- Added an option to disallow "blank" players on the server
+ 
+  
+Version 2.3 (by Rasia)
+======================
+- Random Changes that hopefully fixed some minor bugs
+
+
+Version 2.2 (by Rasia)
+======================
+- No Heavies in Non-Arena game after switching from Arena Game Fixed
+- Team Captains Dropping now randomly gives another person on that team Team 
+  Captains
+- Messed with the ReadyUp Messages to make em more purty and less confusin'
+
+
+Version 2.1 (by Rasia)
+======================
+- Alrighty, a large amount of stuff here :)
+- Removed Heavies Entirely
+- Limited lasers to 2 per team in Match Mode
+- ADDED a Match Mode
+- Reworked the number of times you can get an inv so it didn't count trips to 
+  enemy stations
+- Fixed Team Joining so it correctly distributes team members (at least, 
+  better)
+- Added a Time Limit for each game (3 minutes by default)
+- Fixed the OpenGl bug that made it crash between level swapps (I hope)
+- uumm, lots of other tweaks and changes under the hood
+
+
+Version 1.9.1 (by Rasia)
+========================
+- Fixed the countdown Kill bug
+
+
+Version 1.9 (by Rasia)
+======================
+- Set a limit on Heavies (1 per 4 people)
+- Removed Team Energy
+- Set a limit to the number of times you can access Ammo and ATMs
+- Added Remote ATMs and Ammos
+- Modified the welcome message
+- Fixed observer Bug
+- Modified Player List--Kills will now be displayed when peering into the 
+  game via Gamespy/Pingtool, and after the PL column Admin status is shown 
+  (A for Voted, S for Super)
+- Super Admin can now strip all public admins of thier admin flag
+
+
+Version 1.8.1 (by Rasia)
+========================
+- Fixed a bug that made Gens Industuctable in maps other than Arena
+- Switched Player Score on the Tab  Menu back to kills, but you get a +5 
+  for being on a winning team
+
+
+Version 1.8 (by Rasia)
+======================
+- Removed Mortars
+- Lowered Energy Per Person Some
+- Added a map cycle after X amount of matches played (default of 3)
+- Added Admin Force Start
+- Added Client-side Sounds to spice up the countdown and stuff
+- Added Arena-specific favorites
+- Players who die during countdown now repop on thier team right before 
+  the match starts
+
+
+Version 1.7.1 (by Rasia)
+========================
+- Fixed Team Energy going Negative Bug
+
+
+Version 1.7 (by Rasia)
+======================
+- Using Team Energy to Limit Heavies and Refills
+- Put Admin ability in to teamchange in game.  They won't spawn until the 
+  current game is over
+- Took the BLAH out of the Objective Menu
+- Put in Autoteam in between maps
+- Extended the delay in between games to account for twitches killing 
+  people
+- The observer should no-longer have to re-observer in between games to 
+  change what they are looking at
+
+
+Version 1.6.1 (by Rasia)
+========================
+- Find that ammopacks gave you mines WHOOPS
+- Took out the initial Team Choice menu
+
+
+Version 1.6 (by Rasia)
+======================
+- Added a centerprint on match end, as well as a sound byte
+- Added a check for team death 3 seconds into match, so anyone who has 
+  killed themselves in countdown or prematch are considered for team death
+- Added the ability to change the Timelimit and maxplayers based on if its 
+  an Arena map or not (Look at the cs file to see how to do this)
+- Hardcoded TeamDamage on
+
+
+Version 1.5.8 (by Rasia)
+========================
+- Had a typo
+
+
+Version 1.5.7 (by Rasia)
+========================
+- Fixed the bug that caused hangs.
+- Took out the ability to have admins add people during a fight
+- You no longer ready between games, only between matches
+
+
+Version 1.5 (by Rasia)
+======================
+- Put in Automatic Team joining in between matches.  Also an admin menu 
+  option to disable this. 
+- Touched up some of the Messages about whose ready and what not.  It only 
+  displays unready clients if there is less than 4
+- Added a new feature to the tab menu.  The team name is which team the 
+  player is on, regardless if they are alive are dead 
+- Another new feature: An * appears beside the players name if they are 
+  currently alive. 
+- Scorelimit, Ready Up timer, and AutoTeamJoin are now only set in the code 
+  if thier value didn't previously exist.  This means, once you set, say, 
+  the score limit, changing the map won't reset it to the default value.
+- Holding objectives won't give you points now
+
+
+Version 1.4 (by Rasia)
+======================
+- Removed Mines
+- Added messages to the Fire when Ready to show team score
+- During countdowns, if someone observered and they were the last member it 
+  would break things all to hell (fixed)
+- When an Admin teamchanged someone with Automatic, they were placed on the 
+  team but never spawned (fixed)
+- Voted Admins can now give others Voted Admin status
+- Slightly changed the Objective menu
+- Voted Admins can toggle if the Timer on ReadyStatus is active or not.
+
+
+Version 1.3.1 (by Rasia)
+========================
+- A bad if statement was causing no one to respawn correclty.
+
+
+Version 1.3 (by Rasia)
+======================
+- Rewrote observer code, lets all pray it works now :)
+- Added a message to show who isn't readied up.
+
+
+Version 1.2 (by Rasia)
+======================
+- Removed to option to change teams when MatchStaus = 1 (when people are 
+  fighting)
+- When a player leaves a team, and he is the last one alive, that team loses 
+  now (had the check in the wrong place)
+
+
+Version 1.11 (by Rasia)
+=======================
+- Extremely lagged players were entering the game in ready-mode between level 
+  changes (fixed)
+- When entering a game (for whatever reason) and the match is running, it 
+  shouldn't place you in the ready up state.
+
+
+Version 1.1 (by Rasia)
+======================
+- Admin changing a team would instantly place the player in game, but not spawn 
+  the player (fixed)
+- Switching to Observer mode wouldn't reset the player's matchteam (fixed)
+

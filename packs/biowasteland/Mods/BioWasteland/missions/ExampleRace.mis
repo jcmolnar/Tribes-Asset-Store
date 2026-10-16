@@ -1,0 +1,522 @@
+//==============================================
+//=== Map Example By Biohazard
+//==============================================
+//=== You need to scroll down and read my comments as they appear.
+//=== Some of the most important comments are at the end, so keep looking.
+//=== This assumes you already know how to use the Tribe's Map Editor.
+//=== To learn the map editor, get my Map Making Tutorial Download.
+//==============================================
+
+//==============================================
+//=== To add a race to any map, its simple.
+//=== Scroll down for a description on how.
+//==============================================
+
+
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "Entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "World" {
+			fileName = "lushWorld.vol";
+		};
+		instant SimVolume "WorldTerrain" {
+			fileName = "lushTerrain.vol";
+		};
+		instant SimVolume "lushDML" {
+			fileName = "lushDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "TedFile" {
+			fileName = "3_Vehicle.ted";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "3_vehicle.vol";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "Palette" {
+			fileName = "lush.day.ppl";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-1600";
+			y = "-300";
+			w = "1850";
+			h = "1800";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "litesky.dml";
+			skyColor = "0 0 0";
+			hazeColor = "0 0 0";
+			featurePosition = "0";
+			size = "800";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "2";
+			textures[3] = "3";
+			textures[4] = "4";
+			textures[5] = "5";
+			textures[6] = "6";
+			textures[7] = "7";
+			textures[8] = "8";
+			textures[9] = "9";
+			textures[10] = "10";
+			textures[11] = "11";
+			textures[12] = "12";
+			textures[13] = "13";
+			textures[14] = "14";
+			textures[15] = "15";
+			distance = "13000";
+		};
+		instant Planet "Sun" {
+			fileName = "";
+			azimuth = "60";
+			incidence = "40";
+			castShadows = "True";
+			useLensFlare = "False";
+			intensity = "0.799968 0.799968 0.799968";
+			ambient = "0.399976 0.399976 0.399976";
+			size = "2000";
+			distance = "11000";
+		};
+		instant SimLight {
+			type = "2";
+			range = "3";
+			color = "1 0 0";
+			ambient = "0 0 0";
+			position = "-42.9536 56.4163 126.382";
+			aim = "0 0 -1";
+			isStatic = "True";
+			locked = "true";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "3_Vehicle.dtf";
+			visibleDistance = "1000";
+			hazeDistance = "600";
+			hazeVerticalMin = "1.04846e-38";
+			hazeVerticalMax = "7.36907e-38";
+			perspectiveDistance = "100";
+			screenSize = "70";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 0";
+			rotation = "0 0 0";
+		};
+	};
+	instant SimGroup "MapMarkers" {
+		instant Marker "Map Marker1" {
+			dataBlock = "MapMarker";
+			name = "Running Course";
+			position = "-518.044 785.688 135.187";
+			rotation = "0 0 0";
+		};
+		instant Marker "Map Marker1" {
+			dataBlock = "MapMarker";
+			name = "Vehicle Course";
+			position = "-39.7114 41.4851 132.988";
+			rotation = "0 0 0";
+		};
+	};
+	instant SimGroup "Teams" {
+//==============================================
+//=== Its not required, but it is recommended that you have only one team: "team0"
+//==============================================
+		instant TeamGroup "Team0" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-38.9344 43.6993 114.661";
+						rotation = "0 -0 -1.87976";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-38.9344 43.6993 114.661";
+						rotation = "0 -0 -1.87975";
+					};
+				};
+			};
+			instant SimGroup "base" {
+				instant SimGroup "Pad1" {
+					instant StaticShape "VehicleStation1" {
+						dataBlock = "VehicleStation";
+						name = "";
+						position = "-30.8317 41.25 114.127";
+						rotation = "0 -0 -1.79968";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						enterTime = "439.647";
+						VehiclePad = "8219";
+					};
+					instant StaticShape "vehiclePad1" {
+						dataBlock = "VehiclePad";
+						name = "";
+						position = "-41.8044 60.2428 113.765";
+						rotation = "0 -0 -0.219975";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+						lastDamageObject = "8499";
+						lastDamageTeam = "0";
+						busy = "392.47";
+					};
+					instant SimGroup "Group1" {
+						instant InteriorShape "ehoverpost1" {
+							fileName = "ehoverpost.4.dis";
+							isContainer = "1";
+							position = "-85 280 130";
+							rotation = "0 0 0";
+							lightParams = "0 ";
+						};
+						instant InteriorShape "ehoverpost1" {
+							fileName = "ehoverpost.5.dis";
+							isContainer = "1";
+							position = "-50 280 130";
+							rotation = "0 0 0";
+							lightParams = "0 ";
+						};
+						instant StaticShape "AntennaSmall1" {
+							dataBlock = "SmallAntenna";
+							name = ".";
+							position = "-85 280.057 146";
+							rotation = "0 0 0";
+							destroyable = "True";
+							deleteOnDestroy = "False";
+						};
+						instant StaticShape "AntennaSmall1" {
+							dataBlock = "SmallAntenna";
+							name = ".";
+							position = "-50.0257 280.125 146";
+							rotation = "0 0 0";
+							destroyable = "True";
+							deleteOnDestroy = "False";
+						};
+					};
+					instant SimGroup "Group1" {
+						instant InteriorShape "ehoverpost1" {
+							fileName = "ehoverpost.6.dis";
+							isContainer = "1";
+							position = "-262 382 190";
+							rotation = "0 0 0";
+							lightParams = "0 ";
+						};
+						instant InteriorShape "ehoverpost1" {
+							fileName = "ehoverpost.7.dis";
+							isContainer = "1";
+							position = "-262 347 190";
+							rotation = "0 0 0";
+							lightParams = "0 ";
+						};
+						instant StaticShape "AntennaSmall1" {
+							dataBlock = "SmallAntenna";
+							name = ".";
+							position = "-262 347 206";
+							rotation = "0 0 0";
+							destroyable = "True";
+							deleteOnDestroy = "False";
+						};
+						instant StaticShape "AntennaSmall1" {
+							dataBlock = "SmallAntenna";
+							name = ".";
+							position = "-262 382 206";
+							rotation = "0 0 0";
+							destroyable = "True";
+							deleteOnDestroy = "False";
+						};
+					};
+					instant SimGroup "Group1" {
+						instant InteriorShape "ehoverpost1" {
+							fileName = "ehoverpost.8.dis";
+							isContainer = "1";
+							position = "-441.454 408 230";
+							rotation = "0 0 0.715557";
+							lightParams = "0 ";
+						};
+						instant InteriorShape "ehoverpost1" {
+							fileName = "ehoverpost.9.dis";
+							isContainer = "1";
+							position = "-415.82 430.25 230";
+							rotation = "0 0 0.715557";
+							lightParams = "0 ";
+						};
+						instant StaticShape "AntennaSmall1" {
+							dataBlock = "SmallAntenna";
+							name = ".";
+							position = "-415.837 430.268 246";
+							rotation = "0 0 0";
+							destroyable = "True";
+							deleteOnDestroy = "False";
+							lastDamageObject = "2049";
+							lastDamageTeam = "0";
+						};
+						instant StaticShape "AntennaSmall1" {
+							dataBlock = "SmallAntenna";
+							name = ".";
+							position = "-441.375 408 246";
+							rotation = "0 0 0";
+							destroyable = "True";
+							deleteOnDestroy = "False";
+						};
+					};
+					instant SimGroup "Group1" {
+						instant InteriorShape "ehoverpost1" {
+							fileName = "ehoverpost.10.dis";
+							isContainer = "1";
+							position = "-480 630 130";
+							rotation = "0 0 0";
+							lightParams = "0 ";
+						};
+						instant InteriorShape "ehoverpost1" {
+							fileName = "ehoverpost.11.dis";
+							isContainer = "1";
+							position = "-530 630 130";
+							rotation = "0 0 0";
+							lightParams = "0 ";
+						};
+						instant StaticShape "AntennaSmall1" {
+							dataBlock = "SmallAntenna";
+							name = ".";
+							position = "-480.126 630 146";
+							rotation = "0 0 0";
+							destroyable = "True";
+							deleteOnDestroy = "False";
+						};
+						instant StaticShape "AntennaSmall1" {
+							dataBlock = "SmallAntenna";
+							name = ".";
+							position = "-530.125 630.048 146";
+							rotation = "0 0 0";
+							destroyable = "True";
+							deleteOnDestroy = "False";
+						};
+					};
+					instant StaticShape "InventoryStation1" {
+						dataBlock = "InventoryStation";
+						name = "";
+						position = "-61.6366 49.561 113.972";
+						rotation = "0 -0 1.29999";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+				};
+				instant InteriorShape "tank81" {
+					fileName = "tank8.0.dis";
+					isContainer = "1";
+					position = "-43.4761 53.5513 100";
+					rotation = "0 0 2.87956";
+					lightParams = "0 ";
+					locked = "1";
+				};
+				instant StaticShape "Generator1" {
+					dataBlock = "Generator";
+					name = "";
+					position = "-1222.03 -1222.75 -5.99961";
+					rotation = "0 0 0";
+					destroyable = "True";
+					deleteOnDestroy = "False";
+				};
+				instant SimGroup "RunningCourse" {
+					instant InteriorShape "w64gate1" {
+						fileName = "W64gate.dis";
+						isContainer = "1";
+						position = "-520.68 782.359 120.841";
+						rotation = "0 0 0";
+						lightParams = "0 ";
+					};
+					instant StaticShape "AntennaSmall1" {
+						dataBlock = "SmallAntenna";
+						name = ".";
+						position = "-608.282 972.595 134.696";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant StaticShape "AntennaSmall1" {
+						dataBlock = "SmallAntenna";
+						name = ".";
+						position = "-575.795 992.924 131.474";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant StaticShape "AntennaSmall1" {
+						dataBlock = "SmallAntenna";
+						name = ".";
+						position = "-688.12 1145.75 123.985";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant StaticShape "AntennaSmall1" {
+						dataBlock = "SmallAntenna";
+						name = ".";
+						position = "-664.307 1155.5 114.057";
+						rotation = "0 0 0";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant InteriorShape "tank131" {
+						fileName = "tank13.dis";
+						isContainer = "1";
+						position = "-974.571 1321.16 158.07";
+						rotation = "0 -0 -0.379993";
+						lightParams = "0 ";
+					};
+					instant StaticShape "AntennaSmall1" {
+						dataBlock = "SmallAntenna";
+						name = "Finish Line";
+						position = "-957.589 1319.34 187.743";
+						rotation = "0 -0 -0.339992";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant StaticShape "AntennaSmall1" {
+						dataBlock = "SmallAntenna";
+						name = ".";
+						position = "-960.656 1310.63 187.688";
+						rotation = "0 -0 -0.339991";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant StaticShape "BigElectroBeam1" {
+						dataBlock = "ElectricalBeamBig";
+						name = "";
+						position = "-960.961 1310.81 187.681";
+						rotation = "0 1.56993 1.19996";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+					instant StaticShape "BigElectroBeam1" {
+						dataBlock = "ElectricalBeamBig";
+						name = "";
+						position = "-959.169 1315.45 187.688";
+						rotation = "0 1.56991 1.19994";
+						destroyable = "True";
+						deleteOnDestroy = "False";
+					};
+				};
+			};
+		};
+	};
+//==============================================
+//=== To make a Racing map...
+//===
+//=== 1. Use the Editor to add a SimGroup to the mission.
+//===    This SimGroup will hold all the Legs, and should hold nothing else.
+//=== 2. To this SimGroup, add as many SimGroups (at least one)as you
+//===    want Legs to the course.  The Leg SimGroups will hold all the RaceTriggers,
+//===    and should hold nothing else.
+//=== 3. To the Leg SimGroups, add RaceTriggers in the order players should pass them.
+//===
+//=== Thats it.  Its that simple.
+//===
+//=== If your editor doesn't have RaceTriggers, use GroupTriggers to
+//=== design your mission, then when its complete, rename the dataBlocks
+//=== from GroupTrigger to RaceTrigger.
+//===
+//=== Players will respawn at the last trigger of the last completed leg.
+//===
+//=== Its recomended that triggers of any type not be bigger than 40 in any dimension.
+//==============================================
+	instant SimGroup "Race Course Folder" {
+		instant SimGroup "Flying Leg" {
+			instant Trigger "RaceTrigger1" {
+				dataBlock = "RaceTrigger";
+				name = "";
+				position = "-68.0455 279.411 150.222";
+				rotation = "0 0 0";
+				boundingBox = "-20 -2 -4 20 2 4";
+				isSphere = "True";
+			};
+			instant Trigger "RaceTrigger1" {
+				dataBlock = "RaceTrigger";
+				name = "";
+				position = "-261.469 364.47 209.564";
+				rotation = "0 -0 1.55993";
+				boundingBox = "-20 -2 -4 20 2 4";
+				isSphere = "True";
+			};
+			instant Trigger "RaceTrigger1" {
+				dataBlock = "RaceTrigger";
+				name = "";
+				position = "-427.899 419.189 249.65";
+				rotation = "0 -0 0.699988";
+				boundingBox = "-20 -2 -4 20 2 4";
+				isSphere = "True";
+			};
+			instant Trigger "RaceTrigger1" {
+				dataBlock = "RaceTrigger";
+				name = "";
+				position = "-505.522 630.844 149.658";
+				rotation = "0 -0 -2.61791e-06";
+				boundingBox = "-25 -2 -4 25 2 4";
+				isSphere = "True";
+			};
+		};
+		instant SimGroup "Running Leg" {
+			instant Trigger "RaceTrigger1" {
+				dataBlock = "RaceTrigger";
+				name = "";
+				position = "-520.672 779.9 120.75";
+				rotation = "0 0 0";
+				boundingBox = "-8 -1 -1 8 1 1";
+				isSphere = "True";
+			};
+			instant Trigger "RaceTrigger1" {
+				dataBlock = "RaceTrigger";
+				name = "";
+				position = "-592.229 982.603 133.779";
+				rotation = "0 -0 0.559991";
+				boundingBox = "-20 -1 -3 20 1 3";
+				isSphere = "True";
+			};
+			instant Trigger "RaceTrigger1" {
+				dataBlock = "RaceTrigger";
+				name = "";
+				position = "-676.259 1150.03 121.778";
+				rotation = "0.137609 0.333717 0.316779";
+				boundingBox = "-15 -1 -4 15 1 4";
+				isSphere = "True";
+			};
+			instant Trigger "RaceTrigger1" {
+				dataBlock = "RaceTrigger";
+				name = "";
+				position = "-959.453 1315.08 185.883";
+				rotation = "0 -0 1.21995";
+				boundingBox = "-4 -1 -2 4 1 2";
+				isSphere = "True";
+			};
+		};
+	};
+};
+//--- export object end ---//
+exec(objectives);
+$cdTrack = 3;
+$cdPlayMode = 1;
+//==============================================
+//== The next line of script is not required, but its how many laps required to win.
+//== Default is one.
+//==============================================
+$laps = 1;
+//==============================================
+//== The mission type can be any type!  So You can have racing Duels, Racing CTF, etc.
+//==============================================
+$Game::missionType = "CTF";
+
+

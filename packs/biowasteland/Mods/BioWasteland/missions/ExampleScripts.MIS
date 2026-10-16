@@ -1,0 +1,808 @@
+//==============================================
+//=== Map Example By Biohazard
+//==============================================
+//=== You need to scroll down and read my comments as they appear.
+//=== Some of the most important comments are at the end, so keep looking.
+//=== This assumes you already know how to use the Tribe's Map Editor.
+//=== To learn the map editor, get my Map Making Tutorial Download.
+//==============================================
+
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "tedFile" {
+			fileName = "Broadside.ted";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "lushWorld" {
+			fileName = "lushWorld.vol";
+		};
+		instant SimVolume "lushTerrain" {
+			fileName = "lushTerrain.vol";
+		};
+		instant SimVolume "lushDML" {
+			fileName = "lushDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "Broadside.vol";
+		};
+		instant SimVolume "Volume1" {
+			fileName = "custom.vol";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "palette" {
+			fileName = "lush.day.ppl";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "litesky.dml";
+			skyColor = "0 0 0";
+			hazeColor = "3.39562e+38 3.39562e+38 3.39562e+38";
+			featurePosition = "0";
+			size = "600";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "2";
+			textures[3] = "3";
+			textures[4] = "4";
+			textures[5] = "5";
+			textures[6] = "6";
+			textures[7] = "7";
+			textures[8] = "8";
+			textures[9] = "9";
+			textures[10] = "10";
+			textures[11] = "11";
+			textures[12] = "12";
+			textures[13] = "13";
+			textures[14] = "14";
+			textures[15] = "15";
+			distance = "800";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "Broadside.dtf";
+			visibleDistance = "600";
+			hazeDistance = "400";
+			hazeVerticalMin = "1.16388e-08";
+			hazeVerticalMax = "1.7414e-39";
+			perspectiveDistance = "100";
+			screenSize = "50";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 0";
+//==============================================
+//=== Mess with rotation! This is how I make terrain overhead!
+//=== Generally to rotate an object 90 degrees use 1.57 or 90 depending on object type
+//=== Generally to rotate an object 180 degrees use 3.14 or 180 depending on object type
+//==============================================
+			rotation = "0 0 0";
+		};
+//==============================================
+//=== center of the terrain is 0 0 0
+//=== x and y set the lower left hand corner of the playable map
+//=== w and h set the width and hight of the playable map (usually double x and y)
+//=== This is how you can zoom in on a map to make it a smaller mission
+//==============================================
+		instant MissionCenterPos "MissionCenter" {
+			x = "-100";
+			y = "-100";
+			w = "200";
+			h = "200";
+		};
+	};
+	instant SimGroup "Lights" {
+		instant Planet "sunLight" {
+			fileName = "lushdaysun.bmp";
+			azimuth = "178.656";
+			incidence = "49";
+			castShadows = "True";
+			useLensFlare = "True";
+//==============================================
+//=== This is how you make a dark map, or light map
+//=== intensity numbers represent red blue yellow intensity
+//=== set all three to zero and its a pitch black map
+//=== set red to something and blue and yellow to zero and its a red map!
+//==============================================
+			intensity = "0.699959 0.699959 0.699959";
+			ambient = "0.299963 0.299963 0.299963";
+			size = "180";
+			distance = "1200";
+		};
+	};
+	instant SimGroup "Teams" {
+		instant TeamGroup "team0" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "20.5625 -89.2068 166.701";
+						rotation = "0 -0 -1.19994";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "19.1173 -85.8905 166.701";
+						rotation = "0 -0 -1.13994";
+					};
+				};
+			};
+			instant StaticShape "Large Force Field" {
+				dataBlock = "LargeForceField";
+				name = "Large Force Field";
+				position = "62.9101 -13.2009 161.618";
+				rotation = "0 -0 -3.12917";
+				destroyable = "True";
+				deleteOnDestroy = "True";
+				isactive = "false";
+			};
+		};
+		instant TeamGroup "team1" {
+			instant DropPointGroup "DropPoints" {
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "49.2515 -75.4618 166.701";
+						rotation = "0 -0 2.07993";
+					};
+				};
+				instant SimGroup "Start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "47.5323 -72.5001 166.701";
+						rotation = "0 -0 1.99993";
+					};
+				};
+			};
+//==============================================
+//=== Adding basic Bots is as simple as adding an AI SimGroup,
+//=== Adding a SimGroup in that with the name of the Bot, 
+//=== and adding in that PathMarkers to set the path he should run.
+//==============================================
+			instant SimGroup "AI" {
+				instant SimGroup "JailBird" {
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "72.7795 -76.8571 153.699";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "66.7114 -64.5679 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "57.9336 -49.4835 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "42.8063 -56.896 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "27.897 -64.8933 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "11.16 -73.5818 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "0.919544 -78.6438 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "8.06882 -95.0383 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "13.3294 -106.213 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "28.1157 -99.6453 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "40.485 -92.7519 153.7";
+						rotation = "0 0 0";
+					};
+					instant Marker "Marker1" {
+						dataBlock = "PathMarker";
+						name = "";
+						position = "58.5663 -83.1434 153.7";
+						rotation = "0 0 0";
+					};
+
+				};
+			};
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "28.77 -70.5083 178.088";
+			rotation = "-0.898143 0 -3.12102";
+		};
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "37.4939 -89.8974 179.753";
+			rotation = "-0.990137 0 0.347912";
+		};
+	};
+	instant SimGroup "CutsomVolShapes" {
+		instant InteriorShape "siam1" {
+			fileName = "siam.dis";
+			isContainer = "1";
+			position = "41.6217 -89.8996 153.701";
+			rotation = "0 -0 -2.65989";
+			lightParams = "0 ";
+			locked = "1";
+		};
+		instant InteriorShape "sbunker1" {
+			fileName = "sbunker.dis";
+			isContainer = "1";
+			position = "62.9984 -8.48849 164.629";
+			rotation = "0 0 0";
+			lightParams = "0 ";
+		};
+	};
+	instant SimGroup "NormalTrigger" {
+//==============================================
+//=== This flag stand is just so your player can find the trigger
+//==============================================
+		instant StaticShape "Stand1" {
+			dataBlock = "flagstand";
+			name = "";
+			position = "54.8978 -74.5636 166.701";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+		instant SimGroup "elevator4x4" {
+//==============================================
+//=== This elevator SimGroup is what the GroupTrigger can trigger
+//==============================================
+			instant SimPath "Path1" {
+				isLooping = "False";
+				isCompressed = "False";
+				instant Marker "Marker1" {
+					dataBlock = "PathMarker";
+					name = "";
+					position = "52.5715 -67.8022 166.795";
+					rotation = "0 0 0";
+				};
+				instant Marker "Marker1" {
+					dataBlock = "PathMarker";
+					name = "";
+					position = "52.5717 -67.8024 178.567";
+					rotation = "0 0 0";
+				};
+			};
+			instant Moveable "elevator_4x41" {
+				dataBlock = "elevator4x4";
+				name = "";
+				position = "52.5715 -67.8022 166.795";
+				rotation = "0 0 0";
+				destroyable = "True";
+				deleteOnDestroy = "False";
+				waypoint = "top";
+				delayTime = "123.61";
+				Status = "up";
+			};
+//==============================================
+//=== This is an example of a normal GroupTrigger which the editor can add to your map.
+//=== This one does nothing special except what it was meant to do... trigger groups.
+//=== In this case, it will trigger the elevator, since it is in the elevator's
+//=== group, even if the player is not standing on the elevator.
+//=== I've placed a flag stand with this trigger so you know where to stand and
+//=== try this out.  You can open doors this way too.
+//==============================================
+			instant Trigger "GroupTrigger1" {
+				dataBlock = "GroupTrigger";
+				name = "";
+				position = "54.7647 -74.7686 167.501";
+				rotation = "0 0 0";
+				boundingBox = "-1 -1 -1 1 1 1";
+				isSphere = "True";
+			};
+		};
+		instant StaticShape "solar1" {
+			dataBlock = "SolarPanel";
+			name = "";
+			position = "57.1177 -71.3701 166.701";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+		instant StaticShape "InventoryStation1" {
+			dataBlock = "InventoryStation";
+			name = "";
+			position = "28.0298 -94.2706 166.7";
+			rotation = "0 -0 -2.67998";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+	};
+	instant SimGroup "TeleportGroup" {
+//==============================================
+//=== This is an example of a teleport trigger.  It's basically a normal
+//=== GroupTrigger, but you need to add the last two lines of script
+//=== to it yourself, since the editor doesn't do this.
+//=== The in line tells the game something special could happen
+//=== when the player is in the trigger.
+//=== The num line tells it what special thing should happen.
+//==============================================
+		instant Trigger "GroupTrigger1" {
+			dataBlock = "GroupTrigger";
+			name = "TeleToInside";
+			position = "20.8342 -79.4461 167.652";
+			rotation = "0 0 0";
+			boundingBox = "-1 -1 -1 1 1 1";
+			isSphere = "True";
+			in = "True";
+			num = "Main1";
+		};
+//==============================================
+//=== This is a simple MapMarker used to tell yourself where the teleport should
+//=== send the player to.  Copy and paste its position into the teleport script
+//=== found at the end of this file.
+//==============================================
+		instant Marker "Marker1" {
+			dataBlock = "PathMarker";
+			name = "TeleInSpawnPoint";
+			position = "31.8752 -69.2295 161.974";
+			rotation = "0 0 0";
+		};
+//==============================================
+//=== The following electric beam tells the player where the teleport trigger
+//=== is, because triggers are invisible in game play, but it's not neccessary.
+//=== If you had nothing, the player would be surprised when he entered the
+//=== invisible trigger and was teleported!
+//==============================================
+		instant StaticShape "ElectrBeam1" {
+			dataBlock = "ElectricalBeam";
+			name = "";
+			position = "20.8343 -79.4462 166.701";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+	};
+	instant SimGroup "GiveFistsGroup" {
+//==============================================
+//=== This is an example of a Fists trigger, which I use to give
+//=== players fists for my boxing maps.  It's basically a normal
+//=== GroupTrigger, but you need to add the last two lines of script
+//=== to it yourself, since the editor doesn't do this.
+//=== The in line tells the game something special could happen
+//=== when the player is in the trigger.
+//=== The num line tells it what special thing should happen.
+//==============================================
+		instant Trigger "GroupTrigger1" {
+			dataBlock = "GroupTrigger";
+			name = "GiveFistsTrigger";
+			position = "34.647 -85.5 162.651";
+			rotation = "0 -0 0.479992";
+			boundingBox = "-1 -1 -1 1 1 1";
+			isSphere = "True";
+			in = "True";
+			num = "Main2";
+		};
+//==============================================
+//=== The following mainpad tells the player where the Fist trigger
+//=== is, because triggers are invisible in game play, but it's not neccessary.
+//=== If you had nothing, the player would be surprised when he entered the
+//=== invisible trigger and was given fists!
+//==============================================
+		instant StaticShape "mainpad1" {
+			dataBlock = "mainpad";
+			name = "";
+			position = "34.9468 -85.9419 161.701";
+			rotation = "0 -0 -2.65994";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+		};
+	};
+	instant SimGroup "TrapTriggerGroup" {
+		instant Trigger "GroupTrigger1" {
+//==============================================
+//=== This is an example of a Trap trigger.  It's basically a normal
+//=== GroupTrigger, but you need to add the last two lines of script
+//=== to it yourself, since the editor doesn't do this.
+//=== The in line tells the game something special could happen
+//=== when the player is in the trigger.
+//=== The num line tells it what special thing should happen.
+//==============================================
+			dataBlock = "GroupTrigger";
+			name = "TrapTrigger";
+			position = "42.1456 -82.1924 162.592";
+			rotation = "0 -0 0.459992";
+			boundingBox = "-1 -1 -1 1 1 1";
+			isSphere = "True";
+			in = "True";
+			num = "Main3";
+		};
+//==============================================
+//=== The following LeechPack tells the player where the Trap trigger
+//=== is, because triggers are invisible in game play, but it's not neccessary.
+//=== If you had nothing, the player would be surprised when he entered the
+//=== trap trigger and got hurt!
+//==============================================
+		instant Item "LeechPack1" {
+			dataBlock = "LeechPack";
+			name = "";
+			position = "42.6488 -83.1468 164.362";
+			rotation = "0 0 0";
+			destroyable = "True";
+			deleteOnDestroy = "False";
+			rotates = "True";
+			collideable = "False";
+			count = "1";
+		};
+	};
+};
+//--- export object end ---//
+$teamScoreLimit = 5;
+exec(objectives);
+$Game::missionType = "CTF";
+$cdTrack = 3;
+$cdPlayMode = 1;
+
+//==============================================
+//  Additional map commands you can add...
+//==============================================
+
+noDeployables();	//=== disables all deployables.
+teamKillScore();  //=== enables team scoring for kills
+Lava();		//=== turns on lava damage for the terrain
+indoorMap();	//=== disables items which could allow players to escape the indoor map
+
+//==============================================
+//=== Map Scripts
+//==============================================
+//=== No need for a map.cs file, just add your scripts
+//=== to the end of a map.
+//=== BE CAREFUL when writing new functions and such.
+//=== NEVER redefine existing Tribes functions or Mod functions just for one map!
+//=== Basically, you redefined the server even though you placed your script in a map.
+//=== That function will remain redefined on the server even after the map is done!
+//==============================================
+
+
+//==============================================
+//=== The following two lines disable the games fair-teams checker.
+//=== Use this if you want or need the map to have uneven teams.
+//=== BioWasteland will reset these two variables to default values
+//=== at the end of every map, so its ok.  In general, however,
+//=== DON'T re-define server variables with maps, because most don't reset
+//=== when the map is done.
+//==============================================
+schedule("$Wasteland::FairCheck = \"2340\";", 10);
+schedule("$Wasteland::FairEvens = \"2340\";", 10);
+
+
+//==============================================
+//=== This announces me as the maps maker.
+//==============================================
+schedule("Messageall(1, \"A map by Bïohazard!~wmale5.wcheer3.wav\");", 100);
+
+
+//==============================================
+//=== This script will disable the listed packs for all 8 teams
+//==============================================
+for(%i = -1; %i < 8 ; %i++)
+{
+	schedule("$TeamItemCount[%i]@\"Warppack\"]++;",10);
+	schedule("$TeamItemCount[%i]@\"HolePack\"]++;",10);
+}
+
+//==============================================
+//=== This script will disable the listed pack for only team 1
+//==============================================
+schedule("$TeamItemCount[1@\"MalicePack\"]=2;",10);
+
+
+//==============================================
+//=== This script will pre-deploy a jailStand for team 0.
+//=== In this case it goes into the little bunker in the map.
+//=== This way you can build a predetermined jail.
+//=== Players are always released from jail above it, so plan for that.
+//=== Test it by jailing the bot.
+//==============================================
+//team0 jail
+%sensor = newObject("Jail Pad","StaticShape","jailStand",true);
+CreatejailportSimSet();
+addToSet("MissionCleanup/jailports", %sensor);
+addToSet("MissionCleanup", %sensor);
+GameBase::setTeam(%sensor,0);
+GameBase::setPosition(%sensor,"62.8476 -9.79214 162.633");
+Gamebase::setMapName(%sensor,%name);
+%sensor.disabled = false;
+schedule("$TeamItemCount[GameBase::getTeam("@%sensor@")@\"jailpack\"]++;",10);
+
+
+//==============================================
+//=== Here is where we define what GroupTriggers with the in and num lines do.
+//=== You can make a GroupTrigger do anything you want it to.
+//=== Be sure to use in and num variables, so you dont accidently affect the
+//=== server's normal GroupTriggers.  Failure to do so will make the
+//=== normal GroupTriggers for elevators and doors do erronous things.
+//==============================================
+function GroupTrigger::onEnter(%this, %object)
+{
+	%client = Player::getClient(%object);
+	%player = Client::getOwnedObject(%client);
+	if(%player == -1 || getObjectType(%player) != "Player" || Player::isDead(%player))
+		return;
+	if(%this.in)  //== A player has entered a trigger which does something special!
+	{
+		SHResetStats();
+//==============================================
+//=== Main1 is the teleport trigger, remember!
+//=== So lets define the teleport drop point here.
+//==============================================
+		if(%this.num == "Main1")
+		{
+			GameBase::setPosition(%client, "31.8752 -69.2295 161.974");
+			//== a sound effect during teleportation is not necessary,
+			//== but lets use one the shield hit one.
+			Client::SendMessage(%client,0,"~wshieldhit.wav");
+			return;  //=== end the trigger-script routine, we are done here
+		}
+//==============================================
+//=== If we had other teleport triggers meant to go somewhere else,
+//=== just add more like this...
+//==============================================
+		if(%this.num == "Main?")
+		{
+			GameBase::setPosition(%client, "X Y Z");
+			Client::SendMessage(%client,0,"~wshieldhit.wav");
+			return;
+		}
+//==============================================
+//=== Main2 was our Fists trigger, remember!
+//=== So lets strip the player of weapons and give him fists instead.
+//==============================================
+		if(%this.num == "Main2")
+		{
+			%armor = Player::getArmor(%client);
+			if (%armor == "aarmor"){
+				Client::SendMessage(%client,1,"Oh, sorry.  No Stealth Armor.  Being reset to Goliath.~wturretoff1.wav");
+				Player::setArmor(%client, barmor);
+			}
+			if (%armor == "afemale"){
+				Client::SendMessage(%client,1,"Oh, sorry.  No Stealth Armor.  Being reset to Goliath.~wturretoff1.wav");
+				Player::setArmor(%client, bfemale);
+			}
+			if (%armor == "larmor"){
+				Client::SendMessage(%client,1,"Oh, sorry.  No Assassin Armor.  Being reset to Spy.~wturretoff1.wav");
+				Player::setArmor(%client, spyarmor);
+			}
+			if (%armor == "lfemale"){
+				Client::SendMessage(%client,1,"Oh, sorry.  No Assassin Armor.  Being reset to Spy.~wturretoff1.wav");
+				Player::setArmor(%client, spyfemale);
+			}
+			%numweapon = Player::getItemClassCount(%client,"Weapon");
+			%max = getNumItems(); 
+			for (%i = 0; %i < %max; %i = %i + 1)
+			{ 
+				%item = getItemData(%i);
+				%count = Player::getItemCount(%client,%item); 
+				if(%count && %item != "Fists") Player::setItemCount(%client,%item,0); 
+			}
+			Player::setItemCount(%object, Fists, 1);
+			%item = Player::getMountedItem(%client,$WeaponSlot);
+			if (%item != "Fists") Player::MountItem(%object,fists,0);
+			Client::SendMessage(%client,3,"Let's box!~wmale2.wtaunt4");
+			return;
+		}
+//==============================================
+//=== Main3 was our Trap trigger, remember!
+//=== So lets hit the player with a poison-tipped dart and rumble the place a bit
+//=== like what happens in TombRaider.
+//==============================================
+		else if(%this.num == "Main3")
+		{
+			%pos = GameBase::getPosition(%object);
+			playSound(Ricochet3, %pos);
+			Client::SendMessage(%client,2,"You've been hit with a poison-tipped dart.");
+			Renegades_startBlind(%client, %player, 4);
+			StartRumble();  //== start the functions defined below!
+		}
+      }
+}
+
+//==============================================
+//=== What follows are new functions this map needs.
+//==============================================
+
+function MakeRumbleDrop(%grenadetype) {
+	%randnumber = floor(getRandom() * 15);
+	if(%randnumber == 1) {
+		%grenadeposition = "33.8143 -87.4725 160.7";
+	} else if(%randnumber == 2) {
+		%grenadeposition = "37.7127 -86.9476 160.7";
+	} else if(%randnumber == 3) {
+		%grenadeposition = "41.3976 -84.4067 160.7";
+	} else if(%randnumber == 4) {
+		%grenadeposition = "43.4967 -81.5174 160.7";
+	} else if(%randnumber == 5) {
+		%grenadeposition = "41.4615 -78.198 165.7";
+	} else if(%randnumber == 6) {
+		%grenadeposition = "37.2726 -77.972 165.7";
+	} else if(%randnumber == 7) {
+		%grenadeposition = "33.974 -78.3721 165.7";
+	} else if(%randnumber == 8) {
+		%grenadeposition = "30.9092 -76.5875 165.7";
+	} else if(%randnumber == 9) {
+		%grenadeposition = "35.0864 -74.0514 165.7";
+	} else if(%randnumber == 10) {
+		%grenadeposition = "37.8737 -74.0854 165.7";
+	} else if(%randnumber == 11) {
+		%grenadeposition = "36.123 -70.9585 165.7";
+	} else if(%randnumber == 12) {
+		%grenadeposition = "31.0287 -70.9632 165.7";
+	} else if(%randnumber == 13) {
+		%grenadeposition = "27.8454 -72.2086 160.7";
+	} else if(%randnumber == 14) {
+		%grenadeposition = "33.0475 -70.6419 160.7";
+	} else if(%randnumber == 15) {
+		%grenadeposition = "36.9192 -69.3852 160.7";
+	} else {
+		%grenadeposition = "31.0094 -81.1305 165.7";
+	}
+	%object = newObject("","Mine",%grenadetype);
+	addToSet("MissionCleanup", %object);
+	GameBase::SetPosition(%object, %grenadeposition);
+}
+
+function StartRumble() {
+	schedule("MakeRumbleDrop(\"Concussion\");", 1);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 3);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 6);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 8.5);
+	schedule("MakeRumbleDrop(\"Concussion\");", 9);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 9.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 10);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 10.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 11);
+	schedule("MakeRumbleDrop(\"Concussion\");", 11.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 12);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 12.5);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 13);
+	schedule("MakeRumbleDrop(\"Concussion\");", 13.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 14.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 15);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 15.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 16);
+	schedule("MakeRumbleDrop(\"Concussion\");", 16);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 17);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 18);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 18.5);
+	schedule("MakeRumbleDrop(\"Concussion\");", 19);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 19.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 20);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 20.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 21);
+	schedule("MakeRumbleDrop(\"Concussion\");", 21.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 22);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 22.5);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 23);
+	schedule("MakeRumbleDrop(\"Concussion\");", 23.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 24.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 25);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 25.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 26);
+	schedule("MakeRumbleDrop(\"Concussion\");", 6);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 7);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 8);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 8.5);
+	schedule("MakeRumbleDrop(\"Concussion\");", 9);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 9.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 10);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 10.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 11);
+	schedule("MakeRumbleDrop(\"Concussion\");", 11.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 12);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 12.5);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 13);
+	schedule("MakeRumbleDrop(\"Concussion\");", 13.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 14.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 15);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 15.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 16);
+	schedule("MakeRumbleDrop(\"Concussion\");", 16);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 17);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 18);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 18.5);
+	schedule("MakeRumbleDrop(\"Concussion\");", 19);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 19.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 20);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 20.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 21);
+	schedule("MakeRumbleDrop(\"Concussion\");", 21.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 22);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 22.5);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 23);
+	schedule("MakeRumbleDrop(\"Concussion\");", 23.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 24.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 25);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 25.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 26);
+	schedule("MakeRumbleDrop(\"Concussion\");", 6);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 7);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 8);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 8.5);
+	schedule("MakeRumbleDrop(\"Concussion\");", 9);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 9.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 10);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 10.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 11);
+	schedule("MakeRumbleDrop(\"Concussion\");", 11.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 12);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 12.5);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 13);
+	schedule("MakeRumbleDrop(\"Concussion\");", 13.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 14.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 15);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 15.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 16);
+	schedule("MakeRumbleDrop(\"Concussion\");", 16);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 17);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 18);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 18.5);
+	schedule("MakeRumbleDrop(\"Concussion\");", 19);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 19.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 20);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 20.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 21);
+	schedule("MakeRumbleDrop(\"Concussion\");", 21.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 22);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 22.5);
+	schedule("MakeRumbleDrop(\"PeaceMaker\");", 23);
+	schedule("MakeRumbleDrop(\"Concussion\");", 23.5);
+	schedule("MakeRumbleDrop(\"Firebomb\");", 24.5);
+	schedule("MakeRumbleDrop(\"Handgrenade\");", 25);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 25.5);
+	schedule("MakeRumbleDrop(\"EMPgrenade\");", 26);
+}

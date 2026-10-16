@@ -1,0 +1,38 @@
+Shifter v1 (10-09-99) with Bots -- notes for hosts, Modern Tribes 1.50 port
+===========================================================================
+
+What this is
+  Shifter v1 by Emo1313, the 10-09-99 build with SpoonBot (Werewolf, Wicked69) built in,
+  on the MiniMod v.07 core by Dewy. The release had no readme; this file replaces it.
+
+How to run it
+  Launch with  -mod ShifterBots  (or the Asset Store toggle) and host a game on any
+  standard map. Only the host needs the pack.
+  The original launch line was:  tribes -mod shifter +exec shifter_v1.cs exec serverConfig.cs
+
+Settings
+  Mods\ShifterBots\Shifter_v1.cs holds every switch: voting, fair teams, the team-kill
+  kick/ban (2 team kills = 10 minute ban by default), the welcome message, scoring, and the
+  bots. Six bots spawn with each mission (three per team); set $Spoonbot::AutoSpawn = False
+  or change the $Spoonbot::Bot<N>Name / Bot<N>Team lines to change that.
+  Bot names follow <Type>_<Male|Female>[_Roam], optionally with a team prefix such as T0_ ;
+  types: Guard, Demo, Painter, Sniper, Medic.
+  Players can add and remove bots from the Tab menu ("Bot Controls") while bots are on.
+  Admins turn bots on and off from the Tab menu.
+
+Changed for this port (all marked PORT-FIX or //PORT-OFF: in the files)
+  * A hard-coded second admin password in admin.cs is removed.
+  * The author's auto-admin name list and e-mail address in Shifter_v1.cs are commented out.
+    To auto-admin yourself, fill in $Server::AutoAdmin0 (name) AND $Server::AutoAdminAddr0
+    (an address prefix such as IP:192.168.1.). A bare "IP" matches every internet player.
+  * A hard-coded kick of one player name in server.cs is removed.
+  * Tab-menu actions that only admins are shown (kill, curse, bots on/off, kill all bots)
+    now check that the sender is an admin.
+  * Bot names coming from the Tab menu are checked against the list of real bot types.
+  * Two bot typos (weapon draw for Guard and Demo bots) and one in the flag-return search.
+  * Not included: the client-side files of the 1999 release (key bindings, options screen,
+    chat menu), the MiniMod plugin manager program, and the "storage" folder of optional
+    MiniMod plugins (all of them were switched off in the release).
+
+The Arena mission type (scripts\arena.cs, Tribes Arena 1.3.1 by Rasia) is included but the
+release shipped no Arena maps.

@@ -1,0 +1,6 @@
+$Aeon::Books["zzzIntro","title"] = "Read Me First!";
+$Aeon::Books["zzzIntro","rntTm"] = "1800";
+$Aeon::Books["zzzIntro","feeRn"] = "0";
+$Aeon::Books["zzzIntro","feeLt"] = "0";
+$Aeon::Books["zzzIntro","feeRp"] = "100";
+$Aeon::Books["zzzIntro","cntnt"] = "Welcome to the Aeon Monopolization RPG Mod! A unique chill mod, where there is no pressure, time limits, or even required violence. This goal of this mod is merely to exist, and do whatever you want to, with loads of things you can do and experience, Aeon is one of the most complex mods available for Tribes 1. In this mod you can do everything from buy your own piece of real estate, to building a house using tools better than the built in map editor! You should visit this library often, to learn about the mod, about Central (this city you are in) and all kinds other aspects, like skills you can learn! Just be sure to return these books by throwing them at the Library Terminal before they are late, or you might get stuck with a Late Fee! You should read '<f2>Central: the City<f1>' next for information on the city of Central!";

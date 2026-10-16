@@ -1,0 +1,170 @@
+exec(DuelMOD);          
+$DuelSpawn[1] = "-309.051 33.001 54.7954";
+$DuelSpawn[2] = "-595.356 62.348 16.5953";
+$DuelSpawn[3] = "-948.176 69.6291 84.8361";
+$DuelSpawn[4] = "-1521.22 50.1625 9.41121";
+$DuelSpawn[5] = "-1453.81 -254.44 71.7315";
+$DuelSpawn[6] = "-1012.67 -356.621 46.5358";
+$DuelSpawn[7] = "-648.669 -306.848 49.6844";
+$DuelSpawn[8] = "-204.121 -512 43.416";
+$DuelSpawn[9] = "302.367 -522.292 40.0685";
+$DuelSpawn[10] = "749.647 -441.97 37.6297";
+$DuelSpawn[11] = "724.558 -932.383 48.6879";
+$DuelSpawn[12] = "258.69 -979.993 40.1326";
+
+$cdTrack = 11;
+$cdPlayMode = 1;
+$Game::missionType = "Duel";
+
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "World" {
+			fileName = "iceWorld.vol";
+		};
+		instant SimVolume "WorldTerrain" {
+			fileName = "iceTerrain.vol";
+		};
+		instant SimVolume "iceDML" {
+			fileName = "iceDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "TedFile" {
+			fileName = "4_Commander_TargetLaser.ted";
+			locked = "1";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "4_commander_targetlaser.vol";
+			locked = "1";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "Palette" {
+			fileName = "ice.night.ppl";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-600";
+			y = "-250";
+			w = "800";
+			h = "700";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "icenitesky.dml";
+			skyColor = "0 0 0";
+			hazeColor = "0 0 0";
+			featurePosition = "0";
+			size = "700";
+			textures[0] = "0";
+			textures[1] = "1";
+			textures[2] = "2";
+			textures[3] = "3";
+			textures[4] = "4";
+			textures[5] = "5";
+			textures[6] = "6";
+			textures[7] = "7";
+			textures[8] = "8";
+			textures[9] = "9";
+			textures[10] = "10";
+			textures[11] = "11";
+			textures[12] = "12";
+			textures[13] = "13";
+			textures[14] = "14";
+			textures[15] = "15";
+			distance = "13000";
+		};
+		instant Planet "Sun" {
+			fileName = "";
+			azimuth = "60";
+			incidence = "61";
+			castShadows = "True";
+			useLensFlare = "False";
+			intensity = "0.699914 0.699914 0.699914";
+			ambient = "0.299915 0.299915 0.299915";
+			size = "100";
+			distance = "1000";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "4_Commander_TargetLaser.dtf";
+			visibleDistance = "1000";
+			hazeDistance = "275";
+			hazeVerticalMin = "1.04921e-38";
+			hazeVerticalMax = "7.57084e-38";
+			perspectiveDistance = "100";
+			screenSize = "80";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "15000";
+			position = "-3072 -3072 0";
+			rotation = "0 0 0";
+		};
+		instant StarField "stars1" {
+			inFrontOfSky = "False";
+			colors[0] = "1 1 1";
+			colors[1] = "0.5 0.5 0.5";
+			colors[2] = "0.5 0.5 0.5";
+		};
+		instant Snowfall "Snow1" {
+			intensity = "1";
+			wind = "0 0 -35";
+			suspendRendering = "False";
+			rain = "False";
+		};
+	};
+	instant SimGroup "Lights";
+	instant SimGroup "Teams" {
+		instant TeamGroup "team0" {
+			teamName = "Blood Eagle";
+			skinBase = "beagle";
+			instant SimGroup "DropPoints" {
+				locked = "0";
+				instant SimGroup "start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-83.2792 -147.466 39.0457";
+						rotation = "0 0 0";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-76.1899 -153.855 38.6988";
+						rotation = "0 0 0";
+					};
+				};
+			};
+			instant SimGroup "Base Group";
+		};
+		instant TeamGroup "team1" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "start";
+				instant SimGroup "Random";
+			};
+			instant SimGroup "Base Group";
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "-104.165 -104.208 59.3573";
+			rotation = "0 0 0";
+		};
+	};
+};
+//--- export object end ---//
+

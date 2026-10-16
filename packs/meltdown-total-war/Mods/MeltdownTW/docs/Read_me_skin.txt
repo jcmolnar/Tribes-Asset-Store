@@ -1,0 +1,1 @@
+skin copyright tenabrae 1999. These skins are freely distributable for non-commercial use only as long as credit is given to me. permission is granted to change the skin bitmap.

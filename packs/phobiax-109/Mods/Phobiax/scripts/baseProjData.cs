@@ -1,0 +1,238 @@
+# Damage Types
+#
+
+$ImpactDamageType = -1;
+$LandingDamageType = 0;
+$BulletDamageType = 1;
+$EnergyDamageType = 2;
+$PlasmaDamageType = 3;
+$ExplosionDamageType = 4;
+$ShrapnelDamageType = 5;
+$LaserDamageType = 6;
+$MortarDamageType = 7;
+$BlasterDamageType = 8;
+$ElectricityDamageType = 9;
+$CrushDamageType = 10;
+$DebrisDamageType = 11;
+$MissileDamageType = 12;
+$MineDamageType = 13;
+
+$MagneticDamageType = 14;
+$EMPDamageType = 15;
+$RocketDamageType = 16;
+$RifleDamageType = 17;
+$BomberDamageType = 18;
+$FlamerDamageType = 19;
+$BoosterDamageType = 20;
+$FlamerOverheatType = 21;
+$ImpactDeathType = 22;
+$FlakDamageType = 23;
+$ShotgunDamageType = 24;
+$LowWarheadDamageType = 25;
+$MedWarheadDamageType = 26;
+$HighWarheadDamageType = 27;
+$EMPWarheadDamageType = 28;
+$PhalanxxDamageType = 29;
+$ELFTurretDamageType = 30;
+$DetonationDamageType = 31;
+$TurretDamageType = 32;
+$SentryDamageType = 33;
+$AvengerDamageType = 34;
+
+$SentinelDamageType = 35;
+$FighterDamageType = 36;
+$DecimatorDamageType = 37;
+$EnergyRepeaterDamageType = 38;
+$DoomsdayDamageType = 39;
+$TazerBeamDamageType = 40;
+$TazerBoltDamageType = 41;
+$RetributionDamageType = 42;
+$ConcussionMineDamageType = 43;
+$EMPMineDamageType = 44;
+$CloakedMineDamageType = 45;
+$FlareDamageType = 46;
+$InjectorDamageType = 47;
+$NaniteDamageType = 48;
+$BoomBoxFizzleDamageType = 49;
+$BoomBoxNukeDamageType = 50;
+
+$HeatIncrease[$ImpactDamageType] = 0;
+$HeatIncrease[$LandingDamageType] = 0;
+$HeatIncrease[$BulletDamageType] = 0.5;
+$HeatIncrease[$EnergyDamageType] = 1;
+$HeatIncrease[$PlasmaDamageType] = 5;
+$HeatIncrease[$ExplosionDamageType] = 2;
+$HeatIncrease[$ShrapnelDamageType] = 2;
+$HeatIncrease[$LaserDamageType] = 0;
+$HeatIncrease[$MortarDamageType] = 5;
+$HeatIncrease[$BlasterDamageType] = 0.2;
+$HeatIncrease[$ElectricityDamageType] = 0.1;
+$HeatIncrease[$CrushDamageType] = 0;
+$HeatIncrease[$DebrisDamageType] = 13;
+$HeatIncrease[$MissileDamageType] = 5;
+$HeatIncrease[$MineDamageType] = 7;
+
+$HeatIncrease[$MagneticDamageType] = 0.2;
+$HeatIncrease[$EMPDamageType] = 0;
+$HeatIncrease[$RocketDamageType] = 5;
+$HeatIncrease[$RifleDamageType] = 0;
+$HeatIncrease[$BomberDamageType] = 5;
+$HeatIncrease[$FlamerDamageType] = 1.5;
+$HeatIncrease[$BoosterDamageType] = 1.0;
+$HeatIncrease[$FlamerOverheatType] = 0;
+$HeatIncrease[$ImpactDeathType] = 0;
+$HeatIncrease[$FlakDamageType] = 4;
+$HeatIncrease[$ShotgunDamageType] = 0.1;
+$HeatIncrease[$LowWarheadDamageType] = 3;
+$HeatIncrease[$MedWarheadDamageType] = 5;
+$HeatIncrease[$HighWarheadDamageType] = 7;
+$HeatIncrease[$EMPWarheadDamageType] = 2;
+$HeatIncrease[$PhalanxxDamageType] = 0.2;
+$HeatIncrease[$ELFTurretDamageType] = 0.1;
+$HeatIncrease[$DetonationDamageType] = 10;
+$HeatIncrease[$DeployableTurretType] = 1;
+$HeatIncrease[$DeployableSentryType] = 1;
+
+$HeatIncrease[$DeployableSentinelType] = 0.5;
+$HeatIncrease[$FighterDamageType] = 1;
+$HeatIncrease[$DecimatorDamageType] = 6;
+$HeatIncrease[$EnergyRepeaterDamageType] = 1;
+$HeatIncrease[$DoomsdayDamageType] = 6.5;
+$HeatIncrease[$TazerBeamDamageType] = 0.1;
+$HeatIncrease[$TazerBoltDamageType] = 0.5;
+$HeatIncrease[$RetributionDamageType] = 1;
+$HeatIncrease[$ConcussionMineDamageType] = 8.5;
+$HeatIncrease[$EMPMineDamageType] = 2;
+$HeatIncrease[$CloakedMineDamageType] = 5.5;
+$HeatIncrease[$FlareDamageType] = 15;
+$HeatIncrease[$InjectorDamageType] = 0.75;
+$HeatIncrease[$NaniteDamageType] = 0.5;
+$HeatIncrease[$BoomBoxFizzleDamageType] = 2.5;
+$HeatIncrease[$BoomBoxNukeDamageType] = 6.5;
+
+BulletData ChaingunBullet { bulletShapeName = "bullet.dts"; explosionTag = bulletExp0; expRandCycle = 3; mass = 0.05; bulletHoleIndex = 0; damageClass = 0; damageValue = 0.11; damageType = $BulletDamageType; aimDeflection = 0.005; muzzleVelocity = 425.0; totalTime = 1.5; inheritedVelocityScale = 1.0; isVisible = False; tracerPercentage = 1.0; tracerLength = 30; };
+BulletData FusionBolt { bulletShapeName = "fusionbolt.dts"; explosionTag = turretExp; mass = 0.05; damageClass = 0; damageValue = 0.25; damageType = $EnergyDamageType; muzzleVelocity = 50.0; totalTime = 6.0; liveTime = 4.0; isVisible = True; rotationPeriod = 1.5; };
+BulletData MiniFusionBolt { bulletShapeName = "enbolt.dts"; explosionTag = energyExp; damageClass = 0; damageValue = 0.1; damageType = $EnergyDamageType; muzzleVelocity = 80.0; totalTime = 4.0; liveTime = 2.0; lightRange = 3.0; lightColor = { 0.25, 0.25, 1.0 }; inheritedVelocityScale = 0.5; isVisible = True; rotationPeriod = 1; };
+
+BulletData TurretBolt { bulletShapeName = "enbolt.dts"; explosionTag = energyExp; damageClass = 0; damageValue = 0.1; damageType = $TurretDamageType; muzzleVelocity = 80.0; totalTime = 4.0; liveTime = 2.0; lightRange = 3.0; lightColor = { 0.25, 0.25, 1.0 }; inheritedVelocityScale = 0.5; isVisible = True; rotationPeriod = 1; };
+function TurretBolt::onAdd(%this) { ixTrackProj(%this, DeployableTurret); }
+
+BulletData SentryBolt { bulletShapeName = "enbolt.dts"; explosionTag = energyExp; damageClass = 0; damageValue = 0.1; damageType = $SentryDamageType; muzzleVelocity = 80.0; totalTime = 4.0; liveTime = 2.0; lightRange = 3.0; lightColor = { 0.25, 0.25, 1.0 }; inheritedVelocityScale = 0.5; isVisible = True; rotationPeriod = 1; };
+function SentryBolt::onAdd(%this) { ixTrackProj(%this, DeployableSentry); }
+
+BulletData SentinelBolt { bulletShapeName = "shotgunbolt.dts"; explosionTag = blasterExp; damageClass = 0; damageValue = 0.075; damageType = $SentinelDamageType; muzzleVelocity = 120.0; totalTime = 4.0; liveTime = 2.0; lightRange = 3.0; lightColor = { 1.0, 0.25, 0.25 }; inheritedVelocityScale = 0.5; isVisible = True; rotationPeriod = 1; };
+function SentinelBolt::onAdd(%this) { ixTrackProj(%this, DeployableSentinel); }
+
+$ProjectileSet = newObject("ProjSet",SimSet);
+function ixTrackProj(%this, %type) { %pos = GameBase::getPosition(%this); %set = newObject("set",SimSet); %num = containerBoxFillSet(%set,$StaticObjectType,%pos,2,2,2,0); %count = Group::objectCount(%set); if(%count > 1) { for(%i=0;%i<=%count;%i++) { %turret = Group::getObject(%set,%i); if(GameBase::getDataName(%turret) == %type) %i=%count + 1; } } else %turret = Group::getObject(%set,0); deleteObject(%set); if(GameBase::getControlClient(%turret) == -1) { %owner = ixGetOwnerClient(%turret); if(%owner) { if(GameBase::getTeam(%turret) == GameBase::getTeam(%owner)) { addToSet($ProjectileSet,%this); %this.owner = %owner; } else %owner = 0; } %this.owner = %owner; } }
+
+BulletData BlasterBolt { bulletShapeName = "shotgunbolt.dts"; explosionTag = blasterExp; damageClass = 0; damageValue = 0.125; damageType = $BlasterDamageType; muzzleVelocity = 200.0; totalTime = 2.0; liveTime = 1.125; lightRange = 3.0; lightColor = { 1.0, 0.25, 0.25 }; inheritedVelocityScale = 0.5; isVisible = True; rotationPeriod = 1; };
+BulletData PlasmaBolt { bulletShapeName = "plasmabolt.dts"; explosionTag = plasmaExp; damageClass = 1; damageValue = 0.45; damageType = $PlasmaDamageType; explosionRadius = 4.0; muzzleVelocity = 55.0; totalTime = 3.0; liveTime = 2.0; lightRange = 3.0; lightColor = { 1, 1, 0 }; inheritedVelocityScale = 0.3; isVisible = True; soundId = SoundJetLight; };
+RocketData DiscShell { bulletShapeName = "discb.dts"; explosionTag = rocketExp; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.5; damageType = $ExplosionDamageType; explosionRadius = 7.5; kickBackStrength = 150.0; muzzleVelocity = 65.0; terminalVelocity = 80.0; acceleration = 5.0; totalTime = 6.5; liveTime = 8.0; lightRange = 5.0; lightColor = { 0.4, 0.4, 1.0 }; inheritedVelocityScale = 0.5; trailType = 1; trailLength = 15; trailWidth = 0.3; soundId = SoundDiscSpin; };
+GrenadeData GrenadeShell { bulletShapeName = "grenade.dts"; explosionTag = grenadeExp; collideWithOwner = True; ownerGraceMS = 250; collisionRadius = 0.2; mass = 1.0; elasticity = 0.45; damageClass = 1; damageValue = 0.4; damageType = $ShrapnelDamageType; explosionRadius = 15; kickBackStrength = 150.0; maxLevelFlightDist = 150; totalTime = 30.0; liveTime = 1.0; projSpecialTime = 0.05; inheritedVelocityScale = 0.5; smokeName = "smoke.dts"; };
+GrenadeData MortarShell { bulletShapeName = "mortar.dts"; explosionTag = mortarExp; collideWithOwner = True; ownerGraceMS = 250; collisionRadius = 0.3; mass = 5.0; elasticity = 0.1; damageClass = 1; damageValue = 1.0; damageType = $MortarDamageType; explosionRadius = 20.0; kickBackStrength = 250.0; maxLevelFlightDist = 275; totalTime = 30.0; liveTime = 2.0; projSpecialTime = 0.01; inheritedVelocityScale = 0.5; smokeName = "mortartrail.dts"; };
+GrenadeData MortarTurretShell { bulletShapeName = "mortar.dts"; explosionTag = mortarExp; collideWithOwner = True; ownerGraceMS = 400; collisionRadius = 1.0; mass = 5.0; elasticity = 0.1; damageClass = 1; damageValue = 1.32; damageType = $MortarDamageType; explosionRadius = 30.0; kickBackStrength = 250.0; maxLevelFlightDist = 400; totalTime = 1000.0; liveTime = 2.0; projSpecialTime = 0.05; inheritedVelocityScale = 0.5; smokeName = "mortartrail.dts"; };
+RocketData FlierRocket { bulletShapeName = "rocket.dts"; explosionTag = rocketExp; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.5; damageType = $MissileDamageType; explosionRadius = 9.5; kickBackStrength = 250.0; muzzleVelocity = 65.0; terminalVelocity = 80.0; acceleration = 5.0; totalTime = 10.0; liveTime = 11.0; lightRange = 5.0; lightColor = { 1.0, 0.7, 0.5 }; inheritedVelocityScale = 0.5; trailType = 2; trailString = "rsmoke.dts"; smokeDist = 1.8; soundId = SoundJetHeavy; };
+
+SeekingMissileData TurretMissile { bulletShapeName = "rocket.dts"; explosionTag = rocketExp; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.5; damageType = $MissileDamageType; explosionRadius = 9.5; kickBackStrength = 175.0; muzzleVelocity = 72.0; totalTime = 10; liveTime = 10; seekingTurningRadius = 9; nonSeekingTurningRadius = 75.0; proximityDist = 1.5; smokeDist = 1.75; lightRange = 5.0; lightColor = { 0.4, 0.4, 1.0 }; inheritedVelocityScale = 0.5; soundId = SoundJetHeavy; };
+function TurretMissile::updateTargetPercentage(%target) { if(Player::getMountedItem(%target,$BackpackSlot) == "RocketBooster") return 1.0; else return GameBase::virtual(%target, "getHeatFactor"); }
+
+LaserData sniperLaser { laserBitmapName = "laserPulse.bmp"; hitName = "laserhit.dts"; damageConversion = 0.007; baseDamageType = $LaserDamageType; beamTime = 0.5; lightRange = 2.0; lightColor = { 1.0, 0.25, 0.25 }; detachFromShooter = false; hitSoundId = SoundLaserHit; };
+TargetLaserData targetLaser { laserBitmapName = "paintPulse.bmp"; damageConversion = 0.0; baseDamageType = 0; lightRange = 2.0; lightColor = { 0.25, 1.0, 0.25 }; detachFromShooter = false; };
+
+LightningData lightningCharge { bitmapName = "lightningNew.bmp"; damageType = $ElectricityDamageType; boltLength = 40.0; coneAngle = 35.0; damagePerSec = 0.06; energyDrainPerSec = 60.0; segmentDivisions = 4; numSegments = 5; beamWidth = 0.125; updateTime = 120; skipPercent = 0.5; displaceBias = 0.15; lightRange = 3.0; lightColor = { 0.25, 0.25, 0.85 }; soundId = SoundELFFire; };
+LightningData turretCharge { bitmapName = "lightningNew.bmp"; damageType = $ElectricityDamageType; boltLength = 40.0; coneAngle = 35.0; damagePerSec = 0.06; energyDrainPerSec = 60.0; segmentDivisions = 4; numSegments = 5; beamWidth = 0.125; updateTime = 120; skipPercent = 0.5; displaceBias = 0.15; lightRange = 3.0; lightColor = { 0.25, 0.25, 0.85 }; soundId = SoundELFFire; };
+function Lightning::damageTarget(%target, %timeSlice, %damPerSec, %enDrainPerSec, %pos, %vec, %mom, %shooterId) { if(%damPerSec == 10.0) { ixLockLaser(%target, %shooterId); return; } if(%damPerSec == 100.0) { ixVehicleLockLaser(%target, %shooterId); return; } if(%damPerSec == 50.0) { return; } if(%shooterId) { if(%damPerSec > 0.06) { if(%damPerSec > 0.4) %damageType = $TazerBeamDamageType; else %damageType = $MagneticDamageType; } else %damageType = $ElectricityDamageType; } else %damageType = $ELFTurretDamageType; %damVal = %timeSlice * %damPerSec; %enVal = %timeSlice * %enDrainPerSec; GameBase::applyDamage(%target, %damageType, %damVal, %pos, %vec, %mom, %shooterId); %energy = GameBase::getEnergy(%target); %energy = %energy - %enVal; if (%energy < 0) { %energy = 0; } GameBase::setEnergy(%target, %energy); }
+
+RepairEffectData RepairBolt { bitmapName = "repairadd.bmp"; boltLength = 5.0; segmentDivisions = 4; beamWidth = 0.125; updateTime = 450; skipPercent = 0.6; displaceBias = 0.15; lightRange = 3.0; lightColor = { 0.85, 0.25, 0.25 }; };
+function RepairBolt::onAcquire(%this, %player, %target) { %client = Player::getClient(%player); if (%target == %player) { %player.repairTarget = -1; if (GameBase::getDamageLevel(%player) != 0) { %player.repairRate = 0.05; %player.repairTarget = %player; Client::sendMessage(%client, 0, "AutoRepair On"); cureNanites(%player); } else { Client::sendMessage(%client,0,"Nothing in range"); Player::trigger(%player, $WeaponSlot, false); return; } } else { %player.repairTarget = %target; %player.repairRate = 0.1; if (getObjectType(%player.repairTarget) == "Player") { %rclient = Player::getClient(%player.repairTarget); %name = Client::getName(%rclient); } else { %name = GameBase::getMapName(%player.repairTarget); if((getWord(%name,0) @ " " @ getWord(%name,1)) == "Boom Box:") %name = "Boom Box"; if(%name == "") { %name = (GameBase::getDataName(%player.repairTarget)).description; } } if (GameBase::getDamageLevel(%player.repairTarget) == 0) { Client::sendMessage(%client,0,%name @ " is not damaged"); Player::trigger(%player,$WeaponSlot,false); %player.repairTarget = -1; return; } if (getObjectType(%player.repairTarget) == "Player") { Client::sendMessage(%rclient,0,"Being repaired by " @ Client::getName(%client)); cureNanites(%player.repairTarget); } Client::sendMessage(%client,0,"Repairing " @ %name); } %rate = GameBase::getAutoRepairRate(%player.repairTarget) + %player.repairRate; GameBase::setAutoRepairRate(%player.repairTarget,%rate); }
+function RepairBolt::onRelease(%this, %player) { %object = %player.repairTarget; if (%object != -1) { %client = Player::getClient(%player); if (%object == %player) { Client::sendMessage(%client,0,"AutoRepair Off"); } else { if (GameBase::getDamageLevel(%object) == 0) { Client::sendMessage(%client,0,"Repair Done"); } else { Client::sendMessage(%client,0,"Repair Stopped"); } } %rate = GameBase::getAutoRepairRate(%object) - %player.repairRate; if (%rate < 0) %rate = 0; GameBase::setAutoRepairRate(%object,%rate); } }
+function RepairBolt::checkDone(%this, %player) { if (Player::isTriggered(%player,$WeaponSlot) && Player::getMountedItem(%player,$WeaponSlot) == RepairGun && %player.repairTarget != -1) { %object = %player.repairTarget; if (%object == %player) { if (GameBase::getDamageLevel(%player) == 0) { Player::trigger(%player,$WeaponSlot,false); return; } } else { %objectTeam = GameBase::getTeam(%object); %name = GameBase::getDataName(%object); if((%name == Generator) || (%name == SolarPanel) || (%name == PortGenerator)) { ixRepairing(%player, %object, %objectTeam); } if (GameBase::getDamageLevel(%object) == 0) { Player::trigger(%player,$WeaponSlot,false); return; } } } }
+function ixRepairing(%player, %object, %team) { %count = GameBase::getPowerCount(%object); if(%count) { if(%player.possibleRepair) { %state = GameBase::getDamageState(%object); if((%count == 1) && (%state == Enabled)) { %playerTeam = GameBase::getTeam(%player); $ixRepairTeam[%team] = %playerTeam; %client = GameBase::getOwnerClient(%player); schedule("ixCheckPowerObjective(" @ %client @ "," @ %team @ "," @ $ixTeamPower[%team]++ @ ");",60); } %player.possibleRepair = false; } } else { %player.possibleRepair = true; } }
+
+GrenadeData EMPGrenadeShell { bulletShapeName = "mortar.dts"; explosionTag = EMPPulseExp; collideWithOwner = True; ownerGraceMS = 250; collisionRadius = 0.3; mass = 1.0; elasticity = 0.45; damageClass = 1; damageValue = 0.01; damageType = $EMPDamageType; explosionRadius = 25; kickBackStrength = -100.0; maxLevelFlightDist = 275; totalTime = 30.0; liveTime = 0.25; projSpecialTime = 0.05; inheritedVelocityScale = 0.5; smokeName = "fusionbolt.dts"; soundId = SoundELFFire; };
+LightningData MagnetCharge { bitmapName = "repairadd.bmp"; damageType = $MagneticDamageType; boltLength = 40.0; coneAngle = 28.0; damagePerSec = 0.4; energyDrainPerSec = 0.0; segmentDivisions = 3; numSegments = 4; beamWidth = 0.15; updateTime = 120; skipPercent = 0.2; displaceBias = 0.2; lightRange = 4.0; lightColor = { 1, 0, 0 }; soundId = SoundELFFire; };
+
+LightningData TazerBeam { bitmapName = "lightningTemp.bmp"; damageType = $TazerBeamDamageType; boltLength = 7.5; coneAngle = 30.0; damagePerSec = 0.5; energyDrainPerSec = 20.0; segmentDivisions = 2; numSegments = 3; beamWidth = 0.065; updateTime = 60; skipPercent = 0.35; displaceBias = 0.25; lightRange = 2.0; lightColor = { 0.5, 0.5, 1.0 }; soundId = SoundFireTazerBeam; };
+BulletData TazerBolt { bulletShapeName = "mortartrail.dts"; explosionTag = TazerBoltExp; mass = 0.025; damageClass = 0; damageValue = 0.065; damageType = $TazerBoltDamageType; muzzleVelocity = 120.0; totalTime = 2.0; liveTime = 1.5; lightRange = 3.0; lightColor = { 0.0, 1.0, 0.0 }; inheritedVelocityScale = 0.5; isVisible = True; rotationPeriod = 0.5; };
+BulletData EnergyRepeaterBolt { bulletShapeName = "enbolt.dts"; explosionTag = energyExp; damageClass = 0; damageValue = 0.05; damageType = $EnergyRepeaterDamageType; muzzleVelocity = 100.0; totalTime = 2.5; liveTime = 1.75; lightRange = 3.0; lightColor = { 0.0, 0.0, 1.0 }; inheritedVelocityScale = 0.5; isVisible = True; rotationPeriod = 1; };
+BulletData FighterBolt { bulletShapeName = "enbolt.dts"; explosionTag = energyExp; damageClass = 0; damageValue = 0.1; damageType = $FighterDamageType; muzzleVelocity = 100.0; totalTime = 3.0; liveTime = 2.0; lightRange = 3.0; lightColor = { 0.0, 0.0, 1.0 }; inheritedVelocityScale = 0.5; isVisible = True; rotationPeriod = 0.25; };
+RocketData DecimatorBeam { bulletShapeName = "shotgunbolt.dts"; explosionTag = DecimatorBeamExp; collisionRadius = 0.0; mass = 0.5; damageClass = 1; damageValue = 1.5; damageType = $DecimatorDamageType; explosionRadius = 5.0; kickBackStrength = 500.0; muzzleVelocity = 125.0; terminalVelocity = 125.0; acceleration = 0.0; totalTime = 2.5; liveTime = 2.75; lightRange = 7.5; lightColor = { 0.75, 0.0, 0.75 }; inheritedVelocityScale = 1.0; trailType = 2; trailString = "shotgunex.dts"; smokeDist = 2; soundId = shockExplosion; };
+RocketData HeatFlare { bulletShapeName = "fusionbolt.dts"; explosionTag = FlareExp; collideWithOwner = True; ownerGraceMS = 250; collisionRadius = 0.0; mass = 0.5; damageClass = 1; damageValue = 0.085; damageType = $FlareDamageType; explosionRadius = 5.0; kickBackStrength = 0.0; muzzleVelocity = 75.0; terminalVelocity = 100.0; acceleration = 5.0; totalTime = 7.5; liveTime = 7.75; lightRange = 4.0; lightColor = { 1.0, 1.0, 0.0 }; inheritedVelocityScale = 1.0; trailType = 2; trailString = "plasmatrail.dts"; smokeDist = 2.5; soundId = SoundJetHeavy; };
+RocketData NanoBolt { bulletShapeName = "fusionbolt.dts"; explosionTag = NanoBoltExp; collideWithOwner = True; ownerGraceMS = 250; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.015; damageType = $InjectorDamageType; explosionRadius = 3.0; kickBackStrength = 0.0; muzzleVelocity = 350; terminalVelocity = 350; acceleration = 5.0; totalTime = 3.5; liveTime = 3.75; lightRange = 2.5; lightColor = { 0.25, 0.25, 1.0 }; inheritedVelocityScale = 1.0; trailType = 2; trailString = "enex.dts"; smokeDist = 1; };
+
+RocketData RifleBullet { bulletShapeName = "breath.dts"; explosionTag = riflebulletExp; collisionRadius = 0.0; mass = 2.0; damageClass = 0; damageValue = 0.25; damageType = $RifleDamageType; explosionRadius = 0.5; kickBackStrength = 10.0; muzzleVelocity = 2500.0; terminalVelocity = 3000.0; acceleration = 5.0; totalTime = 2.0; liveTime = 2.0; lightRange = 0.2; lightColor = { 1.0, 0.7, 0.5 }; inheritedVelocityScale = 0.5; trailType = 0; soundId = SoundJetHeavy; };
+GrenadeData BomberWarhead { bulletShapeName = "mortar.dts"; explosionTag = bomberExp; collideWithOwner = false; ownerGraceMS = 500; collisionRadius = 0.2; mass = 0.1; elasticity = 0.15; damageClass = 1; damageValue = 0.75; damageType = $BomberDamageType; explosionRadius = 15; kickBackStrength = 1.0; maxLevelFlightDist = 150; totalTime = 10.0; liveTime = 1.0; projSpecialTime = 0.5; inheritedVelocityScale = 0.25; smokeName = "plasmatrail.dts"; };
+GrenadeData FlameBurst { explosionTag = FlameBurstExp; collideWithOwner = True; ownerGraceMS = 50; collisionRadius = 10.0; mass = 5.0; elasticity = 0.1; damageClass = 1; damageValue = 0.1; damageType = $FlamerDamageType; explosionRadius = 5.0; kickBackStrength = 0.1; maxLevelFlightDist = 75; totalTime = 4.0; liveTime = 0.02; projSpecialTime = 0.01; lightRange = 10.0; lightColor = { 1.0, 1.0, 0.0 }; inheritedVelocityScale = 0.5; smokeName = "plastrail.dts"; soundId = SoundFlyerActive; };
+GrenadeData Booster { explosionTag = BoosterExp; collideWithOwner = True; ownerGraceMS = 50; collisionRadius = 0.0; mass = 5.0; elasticity = 0.1; damageClass = 1; damageValue = 0.002; damageType = $BoosterDamageType; explosionRadius = 7; kickBackStrength = 60.0;maxLevelFlightDist = 200; totalTime = 0.1; liveTime = 0.02; projSpecialTime = 0.01; lightRange = 10.0; lightColor = { 1.0, 1.0, 0.0 }; inheritedVelocityScale = 0.5; smokeName = "tumult_small.dts"; };
+
+SeekingMissileData DeployableTurretMissile { bulletShapeName = "rocket.dts"; explosionTag = rocketExp; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.5; damageType = $AvengerDamageType; explosionRadius = 9.5; kickBackStrength = 175.0; muzzleVelocity = 65.0; totalTime = 25; liveTime = 25; seekingTurningRadius = 0.0; nonSeekingTurningRadius = 5.0; proximityDist = 1.5; smokeDist = 1.75; lightRange = 5.0; lightColor = { 0.4, 0.4, 1.0 }; inheritedVelocityScale = 0.5; soundId = SoundJetHeavy; };
+function DeployableTurretMissile::updateTargetPercentage(%target) { if(Player::getMountedItem(%target,$BackpackSlot) == "RocketBooster") return 1.0; else return GameBase::virtual(%target, "getHeatFactor"); }
+function DeployableTurretMissile::onAdd(%this) { ixTrackProj(%this, DeployableAvenger); }
+
+BulletData FlakShell { bulletShapeName = "tracer.dts"; explosionTag = FlakExp; mass = 0.05; bulletHoleIndex = 0; collisionRadius = 30.0; damageClass = 0; damageValue = 0.3; damageType = $FlakDamageType; aimDeflection = 0.01; muzzleVelocity = 400.0; totalTime = 1.0; inheritedVelocityScale = 1.0; isVisible = False; tracerPercentage = 1.0; tracerLength = 30; soundId = SoundJetLight; };
+BulletData ShotgunBullet { bulletShapeName = "tracer.dts"; explosionTag = ShotExp; mass = 0.05; bulletHoleIndex = 0; damageClass = 0; damageValue = 0.07; damageType = $ShotgunDamageType; aimDeflection = 0.02; muzzleVelocity = 400.0; totalTime = 0.5; inheritedVelocityScale = 1.0; isVisible = False; tracerPercentage = 1.0; tracerLength = 30; };
+RocketData HandRocket { bulletShapeName = "rocket.dts"; explosionTag = rocketExp; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.5; damageType = $RocketDamageType; explosionRadius = 9.5; kickBackStrength = 200.0; muzzleVelocity = 65.0; terminalVelocity = 80.0; acceleration = 5.0; totalTime = 10.0; liveTime = 11.0; lightRange = 5.0; lightColor = { 1.0, 0.7, 0.5 }; inheritedVelocityScale = 0.5; trailType = 2; trailString = "rsmoke.dts"; smokeDist = 1.8; soundId = SoundJetHeavy; };
+
+SeekingMissileData RetributionMissile { bulletShapeName = "rocket.dts"; explosionTag = rocketExp; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.375; damageType = $RetributionDamageType; explosionRadius = 9.5; kickBackStrength = 200.0; muzzleVelocity = 95.0; terminalVelocity = 100.0; acceleration = 5.0; totalTime = 20.0; liveTime = 21.0; lightRange = 5.0; lightColor = { 1.0, 0.7, 0.5 }; inheritedVelocityScale = 0.5; seekingTurningRadius = 0.0; nonSeekingTurningRadius = 5.0; proximityDist = 1.5; lightRange = 5.0; lightColor = { 0.4, 0.4, 1.0 }; trailType = 2; trailString = "smoke.dts"; smokeDist = 1.5; inheritedVelocityScale = 1.0; soundId = SoundJetHeavy; };
+function RetributionMissile::updateTargetPercentage(%target) { if(Player::getMountedItem(%target,$BackpackSlot) == "RocketBooster") return 1.0; else return GameBase::virtual(%target, "getHeatFactor"); }
+
+SeekingMissileData AvengerMissile { bulletShapeName = "rocket.dts"; explosionTag = rocketExp; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.5; damageType = $RocketDamageType; explosionRadius = 9.5; kickBackStrength = 200.0; muzzleVelocity = 75.0; terminalVelocity = 80.0; acceleration = 5.0; totalTime = 20.0; liveTime = 21.0; lightRange = 5.0; lightColor = { 1.0, 0.7, 0.5 }; inheritedVelocityScale = 0.5; seekingTurningRadius = 0.0; nonSeekingTurningRadius = 5.0; proximityDist = 1.5; lightRange = 5.0; lightColor = { 0.4, 0.4, 1.0 }; trailType = 2; trailString = "smoke.dts"; smokeDist = 1.5; inheritedVelocityScale = 1.0; soundId = SoundJetHeavy; };
+function AvengerMissile::updateTargetPercentage(%target) { if(Player::getMountedItem(%target,$BackpackSlot) == "RocketBooster") return 1.0; else return GameBase::virtual(%target, "getHeatFactor"); }
+
+SeekingMissileData LowYieldWarhead { bulletShapeName = "rocket.dts"; explosionTag = flashExpSmall; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.25; damageType = $LowWarheadDamageType; explosionRadius = 5.0; kickBackStrength = 25.0; muzzleVelocity = 90.0; terminalVelocity = 120.0; acceleration = 5.0; totalTime = 20.0; liveTime = 21.0; lightRange = 5.0; lightColor = { 1.0, 0.7, 0.5 }; inheritedVelocityScale = 0.5; seekingTurningRadius = 0.0; nonSeekingTurningRadius = 4.0; proximityDist = 1.5; lightRange = 5.0; lightColor = { 0.4, 0.4, 1.0 }; trailType = 2; trailString = "smoke.dts"; smokeDist = 1.5; inheritedVelocityScale = 0.5; soundId = SoundJetHeavy; };
+function LowYieldWarhead::updateTargetPercentage(%target) { if(Player::getMountedItem(%target,$BackpackSlot) == "RocketBooster") return 1.0; else return GameBase::virtual(%target, "getHeatFactor"); }
+
+SeekingMissileData MediumYieldWarhead { bulletShapeName = "rocket.dts"; explosionTag = rocketExp; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.5; damageType = $MedWarheadDamageType; explosionRadius = 10; kickBackStrength = 50.0; muzzleVelocity = 65.0; terminalVelocity = 80.0; acceleration = 5.0; totalTime = 20.0; liveTime = 21.0; lightRange = 5.0; lightColor = { 1.0, 0.7, 0.5 }; inheritedVelocityScale = 0.5; seekingTurningRadius = 0.0; nonSeekingTurningRadius = 5.0; proximityDist = 1.5; lightRange = 5.0; lightColor = { 0.4, 0.4, 1.0 }; trailType = 2; trailString = "smoke.dts"; smokeDist = 1.5; inheritedVelocityScale = 0.5; soundId = SoundJetHeavy; };
+function MediumYieldWarhead::updateTargetPercentage(%target) { if(Player::getMountedItem(%target,$BackpackSlot) == "RocketBooster") return 1.0; else return GameBase::virtual(%target, "getHeatFactor"); }
+
+SeekingMissileData HighYieldWarhead { bulletShapeName = "rocket.dts"; explosionTag = mortarExp; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 1.0; damageType = $HighWarheadDamageType; explosionRadius = 10.0; kickBackStrength = 150.0; muzzleVelocity = 35.0; terminalVelocity = 100.0; acceleration = 5.0; totalTime = 30.0; liveTime = 31.0; lightRange = 5.0; lightColor = { 1.0, 0.7, 0.5 }; inheritedVelocityScale = 0.5; seekingTurningRadius = 9.0; nonSeekingTurningRadius = 20.0; proximityDist = 1.5; lightRange = 5.0; lightColor = { 0.4, 0.4, 1.0 }; inheritedVelocityScale = 0.5; soundId = SoundJetHeavy; };
+function HighYieldWarhead::updateTargetPercentage(%target) { if(Player::getMountedItem(%target,$BackpackSlot) == "RocketBooster") return 1.0; else return GameBase::virtual(%target, "getHeatFactor"); }
+
+SeekingMissileData EMPYieldWarhead { bulletShapeName = "rocket.dts"; explosionTag = flashExpLarge; collisionRadius = 0.0; mass = 2.0; damageClass = 1; damageValue = 0.01; damageType = $EMPWarheadDamageType; explosionRadius = 5.0; kickBackStrength = -50.0; muzzleVelocity = 55.0; terminalVelocity = 80.0; acceleration = 5.0; totalTime = 20.0; liveTime = 21.0; lightRange = 5.0; lightColor = { 1.0, 0.7, 0.5 }; inheritedVelocityScale = 0.5; seekingTurningRadius = 0.0; nonSeekingTurningRadius = 5.0; proximityDist = 1.5; lightRange = 5.0; lightColor = { 0.4, 0.4, 1.0 }; trailType = 2; trailString = "fusionbolt.dts"; smokeDist = 1.5; inheritedVelocityScale = 0.5; soundId = SoundJetHeavy; };
+function EMPYieldWarhead::updateTargetPercentage(%target) { if(Player::getMountedItem(%target,$BackpackSlot) == "RocketBooster") return 1.0; else return GameBase::virtual(%target, "getHeatFactor"); }
+
+RocketData DoomsdayYieldWarhead { bulletShapeName = "mortar.dts"; explosionTag = DoomBoomExp; collisionRadius = 0.0; mass = 7.5; damageClass = 1; damageValue = 7.5; damageType = $DoomsdayDamageType; explosionRadius = 45.0; kickBackStrength = 300.0; muzzleVelocity = 25.0; terminalVelocity = 75.0; acceleration = 5.0; totalTime = 30.0; liveTime = 31.0; lightRange = 10.0; lightColor = { 0.5, 0.7, 1.0 }; inheritedVelocityScale = 1.0; lightRange = 5.0; lightColor = { 1.0, 0.4, 0.4 }; trailType = 2; trailString = "plasmatrail.dts"; smokeDist = 2.5; inheritedVelocityScale = 1.0; soundId = shockExplosion; };
+
+LightningData LongLockLaser { bitmapName = "hudtrans.bmp"; damageType = $ElectricityDamageType; boltLength = 350.0; coneAngle = 1.0; damagePerSec = 10.0; energyDrainPerSec = 0.0; segmentDivisions = 2; numSegments = 8; beamWidth = 0.05;updateTime = 10; skipPercent = 0.0; displaceBias = 0.005; lightRange = 3.0; lightColor = { 0.0, 1.0, 0.0 }; };
+function ixLockLaser(%target, %client) { %player = Client::getOwnedObject(%client); %object = getObjectType(%target); if(!$ixFloodRockets[%client]) { if(%object == "Player") %targetId = GameBase::getOwnerClient(%target); else if(%object == "Flier") %targetId = GameBase::getControlClient(%target); else %targetId = 0; %lockingObj = getObjectType($ixLockedTarget[%client]); if(%lockingObj == "Player") %lockingId = GameBase::getOwnerClient($ixLockedTarget[%client]); else if(%lockingObj == "Flier") %lockingId = GameBase::getControlClient($ixLockedTarget[%client]); else %lockingId = 1; if((%target == $ixLockedTarget[%client]) || (%lockingId == %targetId)) { if($ixLockTime[%client] > $ixLockAquired) { Player::trigger(%player,$WeaponSlot,false); GameBase::setEnergy(%player,0); GameBase::setRechargeRate(%player,0); Player::unmountItem(%player,$WeaponSlot); Player::mountItem(%player,MissileLauncher,$WeaponSlot); schedule("ixFloodRockets(" @ %client @ "," @ %player @ "," @ %target @ "," @ $ixVPayload[%client] @ ",1);",2); $ixFloodRockets[%client] = true; ixLockWarning(%client,$ixLockedTarget[%client],%object,0.75,Vengeance); playSound(SoundPrepVengeance1,GameBase::getPosition(%player)); playSound(SoundPrepVengeance2,GameBase::getPosition(%player)); schedule("Client::sendMessage(" @ %client @ ",1,\"** FIRING!!! **\");",1.5); schedule("playSound(SoundFireVengeance,GameBase::getPosition(" @ %player @ "));",1.5); } else { if(%object == "Player" || %object == "Flier") $ixLockTime[%client] += $ixLockSpeed[$ixVScanner[%client]]; else $ixLockTime[%client] += ($ixLockSpeed[$ixVScanner[%client]] * $ixLockModifier); } } else { $ixLockTime[%client] = 0; $ixLockedTarget[%client] = %target; if(%object == "Player") { %tgtClient = GameBase::getOwnerClient($ixLockedTarget[%client]); %name = Client::getName(%tgtClient); } else { %name = GameBase::getMapName(%target); if(%name == "") { %name = (GameBase::getDataName(%target)).description; } } Client::sendMessage(%client,0,"** Vengeance: Scanning " @ %name); $ixLockedName[%client] = %name; } } }
+function ixSin(%theta) { return (%theta - (pow(%theta,3)/6) + (pow(%theta,5)/120) - (pow(%theta,7)/5040) + (pow(%theta,9)/362880) - (pow(%theta,11)/39916800)); }
+function ixCos(%theta) { return (1 - (pow(%theta,2)/2) + (pow(%theta,4)/24) - (pow(%theta,6)/720) + (pow(%theta,8)/40320) - (pow(%theta,10)/3628800)); }
+function ixApplyKickback(%player, %strength, %lift) { if((!%lift) && (%lift != 0)) %lift = 0; %rot = GameBase::getRotation(%player); %rad = getWord(%rot, 2); %x = (-1) * (ixSin(%rad)); %y = ixCos(%rad); %dir = %x @ " " @ %y @ " 0"; %force = ixDotProd(Vector::neg(%dir),%strength); %x = getWord(%force, 0); %y = getWord(%force, 1); %dir = %x @ " " @ %y @ " " @ %lift; Player::applyImpulse(%player,%force); }
+function ixLockWarning(%clientId, %target, %object, %delay, %weapon) { %targetId = GameBase::getControlClient(%target); %targetName = Client::getName(%targetId); %name = Client::getName(%clientId); %player = Client::getOwnedObject(%clientId); if(%object == Flier) { if(%targetName != "") %msg = "Vehicle Piloted by " @ %targetName; else %msg = "Vehicle"; } else %msg = %targetName; if(%weapon == Avenger) { Client::sendMessage(%clientId,0,"** Lock Aquired: " @ %msg); playSound(SoundLockAquired,GameBase::getPosition(%player)); schedule("playSound(SoundLockWarning,GameBase::getPosition(" @ %target @ "));",%delay); schedule("Client::sendMessage(" @ %targetId @ ",0,\"** WARNING ** - " @ escapeString(%name) @ " has a Guided Missile Lock!\");",%delay); schedule("playSound(SoundLockWarning,GameBase::getPosition(" @ %target @ "));",(%delay + 0.5)); schedule("playSound(SoundLockWarning,GameBase::getPosition(" @ %target @ "));",(%delay + 1.0)); } else if(%weapon == RetributionPack) { %gender = Client::getGender(%clientId); if(%gender == "Male") %pronoun = "him"; if(%gender == "Female") %pronoun = "her"; Client::sendMessage(%clientId,0,"** Demanding Retribution from " @ %msg); playSound(SoundLockAquired,getBoxCenter(%player)); schedule("playSound(SoundLockWarning,GameBase::getPosition(" @ %target @ "));",%delay); schedule("Client::sendMessage(" @ %targetId @ ",0,\"** BEWARE ** - " @ escapeString(%name) @ " demands Retribution for your crimes against " @ %pronoun @ "!\");",%delay); schedule("playSound(SoundLockWarning,GameBase::getPosition(" @ %target @ "));",(%delay + 0.5)); schedule("playSound(SoundLockWarning,GameBase::getPosition(" @ %target @ "));",(%delay + 1.0)); } else { if(%object == "Player" || %object == "Flier") { Client::sendMessage(%clientId,0,"** Vengeance: Lock Aquired: " @ %msg @ "~wmine_act.wav"); playSound(SoundLockAquired,GameBase::getPosition(%player)); schedule("Client::sendMessage(" @ %targetId @ ",0,\"** WARNING ** - " @ escapeString(%name) @ " has a Vengeance Missile Lock!\");",%delay); schedule("playSound(SoundLockWarning,GameBase::getPosition(" @ %target @ "));",(%delay + 0.5)); schedule("playSound(SoundLockWarning,GameBase::getPosition(" @ %target @ "));",(%delay + 1.0)); } else { Client::sendMessage(%clientId,0,"** Vengeance: Lock Aquired: " @ GameBase::getDataName(%target) @ "~wmine_act.wav"); playSound(SoundLockAquired,GameBase::getPosition(%player)); } } }
+function ixFloodRockets(%client, %player, %object, %count, %warhead) { if($ixFloodRockets[%client]) { %AmmoCount = Player::getItemCount(%player, "VengeanceAmmo"); if(%AmmoCount) { %whNow = $ixVWarhead[%client, %warhead]; if((%warhead) && (%count >= %warhead) && (!Player::isDead(%player)) && ((Player::getMountedItem(%player,$WeaponSlot) == MissileLauncher) || (Player::getMountedItem(%player,$WeaponSlot) == DoomsdayLauncher))) { if(%whNow != "Pause") { if($ixVAmmo[%whNow] <= %AmmoCount) { %pause = 1; %trans = GameBase::getMuzzleTransform(%player); %vel = Item::getVelocity(%player); if(%whNow == "Doomsday") { playSound(SoundDoomsdayLaunch,GameBase::getPosition(%player)); MessageAllExcept(%client,1,"** WARNING ** - " @ Client::getName(%client) @ " has launched a Doomsday Missile~wError_Message.wav"); } else playSound(SoundMissileTurretFire,GameBase::getPosition(%player)); %proj = Projectile::spawnProjectile(%whNow @ "YieldWarhead",%trans,%player,%vel,%object); %proj.pxOwner = %player; Player::decItemCount(%player,"VengeanceAmmo",$ixVAmmo[%whNow]); ixApplyKickback(%player, $ixVKick[%whNow] * 150, $ixVKick[%whNow] * 30); } else { playSound(SoundLoadWarhead,GameBase::getPosition(%player)); Client::sendMessage(%client,0,"*** Vengeance: No Ammo to Fire #" @ %warhead @ " - " @ $ixVWarhead[%client, %warhead] @ "~wC_BuySell.wav"); } } else { playSound(SoundLoadWarhead,GameBase::getPosition(%player)); %pause = 1.5; } %warhead += 1; schedule("ixFloodRockets(" @ %client @ "," @ %player @ "," @ %object @ "," @ %count @ "," @ %warhead @ ");",($ixFloodSpeed * %pause)); } else ixFloodShutdown(%client, %player, "Normal"); } else ixFloodShutdown(%client, %player, "Ammo"); } }
+function ixFloodShutdown(%client, %player, %error) { if(%error == "Normal") { schedule("playSound(SoundUsePack,GameBase::getPosition(" @ %player @ "));",$ixFloodReload + $ixFloodPowerDown); schedule("playSound(SoundPackFail,GameBase::getPosition(" @ %player @ "));",$ixFloodPowerDown); schedule("ixRestorePower(" @ %client @ "," @ %player @ ");",$ixFloodPowerDown); schedule("Player::unmountItem(" @ %player @ "," @ $WeaponSlot @ ");",$ixFloodPowerDown + $ixFloodReload); schedule("Player::mountItem(" @ %player @ ",LockingLaser," @ $WeaponSlot @ ");",$ixFloodPowerDown + $ixFloodReload); schedule("$ixFloodRockets[" @ %client @ "] = false;",$ixFloodPowerDown + $ixFloodReload); schedule("playSound(SoundUsePack,GameBase::getPosition(" @ %player @ "));",$ixFloodReload + $ixFloodPowerDown); } else if(%error == "Ammo") { Client::sendMessage(%client,0,"*** Vengeance: Shutting Down - NO AMMO"); schedule("playSound(SoundUsePack,GameBase::getPosition(" @ %player @ "));",$ixFloodReload + $ixFloodPowerDown); schedule("playSound(SoundPackFail,GameBase::getPosition(" @ %player @ "));",$ixFloodPowerDown); schedule("ixRestorePower(" @ %client @ "," @ %player @ ");",$ixFloodPowerDown); schedule("Player::unmountItem(" @ %player @ "," @ $WeaponSlot @ ");",$ixFloodPowerDown + $ixFloodReload); schedule("Player::mountItem(" @ %player @ ",LockingLaser," @ $WeaponSlot @ ");",$ixFloodPowerDown + $ixFloodReload); schedule("$ixFloodRockets[" @ %client @ "] = false;",$ixFloodPowerDown + $ixFloodReload); schedule("playSound(SoundUsePack,GameBase::getPosition(" @ %player @ "));",$ixFloodReload + $ixFloodPowerDown); } else if(%error == "EMP") { Client::sendMessage(%client,0,"*** Vengeance: Shutting Down - EMP"); schedule("playSound(SoundUsePack,GameBase::getPosition(" @ %player @ "));",$ixFloodReload + $ixFloodPowerDown); schedule("playSound(SoundPackFail,GameBase::getPosition(" @ %player @ "));",$ixFloodPowerDown); schedule("$ixFloodRockets[" @ %client @ "] = false;",$ixFloodPowerDown + $ixFloodReload); schedule("playSound(SoundUsePack,GameBase::getPosition(" @ %player @ "));",$ixFloodReload + $ixFloodPowerDown); } else if(%error == "Sniper") { Client::sendMessage(%client,0,"*** Vengeance: Shutting Down - Damaged"); schedule("playSound(SoundUsePack,GameBase::getPosition(" @ %player @ "));",$ixFloodReload + $ixFloodPowerDown); schedule("playSound(SoundPackFail,GameBase::getPosition(" @ %player @ "));",$ixFloodPowerDown); schedule("ixRestorePower(" @ %client @ "," @ %player @ ");",$ixFloodPowerDown); schedule("$ixFloodRockets[" @ %client @ "] = false;",$ixFloodPowerDown + $ixFloodReload); schedule("playSound(SoundUsePack,GameBase::getPosition(" @ %player @ "));",$ixFloodReload + $ixFloodPowerDown); } }
+function ixRestorePower(%clientId, %player) { if(!%client.empTime) GameBase::setRechargeRate(%player,8); }
+function ixCheckVengeance(%client, %item) { if((%item != LockingLaser) && (%item != MissileLauncher) && (%item != DoomsdayLauncher)) return true; else if($ixFloodRockets[%client]) { Client::sendMessage(%client,0,"Vengeance: Cannot Abort Firing Sequence."); return false; } else return true; }
+
+$ixFloodReload = 1.5;
+$ixFloodPowerDown = 1.0;
+$ixFloodSpeed = 0.25;
+$ixLockSpeed[Doomsday] = 0.2;
+$ixLockSpeed[Long] = 0.5;
+$ixLockSpeed[Medium] = 0.8;
+$ixLockSpeed[Short] = 1.0;
+$ixLockAquired = 25;
+$ixLockModifier = 0.5;
+$ixVKick[Low] = 0.5;
+$ixVKick[EMP] = 0.5;
+$ixVKick[Medium] = 0.75;
+$ixVKick[High] = 1.0;
+$ixVKick[Doomsday] = 3.75;
+
+LightningData ShortLockLaser { bitmapName = "hudtrans.bmp"; damageType = $ElectricityDamageType; boltLength = 50.0; coneAngle = 30.0; damagePerSec = 10.0; energyDrainPerSec = 0.0; segmentDivisions = 2; numSegments = 8; beamWidth = 0.05;updateTime = 10; skipPercent = 0.0; displaceBias = 0.005; lightRange = 3.0; lightColor = { 0.0, 1.0, 0.0 }; };
+LightningData MediumLockLaser { bitmapName = "hudtrans.bmp"; damageType = $ElectricityDamageType; boltLength = 150.0; coneAngle = 15.0; damagePerSec = 10.0; energyDrainPerSec = 0.0; segmentDivisions = 2; numSegments = 8; beamWidth = 0.05;updateTime = 10; skipPercent = 0.0; displaceBias = 0.005; lightRange = 3.0; lightColor = { 0.0, 1.0, 0.0 }; };
+LightningData DoomsdayLockLaser { bitmapName = "lightningNewSub.bmp"; damageType = $ElectricityDamageType; boltLength = 250.0; coneAngle = 0.25; damagePerSec = 10.0; energyDrainPerSec = 0.0; segmentDivisions = 2; numSegments = 8; beamWidth = 0.05; updateTime = 10; skipPercent = 0.0; displaceBias = 0.005; lightRange = 3.0; lightColor = { 1.0, 0.0, 1.0 }; };
+
+BulletData PhalanxxBullet { bulletShapeName = "bullet.dts"; explosionTag = bulletExp0; expRandCycle = 3; mass = 0.05; bulletHoleIndex = 0; damageClass = 0; damageValue = 0.1; damageType = $PhalanxxDamageType; aimDeflection = 0.005; muzzleVelocity = 425.0; totalTime = 1.5; inheritedVelocityScale = 1.0; isVisible = False; tracerPercentage = 1.0; tracerLength = 30; };
+GrenadeData EMPShock { bulletShapeName = "breath.dts"; explosionTag = nullExp; collideWithOwner = false; ownerGraceMS = 500; collisionRadius = 0.0; mass = 0.0; elasticity = 0.1; damageClass = 0; damageValue = 0.01; damageType = $NullDamageType; explosionRadius = 1; kickBackStrength = 0.0; maxLevelFlightDist = 1; totalTime = 0.05; liveTime = 0.05; projSpecialTime = 0.05; inheritedVelocityScale = 1.0; smokeName = "breath.dts"; };
+GrenadeData EjectedBooster { bulletShapeName = "mortarpack.dts"; explosionTag = DetonationExp2; collideWithOwner = True; ownerGraceMS = 50; collisionRadius = 5.0; mass = 5.0; elasticity = 0.2; damageClass = 1; damageValue = 0.5; damageType = $FlamerDamageType; explosionRadius = 8.0; kickBackStrength = 0.5; maxLevelFlightDist = 10; totalTime = 1.5; liveTime = 1.0; projSpecialTime = 0.8; lightRange = 10.0; lightColor = { 1.0, 1.0, 0.0 }; inheritedVelocityScale = 0.5; smokeName = "plastrail.dts"; soundId = SoundFlyerActive; };
+
+GrenadeData FlareShock { bulletShapeName = "breath.dts"; explosionTag = nullFlareExp; collideWithOwner = false; ownerGraceMS = 500; collisionRadius = 0.0; mass = 0.0; elasticity = 0.1; damageClass = 0; damageValue = 0.01; damageType = $NullDamageType; explosionRadius = 1; kickBackStrength = 0.0; maxLevelFlightDist = 1; totalTime = 0.5; liveTime = 0.5; projSpecialTime = 0.05; lightRange = 3.0; lightColor = { 1.0, 1.0, 0.0 }; inheritedVelocityScale = 1.0; smokeName = "plasmatrail.dts"; };
+RocketData NaniteFlash { bulletShapeName = "breath.dts"; explosionTag = nullNaniteExp; collideWithOwner = false; ownerGraceMS = 500; collisionRadius = 0.0; mass = 0.0; damageClass = 0; damageValue = 0.01; damageType = $NullDamageType; explosionRadius = 1; kickBackStrength = 0.0; muzzleVelocity = 1; totalTime = 0.1; liveTime = 0.1; inheritedVelocityScale = 1.0; };
+
+RocketData MushroomCloud1 { bulletShapeName = "breath.dts"; explosionTag = MushroomCloudFlash1; collideWithOwner = false; ownerGraceMS = 500; collisionRadius = 0.0; mass = 10.0; damageClass = 0; damageValue = 0.01; damageType = $NullDamageType; explosionRadius = 1; kickBackStrength = 0.0; muzzleVelocity = 97.5; terminalVelocity = 102.5; acceleration = 5.0; totalTime = 0.05; liveTime = 0.05; inheritedVelocityScale = 1.0; };
+GrenadeData MushroomCloud2 { bulletShapeName = "breath.dts"; explosionTag = MushroomCloudFlash2; collideWithOwner = false; ownerGraceMS = 500; collisionRadius = 0.0; mass = 0.0; elasticity = 0.1; damageClass = 0; damageValue = 0.01; damageType = $NullDamageType; explosionRadius = 1; kickBackStrength = 0.0; maxLevelFlightDist = 1; totalTime = 0.05; liveTime = 0.05; projSpecialTime = 0.05; inheritedVelocityScale = 1.0; smokeName = "breath.dts"; };
+GrenadeData MushroomCloud3 { bulletShapeName = "breath.dts"; explosionTag = MushroomCloudFlash3; collideWithOwner = false; ownerGraceMS = 500; collisionRadius = 0.0; mass = 0.0; elasticity = 0.1; damageClass = 0; damageValue = 0.01; damageType = $NullDamageType; explosionRadius = 1; kickBackStrength = 0.0; maxLevelFlightDist = 1; totalTime = 0.05; liveTime = 0.05; projSpecialTime = 0.05; inheritedVelocityScale = 1.0; smokeName = "breath.dts"; };
+GrenadeData MushroomCloud4 { bulletShapeName = "breath.dts"; explosionTag = BlankExp; collideWithOwner = false; ownerGraceMS = 500; collisionRadius = 0.0; mass = 0.0; elasticity = 0.1; damageClass = 0; damageValue = 0.01; damageType = $NullDamageType; explosionRadius = 1; kickBackStrength = 0.0; maxLevelFlightDist = 12.5; totalTime = 1.5; liveTime = 1.5; projSpecialTime = 0.05; inheritedVelocityScale = 1.0; smokeName = "plastrail.dts"; };
+GrenadeData BoomBoxFizzle { bulletShapeName = "breath.dts"; explosionTag = grenadeExp; collideWithOwner = false; ownerGraceMS = 500; collisionRadius = 0.0; mass = 0.0; elasticity = 0.1; damageClass = 0; damageValue = 0.01; damageType = $NullDamageType; explosionRadius = 1; kickBackStrength = 0.0; maxLevelFlightDist = 1; totalTime = 0.05; liveTime = 0.05; projSpecialTime = 0.05; inheritedVelocityScale = 1.0; smokeName = "breath.dts"; };

@@ -1,0 +1,11 @@
+$Insomniax::fairteams = "true";
+$Insomniax::LeaveAreaTime = "30";
+$insomniax::PAGag = "true";
+$insomniax::PAKick = "true";
+$Insomniax::PAMission = "true";
+$insomniax::PAResetDefaults = "true";
+$insomniax::PATeamDamage = "true";
+$Insomniax::PATimeLimit = "true";
+$insomniax::PSkin = "true";
+$Insomniax::StationTime = "60";
+$DefaultTeamEnergy = "Infinite";

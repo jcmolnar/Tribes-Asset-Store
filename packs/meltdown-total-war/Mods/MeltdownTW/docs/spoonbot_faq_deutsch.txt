@@ -1,0 +1,403 @@
+SPOONBOT FAQ Revision 1.5
+-------------------------
+German version
+
+Die jeweils neueste Version dieser Datei gibts bei http://www.playspoon.com/tribes/spoonbot_faq_deutsch.txt
+
+
+Ich habe dieses File geschrieben um vorsorglich die Fragen zu beantworten,
+welche ich sonst 30 oder 40 mal am Tag gestellt bekomme...
+Falls Fragen auftauchen welche NICHT in diesem FAQ beantwortet werden, so
+bitte ich darum diese Fragen entweder auf them SPOONBOT DEVELOPMENT BOARD auf:
+
+http://www.playspoon.com/forums
+
+zu posten, oder mir direkt eine email zu schicken. Die Adresse ist:
+
+werewolf@playspoon.com
+
+
+ACHTUNG: Von jetzt an werde ich kein Fragen mehr beantworten, die in diesem
+FAQ schon ausreichend behandelt wurden. Wenn ich trotzem so eine Frage
+bekomme, werde ich einfach dieses FAQ als Antwortmail schicken.
+
+
+...los gehts...
+------------------------------------------------------------------------------
+
+
+
+
+Q: Wie installiert man SPOONBOT ?
+
+A: Bitte, diese Frage wird ausreichend im README beantwortet.
+   Falls Unklarheiten bestehen bin ich jedoch gerne bereit zu helfen.
+
+
+
+
+
+Q: Wie startet man SPOONBOT?
+
+A: Mit "TRIBES.EXE -mod spoonbot_10 +exec spoonbot.cs". Natürlich OHNE Hochkommas.
+
+
+
+
+
+Q: Wie spiele ich mit/gegen SPOONBOT, und wie "spawne" ich bots?
+
+A: Einfach "HOST A GAME" anwählen und eine Karte aussuchen.
+   Die mitgelieferte Konfiguration sollte automatisch 2 Teams zu je 4 Bots
+   in die Karte "spawnen".
+   Falls die Bots nicht auftauchen, wurde offenbar die Installation von
+   SPOONBOT nicht richtig durchgeführt.
+   Mit der TABULATOR-Taste wird das Bot-menü aufgerufen, wo man bots 
+   hinzufügen und entfernen kann
+
+
+
+
+
+Q: Ich habe SPOONBOT in das Verzeichnis "Tribes\mybot" installiert anstatt
+   wie empfohlen in "Tribes\spoonbot_10" - und jetzt funktioniert es nicht mehr!
+
+A: Lösung: Entweder TRIBES mit "TRIBES.EXE -mod spoonbot_10 +exec spoonbot.cs"
+   starten, oder die Datei "Tribes\config\spoonbot.cs" umbenennen in
+   "Tribes\config\mybot.cs"
+
+
+
+
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Q: Ich habe SPOONBOT wie im readme beschrieben installiert, und das Spiel sagt
+   daß es SPOONBOT geladen hat, aber es kommen keine Bots! Und wenn ich TAB
+   drücke kommt auch kein Bot-menü!!!
+
+A: Das ist wahrscheinlich das am häufigsten vorkommende Problem.
+   Es gibt 6 Gründe warum dies passieren kann:
+
+   1) Die Datei "spoonbot.cs" konnte nicht im config-Verzeichniss gefunden
+      werden. Sie muss sich bei "Tribes\config\spoonbot.cs" befinden!
+
+   2) Du hast SPOONBOT in einem anderen Verzeichnis als "Tribes\spoonbot_10"
+      installiert
+
+   3) Du hast vergessen, Tribes mit dem Parameter "-mod spoonbot_10" zu starten
+
+   4) Du hast versucht, gleichzeitig SPOONBOT und ein anderes MOD 
+      zu starten, welches leider inkompatibel zu SPOONBOT ist
+
+   5) Deine Version von TRIBES ist sehr alt. das neueste Patch kann Abhilfe
+      schaffen (SPOONBOT benötigt mindestens v1.7)
+      Patches gibts z.b. auf http://www.planetstarsiege.com
+
+   6) Du wurdest ein Opfer von einem bekannten Bug in TRIBES.
+      Bitte schike mir eine email wenn die oberen Ratschläge nicht halfen.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+
+
+
+Q: HILFE! Die Bots bleiben im Inneren von Gebäuden hängen, und oft erreichen
+   sie auch die Flagge nicht!
+
+A: Wir haben zwar ein Wegpunktesystem entwickelt, aber dieses ist noch nicht
+   perfekt, daher habe ein wenig Geduld.
+
+
+
+
+Q: Welche Karten sind für SPOONBOT geeignet?
+
+A: Alle.
+
+
+
+
+
+Q: Könntest du den Bots beibringen, einen Scout zu fliegen?
+
+A: Nein. Das wird von TRIBES einfach nicht unterstützt.
+
+
+
+
+
+Q: Warum greifen die Bots keine feindlichen Turrets oder Sensoren an?
+
+A: Sie tun es. Allerdings braucht es dazu mindestens einen Painter bot und einen Guard bot.
+   Der Painter bot wird als erstes versuchen die Turrets mit seinem Laser zu "markieren",
+   worauf der Guard bot Granaten drauf wirft.
+
+
+
+
+
+Q: Können Bots im C&H Gebäude einnehmen?
+
+
+A: Ja! Das ist neu in v1.0
+
+
+
+
+
+Q: Im Q2 konnte man den Sourcecode nach belieben verändern und erweitern
+   Könntest du nicht dasselbe mit TRIBES machen, damit die Bots z.b. Scouts
+   fliegen könnten?
+
+A: Nein. Leider hat niemand den TRIBES Sourcode. Alles was ich habe ist die
+   eingebaute Scriptsprache, und die kann man nicht erweitern.
+
+
+
+
+
+Q: Ich liebe das Mod XYZ. Kann ich SPOONBOT und mein Lieblings-Mod GLEICHZEITIG
+   spielen?
+
+A: JA! Spoonbot läuft mit Shifter, Renegades, UltraRenegades, BalanceOfPower und fast allen anderen Mods. Allerdings gibts dazu von mir keinen Segen, und ich werde alle emails mit diesem Thema ignorieren.
+
+
+
+
+
+Q: Wie starte ich Renegades zusammen mit Spoonbot?
+
+A: "Tribes.exe +exec ServerConfig +exec spoonbot.cs +exec renegades.cs -mod renegades3 -mod spoonbot_10"
+
+
+
+
+
+Q: Wie starte ich UltraRenegades zusammen mit Spoonbot?
+
+A: "Tribes.exe +exec ServerConfig +exec spoonbot.cs +exec ultra_renegades3.cs -mod ultra_renegades3 -mod spoonbot_10"
+
+
+
+
+
+Q: Wie starte ich einen Dedicated-Server mit Spoonbot?
+
+A: "Tribes.exe +exec ServerConfig +exec spoonbot.cs -mod spoonbot_10 -dedicated"
+
+
+
+
+
+Q: Könntest du eine SPOONBOT version machen, die Renegades Waffen benutzt?
+
+A: Um Spoonbot an ein spezielles Weapon-Mod anzupassen muss man nur die Waffen in Spoonbot.cs eintragen. Das müsst Ihr aber selber machen.
+
+
+
+
+
+Q: Wenn ich SPOONBOT laufen habe, kann ich trotzdem einen Server joinen der
+   nicht SPOONBOT fährt?
+
+A: Ja.
+
+
+
+
+
+Q: Muss ich SPOONBOT auf meinem Computer installiert haben wenn ich auf einem
+   Server mitspielen will der SPOONBOT laufen hat?
+
+A: Nein.
+
+
+
+
+
+Q: Kann ich ein Demo mit SPOONBOT aufnehmen, und danach auf einem Rechner
+   abspielen welcher SPOONBOT nicht installiert hat?
+
+A: Ja.
+
+
+
+
+
+Q: Wann kommt die nächste Version von SPOONBOT heraus?
+
+A: Das hier ist die vorläufig letzte Version.
+
+
+
+
+
+Q: Könntest du nicht jede Woche oder so eine neue Version rausbringen?
+
+A: Nein, weil ich mir vorstellen kann daß nicht jeder Server-operator
+   damit glücklich wäre wenn er jede Woche seinen Server upgraden müsste.
+
+
+
+
+
+Q: Ich möchte trotzdem die neuesten Features sehen, und mir ist es auch egal ob
+   es eine Betaversion ist. Könntest du mir "Zwischenversionen" geben?
+
+A: Es gibt keine "Development Versions" mehr. Vergiss das ganze, und bleib bei v1.0
+
+
+
+
+
+Q: Ich habe ein cooles MOD gemacht, es heisst XYZ. Darf ich Teile von SPOONBOT
+   verwenden und in mein MOD einbauen?
+
+A: Ja. Bitte schicke mir trotzdem vorher eine email.
+
+
+
+
+
+Q: Könntest du mir bei meinem MOD helfen?
+
+A: Kommt darauf an ob ich Interessiert bin. Schreib mir doch einfach.
+
+
+
+
+
+Q: Ich mochte bei der Entwicklung von SPOONBOT helfen. Was kann ich tun?
+
+A: Schau mal auf http://www.playspoon.com/spoonbot_development.shtml
+   und lies es durch.
+
+
+
+
+
+Q: Die Bots bremsen meinen Rechner arg ein, und es fängt zu ruckeln an.
+
+A: SPOONBOT braucht nun mal eine dicke CPU. Eigentlich ist es nicht mein
+   Fehler, weil die eingebaute Scriptsprache von TRIBES nun mal nicht so
+   schnell ist wie ein normales Windows-program. Der Programmcode von
+   SPOONBOT wird hier vom Spiel selber interpretiert.
+   Als Faustregel gilt: Ein Bot braucht mindestens soviel CPU-Power wie ein
+   normaler menschlicher Mitspieler.
+
+
+
+
+
+Q: Die Bots sind aber schön dumm. Die können doch nie einen Menschen ersetzen.
+
+A: Richtig. Kein Bot könnte jemals den Nervenkitzel schaffen, den ein echtes
+   Match von 20 gegen 20 Spielern hat. Was wir versuchen, ist eine Lücke in
+   TRIBES 1 zu füllen, und das Spiel auch für diejenigen interessant zu machen,
+   die alleine Spielen (müssen).
+
+
+
+
+
+Q: Warum wurde TRIBES überhaupt je ohne Bot ausgeliefert?
+
+A: Weil die Leute bei Dynamix wärend der Entwicklung von TRIBES 1 genug mit
+   Multiplayer-problemen zu kämpfen hatten. Es blieb nicht genug Zeit um einen
+   ordentlichen Bot fertigzustellen. Das wird sich mit TRIBES Extreme aber ändern.
+
+
+
+
+
+Q: Wird es in TRIBES 2 endlich einen eingebauten Bot geben?
+
+A: Ja.
+
+
+
+
+
+Q: Wieviel Geld hast du mit SPOONBOT bis jetzt verdient?
+
+A: Nichts. Das Ganze ist mein Privatvergnügen.
+
+
+
+
+
+Q: Hast du das alles wirklich alleine gemacht, oder hattest du Hilfe?
+
+A: Am Anfang war ich alleine, ja. Ich kam sogar recht weit, der Bot hatte
+   bereits ein autonomes Verhalten und so. Jetzt arbeiten 3 Leute mit:
+
+   Werewolf (werewolf@playspoon.com) (Das bin ich, Josef Jahn)
+            Ich habe mir SPOONBOT ausgedacht, und jetzt versuche ich die
+            Arbeit von zwei hochtalentierten Leuten in das Projekt
+            einfließen zu lassen ;-)
+            Die letzte Verantwortung (mit allen Rechten und Pflichten)
+            trage ich.
+
+   EMO1313  (emo1313@dopplegangers.dynip.com)
+            Ihm verdanken wir die vielen kleinen Verbesserungen, die den
+            Bot zu dem gemacht haben was er ist. Kein Fehler entgeht seinen
+            wachsamen Augen, und ausserdem arbeitet er noch an seinem eigenen
+            Mod namens SHIFTER.
+
+   Wicked69 (Paul@LASTHOPE.DEMON.CO.UK)
+            Er ist unser "Neuzugang", hat aber schon sein Können unter
+            Beweis gestellt indem er das gesamte "Gehirn" des Bots umgekrempelt
+            und verbessert hat. Zur Zeit zerbricht er sich den Kopf über das
+            Wegpunkte-system, und wenn er erfolgreich ist muss sich Dynamix
+            noch ordentlich anstrengen wenn sie SPOONBOT schlagen wollen.
+
+   Dann gibt es da noch Savage (savage@technopop.com) welcher seinen eigenen
+   Bot aufgegeben hat und uns wertvolle Teile seiner Arbeit zur Verfügung
+   gestellt hat. Der Code der die Bots dazu bringt, Granaten auf ein mit dem
+   Targeting Laser markiertes Ziel zu werfen stammt von ihm. Danke Savage!
+
+
+
+
+
+Q: Arbeitest du für Dynamix?
+
+A: Nein. Ich wünschte es wäre so ;-)
+
+
+
+
+
+Q: Ich würde gerne selber mit dem Programmieren anfangen. Irgendwelche Tips?
+
+A:  Für den Anfang, versuche bestehenden Code zu verändern, dann schau was
+    deine Änderungen bewirkt haben. Mach deinen Programmcode frei verfügbar.
+    Wenn jemand deine Sachen stiehlt, nimm es als Zeichen daß er ein
+    erbärmlicher Wicht ist, und komm darüber hinweg. Sei ehrlich und arbeite
+    nicht auf den Ruhm zu. Daß heisst aber nicht daß du ihn nicht genießen
+    sollst ;-)
+    Wenn du deinen Programmcode teilst, brauchst du im Gegenzug nicht dauernd
+    das Rad neu erfinden.
+
+
+
+
+
+------------------------------------------------------------------------------
+
+Das wärs für's erste.
+
+
+Auf meiner Website gibts nicht nur den SPOONBOT, sondern auch MP3-Files
+gratis zum downloaden für dich!
+http://www.playspoon.com
+
+
+Ausserdem betreibe ich noch eine (ernsthafte) Seite über Lycanthropie und
+Werwölfe. Dort gibt es auch viele Bilder in hoher Qualität.
+http://www.fly.to/twi
+
+
+Zuguterletzt: Die Homepage von meiner alten Gruppe namens SDT. Wenn du
+TurboPascal und 3D in 320x200 magst, dann ist das das Richtige für dich:
+http://www.fly.to/sdt

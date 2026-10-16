@@ -1,0 +1,177 @@
+//_______________________________________________________________________________________________________________________________________________
+//------------------------------------------------------------------------------------------------------------------------------------------------\
+// THIS CODE IS USED TO CREATE THE USE OF MOUNT MSG'S IN GAME, ANYONE WHO STEALS, OR USES THIS CODE WITHOUT MY PERMISSTION WILL BE SHOT AND EATEN  |
+//________________________________________________________________________________________________________________________________________________/
+// COPYRIGHT 2002 "CT(R)" //|
+//------------------------//|
+// Ice / FishinSC@aol.com //|
+//==========================|
+// Font <f0> = normal green
+// Font <f1> = pale yellow
+// Font <f2> = white
+// Font <f3> = bright green
+// Font <f4> = grey
+// Font <f5> = redish-orange
+// Font <f6> = normal italic
+// Font <f7> and Up = redish orange?
+
+$WeapMountMSG[EL]	= "The Nuclear Fission Emitter fires an EXTREMELY powerful but slow-moving blast that can desecrate an area in seconds, disposed after fired.";
+$WeapMountMSG[LP]	= "The Laser Pistol is fast, but weaker at long ranges, best used for close-combat.";
+$WeapMountMSG[RL]	= "The Rocket Launcher fires a rocket with a deadly, but small blast radius.";
+$WeapMountMSG[MG]	= "The Minigun shoots out sprays of bullets very fast, but it heats up very quickly.";
+$WeapMountMSG[FP]	= "This Gun Shoots a Bolt of plasma that can do some damage.";
+$WeapMountMSG[PC]	= "The Hellfire Cannon shoots Deadly Fusion bolts at a fast speed.";
+$WeapMountMSG[SP]	= "The Silenced Pistol is not very deadly, but is impossible to hear.";
+$WeapMountMSG[AR]	= "The Assault Rifle shoots bullets rapidly, with some spread.";
+$WeapMountMSG[SR]	= "The Sniper Rifle is deadly and long range, but has a slow reload rate.";
+$WeapMountMSG[Sword]	= "The Flame Sword is a deadly, but short ranged melee weapon.";
+$WeapMountMSG[PAttack]		= "Psychos take pleasure in pain, hold the ¡Rage! while taking damage to gain Anger, and release your anger to either heal or destroy anyone.";
+$WeapMountMSG[PAttack,1]	= "The ¡Rage! is set on Attack Mode.";
+$WeapMountMSG[PAttack,2]	= "The ¡Rage! is set on Heal Mode.";
+$WeapMountMSG[F]		= "The Flare Gun is used to launch flare signals into the sky in hopes that your teammates will find you first.";
+$WeapMountMSG[F,1]		= "The Flare Gun is set on Large Flare.";
+$WeapMountMSG[F,2]		= "The Flare Gun is set on Medium Flare.";
+$WeapMountMSG[F,3]		= "The Flare Gun is set on Small Flare.";
+$WeapMountMSG[EnergyRifle]	= "The Confetti launcher is used to send sparkling flechettes of metal flying in dazzling color! Just don't get any in your eyes, comes with 3 fire modes.";
+$WeapMountMSG[EnergyRifle,1]	= "The Confetti launcher is set on Single Fire.";
+$WeapMountMSG[EnergyRifle,2]	= "The Confetti launcher is set on Double Fire.";
+$WeapMountMSG[EnergyRifle,3]	= "The Confetti launcher is set on Triple Fire.";
+$WeapMountMSG[BH]		= "The Disruptor Cannon is capable of 2 modes of fire, forming a black hole, or a repulsion center.";
+$WeapMountMSG[BH,1]		= "The Disruptor Cannon is set on Black Hole Mode.";
+$WeapMountMSG[BH,2]		= "The Disruptor Cannon is set on Repel Mode.";
+$WeapMountMSG[Blaster]		= "The Adv. blaster is the classic blaster with 2 new firing modes.";
+$WeapMountMSG[Blaster,1]	= "The Adv. blaster is set on Energy Efficient.";
+$WeapMountMSG[Blaster,2]	= "The Adv. blaster is set on High-Impact.";
+$WeapMountMSG[Blaster,3]	= "The Adv. blaster is set on Explosive.";
+$WeapMountMSG[Shotgun1]		= "The Adv. Shotgun has 2 modes of fire, standard Scatter Shot, and Meson Shot, but Meson Shot uses both shells at once.";
+$WeapMountMSG[Shotgun1,1]	= "The Adv. Shotgun is set on Scatter Shot.";
+$WeapMountMSG[Shotgun1,2]	= "The Adv. Shotgun is set on Meson Shot.";
+$WeapMountMSG[DiscLauncher]	= "The Adv. Disc launcher is the classic Disc Launcher with 2 new firing modes.";
+$WeapMountMSG[DiscLauncher,1]	= "The Adv. Disc launcher is set on Classic Disc.";
+$WeapMountMSG[DiscLauncher,2]	= "The Adv. Disc launcher is set on Flaming Disc.";
+$WeapMountMSG[DiscLauncher,3]	= "The Adv. Disc launcher is set on Grenade Disc.";
+$WeapMountMSG[GrenadeLauncher]	= "The Adv. Grenade Launcher is now capable of upgradeable grenades that do more damage than ever.";
+$WeapMountMSG[Mortar]			= "The Mortar has barely changed at all. It still has its Long range, and mass destruction.";
+$WeapMountMSG[FreezeGun]		= "The Freeze Gun shoots Liquid Nitrogen that instantly freezes an enemy.";
+$WeapMountMSG[Flamethrower]		= "The FlameThrower can roast more than just MarshMellows.";
+$WeapMountMSG[AG]			= "The Acid Gun shoots streams of deadly acid.";
+$WeapMountMSG[Funk]			= "The Party gun helps your enemies to 'Party'!";
+$WeapMountMSG[Multi]			= "The Multi-Rocket shoots 3 Stingers at once, but its not very deadly or accurate.";
+$WeapMountMSG[Beam]			= "The Beam Cannon is used to singe and burn!";
+$WeapMountMSG[Shock]			= "The Shockwave Rifle is a powerful long range explosive laser wave device.";
+$WeapMountMSG[Flag]			= "You have the Flag!";
+$WeapMountMSG[SmokeLauncher]		= "The Smoke Launcher is used to create smoke screens.";
+$WeapMountMSG[PGL]			= "The Proton Grenade Launcher will drain the enemy's health and energy!";
+$WeapMountMSG[R]			= "Use the Raptor's rocket to trace down any victim in the sky or on foot.";
+$WeapMountMSG[V]			= "The Viral Uploader is the Specialist 'Fake' Repair-Pack.";
+$WeapMountMSG[Syn]			= "The Syndicate spawns 3 ferocious flesh-eating insects.";
+$WeapMountMSG[Tazer]			= "The Tazer will shock your enemies.";
+$WeapMountMSG[GR]			= "The RPG Rifle Shoots small grenades far!";
+$WeapMountMSG[HG]			= "The Hostage Gun is used to take enemies hostage.";
+$WeapMountMSG[KEG]			= "The Keg is used to liven up parties!";
+//Tools::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+$WeapMountMSG[THPack]		= "The MTG is used transport you to your targeted destination!";
+$WeapMountMSG[FL]		= "The Flashlight is used to look in dark areas to see better, or find mines.";
+$WeapMountMSG[TB]		= "The ToolBox repairs most machinery almost instantly, but it has very short range.";
+$WeapMountMSG[TargetingLaser]	= "The classic Targeting Laser with a new look and beam.";
+//Misc:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+$WeapMountMSG[Handgrenade]   = "Handgrenades are what they sound like, portable, hand-thrown explosive devices, comes in 8 varieties.";
+$WeapMountMSG[Handgrenade,1] = "Handgrenades are set on Normal Explosive Mode.";
+$WeapMountMSG[Handgrenade,2] = "Handgrenades are set on Flash Grenade Mode.";
+$WeapMountMSG[Handgrenade,3] = "Handgrenades are set on Fragmentary Grenade Mode.";
+$WeapMountMSG[Handgrenade,4] = "Handgrenades are set on Smoke Screen Mode.";
+$WeapMountMSG[Handgrenade,5] = "Handgrenades are set on Mine Sweeper Mode.";
+$WeapMountMSG[Handgrenade,6] = "Handgrenades are set on EMP Grenade Mode.";
+$WeapMountMSG[Handgrenade,7] = "Handgrenades are set on Tazer Grenade Mode.";
+$WeapMountMSG[Handgrenade,8] = "Handgrenades are set on Incendiary Grenade Mode.";
+//Vehicle:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+$WeapMountMSG[RocketsA] = "Rockets";
+$WeapMountMSG[ShockMsl] = "Shock Missiles";
+$WeapMountMSG[SideWind] = "Side Winders";
+$WeapMountMSG[Grenades] = "Grenade Launcher";
+$WeapMountMSG[ChainGun] = "Chaingun";
+$WeapMountMSG[StingerA] = "Stingers";
+$WeapMountMSG[StingerB] = "EMP rockets";
+$WeapMountMSG[Kamikaze] = "Kamikaze Fire";
+$WeapMountMSG[KamiDive] = "Kamikaze Dive";
+$WeapMountMSG[Detonate] = "Kamikaze Detonation";
+$WeapMountMSG[SuperDet] = "Kamikaze Super Detonation";
+$WeapMountMSG[DropBomb] = "Light Bombs";
+$WeapMountMSG[FlareDis] = "Heat Flare";
+$WeapMountMSG[ScatMine] = "Cluster Mine Bomb";
+$WeapMountMSG[DevShell] = "Heavy Bombs";
+$WeapMountMSG[Deflects] = "Deflectors";
+$WeapMountMSG[ParaBomb] = "Para-Bomb";
+$WeapMountMSG[CrzySpke] = "Porchupine Guns";
+$WeapMountMSG[RmoteDet] = "Remote Detonation";
+
+//-Section set for Naming modes of primary, secondary, and tertiary modes of weapons:
+$WeapModeName[Handgrenade,1]	= "Normal Grenade";
+$WeapModeName[Handgrenade,2]	= "Flash Grenade";
+$WeapModeName[Handgrenade,3]	= "Frag Grenade";
+$WeapModeName[Handgrenade,4]	= "Smoke Screen";
+$WeapModeName[Handgrenade,5]	= "Electronic Mine Sweeper";
+$WeapModeName[Handgrenade,6]	= "EMP Mode Grenade";
+$WeapModeName[Handgrenade,7]	= "Blast Tazer Grenade";
+$WeapModeName[Handgrenade,8]	= "Incendiary Grenade";
+$WeapModeName[F,1]		= "Large Flare";
+$WeapModeName[F,2]		= "Medium Flare";
+$WeapModeName[F,3]		= "Small Flare";
+$WeapModeName[EnergyRifle,1]	= "Single Fire";
+$WeapModeName[EnergyRifle,2]	= "Double Fire";
+$WeapModeName[EnergyRifle,3]	= "Triple Fire";
+$WeapModeName[BH,1]		= "Black Hole Mode";
+$WeapModeName[BH,2]		= "Repel Mode";
+$WeapModeName[Blaster,1]	= "Energy Efficient";
+$WeapModeName[Blaster,2]	= "High-Impact";
+$WeapModeName[Blaster,3]	= "Explosive";
+$WeapModeName[Shotgun1,1]	= "Scatter Shot";
+$WeapModeName[Shotgun1,2]	= "Meson Shot";
+$WeapModeName[DiscLauncher,1]	= "Classic Disc";
+$WeapModeName[DiscLauncher,2]	= "Flaming Disc";
+$WeapModeName[DiscLauncher,3]	= "Grenade Disc";
+$WeapModeName[PAttack,1]	= "Attack Mode";
+$WeapModeName[PAttack,2]	= "Heal Mode";
+
+//-Section set for returning the DataBlock by the Description
+$RealDataBlockName[""] = EL;
+$RealDataBlockName[""] = LP;
+$RealDataBlockName[""] = RL;
+$RealDataBlockName[""] = MG;
+$RealDataBlockName[""] = FP;
+$RealDataBlockName[""] = PC;
+$RealDataBlockName[""] = SP;
+$RealDataBlockName[""] = AR;
+$RealDataBlockName[""] = SR;
+$RealDataBlockName[""] = Sword;
+$RealDataBlockName[""] = PAttack;
+$RealDataBlockName[""] = F;
+$RealDataBlockName[""] = EnergyRifle;
+$RealDataBlockName[""] = BH;
+$RealDataBlockName[""] = Blaster;
+$RealDataBlockName[""] = Shotgun1;	
+$RealDataBlockName[""] = DiscLauncher;
+$RealDataBlockName[""] = GrenadeLauncher;
+$RealDataBlockName[""] = Mortar;
+$RealDataBlockName[""] = FreezeGun;
+$RealDataBlockName[""] = Flamethrower;
+$RealDataBlockName[""] = AG;
+$RealDataBlockName[""] = Funk;
+$RealDataBlockName[""] = Multi;
+$RealDataBlockName[""] = Beam;
+$RealDataBlockName[""] = Shock;
+$RealDataBlockName[""] = Flag;
+$RealDataBlockName[""] = SmokeLauncher;
+$RealDataBlockName[""] = PGL;
+$RealDataBlockName[""] = R;
+$RealDataBlockName[""] = V;
+$RealDataBlockName[""] = Syn;
+$RealDataBlockName[""] = Tazer;
+$RealDataBlockName[""] = GR;
+$RealDataBlockName[""] = HG;
+$RealDataBlockName[""] = KEG;
+$RealDataBlockName[""] = THPack;
+$RealDataBlockName[""] = FL;
+$RealDataBlockName[""] = TB;
+$RealDataBlockName[""] = TargetingLaser;
+$RealDataBlockName[""] = Handgrenade;

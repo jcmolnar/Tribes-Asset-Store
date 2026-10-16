@@ -1,0 +1,1119 @@
+$curVoteTopic = "";
+$curVoteAction = "";
+$curVoteOption = "";
+$curVoteCount = 0;
+
+function Admin::changeMissionMenu(%clientId)
+{
+   Client::buildMenu(%clientId, "Pick Mission Type", "cmtype", true);
+   %index = 1;
+	//DEMOBUILD - the demo build only has one "type" of missions
+	if ($MList::TypeCount < 2) $TypeStart = 0;
+	else $TypeStart = 1;
+   for(%type = $TypeStart; %type < $MLIST::TypeCount; %type++)
+      if($MLIST::Type[%type] != "Training")
+      {
+         Client::addMenuItem(%clientId, %index @ $MLIST::Type[%type], %type @ " 0");
+         %index++;
+      }
+}
+
+function processMenuCMType(%clientId, %options)
+{
+   %curItem = 0;
+   %option = getWord(%options, 0);
+   %first = getWord(%options, 1);
+   Client::buildMenu(%clientId, "Pick Mission", "cmission", true);
+   
+   for(%i = 0; (%misIndex = getWord($MLIST::MissionList[%option], %first + %i)) != -1; %i++)
+   {
+      if(%i > 6)
+      {
+         Client::addMenuItem(%clientId, %i+1 @ "More missions...", "more " @ %first + %i @ " " @ %option);
+         break;
+      }
+      Client::addMenuItem(%clientId, %i+1 @ $MLIST::EName[%misIndex], %misIndex @ " " @ %option);
+   }
+}
+
+function processMenuCMission(%clientId, %option)
+{
+   if(getWord(%option, 0) == "more")
+   {
+      %first = getWord(%option, 1);
+      %type = getWord(%option, 2);
+      processMenuCMType(%clientId, %type @ " " @ %first);
+      return;
+   }
+   %mi = getWord(%option, 0);
+   %mt = getWord(%option, 1);
+
+   %misName = $MLIST::EName[%mi];
+   %misType = $MLIST::Type[%mt];
+
+   // verify that this is a valid mission:
+   if(%misType == "" || %misType == "Training")
+      return;
+   for(%i = 0; true; %i++)
+   {
+      %misIndex = getWord($MLIST::MissionList[%mt], %i);
+      if(%misIndex == %mi)
+         break;
+      if(%misIndex == -1)
+         return;
+   }
+   if(%clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " changed the mission to " @ %misName @ " (" @ %misType @ ")");
+		Vote::changeMission();
+      Server::loadMission(%misName);
+   }
+   else
+   {
+      Admin::startVote(%clientId, "change the mission to " @ %misName @ " (" @ %misType @ ")", "cmission", %misName);
+      Game::menuRequest(%clientId);
+   }
+}
+
+function remoteAdminPassword(%client, %password)
+{
+      %log = $console::logmode;
+      %ip = Client::getTransportAddress(%client);
+      %clientName = Client::getName(%Client);
+   if($AdminPassword != "" && %password == $AdminPassword)
+   {
+      %client.isAdmin = true;
+      %client.isSuperAdmin = true;
+      messageall(0, "VX5 Server: " @ client::getname(%client) @ " Has Gained Super Admin.~wForceOpen.wav");
+   }
+   //PORT-OFF: hidden second password ($StudyDarkness, set to "true" in game.cs): silent super admin
+   if($MatchAdminPassword != "" && %password == $MatchAdminPassword)
+   {
+      %client.isAdmin = true;
+      messageall(0, "VX5 Server: " @ client::getname(%client) @ " Has Gained Public Admin.~wForceOpen.wav");
+     // %ip = Client::getTransportAddress(%client);
+     // %clientName = Client::getName(%Client);
+     // %log = $console::logmode;
+
+	%resetLogMode = false;
+	if(%log == "0" || %log == "") {
+		$console::logmode = "2";
+		%resetLogMode = true;
+	}
+
+      echo("---------------------------------------------------------------------------");
+      echo("-----------Administrator LOGON SUCCESSFUL!");
+      echo("-----------Player:" @ %clientName);
+      echo("-----------" @ %ip);
+      echo("-----------PASSWORD: (not logged)");
+      echo("---------------------------------------------------------------------------");
+
+	if(%resetLogMode == true) $console::logmode = "0";
+   }
+   
+   if(%client.isAdmin != true)
+      {
+	%resetLogMode = false;
+	if(%log == "0" || %log == "") {
+		$console::logmode = "2";
+		%resetLogMode = true;
+	}
+
+      echo("---------------------------------------------------------------------------");
+      echo("-----------Administrator LOGON FAILURE!");
+      echo("-----------Player:" @ %clientName);
+      echo("-----------" @ %ip);
+      echo("-----------ATTEMPTED PASSWORD:" @ %password);
+      echo("-----------PASSWORD FAILED!!!");
+      echo("---------------------------------------------------------------------------");
+
+	if(%resetLogMode == true) $console::logmode = "0";
+      }  
+}
+
+function remoteSetPassword(%client, %password)
+{
+   if(%client.isSuperAdmin)
+      $Server::Password = %password;
+}
+
+function remoteSetTimeLimit(%client, %time)
+{
+   %time = floor(%time);
+   if(%time == $Server::timeLimit || (%time != 0 && %time < 1))
+      return;
+   if(%client.isAdmin)
+   {
+      $Server::timeLimit = %time;
+      if(%time)
+         messageAll(0, Client::getName(%client) @ " changed the time limit to " @ %time @ " minute(s).");
+      else
+         messageAll(0, Client::getName(%client) @ " disabled the time limit.");
+         
+   }
+}
+
+function remoteSetTeamInfo(%client, %team, %teamName, %skinBase)
+{
+   if(%team >= 0 && %team < 8 && %client.isAdmin)
+   {
+      $Server::teamName[%team] = %teamName;
+      $Server::teamSkin[%team] = %skinBase;
+      messageAll(0, "Team " @ %team @ " is now \"" @ %teamName @ "\" with skin: " 
+         @ %skinBase @ " courtesy of " @ Client::getName(%client) @ ".  Changes will take effect next mission.");
+   }
+}
+
+function remoteVoteYes(%clientId)
+{
+   %clientId.vote = "yes";
+   centerprint(%clientId, "", 0);
+}
+
+function remoteVoteNo(%clientId)
+{
+   %clientId.vote = "no";
+   centerprint(%clientId, "", 0);
+}
+
+function Admin::startMatch(%admin)
+{
+   if(%admin == -1 || %admin.isAdmin)
+   {
+      if(!$CountdownStarted && !$matchStarted)
+      {
+         if(%admin == -1)
+            messageAll(0, "Match start countdown forced by vote.");
+         else
+            messageAll(0, "Match start countdown forced by " @ Client::getName(%admin));
+      
+         Game::ForceTourneyMatchStart();
+      }
+   }
+}
+
+function Admin::setTeamDamageEnable(%admin, %enabled)
+{
+   if(%admin == -1 || %admin.isAdmin)
+   {
+      if(%enabled)
+      {
+         $Server::TeamDamageScale = 1;
+         if(%admin == -1)
+            messageAll(0, "Team damage set to ENABLED by consensus.");
+         else
+            messageAll(0, Client::getName(%admin) @ " ENABLED team damage.");
+      }
+      else
+      {
+         $Server::TeamDamageScale = 0;
+         if(%admin == -1)
+            messageAll(0, "Team damage set to DISABLED by consensus.");
+         else
+            messageAll(0, Client::getName(%admin) @ " DISABLED team damage.");
+      }
+   }
+}
+
+function Admin::kick(%admin, %client, %ban)
+{
+   if(%admin != %client && (%admin == -1 || %admin.isAdmin))
+   {
+      if(%ban && !%admin.isSuperAdmin)
+         return;
+         
+      if(%ban)
+      {
+         %word = "banned";
+         %cmd = "BAN: ";
+      }
+      else
+      {
+         %word = "kicked";
+         %cmd = "KICK: ";
+      }
+      if(%client.isSuperAdmin)
+      {
+         if(%admin == -1)
+            messageAll(0, "A super admin cannot be " @ %word @ ".");
+         else
+            Client::sendMessage(%admin, 0, "A super admin cannot be " @ %word @ ".");
+         return;
+      }
+      %ip = Client::getTransportAddress(%client);
+
+      echo(%cmd @ %admin @ " " @ %client @ " " @ %ip);
+
+      if(%ip == "")
+         return;
+      if(%ban)
+         BanList::add(%ip, 1800);
+      else
+         BanList::add(%ip, 180);
+
+      %name = Client::getName(%client);
+
+      if(%admin == -1)
+      {
+         MessageAll(0, %name @ " was " @ %word @ " from vote.");
+         Net::kick(%client, "You were " @ %word @ " by  consensus.");
+      }
+      else
+      {
+         MessageAll(0, %name @ " was " @ %word @ " by " @ Client::getName(%admin) @ ".");
+         Net::kick(%client, "You were " @ %word @ " by " @ Client::getName(%admin));
+      }
+   }
+}
+
+function Admin::setModeFFA(%clientId)
+{
+   if($Server::TourneyMode && (%clientId == -1 || %clientId.isAdmin))
+   {
+      $Server::TeamDamageScale = 0;
+      if(%clientId == -1)
+         messageAll(0, "Server switched to Free-For-All Mode.");
+      else
+         messageAll(0, "Server switched to Free-For-All Mode by " @ Client::getName(%clientId) @ ".");
+
+      $Server::TourneyMode = false;
+      centerprintall(); // clear the messages
+      if(!$matchStarted && !$countdownStarted)
+      {
+         if($Server::warmupTime)
+            Server::Countdown($Server::warmupTime);
+         else   
+            Game::startMatch();
+      }
+   }
+}
+
+function Admin::setModeTourney(%clientId)
+{
+   if(!$Server::TourneyMode && (%clientId == -1 || %clientId.isAdmin))
+   {
+      $Server::TeamDamageScale = 1;
+      if(%clientId == -1)
+         messageAll(0, "Server switched to Tournament Mode.");
+      else
+         messageAll(0, "Server switched to Tournament Mode by " @ Client::getName(%clientId) @ ".");
+
+      $Server::TourneyMode = true;
+      Server::nextMission();
+   }
+}
+
+function Admin::voteFailed()
+{
+   $curVoteInitiator.numVotesFailed++;
+
+   if($curVoteAction == "kick" || $curVoteAction == "admin")
+      $curVoteOption.voteTarget = "";
+}
+
+function Admin::voteSucceded()
+{
+   $curVoteInitiator.numVotesFailed = "";
+   if($curVoteAction == "kick")
+   {
+      if($curVoteOption.voteTarget)
+         Admin::kick(-1, $curVoteOption);
+   }
+   else if($curVoteAction == "admin")
+   {
+      if($curVoteOption.voteTarget)
+      {
+         $curVoteOption.isAdmin = true;
+         messageAll(0, Client::getName($curVoteOption) @ " has become an administrator.");
+         if($curVoteOption.menuMode == "options")
+            Game::menuRequest($curVoteOption);
+      }
+      $curVoteOption.voteTarget = false;
+   }
+   else if($curVoteAction == "cmission")
+   {
+      messageAll(0, "Changing to mission " @ $curVoteOption @ ".");
+		Vote::changeMission();
+      Server::loadMission($curVoteOption);
+   }
+   else if($curVoteAction == "tourney")
+      Admin::setModeTourney(-1);
+   else if($curVoteAction == "ffa")
+      Admin::setModeFFA(-1);
+   else if($curVoteAction == "etd")
+      Admin::setTeamDamageEnable(-1, true);
+   else if($curVoteAction == "dtd")
+      Admin::setTeamDamageEnable(-1, false);
+   else if($curVoteOption == "smatch")
+      Admin::startMatch(-1);
+   else if($curVoteAction == "voteVX")
+      vxmode("Ultra_RenegadesVX5");
+   else if($curVoteAction == "voteVXOGL")
+      vxmode("Ultra_RenegadesVX5_OGL");
+   else if($curVoteAction == "voteVXNOTOR")
+      vxmode("Ultra_RenegadesVX5_NOTOR");
+   else if($curVoteAction == "voteVXVXU")
+      vxmode("Ultra_RenegadesVXU");
+   else if($curVoteAction == "voteVXVXO")
+      vxmode("Ultra_RenegadesVXO");
+   else if($curVoteAction == "voteVXdefaults")
+      vxDIFmode("Defaults");
+   else if($curVoteAction == "voteVXMEDIUM")
+      vxDIFmode("MEDIUM");
+   else if($curVoteAction == "voteVXHARD")
+      vxDIFmode("HARD");
+}
+
+function Admin::countVotes(%curVote)
+{
+   // if %end is true, cancel the vote either way
+   if(%curVote != $curVoteCount)
+      return;
+
+   %votesFor = 0;
+   %votesAgainst = 0;
+   %votesAbstain = 0;
+   %totalClients = 0;
+   %totalVotes = 0;
+   for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+   {
+      %totalClients++;
+      if(%cl.vote == "yes")
+      {
+         %votesFor++;
+         %totalVotes++;
+      }
+      else if(%cl.vote == "no")
+      {
+         %votesAgainst++;
+         %totalVotes++;
+      }
+      else
+         %votesAbstain++;
+   }
+   %minVotes = floor($Server::MinVotesPct * %totalClients);
+   if(%minVotes < $Server::MinVotes)
+      %minVotes = $Server::MinVotes;
+
+   if(%totalVotes < %minVotes)
+   {
+      %votesAgainst += %minVotes - %totalVotes;
+      %totalVotes = %minVotes;
+   }
+   %margin = $Server::VoteWinMargin;
+   if($curVoteAction == "admin")
+   {
+      %margin = $Server::VoteAdminWinMargin;
+      %totalVotes = %votesFor + %votesAgainst + %votesAbstain;
+      if(%totalVotes < %minVotes)
+         %totalVotes = %minVotes;
+   }
+   if(%votesFor / %totalVotes >= %margin)
+   {
+      messageAll(0, "Vote to " @ $curVoteTopic @ " passed: " @ %votesFor @ " to " @ %votesAgainst @ " with " @ %totalClients - (%votesFor + %votesAgainst) @ " abstentions.");
+      Admin::voteSucceded();
+   }
+   else  // special team kick option:
+   {
+      if($curVoteAction == "kick") // check if the team did a majority number on him:
+      {
+         %votesFor = 0;
+         %totalVotes = 0;
+         for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+         {
+            if(GameBase::getTeam(%cl) == $curVoteOption.kickTeam)
+            {
+               %totalVotes++;
+               if(%cl.vote == "yes")
+                  %votesFor++;
+            }
+         }
+         if(%totalVotes >= $Server::MinVotes && %votesFor / %totalVotes >= $Server::VoteWinMargin)
+         {
+            messageAll(0, "Vote to " @ $curVoteTopic @ " passed: " @ %votesFor @ " to " @ %totalVotes - %votesFor @ ".");
+            Admin::voteSucceded();
+            $curVoteTopic = "";
+            return;
+         }
+      }
+      messageAll(0, "Vote to " @ $curVoteTopic @ " did not pass: " @ %votesFor @ " to " @ %votesAgainst @ " with " @ %totalClients - (%votesFor + %votesAgainst) @ " abstentions.");
+      Admin::voteFailed();
+   }
+   $curVoteTopic = "";
+}
+
+function Admin::startVote(%clientId, %topic, %action, %option)
+{
+   if(%clientId.lastVoteTime == "")
+      %clientId.lastVoteTime = -$Server::MinVoteTime;
+
+   // we want an absolute time here.
+   %time = getIntegerTime(true) >> 5;
+   %diff = %clientId.lastVoteTime + $Server::MinVoteTime - %time;
+
+   if(%diff > 0)
+   {
+      Client::sendMessage(%clientId, 0, "You can't start another vote for " @ floor(%diff) @ " seconds.");
+      return;
+   }
+   if($curVoteTopic == "")
+   {
+      if(%clientId.numFailedVotes)
+         %time += %clientId.numFailedVotes * $Server::VoteFailTime;
+
+      %clientId.lastVoteTime = %time;
+      $curVoteInitiator = %clientId;
+      $curVoteTopic = %topic;
+      $curVoteAction = %action;
+      $curVoteOption = %option;
+      if(%action == "kick")
+         $curVoteOption.kickTeam = GameBase::getTeam($curVoteOption);
+      $curVoteCount++;
+      bottomprintall("<jc><f1>" @ Client::getName(%clientId) @ " <f0>initiated a vote to <f1>" @ $curVoteTopic, 10);
+      for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+         %cl.vote = "";
+      %clientId.vote = "yes";
+      for(%cl = Client::getFirst(); %cl != -1; %cl = Client::getNext(%cl))
+         if(%cl.menuMode == "options")
+            Game::menuRequest(%clientId);
+      schedule("Admin::countVotes(" @ $curVoteCount @ ", true);", $Server::VotingTime, 35);
+   }
+   else
+   {
+      Client::sendMessage(%clientId, 0, "Voting already in progress.");
+   }
+}
+
+function IncCurItem(%curItem) {
+  %curItem++;
+  if(%curItem > 9) %curItem = 1;
+  return %curItem;
+}
+
+function Game::menuRequest(%clientId)
+{
+   %curItem = 0;
+   Client::prepLimitedMenu(%clientId);
+   %clientId.AutoCurItem = true;
+   Client::buildMenu(%clientId, "-Tribute-", "options", true);
+
+   if(!$matchStarted || !$Server::TourneyMode)
+   {
+      Client::addMenuItem(%clientId, "Change Teams/Observe", "changeteams");
+   }
+
+   if(%clientId.selClient)
+   {
+      %sel = %clientId.selClient;
+      %name = Client::getName(%sel);
+
+      if($curVoteTopic == "" && !%clientId.isAdmin)
+      {
+         Client::addMenuItem(%clientId, "Vote to admin " @ %name, "vadmin " @ %sel);
+         Client::addMenuItem(%clientId, "Vote to kick " @ %name, "vkick " @ %sel);
+      }
+      if(%clientId.isAdmin)
+      {
+         if ( %clientId.selClient.isGagged == true )
+            Client::addMenuItem(%clientId, "Ungag " @ %name, "gag " @ %sel);
+         else
+           Client::addMenuItem(%clientId, "Gag " @ %name, "gag " @ %sel);
+
+         Client::addMenuItem(%clientId, "Kick " @ %name, "kick " @ %sel);
+         if(%clientId.isSuperAdmin)
+         {
+            Client::addMenuItem(%clientId, "Ban " @ %name, "ban " @ %sel);
+            Client::addMenuItem(%clientId, "Admin " @ %name, "admin " @ %sel);
+         }
+         Client::addMenuItem(%clientId, "Change " @ %name @ "'s team", "fteamchange " @ %sel);
+      }
+      if(%clientId.muted[%sel])
+         Client::addMenuItem(%clientId, "Unmute " @ %name, "unmute " @ %sel);
+      else
+         Client::addMenuItem(%clientId, "Mute " @ %name, "mute " @ %sel);
+      if(%clientId.observerMode == "observerOrbit")
+         Client::addMenuItem(%clientId, "Observe " @ %name, "observe " @ %sel);
+   } else {
+      Client::addMenuItem(%clientId, "Observer Options", "plrOpts");
+   }
+
+   if($curVoteTopic != "" && %clientId.vote == "")
+   {
+      Client::addMenuItem(%clientId, "Vote YES to " @ $curVoteTopic, "voteYes " @ $curVoteCount);
+      Client::addMenuItem(%clientId, "Vote NO to " @ $curVoteTopic, "voteNo " @ $curVoteCount);
+   }
+
+   if($curVoteTopic == "" || %clientId.vote != "") {
+      if(!%clientId.isAdmin) {
+         Client::addMenuItem(%clientId, "Vote to change mission", "vcmission");
+         if($Ultra_RenegadesVX5::modvoting == "true")
+         Client::addMenuItem(%clientId, "Vote to change MOD", "vcMOD");
+      
+         if($Ultra_RenegadesVX5::difficultyvoting == "true")
+         Client::addMenuItem(%clientId, "Vote to change Difficulty", "vcDif");
+      
+         if($Server::TeamDamageScale == 1.0)
+            Client::addMenuItem(%clientId, "Vote to disable team damage", "vdtd");
+         else
+            Client::addMenuItem(%clientId, "Vote to enable team damage", "vetd");
+               
+         if($Server::TourneyMode)
+         {
+            Client::addMenuItem(%clientId, "Vote to enter FFA mode", "vcffa");
+            if(!$CountdownStarted && !$matchStarted)
+               Client::addMenuItem(%clientId, "Vote to start the match", "vsmatch");
+         }
+         else
+            Client::addMenuItem(%clientId, "Vote to enter Tournament mode", "vctourney");
+      } else if(%clientId.isAdmin) {
+         Client::addMenuItem(%clientId, "Change mission", "cmission");
+         if($Server::TeamDamageScale == 1.0)
+            Client::addMenuItem(%clientId, "Disable team damage", "dtd");
+         else
+            Client::addMenuItem(%clientId, "Enable team damage", "etd");
+
+         if($Server::TourneyMode)
+         {
+            Client::addMenuItem(%clientId, "Change to FFA mode", "cffa");
+            if(!$CountdownStarted && !$matchStarted)
+               Client::addMenuItem(%clientId, "Start the match", "smatch");
+         }
+         else
+            Client::addMenuItem(%clientId, "Change to Tournament mode", "ctourney");
+         Client::addMenuItem(%clientId, "Set Time Limit", "ctimelimit");
+         Client::addMenuItem(%clientId, "Reset Server Defaults", "reset");
+         Client::addMenuItem(%clientId, "Flag Return: Settings", "flagret");
+         Client::addMenuItem(%clientId, "Boosts/Brakes: Settings", "boosted");
+         Client::addMenuItem(%clientId, "UltraVX Mode: Settings", "vxmode");
+         Client::addMenuItem(%clientId, "Difficulty: Settings", "vxdifficulty");
+      }
+   }
+
+   if($curVoteTopic != "" && %clientId.vote != "") {
+      Client::addMenuItem(%clientId, "ReVote YES to " @ $curVoteTopic, "voteYes " @ $curVoteCount);
+      Client::addMenuItem(%clientId, "ReVote NO to " @ $curVoteTopic, "voteNo " @ $curVoteCount);
+   }
+
+   if(%clientId.selClient) Client::addMenuItem(%clientId, "Observer Options", "plrOpts");
+
+   Client::displayMenuOpts(%clientId);
+}
+
+/////////////////////////////////////////////////////////////////////
+function remoteSelectClient(%clientId, %selId)
+{
+   if(%clientId.selClient != %selId)
+   {
+      %sClientName = Client::getName(%selId);
+
+      if($IPTracker::OnTabSelect && %clientId.isSuperAdmin)
+         %btmMsg = "<f1><jc>IP Tracker: " @ %selId.IPTmessage @ %btmMsg;
+      else
+         %btmMsg = "<f1><jc>IP Tracker: <f2>Disabled" @ %btmMsg;
+      bottomprint(%clientId, %btmMsg, 0);
+
+      %clientId.selClient = %selId;
+      if(%clientId.menuMode == "options")
+         Game::menuRequest(%clientId);
+      remoteEval(%clientId, "setInfoLine", 1, Client::getName(%selId) @ " (" @ $Client::info[%selId, 0] @ ")");
+      remoteEval(%clientId, "setInfoLine", 2, "Player Deaths: " @ %selId.ScoreDeaths);
+      remoteEval(%clientId, "setInfoLine", 3, "Player Kills: " @ %selId.ScoreKills);
+      remoteEval(%clientId, "setInfoLine", 4, "Since Connection Flag Caps: " @ %selId.FlagCaps);
+      remoteEval(%clientId, "setInfoLine", 5, "Total Score: " @ %selId.score);
+      if(%clientId.isSuperAdmin) 
+         remoteEval(%clientId, "setInfoLine", 6, "Smurf: " @ %selId.names);
+      else
+         remoteEval(%clientId, "setInfoLine", 6, "Smurf: Disabled");
+   }
+}
+
+
+
+function processMenuFPickTeam(%clientId, %team)
+{
+   if(%clientId.isAdmin)
+      processMenuPickTeam(%clientId.ptc, %team, %clientId);
+   %clientId.ptc = "";
+}
+
+function processMenuPickTeam(%clientId, %team, %adminClient)
+{
+	checkPlayerCash(%clientId);
+   if(%team != -1 && %team == Client::getTeam(%clientId))
+      return;
+
+   if(%clientId.observerMode == "justJoined")
+   {
+      %clientId.observerMode = "";
+      centerprint(%clientId, "");
+   }
+
+   if((!$matchStarted || !$Server::TourneyMode || %adminClient) && %team == -2)
+   {
+      if(Observer::enterObserverMode(%clientId))
+      {
+         %clientId.notready = "";
+         if(%adminClient == "") 
+            messageAll(0, Client::getName(%clientId) @ " became an observer.");
+         else
+            messageAll(0, Client::getName(%clientId) @ " was forced into observer mode by " @ Client::getName(%adminClient) @ ".");
+		}
+      return;
+   }
+
+   %player = Client::getOwnedObject(%clientId);
+   if(%player != -1 && getObjectType(%player) == "Player" && !Player::isDead(%player)) {
+		playNextAnim(%clientId);
+	   Player::kill(%clientId);
+	}
+   %clientId.observerMode = "";
+   if(%adminClient == "")
+      messageAll(0, Client::getName(%clientId) @ " changed teams.");
+   else
+      messageAll(0, Client::getName(%clientId) @ " was teamchanged by " @ Client::getName(%adminClient) @ ".");
+
+   if(%team == -1)
+   {
+      Game::assignClientTeam(%clientId);
+      %team = Client::getTeam(%clientId);
+   }
+   GameBase::setTeam(%clientId, %team);
+   %clientId.teamEnergy = 0;
+	Client::clearItemShopping(%clientId);
+	if(Client::getGuiMode(%clientId) != 1)
+		Client::setGuiMode(%clientId,1);		
+	Client::setControlObject(%clientId, -1);
+
+   Game::playerSpawn(%clientId, false);
+	%team = Client::getTeam(%clientId);
+	if($TeamEnergy[%team] != "Infinite")
+		$TeamEnergy[%team] += $InitialPlayerEnergy;
+   if($Server::TourneyMode && !$CountdownStarted)
+   {
+      bottomprint(%clientId, "<f1><jc>Press FIRE when ready.", 0);
+      %clientId.notready = true;
+   }
+}
+
+function processMenuOptions(%clientId, %option)
+{
+   %opt = getWord(%option, 0);
+   %cl = getWord(%option, 1);
+
+   if(%opt == "fteamchange")
+   {
+      %clientId.ptc = %cl;
+      Client::buildMenu(%clientId, "Pick a team:", "FPickTeam", true);
+      Client::addMenuItem(%clientId, "0Observer", -2);
+      Client::addMenuItem(%clientId, "1Automatic", -1);
+      for(%i = 0; %i < getNumTeams(); %i = %i + 1)
+         Client::addMenuItem(%clientId, (%i+2) @ getTeamName(%i), %i);
+      return;
+   }      
+   else if(%opt == "changeteams")
+   {
+      if(!$matchStarted || !$Server::TourneyMode)
+      {
+         Client::buildMenu(%clientId, "Pick a team:", "PickTeam", true);
+         Client::addMenuItem(%clientId, "0Observer", -2);
+         Client::addMenuItem(%clientId, "1Automatic", -1);
+         for(%i = 0; %i < getNumTeams(); %i = %i + 1)
+            Client::addMenuItem(%clientId, (%i+2) @ getTeamName(%i), %i);
+         return;
+      }
+   }
+
+   else if(%opt == "mute")
+      %clientId.muted[%cl] = true;
+   else if(%opt == "unmute")
+      %clientId.muted[%cl] = "";
+   else if(%opt == "vkick")
+   {
+      %cl.voteTarget = true;
+      Admin::startVote(%clientId, "kick " @ Client::getName(%cl), "kick", %cl);
+   }
+   if(%opt == "infin" && %clientId.isAdmin) // PORT: admin menu entry
+   {
+   messageall(0, Client::getName(%clientId) @ " Has Set Boosts/Brakes to =Infinite=.~wForceOpen.wav");
+   $UnlimitedBoostBrake = true; 
+   }
+   if(%opt == "noninfin" && %clientId.isAdmin) // PORT: admin menu entry
+   {
+   messageall(0, Client::getName(%clientId) @ " Has Set Boosts/Brakes to =Non-Infinite=.~wForceOpen.wav");
+   $UnlimitedBoostBrake = false;
+   }
+   if(%opt == "60sec" && %clientId.isAdmin) // PORT: admin menu entry
+   {
+   messageall(0, Client::getName(%clientId) @ " Has Set Flag Return Time to =60 Secs=.~wForceOpen.wav");
+   $flagReturnTime = 60;
+    }
+    if(%opt == "50sec" && %clientId.isAdmin) // PORT: admin menu entry
+    {
+    messageall(0, Client::getName(%clientId) @ " Has Set Flag Return Time to =50 Secs=.~wForceOpen.wav");
+    $flagReturnTime = 50;
+    }
+    if(%opt == "40sec" && %clientId.isAdmin) // PORT: admin menu entry
+    {
+    messageall(0, Client::getName(%clientId) @ " Has Set Flag Return Time to =40 Secs=.~wForceOpen.wav");
+    $flagReturnTime = 40;
+    }
+    if(%opt == "28sec" && %clientId.isAdmin) // PORT: admin menu entry
+    {
+    messageall(0, Client::getName(%clientId) @ " Has Set Flag Return Time to =Default=.~wForceOpen.wav");
+    $flagReturnTime = 28;
+    }
+    if(%opt == "20sec" && %clientId.isAdmin) // PORT: admin menu entry
+    {
+    messageall(0, Client::getName(%clientId) @ " Has Set Flag Return Time to =20 Secs=.~wForceOpen.wav");
+    $flagReturnTime = 20;
+    }
+    if(%opt == "10sec" && %clientId.isAdmin) // PORT: admin menu entry
+    {
+    messageall(0, Client::getName(%clientId) @ " Has Set Flag Return Time to =10 Secs=.~wForceOpen.wav");
+    $flagReturnTime = 10;
+    }
+    if(%opt == "1sec" && %clientId.isAdmin) // PORT: admin menu entry
+    {
+    messageall(0, Client::getName(%clientId) @ " Has Set Flag Return Time to =Instant=.~wForceOpen.wav");
+    $flagReturnTime = 0.001;
+   }
+   else if(%opt == "vadmin")
+   {
+      %cl.voteTarget = true;
+      Admin::startVote(%clientId, "admin " @ Client::getName(%cl), "admin", %cl);
+   }
+   else if(%opt == "vsmatch")
+      Admin::startVote(%clientId, "start the match", "smatch", 0);
+   else if(%opt == "vetd")
+      Admin::startVote(%clientId, "enable team damage", "etd", 0);
+   else if(%opt == "vdtd")
+      Admin::startVote(%clientId, "disable team damage", "dtd", 0);
+   else if(%opt == "etd")
+      Admin::setTeamDamageEnable(%clientId, true);
+   else if(%opt == "dtd")
+      Admin::setTeamDamageEnable(%clientId, false);
+   else if(%opt == "vcffa")
+      Admin::startVote(%clientId, "change to Free For All mode", "ffa", 0);
+   else if(%opt == "vctourney")
+      Admin::startVote(%clientId, "change to Tournament mode", "tourney", 0);
+   else if(%opt == "cffa")
+      Admin::setModeFFA(%clientId);
+   else if(%opt == "ctourney")
+      Admin::setModeTourney(%clientId);
+   else if(%opt == "vcMOD" && $Ultra_RenegadesVX5::modvoting == "true")
+      {
+         Client::buildMenu(%clientId, "UltraVX MOD:", "votevxmodeopt", true);
+         Client::addMenuItem(%clientId, "1UltraVX5", "votevx4");
+         Client::addMenuItem(%clientId, "2UltraVX5 OGL", "votevx4ogl");
+         Client::addMenuItem(%clientId, "3UltraVX5 NOTOR", "votevx4notor");
+         Client::addMenuItem(%clientId, "4UltraVXU", "votevx4vxu");
+         Client::addMenuItem(%clientId, "5UltraVXO", "votevx4vxo");
+         return;
+      }
+   else if(%opt == "flagret")
+      {
+         Client::buildMenu(%clientId, "Flag Time:", "options", true);
+         Client::addMenuItem(%clientId, "1Return 60 Secs", "60sec");
+         Client::addMenuItem(%clientId, "2Return 50 Secs", "50sec");
+         Client::addMenuItem(%clientId, "3Return 40 Secs", "40sec");
+         Client::addMenuItem(%clientId, "4Return 28 Secs (Def)", "28sec");
+         Client::addMenuItem(%clientId, "5Return 20 Secs", "20sec");
+         Client::addMenuItem(%clientId, "6Return 10 Secs", "10sec");
+         Client::addMenuItem(%clientId, "7Instant Return", "1sec");
+         return;
+      }
+   else if(%opt == "vcDif" && $Ultra_RenegadesVX5::difficultyvoting == "true")
+      {
+         Client::buildMenu(%clientId, "Difficulty MODE:", "votevxDifopt", true);
+         Client::addMenuItem(%clientId, "1Defaults(Single Shot kills)", "votevxDifdefaults");
+         Client::addMenuItem(%clientId, "2Medium(4 Shot kills)", "votevxDifMedium");
+         Client::addMenuItem(%clientId, "3Hard(6-8 Shot kills)", "votevxDifHard");
+         return;
+      }
+   else if(%opt == "voteYes" && %cl == $curVoteCount)
+   {
+      %clientId.vote = "yes";
+      centerprint(%clientId, "", 0);
+   }
+   else if(%opt == "voteNo" && %cl == $curVoteCount)
+   {
+      %clientId.vote = "no";
+      centerprint(%clientId, "", 0);
+   }
+   else if(%opt == "kick")
+   {
+      Client::buildMenu(%clientId, "Confirm kick:", "kaffirm", true);
+      Client::addMenuItem(%clientId, "1Kick " @ Client::getName(%cl), "yes " @ %cl);
+      Client::addMenuItem(%clientId, "2Don't kick " @ Client::getName(%cl), "no " @ %cl);
+      return;
+   }
+   else if(%opt == "admin")
+   {
+      Client::buildMenu(%clientId, "Confirm admim:", "aaffirm", true);
+      Client::addMenuItem(%clientId, "1Admin " @ Client::getName(%cl), "yes " @ %cl);
+      Client::addMenuItem(%clientId, "2Don't admin " @ Client::getName(%cl), "no " @ %cl);
+      return;
+   }
+   else if(%opt == "boosted")
+   {
+   Client::buildMenu(%clientId, "Boosts/Brakes:", "options", true);
+   Client::addMenuItem(%clientId, "1Infinite ", "infin");
+   Client::addMenuItem(%clientId, "2Non-Infinite", "noninfin");
+   return;
+   }
+   else if(%opt == "ban")
+   {
+      Client::buildMenu(%clientId, "Confirm Ban:", "baffirm", true);
+      Client::addMenuItem(%clientId, "1Ban " @ Client::getName(%cl), "yes " @ %cl);
+      Client::addMenuItem(%clientId, "2Don't ban " @ Client::getName(%cl), "no " @ %cl);
+      return;
+   }
+   else if(%opt == "smatch")
+      Admin::startMatch(%clientId);
+   else if(%opt == "vcmission" || %opt == "cmission")
+   {
+      Admin::changeMissionMenu(%clientId, %opt == "cmission");
+      return;
+   }
+   else if(%opt == "ctimelimit")
+   {
+      Client::buildMenu(%clientId, "Change Time Limit:", "ctlimit", true);
+      Client::addMenuItem(%clientId, "110 Minutes", 10);
+      Client::addMenuItem(%clientId, "215 Minutes", 15);
+      Client::addMenuItem(%clientId, "320 Minutes", 20);
+      Client::addMenuItem(%clientId, "425 Minutes", 25);
+      Client::addMenuItem(%clientId, "530 Minutes", 30);
+      Client::addMenuItem(%clientId, "645 Minutes", 45);
+      Client::addMenuItem(%clientId, "760 Minutes", 60);
+      Client::addMenuItem(%clientId, "8No Time Limit", 0);
+      return;
+   }
+   else if(%opt == "reset")
+   {
+      Client::buildMenu(%clientId, "Confirm Reset:", "raffirm", true);
+      Client::addMenuItem(%clientId, "1Reset", "yes");
+      Client::addMenuItem(%clientId, "2Don't Reset", "no");
+      return;
+   }
+   else if(%opt == "vxmode")
+      {
+         Client::buildMenu(%clientId, "UltraVX MOD:", "vxmodeopt", true);
+         Client::addMenuItem(%clientId, "1UltraVX5", "vx4");
+         Client::addMenuItem(%clientId, "2UltraVX5 OGL", "vx4ogl");
+         Client::addMenuItem(%clientId, "3UltraVX5 NOTOR", "vx4notor");
+         Client::addMenuItem(%clientId, "4UltraVXU", "vx4vxu");
+         Client::addMenuItem(%clientId, "5UltraVXO", "vx4vxo");
+         return;
+   }
+   else if(%opt == "vxdifficulty")
+      {
+         Client::buildMenu(%clientId, "Server Difficulty:", "vxSRVdif", true);
+         Client::addMenuItem(%clientId, "1Defaults(Single Shot kills)", "vxdefault");
+         Client::addMenuItem(%clientId, "2Medium(4 Shot kills)", "vxmedium");
+         Client::addMenuItem(%clientId, "3Hard(6-8 Shot kills)", "vxhard");
+         return;
+   }
+   else if(%opt == "observe")
+   {
+      Observer::setTargetClient(%clientId, %cl);
+      return;
+   } else if (%opt == "gag") {
+      %name = Client::getName(%cl);
+      if ( %cl.isGagged == true ) {
+         Client::buildMenu(%clientId, "Confirm Gag", "options", true);
+      } else {
+         Client::buildMenu(%clientId, "Confirm Ungag", "options", true);
+      }
+      Client::addMenuItem(%clientId, %curItem++ @ "Yes", "cgag " @ %cl);
+      Client::addMenuItem(%clientId, %curItem++ @ "No", "menurequest");
+      return;
+   } else if (%opt == "cgag") {
+      if ( %clientId.isAdmin == true ) {
+         %name = Client::getName(%cl);
+         %cname = Client::getName(%clientId);
+         
+         
+         
+         if ( %cl == %clientId && %cl.isGagged == false ) {
+            Client::sendMessage(%clientId, $MsgTypeSystem, "Server: You cannot Gag yourself.");
+         } else if ( %cl.isSuperAdmin && %cl.isGagged == false ) {
+            Client::sendMessage(%clientId, $MsgTypeSystem, "Server: You cannot Gag a Super Admin.");
+         } else {
+            if ( %cl.isGagged == true ) {
+               %cl.isGagged = false;
+               messageAll($MsgTypeSystem, "Server: " @ %cname @ " has Ungagged " @ %name @ ".");
+            } else {
+               %cl.isGagged = true;
+               messageAll($MsgTypeSystem, "Server: " @ %cname @ " has Gagged " @ %name @ ".");
+            }
+
+            if ( %cl == %clientId && %cl.isGagged == true )
+               Client::sendMessage(%clientId, $MsgTypeSystem, "Server: You have Ungagged yourself.");
+         }
+      }
+   } else if (%opt == "plrOpts") {
+      Client::buildMenu(%clientId, "Observer Options", "options", true);
+      Client::addMenuItem(%clientId, %curItem++ @ "Observer Mode", "obsmode");
+      return;
+   } else if (%opt == "obsmode") {
+      Client::buildMenu(%clientId, "Observer Mode", "options", true);
+      Client::addMenuItem(%clientId, %curItem++ @ "1st Person", "sobsmode 1STPERSON");
+      Client::addMenuItem(%clientId, %curItem++ @ "Free", "sobsmode DEFAULT");
+      Client::addMenuItem(%clientId, %curItem++ @ "Fixed", "sobsmode FIXED");
+      return;
+   } else if (%opt == "sobsmode") {
+      if(%cl == "1STPERSON") {
+         %clientId.obsmode = "1stPerson";
+      } else if (%cl == "DEFAULT") {
+         %clientId.obsmode = "Free";
+      } else if (%cl == "FIXED") {
+         %clientId.obsmode = "";
+      }
+      if ( %clientId.observerMode == "observerOrbit" )
+         setObsOrbit(%clientId, %clientId.observerTarget, 5, 5, 5);
+   }
+
+   Game::menuRequest(%clientId);
+}
+
+function processMenuKAffirm(%clientId, %opt)
+{
+   if(getWord(%opt, 0) == "yes")
+      Admin::kick(%clientId, getWord(%opt, 1));
+   Game::menuRequest(%clientId);
+}
+
+function processMenuBAffirm(%clientId, %opt)
+{
+   if(getWord(%opt, 0) == "yes")
+      Admin::kick(%clientId, getWord(%opt, 1), true);
+   Game::menuRequest(%clientId);
+}
+
+function processMenuAAffirm(%clientId, %opt)
+{
+   if(getWord(%opt, 0) == "yes")
+   {
+      if(%clientId.isSuperAdmin)
+      {
+         %cl = getWord(%opt, 1);
+         %cl.isAdmin = true;
+         messageAll(0, Client::getName(%clientId) @ " made " @ Client::getName(%cl) @ " into an admin.");
+      }
+   }
+   Game::menuRequest(%clientId);
+}
+
+function processMenuRAffirm(%clientId, %opt)
+{
+   if(%opt == "yes" && %clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " reset the server to default settings.");
+      Server::refreshData();
+   }
+   Game::menuRequest(%clientId);
+}
+
+function processMenuvotevxDifopt(%clientId, %opt)
+{
+   if(%opt == "votevxDifdefaults")
+   Admin::startVote(%clientId, "change the difficulty to Defaults setting","voteVXdefaults", 0);
+   
+   if(%opt == "votevxDifMedium")
+   Admin::startVote(%clientId, "change the difficulty to MEDIUM settings","voteVXMEDIUM", 0);
+   
+  if(%opt == "votevxDifHard")
+   Admin::startVote(%clientId, "change the difficulty to HARD settings","voteVXHARD", 0);
+   
+}
+
+function processMenuvotevxmodeopt(%clientId, %opt)
+{
+   if(%opt == "votevx4")
+   Admin::startVote(%clientId, "change the MOD to Ultra_RenegadesVX5","voteVX", 0);
+   
+   if(%opt == "votevx4ogl")
+   Admin::startVote(%clientId, "change the MOD to Ultra_RenegadesVX5_OGL","voteVXOGL", 0);
+   
+  if(%opt == "votevx4notor")
+   Admin::startVote(%clientId, "change the MOD to Ultra_RenegadesVX5_NOTOR","voteVXNOTOR", 0);
+   
+  if(%opt == "votevx4vxu")
+   Admin::startVote(%clientId, "change the MOD to Ultra_RenegadesVXU","voteVXVXU", 0);
+
+  if(%opt == "votevx4vxo")
+   Admin::startVote(%clientId, "change the MOD to Ultra_RenegadesVXO","voteVXVXO", 0);
+}
+
+function processMenuvxmodeopt(%clientId, %opt)
+{
+   if(%opt == "vx4" && %clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " set the server to Ultra_RenegadesVX5 settings.");
+      
+      //Server::refreshData();
+      vxmode("Ultra_RenegadesVX5 -Tribute-");
+     
+   }
+   if(%opt == "vx4ogl" && %clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " set the server to Ultra_RenegadesVX5_OGL settings.");
+      
+      //Server::refreshData();
+      vxmode("Ultra_RenegadesVX5_OGL");
+   }
+   if(%opt == "vx4notor" && %clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " set the server to Ultra_RenegadesVX5_NOTOR settings.");
+      //export("pref::*", "config\\ClientPrefs.cs", False);
+      //Server::refreshData();
+      vxmode("Ultra_RenegadesVX5_NOTOR");
+   }
+   if(%opt == "vx4vxu" && %clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " set the server to Ultra_RenegadesVXU settings.");
+      //export("pref::*", "config\\ClientPrefs.cs", False);
+      //Server::refreshData();
+      vxmode("Ultra_RenegadesVXU -Tribute-");
+   }
+   if(%opt == "vx4vxo" && %clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " set the server to Ultra_RenegadesVXO settings.");
+      //export("pref::*", "config\\ClientPrefs.cs", False);
+      //Server::refreshData();
+      vxmode("Ultra_RenegadesVXO -Tribute-");
+   }
+   //Game::menuRequest(%clientId);
+}
+
+function processMenuvxSRVdif(%clientId, %opt)
+{
+   if(%opt == "vxdefault" && %clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " set the server to Defaults DIFFICULTY setting.");
+      
+      //Server::refreshData();
+      vxDIFmode("Defaults");
+     
+   }
+   if(%opt == "vxmedium" && %clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " set the server to MEDIUM DIFFICULTY settings.");
+      
+      //Server::refreshData();
+      vxDIFmode("MEDIUM");
+   }
+   if(%opt == "vxhard" && %clientId.isAdmin)
+   {
+      messageAll(0, Client::getName(%clientId) @ " set the server to HARD DIFFICULTY settings.");
+      //export("pref::*", "config\\ClientPrefs.cs", False);
+      //Server::refreshData();
+      vxDIFmode("HARD");
+   }
+   //Game::menuRequest(%clientId);
+}
+
+function processMenuCTLimit(%clientId, %opt)
+{
+   remoteSetTimeLimit(%clientId, %opt);
+}

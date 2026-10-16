@@ -1,0 +1,245 @@
+<html>
+<head>
+<script>
+<!--
+var menus=new Array()
+menus[0]=''
+
+function xregenerate(){
+window.location.reload()
+}
+function xregenerate2(){
+if (document.layers)
+setTimeout("window.onresize=xregenerate",450)
+}
+
+function xchangetext(whichcontent){
+if (document.all)
+descriptions.innerHTML='<font face="Verdana"><small>'+whichcontent+'<font></small>'
+else if (document.layers){
+document.d1.document.d2.document.write('<font face="Verdana"><small>'+whichcontent+'</small></font>')
+document.d1.document.d2.document.close()
+}
+
+}
+
+
+//-->
+</script>
+
+<script>
+<!--
+var content=new Array()
+
+content[0]='<font size=2><b>Enforcers</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;Basically what it is are 2 (count em) 2 blasters. Great on unarmored targets!<BR><BR><b>Made by:</b> Mega Man 1024'
+content[1]='<font size=2><b>Super Hyper Blaster</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;A favorite among Heavy armors, is the Super Hyper Blaster. What it does is uses power cells in seperate cartridges instead of generated energy. These canisters super charge the normal Blaster system, causing it also to be more powerful.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[2]='<font size=2><b>Plasma Cannon</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This gun emulates the fire of a Plasma turret. Because of the weird power fluctuations and other factors, only heavy armor can carry it.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[3]='<font size=2><b>Mitzi Blast Cannon</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Mitzi Blast Cannon (named after my dog) is one of the most configurable and useful weapons in Meltdown. It has 5 tab menu options:<br><br>Standard Mitzi Blast<br>EMP Blast<br>Mitzi Booster<br>Area Poisoning<br>Internal Flaming<br><br>Not a weapon you would want to use face to face!<BR><BR><b>Made by:</b> Mega Man 1024'
+content[4]='<font size=2><b>Fusion Cannon</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Fusion Cannon is an enhancement of the Plasma Cannon. At first it has to prepare the nozzle for the extreme heat its taking from firing the cannon. Then it has to charge up to fire the fusion particles. after all of this, it fires, and in a few hits, can destroy any unarmored target. Good on barriers and players....<BR><BR><b>Made by:</b> Mega Man 1024'
+
+content[5]='<font size=2><b>Gatling Blaster</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;Another variation of the Blaster system, the Gatling Blaster acts like a Blaster Chaingun.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[6]='<font size=2><b>Plasma Chaingun</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Plasma Chaingun fires normal plasma bolts at an extremely fast rate. The only fallback is that it uses gargantuan amounts of energy. In order to fire it for longer periods of time, you must buy a Mini-Reactor.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[7]='<font size=2><b>Gauss Cannon</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Gauss Cannon replaces normal Chaingun bullets with explosive heads. It is one of the most destructive weapons in the game, but it does not have a lot of ammo.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[8]='<font size=2><b>Laser Gatling Gun</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Laser Gatling Gun is the flagship of turret-destruction. when uninterrupted, it causes massive damage, and sometimes even fragments targets (players) upon occasion. <BR><BR><b>Made by:</b> Mega Man 1024'
+content[9]='<font size=2><b>Sonic Blasta Rifle</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Sonic Blasta Rifle is a pulse weapon. Shields are unaffected whatsoever. Any unshielded object is damaged though.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[10]='<font size=2><b>ATC</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The ATC (or autoCannon) is the ultimate in Gauss/Vulcan technologies. It fires miniature missiles at Vulcan speeds. A very useful weapon especially against the LPC and HPC and sometimes even against the Hover Tank.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[11]='<font size=2><b>MiniGun</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This weapon is actually 2 Chainguns linked together. The effectivity and fire rate is doubled for the MiniGun. Great for taking down turrets and Pulse sensors.<BR><BR><b>Made by:</b> Z_Dog'
+content[12]='<font size=2><b>MECH MiniGun</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;One of the heaviest weapons on the battlefield, the MECH MiniGun is 4 chainguns linked together. This is execllent on anything from turrets to even the Borg Cube itself!.<BR><BR><b>Made by:</b> Z_Dog'
+
+content[13]='<font size=2><b>Impact Mortar</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Impact mortar has no timer for which it sets off. Instead it explodes on contact. This is very useful for internal mortar sniping.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[14]='<font size=2><b>Rubber Mortar</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;Oh, the Rubber Mortar. One of my personal favorites (of mortar weapons) It bounces slightly better than a grenade, making a convolution of corpses after the 8-second time limit before it explodes. Such fun and joy cannot come in a simpler package...<BR><BR><b>Made by:</b> Mega Man 1024'
+content[15]='<font size=2><b>EMP Mortar</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The EMP (or Electro Magnetic Pulse) is very simple in nature. It acts 3 differnet ways:<br><br>1. On players it causes a malfunction that slowly drains the armors energy. Once the energy is drained, it causes damage until the armor repairs itself.<br><br>2. on Turrets, it causes the energy flow to breach. It does not lose energy, but it does not gain any either. Until you pound on its fading energy supply, its still going to stay there. The only way to fix this is by destroying the turret (completely) and repairing it.<br><br>3. On fliers it causes its engine reactor to overload and eventually explode in a massive shockwave (including debris)<BR><BR><b>Made by:</b> Mega Man 1024 & Valya[AAOD]'
+content[16]='<font size=2><b>Mine Launcher</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Mine Launcher Fires a special replicating pattern mine. This mine sets down and deploys a plus(+) formation of 4 other mines. A deadly boobytrap, or fire twice for an explosive assault on a Barrier.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[17]='<font size=2><b>Spreadfire</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Spreadfire is a mine launcher on steroids. It spews out 6 randomly-directed grenades that explode at different times. Great for internal razing.<BR><BR><b>Made by:</b> {J} MEGA-Man'
+content[18]='<font size=2><b>Starburst</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Starburst is the mortar-related version of this weapon. This is the same as above, but fires mortars. EXTREMELY EFFECTIVE on inside architecture<BR><BR><b>Made by:</b> {J} MEGA-Man'
+content[19]='<font size=2><b>Baby Nuke Launcher</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Baby Nuke is as far as the handheld weapons can go. The explosive power contained in the Baby Nuke is greater than any other weapon in the game. It has the ability to affect multiple levels of entire structures in one shot. The real nuke is only deployable.<BR><BR><b>Made by:</b> Mega Man 1024'
+
+content[20]='<font size=2><b>Dual Disc Launcher</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;Just your standard dual-linked Disc Launcher. Nothing really special about it.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[21]='<font size=2><b>Missile Launcher</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Missile Launcher is a "Mobile Rocket Turret" In when whering the Missile Targeting pack, operates just like a Rocket turret.<BR><BR><b>Made by:</b> Valya[AAOD]'
+content[22]='<font size=2><b>RPG</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;RPG: Rocket Propelled Grenade<br><br>Just a straight fire Grenade.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[23]='<font size=2><b>MECH RPG</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;the MECH RPG fires 4 RPGs at once. Its good against turrets and the Hover Tank and other countless, listless things.<BR><BR><b>Made by:</b> Z_Dog'
+content[24]='<font size=2><b>RPM</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;RPM: Rocket Propelled Mortar<br><br>Just a Rocket Propelled Mortar.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[25]='<font size=2><b>RPEMP</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;RPEMP: Rocket Propelled Electro-Magnetic Pulse<br><br>See EMP Mortar<BR><BR><b>Made by:</b> Mega Man 1024'
+content[26]='<font size=2><b>Ecstacy Cannon</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Ecstacy Cannon features 4 tab-menu Options:<br><br>1. EO Concussion Missile<br>2. Culex Missile Launcher<br>3. Rocket Turret Missile Mode<br>4. ** ECSTACY ** HEY Blast<BR><br><b>Made by:</b> Mega Man 1024 & Z_Dog'
+content[27]='<font size=2><b>MECH RocketGun</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;A Dual Rocket Launcher. Great for indoor assault because of its small blast radius (compared to the MECH RPG). Great for Enemy base and Mini-Reactor bombardment runs<BR><BR><b>Made by:</b> Z_Dog'
+content[28]='<font size=2><b>Juggalo EO Missile Launcher</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This Missile Launcher fires controllable FBW (fly by wire) rockets.<BR><BR><b>Made by:</b> {J} MEGA-Man'
+
+content[29]='<font size=2><b>Maser Rifle</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The concept behind the Maser Rifle is that it uses microwaves instead of light. Most of the time invisible, the beam contacts a larger area than the Laser, causing much more force.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[30]='<font size=2><b>Sonic Distortion Cannon</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The sonic distortion cannon is a combination of a super-powered sonic (audio) blast and a low-powered laser. The low energy of the laser carries the sound waves PAST the speed of light where they finally exit the muzzle ant hit the target. If the target is hit thay will suffer extreme audio feedback and in most cases, fragment.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[31]='<font size=2><b>Particle Beam</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The PBW (or Particle Beam) is best described as an "electromagnetic shotgun," the PBW emits a burst of charged particles at relativistic velocities capable of literally punching a hole (or fragmenting) through an enemy tribesman at nearly any range. The fallback? It uses a lot of energy. There is also a 10% chance of EMP effects when you fire it....<BR><BR><b>Made by:</b> Mega Man 1024'
+
+content[32]='<font size=2><b>Poison Dart Rifle</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This is nothing to play around with. Once the person dies from it they completely stop moving. Sometimes spawns a bronx cheer.....<BR><BR><b>Made by:</b> Mega Man 1024'
+content[33]='<font size=2><b>MD-2000</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The MD-2000 is the flagship light armor killing weapon. Kills all light armors dead in one shot. The perfect sniper weapon for light hunting... <BR><BR><b>Made by:</b> Mega Man 1024'
+content[34]='<font size=2><b>Mass Driver</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Mass Driver is more like a Gauss rifle. The difference is that the warhead is more explosive and shoots straight.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[35]='<font size=2><b>HP SniperX</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This weapon is a parody. Its great on heavy armor, but barely damages light armor. For this reason, it uses energy instead of ammo.<BR><BR><b>Made by:</b> Valya[AAOD]'
+
+content[36]='<font size=2><b>Swarmer</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The swarmer is a missile shotgun. Its ammo recharges in a matter of maybe a minute or two. This causes havoc among the population and other places...<BR><BR><b>Made by:</b> {J} MEGA-Man'
+content[37]='<font size=2><b>Shotgun</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;Just your basic Shotgun.<BR><BR><b>Made by:</b> Mega Man 1024'
+
+content[38]='<font size=2><b>Gundam Plasma Cannom</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This uses the energy stored in target beacons. As with the Super Hyper Blaster, it super-charges the normal Plasma system to create a chain of super-heated macross.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[39]='<font size=2><b>Flamer</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;Its a old-fashioned flamethrower.... it runs off of Gasoline. But thats ok, its great for toasting tribesmen and it has a 37.5% chance of Internal Flaming.<BR><BR><b>Made by:</b> Mega Man 1024'
+
+content[40]='<font size=2><b>Scouter EO Missile Launcher</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This is a EO (electro-optical) missile (meaning that it is remote controlled or FBW) Its primalily used for scouting enemy defenses, and sometimes even killing light armored players.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[41]='<font size=2><b>Reassembler</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This is just a handheld repair gun. its used by spawning players to repair equipment without a repair pack.<BR><BR><b>Made by:</b> Mega Man 1024'
+
+content[42]='<font size=2><b>Particle Accelerator</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;A step up from the Energy pack, This is used mainly for the PBW sunce it draws energy and without it, you could EMP yourself.... thats not good to do. Speaking of EMP, you have a better chance of EMP defense with this pack.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[43]='<font size=2><b>Mini-Reactor</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;THe ultimate in power generation, this can keep any armor in the air indefinitely. Good for bombardment attacks and pretty much resists EMP effects<BR><BR><b>Made by:</b> Mega Man 1024'
+content[44]='<font size=2><b>Super Repair Pack</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Super Repair uses the repair power of 2 repair packs... long range, fast repair speeds, more for use on repairing borg cubes and forcefields.<BR><BR><b>Made by:</b> Valya[AAOD]'
+content[45]='<font size=2><b>Energy + Shield Pack</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This combines the power of shield and energy (or a recharging shield) The recharge on the shield is very slow. You are protected from EMP attacks when the shield is on.<BR><BR><b>Made by:</b> Valya[AAOD]'
+content[46]='<font size=2><b>3DFX Cloaking Device</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The 3DFX Cloaking Device makes you invisible and jams nearby sensors. The fallback? any lamer running in software (thats me !]) can still see you.<BR><BR><b>Made by:</b> Mega Man 1024'
+content[47]='<font size=2><b>Missile Targeting Pack</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This in conjunction with either the Missile Launcher or the Ecstacy Cannon can cause you to become a portable rocket turret. Fires the same missiles. Great for use on Heavy armors with Mini-Reactors and Vehicles.<BR><BR><b>Made by:</b> Valya[AAOD]'
+content[48]='<font size=2><b>Turret Control Pack</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;The Turret Control Pack gives you the codes to control team turrets with your PDA<BR><BR><b>Made by:</b> Valya[AAOD]'
+content[49]='<font size=2><b>Personal Teleporter</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This finds your waypoint on the map and instantly teleports you there. Great for surprise attacks.<BR><BR><b>Made by:</b> Mega Man 1024 (thanks DesertFox!)'
+content[50]='<font size=2><b>Jump Pack</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This allows you to jump long distances (heavy armor) by literally boosting you with a lot of explosive power. Uses your entire supply of energy.<BR><BR><b>Made by:</b> {J} MEGA-Man'
+
+content[51]='<font size=2><b>Back Button</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;Well, Maybe it downloads the mod. Maybe it takes you back to the main page. Maybe it blows your computer up... you will never know unless you try.'
+
+content[52]='<font size=2><b>Ammo Generator</b></font><BR><font color="#00FF00" size=1>&nbsp;&nbsp;&nbsp;&nbsp;This is no ordinary pack. It CREATES ammo and stops when your armor is full. VERY useful.<BR><BR><b>Made by:</b> Mega Man 1024'
+
+function regenerate(){
+window.location.reload()
+}
+function regenerate2(){
+if (document.layers)
+setTimeout("window.onresize=regenerate",450)
+}
+
+function changetext(whichcontent){
+if (document.all)
+descriptions.innerHTML='<font face="Verdana"><small>'+whichcontent+'<font></small>'
+else if (document.layers){
+document.d1.document.d2.document.write('<font face="Verdana"><small>'+whichcontent+'</small></font>')
+document.d1.document.d2.document.close()
+}
+
+}
+
+
+//-->
+</script>
+<link rel=stylesheet type="text/css" href="greenFont.css">
+<title>Meltdown Classic MOD Weapons Descriptions</title></head>
+<body bgcolor="#000000"><font face="Verdana" size=1 color="#FFFFFF">
+<BR>
+<center><h1> This HTML file is not able to store all the<br><br>information contained within the mod.<br><br>You'll just have to play to see what's in it</h1></center>
+<table width=100% border=0 cellpadding=0 cellspacing=5>
+<tr valign=top><td width="65%" valign=top><div id="scriptmenu" style="line-height:20px">
+<table width=100% border=0>
+<tr valign=top>
+<td width=33%>
+<p><strong>
+<font face="Verdana" size=1 color="#FFFFFF">
+<font size=2><b>Weapons</b><BR></font>
+<br>
+
+<font size=2><b>Energy-Firing Weapons</b><BR></font><br>
+<font size=1>Blaster</font><br>
+<a href="#" onMouseover="changetext(content[0])">Enforcers</a><br>
+<a href="#" onMouseover="changetext(content[1])">Super Hyper Blaster</a><br>
+<a href="#" onMouseover="changetext(content[2])">Plasma Cannon</a><br>
+<a href="#" onMouseover="changetext(content[3])">Mitzi Blast Cannon</a><br>
+<a href="#" onMouseover="changetext(content[4])">Fusion Cannon</a><br><br>
+
+<font size=2><b>Chaingun/Machinegun Weapons</b><BR></font><br>
+<font size=1>Chaingun</font><br>
+<a href="#" onMouseover="changetext(content[5])">Gatling Blaster</a><br>
+<a href="#" onMouseover="changetext(content[6])">Plasma Chaingun</a><br>
+<a href="#" onMouseover="changetext(content[7])">Gauss Cannon</a><br>
+<a href="#" onMouseover="changetext(content[8])">Laser Gatling Gun</a><br>
+<a href="#" onMouseover="changetext(content[10])">ATC</a><br>
+<a href="#" onMouseover="changetext(content[11])">MiniGun</a><br>
+<a href="#" onMouseover="changetext(content[12])">MECH MiniGun</a><br><br>
+
+<font size=2><b>Lobbing Weapons</b><BR></font><br>
+<font size=1>Grenade Launcher</font><br>
+<font size=1>Mortar</font><br>
+<a href="#" onMouseover="changetext(content[13])">Impact Mortar</a><br>
+<a href="#" onMouseover="changetext(content[14])">Rubber Mortar</a><br>
+<a href="#" onMouseover="changetext(content[15])">EMP Mortar</a><br>
+
+</td>
+<td width=33%>
+<p><strong>
+<font face="Verdana" size=1 color="#FFFFFF">
+
+<a href="#" onMouseover="changetext(content[16])">Mine Launcher</a><br>
+<a href="#" onMouseover="changetext(content[17])">SpreadBurst</a><br>
+<a href="#" onMouseover="changetext(content[19])">Baby Nuke Launcher</a><br><br>
+
+<font size=2><b>Launchers</b><BR></font><br>
+<font size=1>Disc Launcher</font><br>
+<a href="#" onMouseover="changetext(content[20])">Dual Disc Launcher</a><br>
+<a href="#" onMouseover="changetext(content[21])">Missile Launcher</a><br>
+<a href="#" onMouseover="changetext(content[22])">RPG</a><br>
+<a href="#" onMouseover="changetext(content[23])">MECHRPG</a><br>
+<a href="#" onMouseover="changetext(content[24])">RPM</a><br>
+<a href="#" onMouseover="changetext(content[25])">RPEMP</a><br>
+<a href="#" onMouseover="changetext(content[26])">Ecstacy Cannon</a><br>
+<a href="#" onMouseover="changetext(content[27])">MECH RocketGun</a><br>
+<a href="#" onMouseover="changetext(content[28])">Juggalo EO Missile Launcher</a><br><BR>
+
+<font size=2><b>Beam Weapons</b><BR></font><br>
+<font size=1>Laser Rifle</font><br>
+<a href="#" onMouseover="changetext(content[29])">Maser Rifle</a><br>
+<a href="#" onMouseover="changetext(content[31])">Particle Beam</a><br><BR>
+
+<font size=2><b>Rifles</b><BR></font><br>
+<a href="#" onMouseover="changetext(content[32])">Dart Rifle</a><br>
+<a href="#" onMouseover="changetext(content[33])">MD-2000</a><br>
+<a href="#" onMouseover="changetext(content[34])">Mass Driver</a><br>
+<a href="#" onMouseover="changetext(content[35])">HP SniperX</a><br><BR>
+
+</td>
+<td width=33%>
+<p><strong>
+<font face="Verdana" size=1 color="#FFFFFF">
+
+<font size=2><b>Spread Weapons</b><BR></font><br>
+<a href="#" onMouseover="changetext(content[36])">Swarmer</a><br>
+<a href="#" onMouseover="changetext(content[37])">Shotgun</a><br><BR>
+
+<font size=2><b>Heat Weapons</b><BR></font><br>
+<font size=1>Plasma Gun</font><br>
+<a href="#" onMouseover="changetext(content[38])">Gundam Plasma Cannon</a><br>
+<a href="#" onMouseover="changetext(content[39])">Flamer</a><br><BR>
+
+<font size=2><b>Tools</b><BR></font><br>
+<font size=1>Targeting Laser</font><br>
+<a href="#" onMouseover="changetext(content[40])">Scouter EO Missile Launcher</a><br>
+<a href="#" onMouseover="changetext(content[41])">Reassembler</a><br><br>
+
+<font size=2><b>Packs</b><BR></font>
+<font size=1>Energy Pack</font><br>
+<a href="#" onMouseover="changetext(content[42])">Particle Accelerator</a><br>
+<a href="#" onMouseover="changetext(content[43])">Mini-Reactor</a><br>
+<font size=1>Repair Pack</font><br>
+<a href="#" onMouseover="changetext(content[44])">Super-Repair Pack</a><br>
+<font size=1>Shield Pack</font><br>
+<a href="#" onMouseover="changetext(content[45])">Energy + Shield Pack</a><br>
+<font size=1>Sensor Jammer</font><br>
+<a href="#" onMouseover="changetext(content[46])">3DFX Cloaking Device</a><br>
+<font size=1>Ammo Pack</font><br>
+<a href="#" onMouseover="changetext(content[52])">Ammo Generator</a><br>
+<a href="#" onMouseover="changetext(content[47])">Missile Targeting Pack</a><br>
+<a href="#" onMouseover="changetext(content[48])">Turret Control Pack</a><br>
+<a href="#" onMouseover="changetext(content[49])">Personal Teleporter</a><br>
+<a href="#" onMouseover="changetext(content[50])">Jump Pack</a><br>
+<a href="meltdown.html" onMouseover="changetext(content[51])"><b>Back</b></a><br>
+
+</td></tr></table>
+</font></strong></p></div></td>
+<td width=35% valign=top>
+<table width="100%" border=0 cellspacing=0 cellpadding=0 height=100%>
+<tr valign=top height=100%><td align=left>
+<font color="#FFFFFF"><ilayer id="d1" width="155" height="155"><layer id="d2" width="155" height="155"><div id="descriptions" align="left"></div></ilayer></layer>
+</td></tr>
+<tr valign=bottom height=50><td width=100% align=center>
+<font face="Verdana" size=1 color="#00FF00">
+<BR><BR>
+</td></tr></table>
+
+</td>
+</tr>
+</table>
+</body>
+</html>

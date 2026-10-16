@@ -1,0 +1,157 @@
+exec(DuelMOD);          
+$cdTrack = 7;
+$cdPlayMode = 1;        
+$DuelSpawn[1] = "-318.961 23.222 152.954";
+$DuelSpawn[2] = "-576.637 47.5022 153.394";
+$DuelSpawn[3] = "-972.633 79.5699 199.667";
+$DuelSpawn[4] = "-1343.78 42.5048 153.052";
+$DuelSpawn[5] = "-1236.23 -407.098 199.599";
+$DuelSpawn[6] = "-897.076 -392.056 155.922";
+$DuelSpawn[7] = "-500.43 -693.321 199.254";
+$DuelSpawn[8] = "-62.2199 -767.055 154.379";
+$DuelSpawn[9] = "130.044 -1143.26 153.879";
+$DuelSpawn[10] = "-203.308 -1438.22 199.715";
+$DuelSpawn[11] = "-503.207 -1699.12 199.923";
+$DuelSpawn[12] = "-1010.03 -1962.98 199.808";
+$Game::missionType = "Duel";
+
+//--- export object begin ---//
+instant SimGroup "MissionGroup" {
+	instant SimGroup "Volumes" {
+		instant SimVolume "InterfaceVol" {
+			fileName = "Interface.vol";
+		};
+		instant SimVolume "entities" {
+			fileName = "Entities.vol";
+		};
+		instant SimVolume "World" {
+			fileName = "mudWorld.vol";
+		};
+		instant SimVolume "WorldTerrain" {
+			fileName = "mudTerrain.vol";
+		};
+		instant SimVolume "mudDML" {
+			fileName = "mudDML.vol";
+		};
+		instant SimVolume "savanaDML" {
+			fileName = "savanaDML.vol";
+		};
+		instant SimVolume "human1DML" {
+			fileName = "human1DML.vol";
+		};
+		instant SimVolume "TedFile" {
+			fileName = "2_Weapons.ted";
+		};
+		instant SimVolume "MissionLighting" {
+			fileName = "2_weapons.vol";
+		};
+	};
+	instant SimGroup "World" {
+		instant SimPalette "Palette" {
+			fileName = "mud.night.ppl";
+		};
+		instant MissionCenterPos "MissionCenter" {
+			x = "-1350";
+			y = "-258";
+			w = "600";
+			h = "400";
+		};
+	};
+	instant SimGroup "Landscape" {
+		instant Sky "Sky" {
+			dmlName = "mudcloudnight.dml";
+			skyColor = "0 0 0";
+			hazeColor = "0 0 0";
+			featurePosition = "0";
+			size = "800";
+			textures[0] = "1";
+			textures[1] = "2";
+			textures[2] = "3";
+			textures[3] = "4";
+			textures[4] = "5";
+			textures[5] = "6";
+			textures[6] = "7";
+			textures[7] = "8";
+			textures[8] = "9";
+			textures[9] = "10";
+			textures[10] = "11";
+			textures[11] = "12";
+			textures[12] = "13";
+			textures[13] = "14";
+			textures[14] = "15";
+			textures[15] = "0";
+			distance = "800";
+		};
+		instant Planet "Sun" {
+			fileName = "mudniteplanet1.bmp";
+			azimuth = "40";
+			incidence = "40";
+			castShadows = "True";
+			useLensFlare = "False";
+			intensity = "0.399963 0.399963 0.399963";
+			ambient = "0.199958 0.199958 0.199958";
+			size = "180";
+			distance = "1200";
+		};
+		instant SimTerrain "Terrain" {
+			tedFileName = "2_Weapons.dtf";
+			visibleDistance = "700";
+			hazeDistance = "400";
+			hazeVerticalMin = "2";
+			hazeVerticalMax = "1.43106e-38";
+			perspectiveDistance = "100";
+			screenSize = "48";
+			contGravity = "0 0 -20";
+			contDrag = "0";
+			contHeight = "10000";
+			position = "-3072 -3072 0";
+			rotation = "0 0 0";
+		};
+		instant StarField "stars1" {
+			inFrontOfSky = "False";
+			colors[0] = "1 1 1";
+			colors[1] = "0.5 0.5 0.5";
+			colors[2] = "0.5 0.5 0.5";
+		};
+	};
+	instant SimGroup "Lights";
+	instant SimGroup "Teams" {
+		instant TeamGroup "team0" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "start" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-62.4809 -121.058 159.59";
+						rotation = "0 0 0";
+					};
+				};
+				instant SimGroup "Random" {
+					instant Marker "Drop Point1" {
+						dataBlock = "DropPointMarker";
+						name = "";
+						position = "-77.6767 -137.354 154.308";
+						rotation = "0 0 0";
+					};
+				};
+			};
+			instant SimGroup "Items";
+		};
+		instant TeamGroup "team1" {
+			instant SimGroup "DropPoints" {
+				instant SimGroup "start";
+				instant SimGroup "Random";
+			};
+			instant SimGroup "Items";
+		};
+	};
+	instant SimGroup "ObserverDropPoints" {
+		instant Marker "Drop Point1" {
+			dataBlock = "DropPointMarker";
+			name = "";
+			position = "-29.2118 -101.839 197.489";
+			rotation = "0.455079 -0.214795 0.929914";
+		};
+	};
+};
+//--- export object end ---//
